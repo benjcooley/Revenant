@@ -1,0 +1,5 @@
+o Bow mode - 
+o CD-Slowdown
+o VOODOO wierdness
+o Cull dead enemies
+o Arrow speed

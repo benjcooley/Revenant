@@ -1,0 +1,43 @@
+// Revenant - Copyright 1998 Cinematix Studios, Inc.
+//************* Revenant AREA.DEF File  ************ 
+
+// Main Map Area
+AREA "Ahkuilon"
+BEGIN
+  LEVEL 0
+  AMBLIGHT 40
+  AMBCOLOR 160 160 255
+//  SCRIPT "ahkuilon.s"
+END
+
+// Level 45 Area
+AREA "The Catacombs"
+BEGIN
+  LEVEL 45
+  AMBLIGHT 30
+  AMBCOLOR 160 160 255
+END
+
+// Cave Area
+AREA "The Caves"
+BEGIN
+  LEVEL 120
+  AMBLIGHT 40
+  AMBCOLOR 175 100 255
+END
+
+// Town
+AREA "Misthaven"
+BEGIN
+  LEVEL 121
+  AMBLIGHT 40
+  AMBCOLOR 100 100 255
+END
+
+// Tavern
+AREA "The Drunken Whore Tavern"
+BEGIN
+  LEVEL 1
+  AMBLIGHT 20
+  AMBCOLOR 200 200 255
+END

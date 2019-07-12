@@ -1,0 +1,436 @@
+// Revenant - Copyright 1998 Cinematix Studios, Inc.
+// *********** Revenant SPELL DEF File  ************
+
+// contains all the spell info
+
+// Command List
+// Start a spell with: SPELL "name"
+
+// then BEGIN it
+// when done END it
+
+// #defines to macro define text
+
+// talismans
+// fire = 'f'
+
+// damage types
+#define DA_FIRE		7
+#define DA_ELECTRIC	10
+#define DA_NONE		-1
+#define DA_IMPACT	5
+#define DA_ICE		8
+
+// spell flags
+#define SF_NONE		0x0000
+
+// variant types
+#define TP_BASIC	3
+
+// conditionals
+#define TRUE		1
+#define FALSE		0
+
+// NAME, TYPE, TALISMANS, EFFECT_NAME, MANA, WAIT_NEXT, MIN_D, MAX_D, SKILL, HEIGHT, FACING, LOOP_TIME
+
+// the fireball spell
+// doesn't work
+SPELL "Fireball"
+BEGIN
+	DESCRIPTION "A flaming ball of flame."
+	DAMAGETYPE DA_FIRE
+	NAME "Fireball" 
+	ANIMATION "invoke1"
+	DELAY 6
+	FLAGS SF_NONE
+	VARIANT "Fireball", TP_BASIC, "fm", "fireball", 10, 1, 20, 45, 30, 50, FALSE, 15
+END
+
+// the lightning spells
+// doesn't work
+SPELL "Lightning"
+BEGIN
+	NAME "Lightning"
+	DESCRIPTION "An devastating bolt of electricity."
+	DAMAGETYPE DA_ELECTRIC
+	ANIMATION "invoke2"
+	DELAY 10
+	FLAGS SF_NONE
+	VARIANT "Electric Bolt", TP_BASIC, "sm", "LightStrip", 15, 1, 15, 25, 30, 100, TRUE, 20
+END
+
+// the heal spell
+// heal is programmed to use the max damage field, for how much health is replenished
+SPELL "Heal"
+BEGIN
+	NAME "Heal"
+	DESCRIPTION "A magical medication."
+	DAMAGETYPE DA_NONE
+	ANIMATION "invoke2"
+	DELAY 10
+	FLAGS SF_NONE
+	VARIANT "Heal", TP_BASIC, "l", "heal", 10, 1, 0, 15, 30, 0, TRUE, 65
+
+END
+
+// the heal spells
+// same as 1, but more powerful
+SPELL "Heal2"
+BEGIN
+	NAME "Heal2"
+	DESCRIPTION "A magical medication."
+	DAMAGETYPE DA_NONE
+	ANIMATION "invoke2"
+	DELAY 10
+	FLAGS SF_NONE
+	VARIANT "Heal2", TP_BASIC, "lp", "heal", 10, 1, 0, 30, 30, 0, TRUE, 65
+
+END
+
+
+// the heal spells
+// same as 2, but more powerful
+SPELL "Heal3"
+BEGIN
+	NAME "Heal3"
+	DESCRIPTION "A magical medication."
+	DAMAGETYPE DA_NONE
+	ANIMATION "invoke2"
+	DELAY 10
+	FLAGS SF_NONE
+	VARIANT "Heal3", TP_BASIC, "llp", "heal", 10, 1, 0, 45, 30, 0, TRUE, 65
+
+END
+
+
+// the heal spells
+// same as 3, but max the healing
+SPELL "Heal4"
+BEGIN
+	NAME "Heal4"
+	DESCRIPTION "A magical medication."
+	DAMAGETYPE DA_NONE
+	ANIMATION "invoke2"
+	DELAY 10
+	FLAGS SF_NONE
+	VARIANT "Heal4", TP_BASIC, "llpp", "heal", 10, 1, 0, 0, 30, 0, TRUE, 65
+
+END
+
+// the powerful meteor storm
+// doesn't work
+SPELL "Meteor Storm"
+BEGIN
+	NAME "Meteor Storm"
+	DESCRIPTION "A mighty blow from above."
+	DAMAGETYPE DA_IMPACT
+	ANIMATION "invoke2"
+	DELAY 10
+	FLAGS SF_NONE
+	VARIANT "Meteor Storm", TP_BASIC, "fmp", "meteorstorm", 30, 1, 15, 20, 30, 100, TRUE, 20
+END
+
+// a blaze of glory
+// works
+SPELL "Fire Cone"
+BEGIN
+	NAME "Fire Cone"
+	DESCRIPTION "A mystical blow torch."
+	DAMAGETYPE DA_FIRE
+	ANIMATION "invoke2"
+	DELAY 10
+	FLAGS SF_NONE
+	VARIANT "Fire Cone", TP_BASIC, "f", "firecone", 15, 1, 15, 25, 30, 100, TRUE, 20
+END
+
+// a blaze of glory
+// works
+SPELL "Dragon Fire"
+BEGIN
+	NAME "Dragon Fire"
+	DESCRIPTION "Patooie!"
+	DAMAGETYPE DA_FIRE
+	ANIMATION "attack1"
+	DELAY 30
+	FLAGS SF_NONE
+	VARIANT "Dragon Fire", TP_BASIC, "-", "dragonfire", 15, 1, 15, 25, 30, 100, TRUE, 20
+END
+
+// hurry auntie em, put todo in the cellar
+SPELL "Wind Assault"
+BEGIN
+	NAME "Wind Assault"
+	DESCRIPTION "A summer afternoon breeze."
+	DAMAGETYPE DA_IMPACT
+	ANIMATION "invoke2"
+	DELAY 10
+	FLAGS SF_NONE
+	VARIANT "Wind Assault", TP_BASIC, "ff", "windstrip", 15, 1, 15, 25, 30, 120, TRUE, 20
+END
+
+// a snow ball fight gone awry
+SPELL "Ice Bolt"
+BEGIN
+	NAME "Ice Bolt"
+	DESCRIPTION "A blast from the past."
+	DAMAGETYPE DA_ICE
+	ANIMATION "invoke2"
+	DELAY 10
+	FLAGS SF_NONE
+	VARIANT "Ice Bolt", TP_BASIC, "im", "icebolt", 15, 1, 15, 25, 30, 70, TRUE, 20
+END
+
+// parade time
+SPELL "Flaming Aura"
+BEGIN
+	NAME "Flaming Aura"
+	DESCRIPTION "Protect-o-Locke"
+	DAMAGETYPE DA_NONE
+	ANIMATION "invoke2"
+	DELAY 10
+	FLAGS SF_NONE
+	VARIANT "Flaming Aura", TP_BASIC, "-", "streamer", 15, 1, 15, 25, 30, 0, TRUE, 20
+END
+
+// its rain'n, its pour'n, de old man is snoring
+SPELL "Ice Storm"
+BEGIN
+	NAME "Ice Storm"
+	DESCRIPTION "Blizzard Entertainment."
+	DAMAGETYPE DA_ICE
+	ANIMATION "invoke2"
+	DELAY 10
+	FLAGS SF_NONE
+	VARIANT "Ice Storm", TP_BASIC, "ip", "tornado", 15, 1, 15, 25, 30, 0, TRUE, 20
+END
+
+// dinner time
+SPELL "Nourish"
+BEGIN
+	NAME "Nourish"
+	DESCRIPTION "Hungry for those good times baby..."
+	DAMAGETYPE DA_NONE
+	ANIMATION "invoke2"
+	DELAY 10
+	FLAGS SF_NONE
+	VARIANT "Nourish", TP_BASIC, "-", "createfood", 15, 1, 15, 25, 30, 0, TRUE, 20
+END
+
+// the fire blast, thingie
+SPELL "Fire Blast"
+BEGIN
+	NAME "Fire Blast"
+	DESCRIPTION "Kaboom!"
+	DAMAGETYPE DA_FIRE
+	ANIMATION "invoke2"
+	DELAY 10
+	FLAGS SF_NONE
+	VARIANT "Fire Blast", TP_BASIC, "-", "firewind", 15, 1, 15, 25, 30, 0, TRUE, 20
+END
+
+// you the fever, ive got the cure
+SPELL "Cure"
+BEGIN
+	NAME "Cure"
+	DESCRIPTION "Everyone has got to have the sickness, because everyone seems to need the cure."
+	DAMAGETYPE DA_NONE
+	ANIMATION "invoke2"
+	DELAY 10
+	FLAGS SF_NONE
+	VARIANT "Cure", TP_BASIC, "-", "cure", 15, 1, 15, 25, 30, 0, TRUE, 20
+END
+
+// kapoof!
+SPELL "Fire Poof"
+BEGIN
+	NAME "Fire Poof"
+	DESCRIPTION "Eat the new cheetos, fire poofs!"
+	DAMAGETYPE DA_FIRE
+	ANIMATION "invoke2"
+	DELAY 10
+	FLAGS SF_NONE
+	VARIANT "Fire Poof", TP_BASIC, "ffi", "fireflash", 15, 1, 15, 25, 30, 0, TRUE, 20
+END
+
+// fizzle
+SPELL "Fizzle"
+BEGIN
+	NAME "Fizzle"
+	DESCRIPTION "Failed casting attempt!"
+	DAMAGETYPE DA_NONE
+	ANIMATION "invoke2"
+	DELAY 10
+	FLAGS SF_NONE
+	VARIANT "Fizzle", TP_BASIC, "x", "fizzle", 0, 1, 0, 0, 0, 0, FALSE, 20
+END
+
+// blue flaming stuff
+// aura uses the min damage for defensive bonus, max damage for offensive bonus
+SPELL "Aura"
+BEGIN
+	NAME "Aura"
+	DESCRIPTION "For the true blue flamer."
+	DAMAGETYPE DA_NONE
+	ANIMATION "invoke2"
+	DELAY 10
+	FLAGS SF_NONE
+	VARIANT "Aura", TP_BASIC, "fi", "aura", 0, 1, 10, 0, 0, 0, FALSE, 20
+END
+
+// Paralize Spell Level 1
+// a spining egg with some nifty particles
+SPELL "Paralize1"
+BEGIN
+	NAME "Paralize1"
+	DESCRIPTION "Uh, yea, this is some ugly little circles scurring."
+	DAMAGETYPE DA_FIRE
+	ANIMATION "invoke2"
+	DELAY 10
+	FLAGS SF_NONE
+	VARIANT "Paralize1", TP_BASIC, "mff", "Paralize1", 15, 1, 0, 0, 20, 0, TRUE, 20
+END
+
+// Paralize Spell Level 2
+// Lasts longer than Paralize Level 1
+SPELL "Paralize2"
+BEGIN
+	NAME "Paralize2"
+	DESCRIPTION "Uh, yea, this is some ugly little circles scurring."
+	DAMAGETYPE DA_FIRE
+	ANIMATION "invoke2"
+	DELAY 10
+	FLAGS SF_NONE
+	VARIANT "Paralize2", TP_BASIC, "mffp", "Paralize1", 15, 1, 0, 0, 30, 0, TRUE, 20
+END
+
+// Paralize Spell Level 3
+// Attacks multiple targets
+SPELL "Paralize3"
+BEGIN
+	NAME "Paralize3"
+	DESCRIPTION "Uh, yea, this is some ugly little circles scurring."
+	DAMAGETYPE DA_FIRE
+	ANIMATION "invoke2"
+	DELAY 10
+	FLAGS SF_NONE
+	VARIANT "Paralize3", TP_BASIC, "ffp", "Paralize1", 15, 1, 0, 0, 40, 0, TRUE, 20
+END
+
+
+// Paralize Spell Level 4
+// Attacks 1 target, but also deals damage
+SPELL "Paralize4"
+BEGIN
+	NAME "Paralize4"
+	DESCRIPTION "Uh, yea, this is some ugly little circles scurring."
+	DAMAGETYPE DA_FIRE
+	ANIMATION "invoke2"
+	DELAY 10
+	FLAGS SF_NONE
+	VARIANT "Paralize4", TP_BASIC, "mffi", "Paralize1", 15, 1, 1, 4, 50, 0, TRUE, 20
+END
+
+// Quick Sand
+// Swirling pool of sand under flailing/spinning enemy
+// I set the damage low, because it happens multiple times
+SPELL "Quicksand"
+BEGIN
+	NAME "Quicksand"
+	DESCRIPTION "Is it a tornado?  I think it should be, or at least a dust storm."
+	DAMAGETYPE DA_FIRE
+	ANIMATION "invoke2"
+	DELAY 10
+	FLAGS SF_NONE
+	VARIANT "Quicksand", TP_BASIC, "em", "Quicksand", 15, 1, 2, 6, 50, 0, TRUE, 20
+END
+
+// Quick Sand 2
+// Same as 1, but it attacks multiple targets
+SPELL "Quicksand2"
+BEGIN
+	NAME "Quicksand2"
+	DESCRIPTION "Is it a tornado?  I think it should be, or at least a dust storm."
+	DAMAGETYPE DA_FIRE
+	ANIMATION "invoke2"
+	DELAY 10
+	FLAGS SF_NONE
+	VARIANT "Quicksand2", TP_BASIC, "-", "Quicksand", 15, 1, 2, 6, 50, 0, TRUE, 20
+END
+
+// Quick Sand 3
+// Same as 1, but it attacks multiple targets
+SPELL "Quicksand3"
+BEGIN
+	NAME "Quicksand3"
+	DESCRIPTION "Is it a tornado?  I think it should be, or at least a dust storm."
+	DAMAGETYPE DA_FIRE
+	ANIMATION "invoke2"
+	DELAY 10
+	FLAGS SF_NONE
+	VARIANT "Quicksand3", TP_BASIC, "pm", "Quicksand", 15, 1, 2, 6, 50, 0, TRUE, 20
+END
+
+// Vortex
+// Send the dude somewhere else
+SPELL "Vortex"
+BEGIN
+	NAME "Vortex"
+	DESCRIPTION "Hood-dini has nothing on me!"
+	DAMAGETYPE DA_FIRE
+	ANIMATION "invoke2"
+	DELAY 10
+	FLAGS SF_NONE
+	VARIANT "Vortex", TP_BASIC, "-", "Vortex", 15, 1, 2, 6, 50, 0, TRUE, 20
+END
+
+// Vortex
+// This vortex is used by the priests
+SPELL "VortexM"
+BEGIN
+	NAME "VortexM"
+	DESCRIPTION "Hood-dini has nothing on me!"
+	DAMAGETYPE DA_FIRE
+	ANIMATION "invoke2"
+	DELAY 10
+	FLAGS SF_NONE
+	VARIANT "VortexM", TP_BASIC, "-", "Vortex", 15, 1, 2, 6, 50, 0, TRUE, 20
+END
+
+// Mana Drain 1
+// Send the dude somewhere else
+SPELL "ManaDrain"
+BEGIN
+	NAME "ManaDrain"
+	DESCRIPTION "Hood-dini has nothing on me!"
+	DAMAGETYPE DA_FIRE
+	ANIMATION "invoke2"
+	DELAY 10
+	FLAGS SF_NONE
+	VARIANT "ManaDrain", TP_BASIC, "-", "ManaDrain", 15, 1, 2, 6, 50, 0, TRUE, 20
+END
+
+// Shriek
+// Now that's a hell of a set of pipes
+SPELL "Shriek"
+BEGIN
+	NAME "Shriek"
+	DESCRIPTION "The Wraiths Shriek"
+	DAMAGETYPE DA_IMPACT
+	ANIMATION "invoke2"
+	DELAY 10
+	FLAGS SF_NONE
+	VARIANT "Shriek", TP_BASIC, "-", "Shriek", 15, 1, 2, 6, 50, 0, TRUE, 20
+END
+
+// Puke
+// Ewwww, Zombie goo
+SPELL "Puke"
+BEGIN
+	NAME "Puke"
+	DESCRIPTION "The Zombie's Puke"
+	DAMAGETYPE DA_IMPACT
+	ANIMATION "invoke2"
+	DELAY 10
+	FLAGS SF_NONE
+	VARIANT "Puke", TP_BASIC, "p", "Puke", 15, 1, 2, 6, 50, 0, TRUE, 20
+END

@@ -1,0 +1,17 @@
+--------------------Configuration: exile - Win32 Release--------------------
+Begining build with project "C:\Exile\Exile.dsp", at root.
+Active configuration is Win32 (x86) Application (based on Win32 (x86) Application)
+
+Project's tools are:
+			"32-bit C/C++ Compiler for 80x86" with flags "/nologo /G5 /Gr /Zp16 /MT /W3 /Gm /Gi /GX /Zi /Od /Oy /Ob2 /D "WIN32" /D "_WINDOWS" /D "EXILE" /Fp"Exile.pch" /YX /FD /c "
+			"OLE Type Library Maker" with flags "/nologo /D "NDEBUG" /mktyplib203 /win32 "
+			"Win32 Resource Compiler" with flags "/l 0x409 /fo"exile.res" /d "NDEBUG" "
+			"Browser Database Maker" with flags "/nologo /o"Exile.bsc" "
+			"COFF Linker for 80x86" with flags "msvcrt.lib libc.lib winmm.lib ddraw.lib d3drm.lib dsound.lib dplayx.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib advapi32.lib implode.lib vfw32.lib libcmtd.lib dinput.lib /nologo /subsystem:windows /profile /map:"Exile.map" /debug /machine:I386 /nodefaultlib:"libc.lib" /nodefaultlib:"libcmt.lib" /out:"Exile.exe" "
+			"Custom Build" with flags ""
+			"<Component 0xa>" with flags ""
+
+
+
+
+Exile.exe - 0 error(s), 0 warning(s)

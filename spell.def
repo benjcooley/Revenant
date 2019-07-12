@@ -1,0 +1,499 @@
+// Revenant - Copyright 1998 Cinematix Studios, Inc.
+// *********** Revenant SPELL DEF File  ************
+
+// contains all the spell info
+
+// Command List
+// Start a spell with: SPELL "name"
+
+// then BEGIN it
+// when done END it
+
+// #defines to macro define text
+
+// talismans
+// fire = 'f'
+
+// damage types
+#define DT_NONE		-1		// Does no damage whatsoever
+#define DT_MISC		0		// Just damage (no specific type)
+#define DT_HAND		1		// Damage from hand to hand combat
+#define DT_PUNCTURE 2		// Puncture damage (arrows, knives and swords thrusts)
+#define DT_CUT		3		// Cutting or slashing damage (knive and sword swings)
+#define DT_CHOP		4		// Chopping damage (knive, sword, or axe chops)
+#define DT_BLUDGEON 5       // Bludgeoning damage (warhammers, clubs, maces)
+#define DT_MAGICAL  6       // Magical damage (other than any that fit below)
+#define DT_BURN     7       // Burn damage (i.e. lava, fileball, etc.)
+#define DT_FREEZE   8       // Freeze damage (i.e. frost, etc.)
+#define DT_POISON   9		// Poison damage
+
+// spell flags
+#define SF_NONE		0x0000
+
+// variant types
+#define TP_BASIC	3
+
+// conditionals
+#define TRUE		1
+#define FALSE		0
+
+// NAME, TYPE, TALISMANS, EFFECT_NAME, MANA, WAIT_NEXT, MIN_D, MAX_D, SKILL, HEIGHT, FACING, LOOP_TIME
+
+SPELL "Fireball"
+BEGIN
+	DESCRIPTION "A flaming ball of fire."
+	DAMAGETYPE DT_BURN
+	NAME "Fireball" 
+	ANIMATION "invoke01"
+	DELAY 6
+	FLAGS SF_NONE
+	VARIANT "Fireball", TP_BASIC, "fmd", "fireball", 10, 1, 5, 10, 30, 50, FALSE, 15
+END
+
+// the lightning spells
+// doesn't work
+SPELL "Lightning"
+BEGIN
+	NAME "Lightning"
+	DESCRIPTION "A devastating bolt of electricity."
+	DAMAGETYPE DT_BURN
+	ANIMATION "invoke2"
+	DELAY 10
+	FLAGS SF_NONE
+	VARIANT "Electric Bolt", TP_BASIC, "sm", "lightstrip", 15, 1, 15, 25, 30, 100, TRUE, 20
+END
+
+// the heal spells - Level 1
+// heal is programmed to use the max damage field, for how much health is replenished
+SPELL "Heal"
+BEGIN
+	NAME "Heal"
+	DESCRIPTION "A magical medication."
+	DAMAGETYPE DT_NONE
+	ANIMATION "invoke2"
+	DELAY 10
+	FLAGS SF_NONE
+	VARIANT "Heal", TP_BASIC, "l", "heal", 10, 1, 0, 10, 30, 0, TRUE, 65
+END
+
+// the heal spells - Level 2
+// heal is programmed to use the max damage field, for how much health is replenished
+SPELL "Heal2"
+BEGIN
+	NAME "Heal2"
+	DESCRIPTION "A magical medication."
+	DAMAGETYPE DT_NONE
+	ANIMATION "invoke2"
+	DELAY 10
+	FLAGS SF_NONE
+	VARIANT "Heal2", TP_BASIC, "lp", "heal", 10, 1, 0, 30, 30, 0, TRUE, 65
+END
+
+// the heal spells - Level 3
+// heal is programmed to use the max damage field, for how much health is replenished
+SPELL "Heal3"
+BEGIN
+	NAME "Heal3"
+	DESCRIPTION "A magical medication."
+	DAMAGETYPE DT_NONE
+	ANIMATION "invoke2"
+	DELAY 10
+	FLAGS SF_NONE
+	VARIANT "Heal3", TP_BASIC, "lpp", "heal", 10, 1, 0, 100, 30, 0, TRUE, 65
+END
+
+// the heal spells - Max Heal
+// heal is programmed to use the max damage field, for how much health is replenished
+SPELL "Heal4"
+BEGIN
+	NAME "Heal4"
+	DESCRIPTION "A magical medication."
+	DAMAGETYPE DT_NONE
+	ANIMATION "invoke2"
+	DELAY 10
+	FLAGS SF_NONE
+	VARIANT "Heal4", TP_BASIC, "lppp", "heal", 10, 1, 0, 0, 30, 0, TRUE, 65
+END
+
+// the powerful meteor storm
+// doesn't work
+SPELL "Meteor Storm"
+BEGIN
+	NAME "Meteor Storm"
+	DESCRIPTION "A mighty blow from above."
+	DAMAGETYPE DT_BLUDGEON
+	ANIMATION "invoke2"
+	DELAY 10
+	FLAGS SF_NONE
+	VARIANT "Meteor Storm", TP_BASIC, "escp", "meteorstorm", 30, 1, 15, 20, 30, 100, TRUE, 20
+END
+
+// a blaze of glory
+// works
+SPELL "Fire Cone"
+BEGIN
+	NAME "Fire Cone"
+	DESCRIPTION "A mystical blow torch."
+	DAMAGETYPE DT_BURN
+	ANIMATION "invoke2"
+	DELAY 10
+	FLAGS SF_NONE
+	VARIANT "Fire Cone", TP_BASIC, "fp", "firecone", 15, 1, 15, 25, 30, 100, TRUE, 20
+END
+
+// a blaze of glory
+// works
+SPELL "Dragon Fire"
+BEGIN
+	NAME "Dragon Fire"
+	DESCRIPTION "Patooie!"
+	DAMAGETYPE DT_BURN
+	ANIMATION "attack1"
+	DELAY 30
+	FLAGS SF_NONE
+	VARIANT "Dragon Fire", TP_BASIC, "-", "dragonfire", 15, 1, 15, 25, 30, 100, TRUE, 20
+END
+
+// hurry auntie em, put todo in the cellar
+SPELL "Wind Assault"
+BEGIN
+	NAME "Wind Assault"
+	DESCRIPTION "A summer afternoon breeze."
+	DAMAGETYPE DT_BLUDGEON
+	ANIMATION "invoke1"
+	DELAY 10
+	FLAGS SF_NONE
+	VARIANT "Wind Assault", TP_BASIC, "ff", "windstrip", 15, 1, 15, 25, 30, 120, TRUE, 20
+END
+
+// a snow ball fight gone awry
+SPELL "Ice Bolt"
+BEGIN
+	NAME "Ice Bolt"
+	DESCRIPTION "A blast from the past."
+	DAMAGETYPE DT_FREEZE
+	ANIMATION "invoke2"
+	DELAY 10
+	FLAGS SF_NONE
+	VARIANT "Ice Bolt", TP_BASIC, "ipo", "icebolt", 15, 1, 15, 25, 30, 70, TRUE, 20
+END
+
+// parade time
+SPELL "Flaming Aura"
+BEGIN
+	NAME "Flaming Aura"
+	DESCRIPTION "Protect-o-Locke"
+	DAMAGETYPE DT_NONE
+	ANIMATION "invoke2"
+	DELAY 10
+	FLAGS SF_NONE
+	VARIANT "Flaming Aura", TP_BASIC, "-", "streamer", 15, 1, 15, 25, 30, 0, TRUE, 20
+END
+
+// its rain'n, its pour'n, de old man is snoring
+SPELL "Ice Storm"
+BEGIN
+	NAME "Ice Storm"
+	DESCRIPTION "Blizzard Entertainment."
+	DAMAGETYPE DT_FREEZE
+	ANIMATION "invoke2"
+	DELAY 10
+	FLAGS SF_NONE
+	VARIANT "Ice Storm", TP_BASIC, "ip", "tornado", 15, 1, 15, 25, 30, 0, TRUE, 20
+END
+
+// dinner time
+SPELL "Nourish"
+BEGIN
+	NAME "Nourish"
+	DESCRIPTION "Hungry for those good times baby..."
+	DAMAGETYPE DT_NONE
+	ANIMATION "invoke2"
+	DELAY 10
+	FLAGS SF_NONE
+	VARIANT "Nourish", TP_BASIC, "oe", "createfood", 15, 1, 15, 25, 30, 0, TRUE, 20
+END
+
+// the fire blast, thingie
+SPELL "Fire Blast"
+BEGIN
+	NAME "Fire Blast"
+	DESCRIPTION "Kaboom!"
+	DAMAGETYPE DT_BURN
+	ANIMATION "invoke2"
+	DELAY 10
+	FLAGS SF_NONE
+	VARIANT "Fire Blast", TP_BASIC, "-", "firewind", 15, 1, 15, 25, 30, 0, TRUE, 20
+END
+
+// you the fever, ive got the cure
+SPELL "Cure"
+BEGIN
+	NAME "Cure"
+	DESCRIPTION "Everyone has got to have the sickness, because everyone seems to need the cure."
+	DAMAGETYPE DT_NONE
+	ANIMATION "invoke2"
+	DELAY 10
+	FLAGS SF_NONE
+	VARIANT "Cure", TP_BASIC, "-", "cure", 15, 1, 15, 25, 30, 0, TRUE, 20
+END
+
+// kapoof!
+SPELL "Fire Poof"
+BEGIN
+	NAME "Fire Poof"
+	DESCRIPTION "Eat the new cheetos, fire poofs!"
+	DAMAGETYPE DT_BURN
+	ANIMATION "invoke2"
+	DELAY 10
+	FLAGS SF_NONE
+	VARIANT "Fire Poof", TP_BASIC, "-", "fireflash", 15, 1, 15, 25, 30, 0, TRUE, 20
+END
+
+// fizzle
+SPELL "Fizzle"
+BEGIN
+	NAME "Fizzle"
+	DESCRIPTION "Failed casting attempt!"
+	DAMAGETYPE DT_NONE
+	ANIMATION "invoke2"
+	DELAY 10
+	FLAGS SF_NONE
+	VARIANT "Fizzle", TP_BASIC, "x", "fizzle", 0, 1, 0, 0, 0, 0, FALSE, 20
+END
+
+// blue flaming stuff
+// aura uses the min damage for defensive bonus, max damage for offensive bonus
+SPELL "Aura"
+BEGIN
+	NAME "Aura"
+	DESCRIPTION "For the true blue flamer."
+	DAMAGETYPE DT_NONE
+	ANIMATION "invoke1"
+	DELAY 10
+	FLAGS SF_NONE
+	VARIANT "Aura", TP_BASIC, "fio", "aura", 0, 1, 10, 0, 0, 0, FALSE, 20
+END
+
+// Paralize Spell Level 1
+// a spining egg with some nifty particles
+SPELL "Paralize1"
+BEGIN
+	NAME "Paralize1"
+	DESCRIPTION "Uh, yea, this is some ugly little circles scurring."
+	DAMAGETYPE DT_NONE
+	ANIMATION "invoke2"
+	DELAY 10
+	FLAGS SF_NONE
+	VARIANT "Paralize1", TP_BASIC, "om", "Paralize1", 15, 1, 0, 0, 20, 0, TRUE, 20
+END
+
+// Paralize Spell Level 2
+// Lasts longer than Paralize Level 1
+SPELL "Paralize2"
+BEGIN
+	NAME "Paralize2"
+	DESCRIPTION "Uh, yea, this is some ugly little circles scurring."
+	DAMAGETYPE DT_NONE
+	ANIMATION "invoke2"
+	DELAY 10
+	FLAGS SF_NONE
+	VARIANT "Paralize2", TP_BASIC, "omp", "Paralize1", 15, 1, 0, 0, 30, 0, TRUE, 20
+END
+
+// Paralize Spell Level 3
+// Attacks multiple targets
+SPELL "Paralize3"
+BEGIN
+	NAME "Paralize3"
+	DESCRIPTION "Uh, yea, this is some ugly little circles scurring."
+	DAMAGETYPE DT_NONE
+	ANIMATION "invoke2"
+	DELAY 10
+	FLAGS SF_NONE
+	VARIANT "Paralize3", TP_BASIC, "ompp", "Paralize1", 15, 1, 0, 0, 40, 0, TRUE, 20
+END
+
+
+// Paralize Spell Level 4
+// Attacks 1 target, but also deals damage !Very Ugly!
+SPELL "Paralize4"
+BEGIN
+	NAME "Paralize4"
+	DESCRIPTION "Uh, yea, this is some ugly little circles scurring."
+	DAMAGETYPE DT_MISC
+	ANIMATION "invoke2"
+	DELAY 10
+	FLAGS SF_NONE
+	VARIANT "Paralize4", TP_BASIC, "omppp", "Paralize1", 15, 1, 1, 4, 50, 0, TRUE, 20
+END
+
+// Quick Sand
+// Swirling pool of sand under flailing/spinning enemy
+// I set the damage low, because it happens multiple times
+SPELL "Quicksand"
+BEGIN
+	NAME "Quicksand"
+	DESCRIPTION "Is it a tornado?  I think it should be, or at least a dust storm."
+	DAMAGETYPE DT_MISC
+	ANIMATION "invoke2"
+	DELAY 10
+	FLAGS SF_NONE
+	VARIANT "Quicksand", TP_BASIC, "em", "Quicksand", 15, 1, 2, 6, 50, 0, TRUE, 40
+END
+
+// Quick Sand 2
+// Same as 1, but it attacks multiple targets
+SPELL "Quicksand2"
+BEGIN
+	NAME "Quicksand2"
+	DESCRIPTION "Is it a tornado?  I think it should be, or at least a dust storm."
+	DAMAGETYPE DT_MISC
+	ANIMATION "invoke2"
+	DELAY 10
+	FLAGS SF_NONE
+	VARIANT "Quicksand2", TP_BASIC, "emp", "Quicksand", 15, 1, 2, 6, 50, 0, TRUE, 20
+END
+
+// Quick Sand 3
+// Same as 1, but it attacks multiple targets - Not even CLOSE to working
+SPELL "Quicksand3"
+BEGIN
+	NAME "Quicksand3"
+	DESCRIPTION "Is it a tornado?  I think it should be, or at least a dust storm."
+	DAMAGETYPE DT_MISC
+	ANIMATION "invoke2"
+	DELAY 10
+	FLAGS SF_NONE
+	VARIANT "Quicksand3", TP_BASIC, "empp", "Quicksand", 15, 1, 2, 6, 50, 0, TRUE, 20
+END
+
+// Vortex
+// Send the dude somewhere else
+SPELL "Vortex"
+BEGIN
+	NAME "Vortex"
+	DESCRIPTION "Hood-dini has nothing on me!"
+	DAMAGETYPE DT_NONE
+	ANIMATION "invoke2"
+	DELAY 10
+	FLAGS SF_NONE
+	VARIANT "Vortex", TP_BASIC, "am", "Vortex", 15, 1, 2, 6, 50, 0, TRUE, 20
+END
+
+// Vortex - 2
+// Send the dude to a predefined point
+SPELL "Vortex2"
+BEGIN
+	NAME "Vortex2"
+	DESCRIPTION "Hood-dini has nothing on me!"
+	DAMAGETYPE DT_NONE
+	ANIMATION "invoke2"
+	DELAY 10
+	FLAGS SF_NONE
+	VARIANT "Vortex2", TP_BASIC, "amp", "Vortex", 15, 1, 2, 6, 50, 0, TRUE, 20
+END
+
+// Set Vortex
+// Set the point that we wish to send the duder!
+SPELL "SetVortex"
+BEGIN
+	NAME "SetVortex"
+	DESCRIPTION "Hood-dini my ass!"
+	DAMAGETYPE DT_NONE
+	ANIMATION "invoke2"
+	DELAY 10
+	FLAGS SF_NONE
+	VARIANT "SetVortex", TP_BASIC, "ame", "SetVortex", 15, 1, 2, 6, 50, 0, TRUE, 20
+END
+
+// Vortex
+// This vortex is used by the priests
+SPELL "VortexM"
+BEGIN
+	NAME "VortexM"
+	DESCRIPTION "Hood-dini has nothing on me!"
+	DAMAGETYPE DT_NONE
+	ANIMATION "invoke2"
+	DELAY 10
+	FLAGS SF_NONE
+	VARIANT "VortexM", TP_BASIC, "-", "Vortex", 15, 1, 2, 6, 50, 0, TRUE, 20
+END
+
+// Mana Drain 1
+// Suck the magic from his sorry ass
+SPELL "ManaDrain1"
+BEGIN
+	NAME "ManaDrain1"
+	DESCRIPTION "Gimme that juice!"
+	DAMAGETYPE DT_MISC
+	ANIMATION "invoke2"
+	DELAY 10
+	FLAGS SF_NONE
+	VARIANT "ManaDrain1", TP_BASIC, "ocdp", "ManaDrain", 1, 1, 0, 20, 50, 0, TRUE, 20
+END
+
+// Mana Drain 2
+// Suck some more magic from his sorry ass
+SPELL "ManaDrain2"
+BEGIN
+	NAME "ManaDrain1"
+	DESCRIPTION "Gimme that juice!"
+	DAMAGETYPE DT_MISC
+	ANIMATION "invoke2"
+	DELAY 10
+	FLAGS SF_NONE
+	VARIANT "ManaDrain2", TP_BASIC, "ocdpp", "ManaDrain", 1, 1, 0, 40, 50, 0, TRUE, 20
+END
+
+// Life Drain 1
+// Suck the life from his sorry ass
+SPELL "LifeDrain1"
+BEGIN
+	NAME "LifeDrain1"
+	DESCRIPTION "Gimme that juice!"
+	DAMAGETYPE DT_MISC
+	ANIMATION "invoke2"
+	DELAY 10
+	FLAGS SF_NONE
+	VARIANT "LifeDrain1", TP_BASIC, "old", "ManaDrain", 1, 1, 0, 20, 50, 0, TRUE, 20
+END
+
+// Life Drain 2
+// Suck some more life from his sorry ass
+SPELL "LifeDrain2"
+BEGIN
+	NAME "LifeDrain1"
+	DESCRIPTION "Gimme that juice!"
+	DAMAGETYPE DT_MISC
+	ANIMATION "invoke2"
+	DELAY 10
+	FLAGS SF_NONE
+	VARIANT "LifeDrain2", TP_BASIC, "oldp", "ManaDrain", 1, 1, 0, 40, 50, 0, TRUE, 20
+END
+
+// Shriek
+// Now that's a hell of a set of pipes
+SPELL "Shriek"
+BEGIN
+	NAME "Shriek"
+	DESCRIPTION "The Wraiths Shriek"
+	DAMAGETYPE DT_MISC
+        ANIMATION "screach"
+	DELAY 10
+	FLAGS SF_NONE
+        VARIANT "Shriek", TP_BASIC, "-", "Shriek", 0, 1, 2, 6, 50, 0, TRUE, 50
+END
+
+// Puke
+// Ewwww, Zombie goo
+SPELL "Puke"
+BEGIN
+	NAME "Puke"
+	DESCRIPTION "The Zombie's Puke"
+	DAMAGETYPE DT_MISC
+	ANIMATION "invoke2"
+	DELAY 10
+	FLAGS SF_NONE
+        VARIANT "Puke", TP_BASIC, "-", "Puke", 0, 1, 15, 50, 50, 0, TRUE, 20
+END

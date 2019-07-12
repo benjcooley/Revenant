@@ -1,0 +1,9 @@
+*.obj
+*.sbr
+*.pdb
+*.aps
+*.dsp
+*.dsw
+*.ncb
+*.opt
+/Revenant

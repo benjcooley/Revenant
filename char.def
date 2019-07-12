@@ -1,0 +1,225 @@
+// Revenant - Copyright 1998 Cinematix Studios, Inc.
+// ********* Revenant Character DEF File  ********** 
+
+// The chararacter DEF file contains the basic values and settings for
+// the characters (monsters, NPC's, and players) in the game.
+//
+// Each character block is set up as follows...
+//
+// CHARACTER "CharName"			// Describes which character this block is for
+// BEGIN
+//  
+//   The following tags are used within the block.  Note that if tag is 
+//   described as a 'monster/NPC' tag, it is not used for the player, and 
+//   if described as a 'player' tag, it is not used for monsters/NPC's
+//
+//	 NOTE: the ATTACK line must be wrapped around to mutiple lines using the 
+//   line continue character '\' (backslash).
+//
+//    ARMOR armorvalue		// The basic armor to hit value (1-25) used for monsters/NPC's
+//
+//	  ATTACK "name", flags, button, "combo", "impact", "block", "miss", "death",\
+//			 blocktime, impacttime, waittime, stunwait, mindist, maxdist, snapdist,\
+//			 hitminrange, hitmaxrange, hitangle, damagemod, fatigue, offensiveskill,\
+//			 weaponmask, weaponskill, attackpcnt
+//		
+//		Describes a specific character attack which the game uses to determine which
+//      attack is played when a character presses a button, or a monster trys to attack.
+//		When a monster or player attacks, the game looks through the attack list, and
+//		finds the first attack that fits the character's or monsters current status by
+//		searching first for attacks with the CA_COMBO flag set, then the CA_SPECIAL flag,
+//      then all other ordinary attacks.  Character attacks should be listed from least
+//		generic (combo's specials, etc.) to most generic in the file.	
+//
+//			"name"		Name of attack animation to use for attack.  Use just the attack
+//						animation name, WITHOUT transition ("combat to myattack") or
+//						animation tags ("myattack_o").  Also remember not to use the _s tag
+//						with your attack animation in 3DSMAX.
+//
+//			flags		Attack flags (CA_xxxx flags, i.e. CA_BLOOD to cause attack to
+//					    use blood). More than one flag is specified by using
+//						the | character (i.e. CA_BLOOD | CA_COMBO).
+//
+//			button		The attack button (1=Swing, 2=Thrust, 3=Chop, 4-9=Combos)
+//
+//			"combo"		This attack is combo/counter attack for when opponent in this state
+//						(i.e. "stunned" would make this attack a special attack for when
+//						the opponent is in the "stunned" animation state.
+//
+//			"impact"	The special impact animation for the opponent to use if he is hit.  
+//						If this is "", the game will use the default "impact" animation.
+//						This animation can be the same as the "death" animation.  The root
+//						"myimpact_ol" animation used for death will transition back to the 
+//						"combat" neutral pose on a non-death blow either by interpolating 
+//						directly or by using a "impact to combat" animation if it can find it.
+//						Impacts may need to have the 's' synchronize frame tag to synchronize
+//						the frame number for the attack and impact animation.  Note: do
+//						NOT use the 's' tag for the attack animation (NO "myattack_s" BAD!).
+//						ALSO: use only the main state name, not the transition name for the
+//						name in THIS file.. do NOT use any animation tags here either (i.e.
+//						_s or _o etc.)  ("myimpact" GOOD, "combat to myimpact" BAD, 
+//						"myimpact_s" BAD)
+//
+//			"block"		The special block animation for the opponent to use if he blocks.  
+//						If this is "", or the opponent doesn't have this block, the game
+//						will use the default "block" animation.  Usually the block animations
+//						will need to synchronize their frame numbers with the attackers
+//						attack by using the 's' tag in the animaion (i.e. "myblock_s").  Note:
+//						do not use the 's' tag on the "attack" animations themselves, only
+//						blocks and impacts.  Remember, do not use transition names or animation
+//						tags in THIS file.
+//
+//			"miss"		Miss the attacker uses when he misses the opponent.  This miss
+//						animation is played immediatly after 'impacttime' on a miss.  Do not
+//						use the synchronize tag 's' for this animation.   Remember, do not 
+//						use transition names or animation tags in THIS file.
+//
+//			"death"		Death animation for opponent to play if this attack kills him.
+//						This animation can be the same as the "impact" animation if it ends
+//						in a looping root state (i.e. "combat to myimpact" and "myimpact_ol").
+//						Remember, do not use transition names or animation tags in THIS file.
+//
+//			blocktime	Number of frames in which opponent can attempt to block the attack.
+//						This MUST be less than 'impacttime'.  If the player or monster
+//						attempts to block before this time has expired in the attack, the
+//						special 'block' animation will play.  If the block animation is
+//						synced to the attack with the _s tag, it will begin at the same frame
+//						the attack is currently playing.
+//			impacttime	Number of frames after the attack begins to show the impact.  This
+//						should be set to the exact point at which the weapon hits the 
+//						opponent.  This MUST NOT be greater than the number of frames in
+//						the attack animation, or the attack will NEVER HIT.  At impact, the
+//						game checks the current blocking, etc. status, and calculates if
+//						the attack actually hits, if so, the "impact" or "death" animation
+//						begins playing (either one of which can be synced to the attack with
+//						the '_s' tag in 3DSMAX.	 However, if the char misses, the 
+//						attack animation is interrupted, and the game either plays the "miss"
+//						animation if there is one, or it goes directly back (interpolating) to
+//						the combat neutral stance ("combat").
+//
+//			waittime	This is the amount of time to wait (during an attack) before the
+//						character can do a new move.  This MUST be AFTER impacttime, or the
+//						character will never hit anything!
+//
+//			stunwait	The number of frames the game will loop in the "impact" looping
+//						state (i.e. after it has played "combat to myimpact" it will loop
+//						in "myimpact_l" for until frames is expired.  This allows you to set
+//						up a stun/combo combination where one attack stuns the opponent, and
+//						another attack using the "combo" animation name above is used to 
+//						finish him off.
+//
+//			mindist		These two values set the minimum and maximum distances at which this
+//			maxdist		attack may be used.  If the opponent is beyond these distances, the
+//						game will look for another more appropriate attack.
+//
+//			snapdist	This is the distance to which the opponent will be snapped to for
+//						synchronized animations.  You can get this distance by measuring
+//						the distance in units between your characters in 3DSMAX.  This
+//						value is used for snapping impacts when the CA_SNAPIMPACT flag
+//						is used, deaths when CA_SNAPDEATH is used, and blocks when 
+//						CA_SNAPBLOCK is used.
+//
+//			hitminrange	The game will register a hit ONLY when the character is within this
+//			hitmaxrange	range when 'impacttime' expires.  This allows the character to leap
+//			hitangle	back, or jump to the side before he gets hit.  'hitangle' is a
+//						positive angle from 0-128 where 32 is 45 degrees from either side
+//						of the attacker.
+//
+//			damagemod	When the attacker hits, the amount of damage he does is based on
+//						the weapon he is using, and his fatigue.  This percentage modifier 
+//						can add to, or subtracts from this basic damage value.  10 = +10%,
+//						-30 = -30%.
+//
+//			fatigue		This is the total fatigue value this attack subtracts from the
+//						character's fatigue status.  This limits the super kick ass
+//						attacks by causing the character to become more fatigued as he
+//						uses the best combos.  When the player is very fatigued, his
+//						to hit value goes up for attacks, down for defense, and his
+//						damage values are reduced.  If the player does not have enough
+//						fatigue, he may not execute this attack.  Normal attacks take
+//						a very small amount of fatigue.  This is use for players and
+//						monsters/NPC's
+//
+//			offensiveskill
+//
+//						The player must have at list this offensive skill level to
+//						execute this attack. If he doesn't, the game will search for 
+//						another valid attack if there is one.  This is only used for players.
+//
+//			weaponmask	This describes the weapons that may be used with this attack. If
+//						the player is using a different weapon, the game will find another
+//						attack which matches it. (i.e. WM_AXE | WM_SHORTBLADE).  Note: use
+//						the | character to combine weapon mask flags WM_xxx.  This tag is
+//						only used for players.  Animations must have a 'weapon' object
+//						for the system to replace if you want to see the weapon a player
+//						is using.
+//
+//			weaponskill	The player has skill levels in each weapon catagory.  To execute
+//						this attack, the player must have at least this skill level for
+//						the weapon he is using.
+//
+//			attackpcnt	This is a value from 1-100 which controls the frequency of the
+//						attack for monsters.  Note that these values are relative to 
+//						each other (i.e. if all attacks have a frequency of either 1, or
+//						50, they are all equally likely,  however if one attack has 1, and
+//						another has 50, the 50 attack is 50 times more liklely to occur).
+//						Please use ranges from 10 to 100 for most attacks and reserve 
+//						1-10 for truley unlikely attacks.
+//
+//    ATTACKMOD attackmod	// The attack to hit modifier (1-25) for monsters/NPC's
+//
+//	  BLOCK	pcnt, min, max	// The freq (per frame), min and max time monster/NPC will block
+//
+//	  DAMAGE damage			// The damage (1-10000) for monster/NPC's weapon
+//
+//	  DAMAGEMODS misc, hand, puncture, cut, chop, bludgeon, magical, burn, freeze, poison
+//
+//		  Damage modifier for the various types of damage a char can sustain
+//		  in percentages (i.e. 10 is +10%, -40 is -40%, etc.).
+//		  For all monsters players, and NPC's
+//
+//		  misc		Just damage (no specific type)
+//		  hand	    Damage from hand to hand combat
+//		  puncture  Puncture damage (arrows, knives and swords thrusts)
+//		  cut       Cutting or slashing damage (knive and sword swings)
+//        chop      Chopping damage (knive, sword, or axe chops)
+//        bludgeon  Bludgeoning damage (warhammers, clubs, maces)
+//        magical   Magical damage (other than any that fit below)
+//		  burn      Burn damage (i.e. lava, fileball, etc.)
+//        freeze    Freeze damage (i.e. frost, etc.)
+//        poison    Poison damage
+//
+//	  DEFENSEMOD defensemod	// The defense to hit modifier (1-25) for monsters/NPC's
+//
+//	  WEAPONTYPE weaontype  // The weapon type (i.e. WT_AXE) for monsters/NPC's
+
+// Character attack flags (use with ATTACK -,flags,-,-,-,-,-,-... tag)
+#define CA_SPECIAL	     0x0001	// Special attack, set when this attack may override a normal attack
+#define CA_COMBO         0x0002	// Set when 'comboname' non-empty (combo enabled by opponent state)
+#define CA_SPLATTER      0x0004	// Causes opponent to splatter if successful
+#define CA_DEATH         0x0008	// Causes opponent to die if successful
+#define CA_HAND	         0x0010	// Is a thrust type attack (can't do with axe)
+#define CA_THRUST        0x0020	// Is a thrust type attack (can't do with axe)
+#define CA_SLASH		 0x0040 // This is a slashing attack (if axe, uses CHOP damage type)
+#define CA_CHOP		     0x0080	// Is a chop type attack
+#define CA_SPARKS		 0x0100 // Show sparks on block
+#define CA_BLOOD		 0x0200 // Show blood on impact
+#define CA_SNAPIMPACT	 0x0400 // Snap the impact
+#define CA_SNAPBLOCK	 0x0800	// Snap the block
+
+// Character flags (use with FLAGS tag)
+#define CF_UNDEAD	0x0001	// This character can only be damaged by magical/silver weapons
+#define CF_MAGICAL  0x0002	// This character can only be damaged by magical weapons
+
+// Weapon mask defines (use with ATTACK -,-,..,weaponmask,... tag)
+#define WM_HAND			0x0000
+#define WM_SHORTBLADE	0x0001
+#define WM_LONGBLADE	0x0002
+#define WM_BLUDGEON		0x0004
+#define WM_AXE			0x0008
+#define WM_BOW			0x0010
+
+CHARACTER "Default"	// For any character that doesn't have a special definition
+BEGIN
+
+END

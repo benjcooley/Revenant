@@ -1,0 +1,52 @@
+--------------------Configuration: sound - Win32 Debug--------------------
+Begining build with project "D:\Revenant\sound.dsp", at root.
+Active configuration is Win32 (x86) Console Application (based on Win32 (x86) Console Application)
+
+Project's tools are:
+			"32-bit C/C++ Compiler for 80x86" with flags "/nologo /MLd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /Fp"Debug/sound.pch" /YX /Fo"Debug/" /Fd"Debug/" /FD /c "
+			"Win32 Resource Compiler" with flags "/l 0x409 /d "_DEBUG" "
+			"Browser Database Maker" with flags "/nologo /o"Debug/sound.bsc" "
+			"COFF Linker for 80x86" with flags "kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /incremental:yes /pdb:"Debug/sound.pdb" /debug /machine:I386 /out:"Debug/sound.exe" /pdbtype:sept "
+			"Custom Build" with flags ""
+			"<Component 0xa>" with flags ""
+
+Creating temp file "C:\WINDOWS\TEMP\RSP2164.TMP" with contents </nologo /MLd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /Fp"Debug/sound.pch" /YX /Fo"Debug/" /Fd"Debug/" /FD /c 
+"D:\Revenant\sound.cpp"
+>
+Creating command line "cl.exe @C:\WINDOWS\TEMP\RSP2164.TMP" 
+Creating temp file "C:\WINDOWS\TEMP\RSP2165.TMP" with contents <kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /incremental:yes /pdb:"Debug/sound.pdb" /debug /machine:I386 /out:"Debug/sound.exe" /pdbtype:sept 
+.\Debug\sound.obj>
+Creating command line "link.exe @C:\WINDOWS\TEMP\RSP2165.TMP" 
+Compiling...
+sound.cpp
+D:\Revenant\sound.h(201) : error C2065: 'SoundPlayer' : undeclared identifier
+D:\Revenant\sound.h(201) : error C2228: left of '.FindSound' must have class/struct/union type
+D:\Revenant\sound.h(204) : error C2228: left of '.Mount' must have class/struct/union type
+D:\Revenant\sound.h(206) : error C2228: left of '.Play' must have class/struct/union type
+D:\Revenant\sound.h(208) : error C2228: left of '.Unmount' must have class/struct/union type
+D:\Revenant\sound.h(215) : error C2228: left of '.FindSound' must have class/struct/union type
+D:\Revenant\sound.h(218) : error C2228: left of '.Mount' must have class/struct/union type
+D:\Revenant\sound.h(220) : error C2228: left of '.Play' must have class/struct/union type
+D:\Revenant\sound.h(222) : error C2228: left of '.Unmount' must have class/struct/union type
+D:\Revenant\sound.cpp(54) : error C2065: 'SoundSystemOn' : undeclared identifier
+D:\Revenant\sound.cpp(149) : error C2065: 'random' : undeclared identifier
+D:\Revenant\sound.cpp(329) : error C2065: 'makepath' : undeclared identifier
+D:\Revenant\sound.cpp(329) : error C2065: 'ResourcePath' : undeclared identifier
+D:\Revenant\sound.cpp(330) : error C2065: 'Language' : undeclared identifier
+D:\Revenant\sound.cpp(363) : error C2228: left of '.Functioning' must have class/struct/union type
+D:\Revenant\sound.cpp(415) : error C2228: left of '.DirectSound' must have class/struct/union type
+D:\Revenant\sound.cpp(415) : error C2227: left of '->CreateSoundBuffer' must point to class/struct/union
+D:\Revenant\sound.cpp(460) : error C2228: left of '.Functioning' must have class/struct/union type
+D:\Revenant\sound.cpp(470) : error C2228: left of '.DirectSound' must have class/struct/union type
+D:\Revenant\sound.cpp(470) : error C2227: left of '->DuplicateSoundBuffer' must point to class/struct/union
+D:\Revenant\sound.cpp(486) : error C2228: left of '.Functioning' must have class/struct/union type
+D:\Revenant\sound.cpp(530) : error C2228: left of '.Functioning' must have class/struct/union type
+D:\Revenant\sound.cpp(538) : error C2228: left of '.Functioning' must have class/struct/union type
+D:\Revenant\sound.cpp(579) : error C2065: 'MainWindow' : undeclared identifier
+D:\Revenant\sound.cpp(579) : error C2228: left of '.Hwnd' must have class/struct/union type
+D:\Revenant\sound.cpp(927) : error C2065: 'ClassDefPath' : undeclared identifier
+Error executing cl.exe.
+
+
+
+sound.exe - 26 error(s), 0 warning(s)

@@ -1,0 +1,32 @@
+
+1.  [X] Fix ExileRC so that it reads by file name rather than Imagery number.
+
+2.  [X] Fix ExileRC so that it writes the ThumbNails by file name rather
+	than Imagery number.
+
+3.  [ ] Add OpenBox and CloseBox to the BOX code so that we can close the
+	Boxes when we run the ExileRC from the editor.
+
+4.  [ ] Change ExileRC so that it can write out to a BOX file.
+
+5.  [ ] Change the file system in the game so that it reads from BOX files.
+
+6.  [ ] Fix the game so that when ExileRC is run, the rest of the program
+	waits until it's finished.
+
+7.  [ ] Add in the EDITOR_VERSION define so that code can be marked to only
+	be compiled when we're making the version with the Editor built in.
+
+8.  [X] Add the code to generate unique ID's to be used with the Class.Def.
+
+9.  [X] Change the map system to use the unique ID's stored in the Class.Def
+	rather than the position in the Class.Def for determining tile values.
+
+10. [X] Add the code to write out the Master CGS file when resources are added
+	by the AddRC command.
+
+11. [X] Convert the existing CGS files into the Master CGS file.
+
+12. [X] Create the master graphics directory with structured subdirectories.
+
+13. [X] Create the master resource directory with structured subdirectories.

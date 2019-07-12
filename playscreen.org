@@ -1,0 +1,535 @@
+// *************************************************************************
+// *                           Cinematix EXILE                             *
+// *                    Copyright (C) 1996 Cinematix                       *
+// *              playscreen.cpp - EXILE play screen object                *
+// *************************************************************************
+
+#include <windows.h>
+#include <stdio.h>
+
+#include "exile.h"
+#include "timer.h"
+#include "mainwnd.h"
+#include "animation.h"
+#include "animimagebody.h"
+#include "bitmap.h"
+#include "bmsurface.h"
+#include "display.h"
+#include "playscreen.h"
+#include "mappane.h"
+#include "automap.h"
+#include "inventory.h"
+#include "tile.h"
+#include "editor.h"
+#include "dls.h"
+#include "cursor.h"
+#include "equip.h"
+#include "player.h"
+#include "multictrl.h"
+#include "spell.h"
+#include "statpane.h"
+#include "multi.h"
+#include "textbar.h"
+#include "statusbar.h"
+#include "sound.h"
+#include "savegame.h"
+
+PTBitmap bitmap;
+PTBitmap PointerCursor;
+PTBitmap HandCursor;
+
+int DynamicIntensity = 0;
+
+/* Quick structure for the little bitmaps of the interface which hang over the map pane. */
+#define NUMOVERHANGS	17
+#define NUMMAINHANGS	13
+#define STARTMULTIHANGS	NUMMAINHANGS
+#define ENDMULTIHANGS	NUMOVERHANGS
+struct { int x, y, w, h; } oh[NUMOVERHANGS] =
+{ { 32, 16, 46, 9 }, { 32, 25, 9, 37 }, { 278, 16, 84, 30 },
+  { 562, 16, 46, 9 }, { 599, 25, 9, 37 }, { 32, 318, 25, 18 },
+  { 32, 294, 3, 9 }, { 32, 169, 7, 14 }, { 601, 169, 7, 14 },
+  { 605, 294, 4, 9 }, { 582, 318, 26, 18 }, { 484, 333, 52, 3 },
+  { 348, 331, 101, 5 },
+  { 493, 348, 15, 28 }, { 596, 348, 29, 28 },	// multipane top
+  { 493, 444, 15, 28 }, { 610, 444, 15, 28 }	// multipane bottom
+};
+PTBitmap overhang[NUMOVERHANGS];
+
+TPlayScreen::TPlayScreen()
+{
+	nextscreen   = NULL;
+}
+
+BOOL TPlayScreen::Initialize()
+{
+	GameData = TMulti::LoadMulti("playscrn.dat");
+
+	Display->CreateBackgroundArea(0, 0, Display->Width(), MAPPANEY);
+	Display->CreateBackgroundArea(0, MAPPANEY, MAPPANEX, MAPPANEHEIGHT);
+	Display->CreateBackgroundArea(MAPPANEX+MAPPANEWIDTH, MAPPANEY,
+					Display->Width() - (MAPPANEX+MAPPANEWIDTH), MAPPANEHEIGHT);
+	Display->CreateBackgroundArea(0, MAPPANEY+MAPPANEHEIGHT, Display->Width(),
+					Display->Height() - MAPPANEY - MAPPANEHEIGHT);
+
+	// Set correct imagery path
+	if (NoNormals == TRUE)
+		TObjectImagery::SetImageryPath(NONORMALPATH);
+	else
+		TObjectImagery::SetImageryPath(NORMALPATH);
+
+  // Load class.def
+	TObjectClass::LoadClasses();
+
+
+  // Init the AutoMap pane before MapPane since it allocates buffers used by MapPane
+	if (!AutoMap.Initialize())
+		FatalError("Trouble initializing automap pane");
+	AddPane(&AutoMap);
+
+  // Init map pane
+	if (!MapPane.Initialize())
+		FatalError("Trouble initializing map pane");
+	AddPane(&MapPane);
+
+  // Character inventory
+	if (!Inventory.Initialize())
+		FatalError("Trouble initializing inventory pane");
+	AddPane(&Inventory);
+
+  // Health bar
+	if (!HealthBar.Initialize())
+		FatalError("Trouble initializing health bar");
+	AddPane(&HealthBar);
+
+	if (!StaminaBar.Initialize())
+		FatalError("Trouble initializing stamina bar");
+	AddPane(&StaminaBar);
+
+  // Quick spell buttons
+	if (!QuickSpells.Initialize())
+		FatalError("Trouble initializing quick spell buttons");
+	AddPane(&QuickSpells);
+
+  // Text bar
+	if (!TextBar.Initialize())
+		FatalError("Trouble initializing text bar");
+	AddPane(&TextBar);
+
+  // Various multifunction panels
+	if (!EquipPane.Initialize())
+		FatalError("Trouble initializing equipment pane");
+	AddPane(&EquipPane);
+
+	if (!SpellPane.Initialize())
+		FatalError("Trouble initializing spell pane");
+	AddPane(&SpellPane);
+
+	if (!StatPane.Initialize())
+		FatalError("Trouble initializing stat pane");
+	AddPane(&StatPane);
+
+	if (!MultiCtrl.Initialize())
+		FatalError("Trouble initializing multicontrol pane");
+	AddPane(&MultiCtrl);
+
+	// Mouse cursors
+	PointerCursor = GameData->Bitmap("cursor");
+	if (!PointerCursor)
+		return FALSE;
+
+	HandCursor = GameData->Bitmap("handcursor");
+	if (!HandCursor)
+		return FALSE;
+	//HandCursor = NULL;
+
+	SetMouseBitmap(PointerCursor);
+
+	// Sound system
+	SoundPlayer.Initialize();
+
+	bitmap = TBitmap::Load(100);
+	if (!bitmap)
+		return FALSE;
+
+	multidirty = FALSE;
+
+	numpostcharanims = 0;
+
+	// Hang on to the parts which hang over the map pane
+	for (int i = 0; i < NUMOVERHANGS; i++)
+	{
+		if (!(overhang[i] = TBitmap::NewBitmap(oh[i].w, oh[i].h, BM_8BIT | BM_PALETTE)))
+			return FALSE;
+
+		overhang[i]->Put(0, 0, bitmap, oh[i].x, oh[i].y, oh[i].w, oh[i].h);
+		memcpy(overhang[i]->palette.ptr(), bitmap->palette.ptr(), bitmap->palettesize);
+	}
+
+	Display->Put(0, 0, bitmap, DM_NOCLIP | DM_BACKGROUND);
+	delete bitmap;
+
+	if (StartInEditor)
+		StartEditor();
+
+	LoadEnvironment("default.env", Editor);
+
+	return TRUE;
+}
+
+void TPlayScreen::Close()
+{
+	MapPane.Close();
+	Inventory.Close();
+	QuickSpells.Close();
+	HealthBar.Close();
+	StaminaBar.Close();
+	TextBar.Close();
+	AutoMap.Close();
+	EquipPane.Close();
+	SpellPane.Close();
+	StatPane.Close();
+	MultiCtrl.Close();
+	SoundPlayer.Close();
+
+	if (Editor)
+	{
+		ShutDownEditor();
+		Editor = TRUE;			// other stuff needs to know that we were in the editor
+		TObjectClass::SaveClasses(FALSE);
+	}
+
+	TObjectClass::FreeClasses();
+
+	for (int i = 0; i < NUMOVERHANGS; i++)
+		delete overhang[i];
+
+	SetMouseBitmap(NULL);
+
+	if (Editor)
+		SaveEnvironment("default.env");
+
+	delete GameData;
+}
+
+void TPlayScreen::DrawBackground()
+{
+	if (dirty)
+	{
+		bitmap = TBitmap::Load(100);
+		if (!bitmap)
+			FatalError("loading interface bitmap");
+
+		Display->Put(0, 0, bitmap, DM_NOCLIP | DM_BACKGROUND);
+		delete bitmap;
+	}
+
+	TScreen::DrawBackground();
+
+ // Overhaning parts of multipanel if needed
+	if (multidirty)
+	{
+		for (int i = STARTMULTIHANGS; i < ENDMULTIHANGS; i++)
+			Display->Put(oh[i].x, oh[i].y, overhang[i], DM_TRANSPARENT | DM_BACKGROUND);
+
+		multidirty = FALSE;
+	}
+}
+
+void TPlayScreen::Animate(BOOL draw)
+{
+	if (dirty)
+		return;
+
+	TScreen::Animate(draw);
+
+	// Draw post-character animations (spell effects, etc)
+	if (draw)
+	{
+		static BOOL wasinexclusion = FALSE;
+
+		if (InCompleteExclusion())
+		{
+			if (!wasinexclusion)
+			{
+				Display->Reset();
+
+				// Overhanging parts of interface screen to background
+				for (int i = 0; i < NUMMAINHANGS; i++)
+					Display->Put(oh[i].x, oh[i].y, overhang[i], DM_TRANSPARENT | DM_BACKGROUND);
+
+				wasinexclusion = TRUE;
+			}
+		}
+		else
+		{
+			wasinexclusion = FALSE;
+
+			MapPane.SetClipRect();
+			for (int i = 0; i < numpostcharanims; i++)
+			{
+				if (postanim[i].drawmode & (DM_ZBUFFER | DM_ZSTATIC))
+					Display->ZPut(postanim[i].x, postanim[i].y, postanim[i].z, postanim[i].bm, postanim[i].drawmode);
+				else
+					Display->PutDim(postanim[i].x, postanim[i].y, postanim[i].bm, postanim[i].drawmode, postanim[i].dim);
+			}
+			Display->Reset();
+
+			// Overhanging parts of interface screen
+			for (i = 0; i < NUMMAINHANGS; i++)
+				Display->Put(oh[i].x, oh[i].y, overhang[i], DM_TRANSPARENT | DM_NORESTORE);
+		}
+	}
+
+	numpostcharanims = 0;
+
+	// Hack to make the #()$*# dynamic light work
+/*
+	static int lighthack = 2;
+	if (lighthack)
+	{
+		if (--lighthack == 1)
+			MapPane.SetDLightIntensity(179);
+		else
+			MapPane.SetDLightIntensity(180);
+	}
+*/
+
+	// Update the AutoMap
+	if (!Editor)
+		AutoMap.RecordTravels();
+}
+
+void TPlayScreen::KeyPress(int key, BOOL down)
+{
+	BYTE *screen;
+	extern int TimeSinceInput, ambient;
+	int amb;
+
+	TScreen::KeyPress(key, down);
+
+	if (down)
+	{
+		switch (key)
+		{
+		  case VK_F1:
+			if (DynamicIntensity > 0)
+				DynamicIntensity = 0;
+			else
+				DynamicIntensity = 180;
+			MapPane.SetDLightIntensity(DynamicIntensity);
+			break;
+		  case VK_F2:
+		    DynamicIntensity = max(60, DynamicIntensity - 30);
+			MapPane.SetDLightIntensity(DynamicIntensity);
+			break;
+		  case VK_F3:
+		    DynamicIntensity = min(240, DynamicIntensity + 30);
+			MapPane.SetDLightIntensity(DynamicIntensity);
+			break;
+		  case VK_F4:
+			LoadEnvironment("default.env");
+			break;
+		  case VK_F5:
+			if (CtrlDown)
+			{
+				SaveGame.Save();
+				SaveGame.WriteGame();
+				SaveGame.Restore();
+			}
+			else
+				LoadEnvironment("noon.env");
+			break;
+		  case VK_F6:
+			LoadEnvironment("midnight.env");
+			break;
+		  case VK_F7:
+			if (CtrlDown)
+			{
+				SaveGame.Save();
+				SaveGame.Purge();
+				SaveGame.ReadGame();
+				SaveGame.Restore();
+			}
+			else
+				LoadEnvironment("inferno.env");
+			break;
+		  case VK_F8:
+			if (CtrlDown)
+			{
+				FILE *fp;
+				fp = fopen("SCREEN.RAW", "wb");
+				screen = (BYTE *)(Display->FrontBuffer()->Lock());
+				Display->FrontBuffer()->Unlock();
+				if (fp && screen)
+				{
+					WORD pixel;
+					for (int y = 0; y < 480; y++)
+						for (int x = 0; x < 640; x++)
+						{
+							pixel = *((WORD *)screen);
+							screen += 2;
+							if (Display->BitsPerPixel() == 15)
+							{
+								fputc(((pixel >> 10) & 0x1f) << 3, fp);
+								fputc(((pixel >> 5) & 0x1f) << 3, fp);
+								fputc((pixel & 0x1f) << 3, fp);
+							}
+							else
+							{
+								fputc(((pixel >> 11) & 0x1f) << 3, fp);
+								fputc(((pixel >> 5) & 0x3f) << 2, fp);
+								fputc((pixel & 0x1f) << 3, fp);
+							}
+						}
+
+					fclose(fp);
+				}
+			}
+			else if (!Editor)
+			{
+				amb = max(0, (ambient << 2) - 4);
+				MapPane.SetAmbientLight(-1, -1, -1, amb);
+				MapPane.RedrawAll();
+			}
+
+			break;
+		  case VK_F9:
+			if (!Editor)
+			{
+				amb = min(80, (ambient << 2) + 4);
+				MapPane.SetAmbientLight(-1, -1, -1, amb);
+				MapPane.RedrawAll();
+			}
+			break;
+		  case VK_PAUSE:  // DDD : Force into Debug mode
+			__asm
+			{
+				int	3
+			}
+			break;
+		  case VK_F12:
+			if (CtrlDown)
+			{
+				if (Editor)
+				{
+					ShutDownEditor();
+					Redraw();
+				}
+				else
+ 					StartEditor();
+			}
+			else
+			{
+				SaveGame.Save();
+				SaveGame.Purge();
+				MapPane.ReloadSectors();
+				SaveGame.ReadGame();
+				SaveGame.Restore();
+			}
+			//	TimeSinceInput = 5000;
+
+			break;
+		  case 'R':
+			if (CtrlDown)
+				MapPane.RedrawAll();
+			break;
+			/*
+		  case 'B':
+			if (CtrlDown)
+			{
+				TOGGLE(ShowZBuffer);
+				MapPane.RedrawAll();
+			}
+			break;
+		  case 'M':
+			if (CtrlDown)
+			{
+				TOGGLE(ShowNormalBuffer);
+				MapPane.RedrawAll();
+			}
+			*/
+			break;
+		}
+	}
+}
+
+BOOL TPlayScreen::LoadEnvironment(char *name, BOOL loadpos)
+{
+	BOOL retval = FALSE;
+
+	FILE *fp = popen(name, "rb");
+	if (fp)
+	{
+		SColor colors[32];
+		int params[32];
+
+		if (fread(params, sizeof(int), 32, fp) == 32 &&
+			fread(colors, sizeof(SColor), 32, fp) == 32)
+		{
+			MapPane.SetAmbientLight(params[0], params[1], params[2], params[3]);
+			SetMonoPercent(params[4]);
+			//MapPane.SetDLightIntensity(DynamicIntensity = params[5]);
+
+			if (loadpos)
+			{
+				S3DPoint mappos(params[6], params[7], params[8]);
+				MapPane.SetMapPos(mappos);
+			}
+
+			SetAmbientColor(colors[0]);
+			for (int i = 0; i < 4; i++)
+			{
+				if (i == 0)
+					continue;
+				SetLightColor(i, colors[1 + i], params[10 + i]);
+			}
+
+			retval = TRUE;
+			MapPane.RedrawAll();
+		}
+
+		fclose(fp);
+	}
+
+	return retval;
+}
+
+BOOL TPlayScreen::SaveEnvironment(char *name)
+{
+	BOOL retval = FALSE;
+
+	FILE *fp = popen(name, "wb");
+	if (fp)
+	{
+		extern int ambient, dirintensity, dirnormal;
+		S3DPoint mappos;
+
+		SColor colors[32];
+		int params[32];
+
+		params[0] = dirnormal >> 8;
+		params[1] = dirnormal & 0xFF;
+		params[2] = dirintensity;
+		params[3] = ambient << 2;
+		params[4] = GetMonoPercent();
+		params[5] = DynamicIntensity;
+		MapPane.GetMapPos(mappos);
+		params[6] = mappos.x;
+		params[7] = mappos.y;
+		params[8] = mappos.z;
+
+		GetAmbientColor(colors[0]);
+		for (int i = 0; i < 4; i++)
+			GetLightColor(i, colors[1 + i], params[10 + i]);
+
+		if (fwrite(params, sizeof(int), 32, fp) == 32 &&
+			fwrite(colors, sizeof(SColor), 32, fp) == 32)
+			retval = TRUE;
+
+		fclose(fp);
+	}
+
+	return retval;
+}
+

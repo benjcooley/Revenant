@@ -1,0 +1,48 @@
+// Revenant - Copyright 1998 Cinematix Studios, Inc.
+//************* Revenant AREA.DEF File  ************ 
+
+// Town and Ruins
+AREA "Misthaven"
+BEGIN
+  RECT 9248,7500,17900,11600
+ // CDPLAYLIST TRACKS 2 
+// CDPLAYLIST RANDOM TRACKS 1 2 3			// or...
+// CDPLAYLIST RANDOM PAUSE 5 TRACKS 1 2 3
+  LEVEL 20
+  AMBLIGHT 35
+  AMBCOLOR 160, 140, 120
+  NIGHTAMBLIGHT 20
+  NIGHTAMBCOLOR 50, 50, 250
+  SCRIPT "master.s"
+END
+
+//House Interiors
+Area "Home"
+BEGIN
+  RECT 7000, 9000, 9000, 13000	
+  //CDPLAYLIST TRACKS 10
+  LEVEL 20
+  AMBLIGHT 20
+  AMBCOLOR 150, 130, 110	
+END
+
+//Ruins Interiors
+Area "Ruins"
+BEGIN
+	RECT 4800, 3744, 5600, 5680
+	LEVEL 20
+	AMBLIGHT 15
+	AMBCOLOR 75, 75, 225
+END
+
+
+
+// Caves
+AREA "The Caves"
+BEGIN
+  //CDPLAYLIST TRACKS 1
+  LEVEL 30
+  AMBLIGHT 10
+  AMBCOLOR 155, 155, 210
+END
+

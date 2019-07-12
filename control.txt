@@ -1,0 +1,201 @@
+Exiting Game
+------------
+
+  Ctrl-Esc
+
+Mouse Controls
+--------------
+
+  Left Button - Use (when cursor is use icon), or Goto
+  Right Button - Move in a direction
+
+Keyboard Controls
+-----------------
+
+  Normal Controls
+  -----------
+ 
+  T - Talk/Use
+  G - Get
+  J - Jump
+  I - Inventory
+  ENTER - Combat On
+
+  SPACE - Fullscreen (keyboad only)
+
+  R - Run
+  S - Sneak
+
+  F1  Spell 1
+  F2  Spell 2
+  F3  Spell 3
+  F4  Spell 4
+
+  Inventory Controls (Not working yet)
+  ------------------
+
+  U - Use
+  M - Move
+  D - Drop
+  Esc - Exit
+
+  Combat Controls
+  ---------------
+
+  ENTER - Combat Off
+
+  A - Swing
+  S - Thrust
+  D - Chop
+
+  Ctrl-A - Combo1
+  Ctrl-S - Combo2
+  Ctrl-D - Combo3
+
+  Shift-A - Combo4
+  Shift-S - Combo5
+  Shift-D - Combo6
+
+  F1  Spell 1
+  F2  Spell 2
+  F3  Spell 3
+  F4  Spell 4
+
+  Alt-Arrows - Jump Mode (with arrows)
+
+Microsoft Sidewinder Gamepad
+----------------------------
+
+  Sidewinder Key
+  --------------
+
+  A - JOY1
+  B - JOY2
+  C - JOY3
+  X - JOY4
+  Y - JOY5
+  Z - JOY6
+  R1 - JOY7
+  L1 - JOY8
+  SELECT - JOY9
+  START - JOY10
+
+  Normal Controls
+  -----------
+ 
+  A - Talk/Use
+  B - Get
+  C - Jump
+  X - Invoke
+  Y - Inventory
+  Z - Combat On
+
+  R1 - Run
+  L1 - Sneak
+
+  X-A  Spell 1
+  X-B  Spell 2
+  X-C  Spell 3
+  X-Z  Spell 4
+
+  Inventory Controls
+  ------------------
+
+  A - Use
+  B - Move
+  C - Drop
+  X - Exit
+
+  Combat Controls
+  ---------------
+
+  Z - Combat Off
+
+  A - Swing
+  B - Thrust
+  C - Chop
+
+  R1-A - Combo1
+  R1-B - Combo2
+  R1-C - Combo3
+
+  L1-A - Combo4
+  L1-B - Combo5
+  L1-C - Combo6
+
+  X-A  Spell 1
+  X-B  Spell 2
+  X-C  Spell 3
+  X-Z  Spell 4
+
+  Y - Jump Mode (with arrows)
+
+Gravis GripPad Pro
+------------------
+
+  Gamepad Key
+  -----------
+
+  R - JOY1
+  Y - JOY2
+  G - JOY3
+  B - JOY4
+  L1 - JOY5
+  R1 - JOY6
+  L2 - JOY7
+  R2 - JOY8
+  SELECT - JOY9
+  START - JOY10
+
+  Normal Controls
+  -----------
+ 
+  R - Talk/Use
+  Y - Get
+  G - Jump
+  B - Combat On
+
+  L1 - Invoke
+  L2 - Inventory
+
+  R1 - Run
+  R2 - Sneak
+
+  L1-R  Spell 1
+  L1-Y  Spell 2
+  L1-G  Spell 3
+  L1-B  Spell 4
+
+  Inventory Controls
+  ------------------
+
+  R - Use
+  Y - Move
+  G - Drop
+  B - Exit
+
+  Combat Controls
+  ---------------
+
+  B - Combat Off
+
+  R - Swing
+  Y - Thrust
+  G - Chop
+
+  R1-R - Combo1
+  R1-Y - Combo2
+  R1-G - Combo3
+
+  R2-R - Combo4
+  R2-Y - Combo5
+  R2-G - Combo6
+
+  L1-R  Spell 1
+  L1-Y  Spell 2
+  L1-G  Spell 3
+  L1-B  Spell 4
+
+  L2 - Jump Mode (with arrows)
+
+

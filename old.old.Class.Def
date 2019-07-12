@@ -1,0 +1,1958 @@
+// ********* Revenant Class Def Save File ********
+// -----------------------------------------------
+
+// Revenant - Copyright 1998 Cinematix Studios, Inc.
+
+Unique Type ID = 0x06fe
+
+CLASS "WEAPON"
+BEGIN
+
+
+	// Stat Defs: <StatName> <FourCharId> <Default> <Min> <Max>
+	STATS
+	BEGIN
+		EqSlot EQSL 3 0 9
+		Type TYPE 0 0 5
+		Damage DMG 0 0 10000
+		Combining COMB 0 0 16
+		Poison PSN 0 0 32
+		Value VAL 0 0 1000000
+		WeaponType TYP 2 0 5
+		SwingRange SRN 48 16 128
+		ThrustRange TRN 48 16 128
+	END
+
+
+	TYPES
+	BEGIN
+		"Club" "Equip\Club.I3D" 0xd0d40000 {3,2,0,48,48,0,0,48,48} {}
+		"StoneAxe" "Equip\StoneAxe.I3D" 0x3f040001 {3,3,0,48,48,0,0,48,48} {}
+		"BonePickaxe" "Equip\BonePick.I3D" 0xba200002 {3,3,0,48,48,0,0,48,48} {}
+		"Sword" "Equip\Sword.I3D" 0x20240003 {3,1,0,48,48,0,0,48,48} {}
+		"Dagger" "Equip\Dagger.I3D" 0xd8420004 {3,0,0,48,48,0,12,48,48} {}
+		"Spiked Handaxe" "Equip\Spiked Handaxe.I2D" 0xa1450005 {3,3,0,48,48,0,0,48,48} {}
+		"Flanged Mace" "Equip\Flanged Mace.I2D" 0x684d0006 {3,2,0,48,48,0,0,48,48} {}
+		"BattleAxe" "Equip\BattleAxe.I3D" 0xe26f0007 {3,3,0,48,48,0,0,48,48} {}
+		"MorningStar" "Equip\MorningStar.I3D" 0x73980008 {3,4,0,48,48,0,0,48,48} {}
+		"Shortsword" "Equip\Shortsword.I2D" 0x709b0009 {3,0,0,48,48,0,0,48,48} {}
+		"Broadsword" "Equip\BroadSword.I3D" 0x5ea3000a {3,1,0,48,48,0,0,48,48} {}
+		"HandHalfSword" "Equip\HHSword.I3D" 0x17c9000b {3,1,0,48,48,0,0,48,48} {}
+		"Maul" "Equip\Maul.I3D" 0xb3e8000d {3,2,0,48,48,0,0,48,48} {}
+		"Tulwar" "Equip\Tulwar.I3D" 0xd8eb000e {3,1,0,48,48,0,0,48,48} {}
+		"Katana" "Equip\Katana.I3D" 0x1fee000f {3,1,0,48,48,0,0,48,48} {}
+		"Flamberge" "Equip\SwordX2.I3D" 0x9af20010 {3,1,0,48,48,0,0,48,48} {}
+		"DwarvenAxe" "Equip\DwarvenAxe.I3D" 0xe8f50011 {3,3,0,48,48,0,0,48,48} {}
+		"ValkyrieSword" "Equip\ValkyrieSword.I3D" 0xadf80012 {3,1,0,48,48,0,0,48,48} {}
+		"GoldenMorningstar" "Equip\GoldenMace.I3D" 0x81fc0013 {3,4,0,48,48,0,0,48,48} {}
+		"JeweledDagger" "Equip\JeweledDagger.I3D" 0x0f000014 {3,0,0,48,48,0,0,48,48} {}
+		"WrithingKris" "Equip\WrithingKris.I3D" 0xf7040015 {3,0,0,48,48,0,50,48,48} {}
+		"CharredClaymore" "Equip\BlackenedSword.I3D" 0x77070016 {3,1,0,48,48,0,0,48,48} {}
+		"BerserkerSword" "Equip\SwordX.I3D" 0x820a0017 {3,1,0,48,48,0,0,48,48} {}
+		"BlackenedAxe" "Equip\BlackenedAxe.I3D" 0x310e0018 {3,3,0,48,48,0,0,48,48} {}
+		"BlackenedMorningstar" "Equip\BlackenedMace.I3D" 0x65130019 {3,4,0,48,48,0,0,48,48} {}
+		"Axe of Wrath" "Equip\Axe of Wrath.I2D" 0x0ca21001 {3,3,0,48,48,0,0,48,48} {}
+		"Mercurous" "Equip\Mercurous.I2D" 0xac24001e {3,2,0,48,48,0,0,48,48} {}
+		"Deathwreaker" "Equip\Deathwreaker.I2D" 0x5628001f {3,2,0,48,48,0,0,48,48} {}
+		"Pommel" "Equip\Pommel.I2D" 0xd82c0020 {9,2,1,48,48,0,0,48,48} {}
+		"Crosspiece" "Equip\Crosspiece.I2D" 0x85300021 {9,2,2,48,48,0,0,48,48} {}
+		"Hilt" "Equip\Hilt.I2D" 0xd4340022 {9,2,1,48,48,0,0,48,48} {}
+		"Blade" "Equip\Blade.I2D" 0x13390023 {9,2,2,48,48,0,0,48,48} {}
+		"Angsaar" "Equip\Angsaar.I3D" 0x403c0024 {3,1,0,48,48,0,0,48,48} {}
+		"OgrokAxe" "Equip\OgrokAxe.I3D" 0x403c0025 {3,3,0,48,48,0,0,48,48} {}
+	END
+
+END
+
+CLASS "ARMOR"
+BEGIN
+
+
+	// Stat Defs: <StatName> <FourCharId> <Default> <Min> <Max>
+	STATS
+	BEGIN
+		EqSlot EQSL 4 0 8
+		Value VAL 0 0 1000000
+		Protection PROT 1 1 10
+		Combining COMB 0 0 16
+		ResistPoison RPSN 0 -100 100
+		Stealth STLH 0 -100 100
+	END
+
+
+	TYPES
+	BEGIN
+		"Sigil Ring" "Equip\Sigil Ring.I2D" 0xae410025 {4,0,0,0,0,0} {}
+		"Serpent Ring" "Equip\Serpent Ring.I2D" 0x734c0026 {4,0,0,0,0,0} {}
+		"Gloves of Thieving" "Equip\Gloves of Thieving.I2D" 0x2a510027 {4,0,0,0,0,0} {}
+		"Cestus of Slicing" "Equip\Cestus of Slicing.I2D" 0x63560028 {4,0,0,0,0,0} {}
+		"Wyrmtooth Necklace" "Equip\Wyrmtooth Necklace.I2D" 0x4c590029 {0,0,0,0,0,0} {}
+		"Emerald Ring" "Equip\Emerald Ring.I2D" 0xc35e002a {4,0,0,10,0,0} {}
+		"Emerald Bracelet" "Equip\Emerald Bracelet.I2D" 0xf962002b {4,0,0,25,0,0} {}
+		"Emerald Collar" "Equip\Emerald Collar.I2D" 0xf865002c {0,0,0,50,0,0} {}
+		"Amulet of Thunderbolts" "Equip\Amulet of Thunderbolts.I2D" 0xc869002d {0,0,0,0,0,0} {}
+		"Wolfsbane Pendant" "Equip\Wolfsbane Pendant.I2D" 0xda6c002e {0,0,0,0,0,0} {}
+		"Leather Vest" "Equip\Leather Vest.I2D" 0x5072002f {1,0,0,0,0,0} {}
+		"Shadowsilk Shirt" "Equip\Shadowsilk Shirt.I2D" 0x5b770030 {1,0,0,0,0,0} {}
+		"Chainmail" "Equip\Chainmail.I2D" 0xa27b0031 {1,0,0,0,0,0} {}
+		"Scale Mail" "Equip\Scale Mail.I2D" 0x897e0032 {1,0,0,0,0,0} {}
+		"Studded Vest" "Equip\Studded Vest.I2D" 0xcc840033 {1,0,0,0,0,0} {}
+		"Hauberk" "Equip\Hauberk.I2D" 0x8d880034 {1,0,0,0,0,0} {}
+		"Breastplate" "Equip\Breastplate.I2D" 0x638c0035 {1,0,0,0,0,0} {}
+		"Field Plate" "Equip\Field Plate.I2D" 0x85900036 {1,0,0,0,0,0} {}
+		"Spiked Garde" "Equip\Spiked Garde.I2D" 0x60960037 {1,0,0,0,0,0} {}
+		"Ancient Armor of Wizardry" "Equip\Ancient Armor of Wizardry.I2D" 0x7b9a0038 {1,0,0,0,0,0} {}
+		"Icen Band" "Equip\Icen Band.I2D" 0xd39e0039 {4,0,0,0,0,0} {}
+		"Fireruby Ring" "Equip\Fireruby Ring.I2D" 0xc4a3003a {4,0,0,0,0,0} {}
+		"Blacken Ring" "Equip\Blacken Ring.I2D" 0x35a8003b {4,0,0,0,0,0} {}
+		"Twindragon Bracelet" "Equip\Twindragon Bracelet.I2D" 0x83ac003c {4,0,0,0,0,0} {}
+		"Shadowsilk Boots" "Equip\Shadowsilk Boots.I2D" 0x6bb1003d {8,0,0,0,0,0} {}
+		"Ancient Boots of Wizardry" "Equip\Ancient Boots of Wizardry.I2D" 0x2ab5003e {8,0,0,0,0,0} {}
+		"Leather Boots" "Equip\Leather Boots.I2D" 0xb4b9003f {8,0,0,0,0,0} {}
+		"Climbing Boots" "Equip\Climbing Boots.I2D" 0x34bf0040 {8,0,0,0,0,0} {}
+		"High Boots" "Equip\High Boots.I2D" 0x0dc20041 {8,0,0,0,0,0} {}
+		"Spiked-Toed Boots" "Equip\Spiked-Toed Boots.I2D" 0x65c90042 {8,0,0,0,0,0} {}
+		"Amulet of Channeling" "Equip\Amulet of Channeling.I2D" 0xe1cd0043 {0,0,1,0,0,0} {}
+		"Staff" "Equip\Staff.I2D" 0x55d10044 {2,0,1,0,0,0} {}
+		"Staff of Channeling" "Equip\Staff of Channeling.I2D" 0xf3d70045 {2,0,0,0,0,0} {}
+	END
+
+END
+
+CLASS "TALISMAN"
+BEGIN
+
+
+	// Stat Defs: <StatName> <FourCharId> <Default> <Min> <Max>
+	STATS
+	BEGIN
+		Value VAL 0 0 1000000
+		Order ORDR 0 -10 10
+		Power POWR 0 -10 10
+		Earth ERTH 0 -10 10
+		Fire FIRE 0 -10 10
+		Lightning LITN 0 -10 10
+		Ice ICE 0 -10 10
+		Destruction DEST 0 -10 10
+		Healing HEAL 0 0 1
+	END
+
+
+	TYPES
+	BEGIN
+		"Sun" "Magic\Sun.I2D" 0xeae80047 {0,-5,8,0,0,0,-10,7,0} {}
+		"Life" "Magic\Life.I2D" 0xe6ef0049 {0,0,0,0,0,0,0,0,1} {}
+		"Ocean" "Magic\Ocean.I2D" 0x31f2004a {0,-2,6,0,-10,0,10,0,0} {}
+		"Law" "Magic\Law.I2D" 0x16db0046 {0,10,5,0,0,0,0,0,0} {}
+		"Soul" "Magic\Soul.I2D" 0x29ec0048 {0,0,10,0,0,0,0,0,0} {}
+		"Stars" "Magic\Stars.I2D" 0xfff6004b {0,8,3,0,5,0,5,-3,0} {}
+		"Death" "Magic\Death.I2D" 0xf2f9004c {0,5,2,0,0,0,0,10,0} {}
+		"Chaos" "Magic\Chaos.I2D" 0xb0fb004d {0,-10,10,0,0,0,0,0,0} {}
+		"Sky" "Magic\Sky.I2D" 0xa6ff004e {0,-7,4,-10,0,10,0,-6,0} {}
+		"Earth" "Magic\Earth.I2D" 0x6501004f {0,0,7,10,0,-10,0,4,0} {}
+		"Ward" "Magic\Ward.I2D" 0xb4050050 {0,5,1,0,0,0,0,-10,0} {}
+		"Moon" "Magic\Moon.I2D" 0xd3080051 {0,0,2,3,0,0,7,3,0} {}
+		"Rubert" "Magic\Rubert.I2D" 0x410b0052 {0,0,0,0,0,0,0,0,0} {}
+		"Gilmor" "Magic\Gilmor.I2D" 0xc60f0053 {0,0,0,0,0,0,0,0,0} {}
+		"Barry" "Magic\Barry.I2D" 0x3b110054 {0,0,0,0,0,0,0,0,0} {}
+	END
+
+END
+
+CLASS "FOOD"
+BEGIN
+
+
+	// Stat Defs: <StatName> <FourCharId> <Default> <Min> <Max>
+	STATS
+	BEGIN
+		Value VAL 0 0 1000000
+	END
+
+
+	TYPES
+	BEGIN
+		"Meat" "Misc\Meat.I2D" 0x7b150055 {0} {}
+		"Cheese" "Misc\Cheese.I2D" 0xce3b0056 {0} {}
+		"Apple" "Misc\Apple.I2D" 0xcc530057 {0} {}
+		"Bread" "Misc\Bread.I2D" 0x5f560058 {0} {}
+		"Grapes" "Misc\Grapes.I2D" 0xb2590059 {0} {}
+		"Bottle" "Misc\Bottle.I2D" 0x826e005a {0} {}
+		"Glass" "Misc\Glass.I2D" 0xee75005b {0} {}
+		"Fish" "Misc\Fish.I2D" 0x8786005c {0} {}
+		"Mug" "Misc\Mug.I2D" 0xd38b005d {0} {}
+		"Watermelon" "Misc\Watermelon.I2D" 0x968e005e {0} {}
+		"Celery" "Misc\Celery.I2D" 0x8992005f {0} {}
+	END
+
+END
+
+CLASS "CONTAINER"
+BEGIN
+
+
+	// Stat Defs: <StatName> <FourCharId> <Default> <Min> <Max>
+	STATS
+	BEGIN
+		Openable OPEN 0 0 1
+		Value VAL 0 0 1000000
+	END
+
+
+	// Stat Defs: <StatName> <FourCharId> <Default> <Min> <Max>
+	OBJSTATS
+	BEGIN
+		Locked LOCK 0 0 0
+		KeyId KEY 0 0 0
+		PickDifficulty PICK 0 0 0
+	END
+
+
+	TYPES
+	BEGIN
+		"Chest" "Misc\Chest.I2D" 0x6c950060 {1,1} {0,0,0}
+		"Pouch" "Misc\Pouch.I2D" 0x41980061 {0,0} {0,0,0}
+		"Spell Pouch" "Misc\Spell Pouch.I2D" 0x329f0063 {0,0} {0,0,0}
+		"Flask" "Misc\Flask.I2D" 0x359c0062 {1,0} {0,0,0}
+		"Empty Vial" "Misc\Vial.I2D" 0x383a0013 {1,0} {0,0,0}
+		"Vial Rack" "Misc\VialRack.I2D" 0xe375c01d {0,0} {0,0,0}
+		"Chest" "TownInt\TInChestW.I2D" 0x246d0108 {1,1} {0,0,0}
+		"Chest" "TownInt\TInChestN.I2D" 0xc1950109 {1,1} {0,0,0}
+		"Bookcase" "TownInt\TInBookcaseN.I2D" 0xec0a0105 {1,0} {0,0,0}
+		"Bookcase" "TownInt\TInBookcaseW.I2D" 0xf1550434 {1,0} {0,0,0}
+		"ChestE" "Dungeon\DunChestE.I2D" 0x6c950064 {1,1} {0,0,0}
+		"ChestS" "Dungeon\DunChestS.I2D" 0x6c950065 {1,1} {0,0,0}
+	END
+
+END
+
+CLASS "LIGHTSOURCE"
+BEGIN
+
+
+	// Stat Defs: <StatName> <FourCharId> <Default> <Min> <Max>
+	STATS
+	BEGIN
+		EqSlot EQSL 4 0 6
+		Value VAL 0 0 1000000
+	END
+
+
+	TYPES
+	BEGIN
+		"Lantern" "Misc\Lantern.I2D" 0x20a30064 {2,0} {}
+		"Torch" "Misc\Torch.I2D" 0x58a70065 {2,0} {}
+	END
+
+END
+
+CLASS "TOOL"
+BEGIN
+
+
+	// Stat Defs: <StatName> <FourCharId> <Default> <Min> <Max>
+	STATS
+	BEGIN
+		Value VAL 0 0 1000000
+		Pick PICK 0 0 100
+	END
+
+
+	TYPES
+	BEGIN
+		"Lockpicks" "Equip\Lockpicks.I2D" 0x98ac0066 {20,10} {}
+		"Galvorn Lockpicks" "Equip\Galvorn Lockpicks.I2D" 0x4bc40067 {45,35} {}
+	END
+
+END
+
+CLASS "MONEY"
+BEGIN
+
+
+	// Stat Defs: <StatName> <FourCharId> <Default> <Min> <Max>
+	STATS
+	BEGIN
+		Value VAL 1 1 10000
+	END
+
+
+	// Stat Defs: <StatName> <FourCharId> <Default> <Min> <Max>
+	OBJSTATS
+	BEGIN
+		Amount AMT 1 1 10000
+	END
+
+
+	TYPES
+	BEGIN
+		"Gold" "Misc\Coin.I2D" 0x4ec80068 {1} {1}
+		"Coin" "Misc\Coin.I2D" 0x5ec8f068 {1} {1}
+	END
+
+END
+
+CLASS "TILE"
+BEGIN
+
+
+	// Stat Defs: <StatName> <FourCharId> <Default> <Min> <Max>
+	STATS
+	BEGIN
+		Code CODE -1 0 -1
+		Extra EXTR -1 0 -1
+		Supertile SUPR 0 0 1
+		Width WDTH 0 0 16
+		Height HGHT 0 0 16
+	END
+
+
+	TYPES
+	BEGIN
+		"Splat1" "Misc\Splat1.I2D" 0xd67f06bd {-1,-1,0,0,0} {}
+		"Splat2" "Misc\Splat2.I2D" 0x491f06be {-1,-1,0,0,0} {}
+		"Splat3" "Misc\Splat3.I2D" 0xf15f06bf {-1,-1,0,0,0} {}
+		"Splat4" "Misc\Splat4.I2D" 0xf19d06c0 {-1,-1,0,0,0} {}
+		"Blood1" "Misc\Blood1.I2D" 0xd67f06bd {-1,-1,0,0,0} {}
+		"Blood2" "Misc\Blood2.I2D" 0x491f06be {-1,-1,0,0,0} {}
+		"Blood3" "Misc\Blood3.I2D" 0xf15f06bf {-1,-1,0,0,0} {}
+		"BloodS1" "Misc\BloodS1.I2D" 0xc67a06bc {-1,-1,0,0,0} {}
+		"BloodS2" "Misc\BloodS2.I2D" 0xf91b06bf {-1,-1,0,0,0} {}
+		"BloodS3" "Misc\BloodS3.I2D" 0xe15c06be {-1,-1,0,0,0} {}
+		"BloodS4" "Misc\BloodS4.I2D" 0xd15d06bd {-1,-1,0,0,0} {}
+		"Light" "Town\TwnLight.I2D" 0xa4dc0069 {-1,-1,0,0,0} {}
+		"Cobra" "Misc\CobraStatue.I2D" 0x09876aed {-1,-1,0,0,0} {}
+		"TwnBrazier" "Town\TwnBrazier.I2D" 0x70dc006a {-1,-1,0,0,0} {}
+		"TwnStreet" "Town\TwnStreet.I2D" 0xd4f5006b {1886417008,-1,0,0,0} {}
+		"TwnSidewalkSWin" "Town\TwnSidewalkSWin.I2D" 0xc313006c {-1,-1,0,0,0} {}
+		"TwnSidewalkSEin" "Town\TwnSidewalkSEin.I2D" 0x512e006d {-1,-1,0,0,0} {}
+		"TwnSidewalkNWin" "Town\TwnSidewalkNWin.I2D" 0x8432006e {-1,-1,0,0,0} {}
+		"TwnSidewalkNEin" "Town\TwnSidewalkNEin.I2D" 0x8436006f {-1,-1,0,0,0} {}
+		"TwnSidewalkSWinT" "Town\TwnSidewalkSWinT.I2D" 0x2d3c0070 {-1,-1,0,0,0} {}
+		"TwnSidewalkSEinT" "Town\TwnSidewalkSEinT.I2D" 0xe33f0071 {-1,-1,0,0,0} {}
+		"TwnSidewalkNWinT" "Town\TwnSidewalkNWinT.I2D" 0x9b440072 {-1,-1,0,0,0} {}
+		"TwnSidewalkNEinT" "Town\TwnSidewalkNEinT.I2D" 0x18460073 {-1,-1,0,0,0} {}
+		"TwnSidewalkE2" "Town\TwnSidewalkE2.I2D" 0x234a0074 {-1,-1,0,0,0} {}
+		"TwnSidewalkE1" "Town\TwnSidewalkE1.I2D" 0x284e0075 {-1,-1,0,0,0} {}
+		"TwnSidewalkN2" "Town\TwnSidewalkN2.I2D" 0x9c520076 {-1,-1,0,0,0} {}
+		"TwnSidewalkN1" "Town\TwnSidewalkN1.I2D" 0xec570077 {-1,-1,0,0,0} {}
+		"TwnSidewalkS2" "Town\TwnSidewalkS2.I2D" 0x665b0078 {-1,-1,0,0,0} {}
+		"TwnSidewalkS1" "Town\TwnSidewalkS1.I2D" 0x6a5e0079 {-1,-1,0,0,0} {}
+		"TwnSidewalkW2" "Town\TwnSidewalkW2.I2D" 0xf462007a {-1,-1,0,0,0} {}
+		"TwnSidewalkW1" "Town\TwnSidewalkW1.I2D" 0xc875007b {-1,-1,0,0,0} {}
+		"TwnSidewalkNE" "Town\TwnSidewalkNE.I2D" 0x677a007c {-1,-1,0,0,0} {}
+		"TwnSidewalkNW" "Town\TwnSidewalkNW.I2D" 0xe880007d {-1,-1,0,0,0} {}
+		"TwnSidewalkSE" "Town\TwnSidewalkSE.I2D" 0x3882007e {-1,-1,0,0,0} {}
+		"TwnSidewalkSW" "Town\TwnSidewalkSW.I2D" 0xfc87007f {-1,-1,0,0,0} {}
+		"TwnSidewalkW2a" "Town\TwnSidewalkW2a.I2D" 0x098b0080 {-1,-1,0,0,0} {}
+		"TwnSidewalkN1a" "Town\TwnSidewalkN1a.I2D" 0x888b0081 {-1,-1,0,0,0} {}
+		"TwnSidewalkN2a" "Town\TwnSidewalkN2a.I2D" 0x0b8b0082 {-1,-1,0,0,0} {}
+		"TwnSidewalkW1a" "Town\TwnSidewalkW1a.I2D" 0xaf8b0083 {-1,-1,0,0,0} {}
+		"TwnSidewalkNs" "Town\TwnSidewalkNs.I2D" 0xa78e0084 {-1,-1,0,0,0} {}
+		"TwnSidewalkEs" "Town\TwnSidewalkEs.I2D" 0xc6920085 {-1,-1,0,0,0} {}
+		"TwnSidewalkSs" "Town\TwnSidewalkSs.I2D" 0x43960086 {-1,-1,0,0,0} {}
+		"TwnSidewalkWs" "Town\TwnSidewalkWs.I2D" 0x74990087 {-1,-1,0,0,0} {}
+		"TwnSidewalkNw" "Town\TwnSidewalkNw2.I2D" 0x599d0088 {-1,-1,0,0,0} {}
+		"TwnSidewalkEw" "Town\TwnSidewalkEw.I2D" 0xf09d0089 {-1,-1,0,0,0} {}
+		"TwnSidewalkSw" "Town\TwnSidewalkSw2.I2D" 0x47a1008a {-1,-1,0,0,0} {}
+		"TwnSidewalkWw" "Town\TwnSidewalkWw.I2D" 0x1ea1008b {-1,-1,0,0,0} {}
+		"TwnTierSE" "Town\TwnTierSE.I2D" 0x73a6008c {-1,-1,0,0,0} {}
+		"TwnTierS2" "Town\TwnTierS2.I2D" 0x95aa008d {-1,-1,0,0,0} {}
+		"TwnTierS1" "Town\TwnTierS1.I2D" 0xbbaf008e {-1,-1,0,0,0} {}
+		"TwnTierSW" "Town\TwnTierSW.I2D" 0xd6b4008f {-1,-1,0,0,0} {}
+		"TwnTierE2" "Town\TwnTierE2.I2D" 0x4fb80090 {-1,-1,0,0,0} {}
+		"TwnTierE1" "Town\TwnTierE1.I2D" 0x3bbc0091 {-1,-1,0,0,0} {}
+		"TwnTierNE" "Town\TwnTierNE.I2D" 0x60c00092 {-1,-1,0,0,0} {}
+		"TwnTierW1" "Town\TwnTierW1.I2D" 0x6ac50093 {-1,-1,0,0,0} {}
+		"TwnTierW2" "Town\TwnTierW2.I2D" 0x4dca0094 {-1,-1,0,0,0} {}
+		"TwnTierN1" "Town\TwnTierN1.I2D" 0x50cd0095 {-1,-1,0,0,0} {}
+		"TwnTierN2" "Town\TwnTierN2.I2D" 0x35d30096 {-1,-1,0,0,0} {}
+		"TwnTierNW" "Town\TwnTierNW.I2D" 0xe8d70097 {-1,-1,0,0,0} {}
+		"TwnTier" "Town\TwnTier.I2D" 0x17db0098 {-1,-1,0,0,0} {}
+		"TwnBlankwallE" "Town\TwnBlankwallE.I2D" 0x63e10099 {-1,-1,0,0,0} {}
+		"TwnBlankwallS" "Town\TwnBlankwallS.I2D" 0xe3e4009a {-1,-1,0,0,0} {}
+		"TwnChimney" "Town\TwnChimney.I2D" 0x6ceb009b {-1,-1,0,0,0} {}
+		"TwnDoorwayE" "Town\TwnDoorwayE.I2D" 0x2aef009c {-1,-1,0,0,0} {}
+		"TwnDoorwayS" "Town\TwnDoorwayS.I2D" 0x94f3009d {-1,-1,0,0,0} {}
+		"TwnPillarSW" "Town\TwnPillarSW.I2D" 0x57f9009e {-1,-1,0,0,0} {}
+		"TwnPillarSE" "Town\TwnPillarSE.I2D" 0x36fd009f {-1,-1,0,0,0} {}
+		"TwnPillarNE" "Town\TwnPillarNE.I2D" 0x920300a0 {-1,-1,0,0,0} {}
+		"TwnPillartopS" "Town\TwnPillartopS.I2D" 0x490a00a1 {-1,-1,0,0,0} {}
+		"TwnPillartopE" "Town\TwnPillartopE.I2D" 0xb11100a2 {-1,-1,0,0,0} {}
+		"TwnStonewallS" "Town\TwnStonewallS.I2D" 0xff1500a3 {-1,-1,0,0,0} {}
+		"TwnStonewallS2" "Town\TwnStonewallS2.I2D" 0xf41800a4 {-1,-1,0,0,0} {}
+		"TwnStonewallE" "Town\TwnStonewallE.I2D" 0x231e00a5 {-1,-1,0,0,0} {}
+		"TwnWinwallS" "Town\TwnWinwallS.I2D" 0x5d2300a6 {-1,-1,0,0,0} {}
+		"TwnWinwallS2" "Town\TwnWinwallS2.I2D" 0x8d2900a7 {-1,-1,0,0,0} {}
+		"TwnWinwallS3" "Town\TwnWinwallS3.I2D" 0xd22e00a8 {-1,-1,0,0,0} {}
+		"TwnWinwallE" "Town\TwnWinwallE.I2D" 0x314400a9 {-1,-1,0,0,0} {}
+		"TwnWinwallE2" "Town\TwnWinwallE2.I2D" 0x7f5c00aa {-1,-1,0,0,0} {}
+		"TwnWinwallE3" "Town\TwnWinwallE3.I2D" 0x866300ab {-1,-1,0,0,0} {}
+		"TwnWinopenwallS" "Town\TwnWinopenwallS.I2D" 0x0b6800ac {-1,-1,0,0,0} {}
+		"TwnWinopenwallS2" "Town\TwnWinopenwallS2.I2D" 0x636e00ad {-1,-1,0,0,0} {}
+		"TwnWinopenwallE" "Town\TwnWinopenwallE.I2D" 0x957200ae {-1,-1,0,0,0} {}
+		"TwnWinopenwallE2" "Town\TwnWinopenwallE2.I2D" 0x827c00af {-1,-1,0,0,0} {}
+		"TwnGableroofE" "Town\TwnGableroofE.I2D" 0xa18000b0 {-1,-1,0,0,0} {}
+		"TwnGableroofS" "Town\TwnGableroofS.I2D" 0x418600b1 {-1,-1,0,0,0} {}
+		"TwnBlankwallEp" "Town\TwnBlankwallEp.I2D" 0x588c00b2 {-1,-1,0,0,0} {}
+		"TwnBlankwallSp" "Town\TwnBlankwallSp.I2D" 0x639200b3 {-1,-1,0,0,0} {}
+		"TwnDoorwayEp" "Town\TwnDoorwayEp.I2D" 0xbf9700b4 {-1,-1,0,0,0} {}
+		"TwnDoorwaySp" "Town\TwnDoorwaySp.I2D" 0xdc9d00b5 {-1,-1,0,0,0} {}
+		"TwnPillarSWp" "Town\TwnPillarSWp.I2D" 0xe2a200b6 {-1,-1,0,0,0} {}
+		"TwnPillarSEp" "Town\TwnPillarSEp.I2D" 0xe9a800b7 {-1,-1,0,0,0} {}
+		"TwnPillarNEp" "Town\TwnPillarNEp.I2D" 0xfbaf00b8 {-1,-1,0,0,0} {}
+		"TwnPillartopSp" "Town\TwnPillartopSp.I2D" 0x05b300b9 {-1,-1,0,0,0} {}
+		"TwnPillartopEp" "Town\TwnPillartopEp.I2D" 0x16ba00ba {-1,-1,0,0,0} {}
+		"TwnStonewallSp" "Town\TwnStonewallSp.I2D" 0x81c000bb {-1,-1,0,0,0} {}
+		"TwnStonewallS2p" "Town\TwnStonewallS2p.I2D" 0xd8c400bc {-1,-1,0,0,0} {}
+		"TwnStonewallEp" "Town\TwnStonewallEp.I2D" 0xbeca00bd {-1,-1,0,0,0} {}
+		"TwnWinwallSp" "Town\TwnWinwallSp.I2D" 0x3dd500be {-1,-1,0,0,0} {}
+		"TwnWinwallS2p" "Town\TwnWinwallS2p.I2D" 0x5edc00bf {-1,-1,0,0,0} {}
+		"TwnWinwallS3p" "Town\TwnWinwallS3p.I2D" 0x8fe000c0 {-1,-1,0,0,0} {}
+		"TwnWinwallEp" "Town\TwnWinwallEp.I2D" 0xeee600c1 {-1,-1,0,0,0} {}
+		"TwnWinwallE2p" "Town\TwnWinwallE2p.I2D" 0xeded00c2 {-1,-1,0,0,0} {}
+		"TwnWinwallE3p" "Town\TwnWinwallE3p.I2D" 0xcbf300c3 {-1,-1,0,0,0} {}
+		"TwnWinopenwallSp" "Town\TwnWinopenwallSp.I2D" 0x0ff800c4 {-1,-1,0,0,0} {}
+		"TwnWinopenwallS2p" "Town\TwnWinopenwallS2p.I2D" 0x59fe00c5 {-1,-1,0,0,0} {}
+		"TwnWinopenwallEp" "Town\TwnWinopenwallEp.I2D" 0x2f0400c6 {-1,-1,0,0,0} {}
+		"TwnWinopenwallE2p" "Town\TwnWinopenwallE2p.I2D" 0xc00b00c7 {-1,-1,0,0,0} {}
+		"TwnGableroofEp" "Town\TwnGableroofEp.I2D" 0x421000c8 {-1,-1,0,0,0} {}
+		"TwnGableroofSp" "Town\TwnGableroofSp.I2D" 0xce1600c9 {-1,-1,0,0,0} {}
+		"TIn" "TownInt\TIn .I2D" 0xdb7a06bc {-1,-1,0,0,0} {}
+		"TInInsidewallW" "TownInt\TInInsidewallW.I2D" 0xe02600ca {-1,-1,0,0,0} {}
+		"TInInsidewallN" "TownInt\TInInsidewallN.I2D" 0xb34800cb {-1,-1,0,0,0} {}
+		"TInFloor" "TownInt\TInFloor.I2D" 0x926400cc {-1,-1,0,0,0} {}
+		"TInCutawayS" "TownInt\TInCutawayS.I2D" 0xa26d00cd {-1,-1,0,0,0} {}
+		"TInCutawayE" "TownInt\TInCutawayE.I2D" 0x587d00ce {-1,-1,0,0,0} {}
+		"TInCutawaySE" "TownInt\TInCutawaySE.I2D" 0xb08f00cf {-1,-1,0,0,0} {}
+		"TInCutawaySW" "TownInt\TInCutawaySW.I2D" 0xac9400d0 {-1,-1,0,0,0} {}
+		"TInCutawayNE" "TownInt\TInCutawayNE.I2D" 0x5ea600d1 {-1,-1,0,0,0} {}
+		"TInCutawayDoorW" "TownInt\TInCutawayDoorW.I2D" 0x4ab000d2 {-1,-1,0,0,0} {}
+		"TInCutawayDoorN" "TownInt\TInCutawayDoorN.I2D" 0xacc200d3 {-1,-1,0,0,0} {}
+		"TInWeaponwallN" "TownInt\TInWeaponwallN.I2D" 0x83d400d4 {-1,-1,0,0,0} {}
+		"TInWeaponwallW" "TownInt\TInWeaponwallW.I2D" 0xb5da00d5 {-1,-1,0,0,0} {}
+		"TInBarrelwallW" "TownInt\TInBarrelwallW.I2D" 0xebee00d6 {-1,-1,0,0,0} {}
+		"TInBarrelwallN" "TownInt\TInBarrelwallN.I2D" 0x17ff00d7 {-1,-1,0,0,0} {}
+		"TInBakerwallW" "TownInt\TInBakerwallW.I2D" 0x980d00d8 {-1,-1,0,0,0} {}
+		"TInBakerwallN" "TownInt\TInBakerwallN.I2D" 0xb92c00d9 {-1,-1,0,0,0} {}
+		"TInArrowwallW" "TownInt\TInArrowwallW.I2D" 0x573b00da {-1,-1,0,0,0} {}
+		"TInArrowwallN" "TownInt\TInArrowwallN.I2D" 0xb04800db {-1,-1,0,0,0} {}
+		"TInDoorframeW" "TownInt\TInDoorframeW.I2D" 0x7a5c00dc {-1,-1,0,0,0} {}
+		"TInDoorframeN" "TownInt\TInDoorframeN.I2D" 0x4e6d00dd {-1,-1,0,0,0} {}
+		"TInToolwallW" "TownInt\TInToolwallW.I2D" 0x307800de {-1,-1,0,0,0} {}
+		"TInToolwallN" "TownInt\TInToolwallN.I2D" 0x9d8800df {-1,-1,0,0,0} {}
+		"TInPotwallW" "TownInt\TInPotwallW.I2D" 0x88a100e0 {-1,-1,0,0,0} {}
+		"TInPotwallN" "TownInt\TInPotwallN.I2D" 0xdeb500e1 {-1,-1,0,0,0} {}
+		"TInArmorwallW" "TownInt\TInArmorwallW.I2D" 0x88c800e2 {-1,-1,0,0,0} {}
+		"TInArmorwallN" "TownInt\TInArmorwallN.I2D" 0xbbda00e3 {-1,-1,0,0,0} {}
+		"TInWindowwallW" "TownInt\TInWindowwallW.I2D" 0xfefc00e4 {-1,-1,0,0,0} {}
+		"TInWindowwallN" "TownInt\TInWindowwallN.I2D" 0x4e2000e5 {-1,-1,0,0,0} {}
+		"TInWindowwall2W" "TownInt\TInWindowwall2W.I2D" 0x014100e6 {-1,-1,0,0,0} {}
+		"TInWindowwall2N" "TownInt\TInWindowwall2N.I2D" 0x336400e7 {-1,-1,0,0,0} {}
+		"TInStairsN" "TownInt\TInStairsN.I2D" 0x30a200e8 {-1,-1,0,0,0} {}
+		"TInStairsW" "TownInt\TInStairsW.I2D" 0x31bb00e9 {-1,-1,0,0,0} {}
+		"TInSideE" "TownInt\TInSideE.I2D" 0x84c3060a {-1,-1,0,0,0} {}
+		"TInSideS" "TownInt\TInSideS.I2D" 0xae59060b {-1,-1,0,0,0} {}
+		"TInPostW" "TownInt\TInPostW.I2D" 0x32e800ea {-1,-1,0,0,0} {}
+		"TInPostN" "TownInt\TInPostN.I2D" 0x4e0800eb {-1,-1,0,0,0} {}
+		"TInPostSW" "TownInt\TInPostSW.I2D" 0x102500ec {-1,-1,0,0,0} {}
+		"TInPostNW" "TownInt\TInPostNW.I2D" 0x3c4700ed {-1,-1,0,0,0} {}
+		"TInPostNE" "TownInt\TInPostNE.I2D" 0x4d7100ee {-1,-1,0,0,0} {}
+		"TInFireplaceW" "TownInt\TInFireplaceW.I2D" 0x8a9c00ef {-1,-1,0,0,0} {}
+		"TInFireplaceN" "TownInt\TInFireplaceN.I2D" 0xf6c600f0 {-1,-1,0,0,0} {}
+		"TInStovewallW" "TownInt\TInStovewallW.I2D" 0xfaf900f1 {-1,-1,0,0,0} {}
+		"TInStovewallN" "TownInt\TInStovewallN.I2D" 0xff1d00f2 {-1,-1,0,0,0} {}
+		"TInStoveW" "TownInt\TInStoveW.I2D" 0xed4a00f3 {-1,-1,0,0,0} {}
+		"TInStoveN" "TownInt\TInStoveN.I2D" 0xa19000f4 {-1,-1,0,0,0} {}
+		"TInOvenW" "TownInt\TInOvenW.I2D" 0xc1a300f5 {-1,-1,0,0,0} {}
+		"TInOvenN" "TownInt\TInOvenN.I2D" 0x98d000f6 {-1,-1,0,0,0} {}
+		"TInTableW" "TownInt\TInTableW.I2D" 0x99ee00f7 {-1,-1,0,0,0} {}
+		"TInTableN" "TownInt\TInTableN.I2D" 0x791e00f8 {-1,-1,0,0,0} {}
+		"TInTableRound" "TownInt\TInTableRound.I2D" 0xe54a00f9 {-1,-1,0,0,0} {}
+		"TInNighttableW" "TownInt\TInNighttableW.I2D" 0x6c7600fa {-1,-1,0,0,0} {}
+		"TInNighttableN" "TownInt\TInNighttableN.I2D" 0xa18c00fb {-1,-1,0,0,0} {}
+		"TInCounterW" "TownInt\TInCounterW.I2D" 0x16ba00fc {-1,-1,0,0,0} {}
+		"TInCounterN" "TownInt\TInCounterN.I2D" 0x2be500fd {-1,-1,0,0,0} {}
+		"TInDresserW" "TownInt\TInDresserW.I2D" 0x791d00fe {-1,-1,0,0,0} {}
+		"TInDresserN" "TownInt\TInDresserN.I2D" 0x1b3a00ff {-1,-1,0,0,0} {}
+		"TInStool" "TownInt\TInStool.I2D" 0x066a0100 {-1,-1,0,0,0} {}
+		"TInChairW" "TownInt\TInChairW.I2D" 0x81960101 {-1,-1,0,0,0} {}
+		"TInChairN" "TownInt\TInChairN.I2D" 0x4ab20102 {-1,-1,0,0,0} {}
+		"TInChairE" "TownInt\TInChairE.I2D" 0x76ce0103 {-1,-1,0,0,0} {}
+		"TInChairS" "TownInt\TInChairS.I2D" 0xcbea0104 {-1,-1,0,0,0} {}
+		"TInBedN" "TownInt\TInbedn.I2D" 0x1b270106 {-1,-1,0,0,0} {}
+		"TInBedW" "TownInt\TInBedW.I2D" 0x0e490107 {-1,-1,0,0,0} {}
+		"TInCandle" "TownInt\TInCandle.I2D" 0x3db5010a {-1,-1,0,0,0} {}
+		"TInSconceW" "TownInt\TInSconceW.I2D" 0xfed3010b {-1,-1,0,0,0} {}
+		"TInSconceN" "TownInt\TInSconceN.I2D" 0x8ef4010c {-1,-1,0,0,0} {}
+		"TInLampW" "TownInt\TInLampW.I2D" 0x18f9010d {-1,-1,0,0,0} {}
+		"TInLampN" "TownInt\TInLampN.I2D" 0xbc11010e {-1,-1,0,0,0} {}
+		"TInBarrel" "TownInt\TInBarrel.I2D" 0x352d010f {-1,-1,0,0,0} {}
+		"TInBarrel2" "TownInt\TInBarrel2.I2D" 0x09490110 {-1,-1,0,0,0} {}
+		"TInCrate" "TownInt\TInCrate.I2D" 0x7e6b0111 {-1,-1,0,0,0} {}
+		"TInCrate2" "TownInt\TInCrate2.I2D" 0x40890112 {-1,-1,0,0,0} {}
+		"TInPictureN" "TownInt\TInPictureN.I2D" 0xcd9d0113 {-1,-1,0,0,0} {}
+		"TInPictureW" "TownInt\TInPictureW.I2D" 0x1fb90114 {-1,-1,0,0,0} {}
+		"TInPicture2N" "TownInt\TInPicture2N.I2D" 0xead90115 {-1,-1,0,0,0} {}
+		"TInCounterEndS" "TownInt\TInCounterEndS.I2D" 0x31f60116 {-1,-1,0,0,0} {}
+		"TInCounterEndE" "TownInt\TInCounterEndE.I2D" 0x98120117 {-1,-1,0,0,0} {}
+		"TInCounterEndN" "TownInt\TInCounterEndN.I2D" 0x233e0118 {-1,-1,0,0,0} {}
+		"TInCounterEndW" "TownInt\TInCounterEndW.I2D" 0xf3910119 {-1,-1,0,0,0} {}
+		"TInCounterNE" "TownInt\TInCounterNE.I2D" 0x1ea4011a {-1,-1,0,0,0} {}
+		"TInCounterNW" "TownInt\TInCounterNW.I2D" 0xfbc6011b {-1,-1,0,0,0} {}
+		"TInCounterSW" "TownInt\TInCounterSW.I2D" 0xb7e5011c {-1,-1,0,0,0} {}
+		"TInCounterSE" "TownInt\TInCounterSE.I2D" 0x3f09011d {-1,-1,0,0,0} {}
+		"TInCounterN2" "TownInt\TInCounterN2.I2D" 0x6023011e {-1,-1,0,0,0} {}
+		"TInCounterW2" "TownInt\TInCounterW2.I2D" 0xff25011f {-1,-1,0,0,0} {}
+		"TInCounterS" "TownInt\TInCounterS.I2D" 0x90250120 {-1,-1,0,0,0} {}
+		"TInCounterE" "TownInt\TInCounterE.I2D" 0x3f470121 {-1,-1,0,0,0} {}
+		"TInBanisterS" "TownInt\TInBanisterS.I2D" 0xfa610122 {-1,-1,0,0,0} {}
+		"TInBanisterE" "TownInt\TInBanisterE.I2D" 0xa58e0123 {-1,-1,0,0,0} {}
+		"TInSBanisterS" "TownInt\TInSBanisterS.I2D" 0x7eab0124 {-1,-1,0,0,0} {}
+		"TInSBanisterE" "TownInt\TInSBanisterE.I2D" 0x19c80125 {-1,-1,0,0,0} {}
+		"TInBanisterPost" "TownInt\TInBanisterPost.I2D" 0xc4db0126 {-1,-1,0,0,0} {}
+		"TInBedS" "TownInt\TInBedS.I2D" 0x841c0435 {-1,-1,0,0,0} {}
+		"TInBedE" "TownInt\TInBedE.I2D" 0xe1b80436 {-1,-1,0,0,0} {}
+		"TInCutawayS2" "TownInt\TInCutawayS2.I2D" 0x84630439 {-1,-1,0,0,0} {}
+		"TInCutawayE2" "TownInt\TInCutawayE2.I2D" 0xe180043a {-1,-1,0,0,0} {}
+		"TInCutAwaySW2" "TownInt\TInCutAwaySW2.I2D" 0x847d043b {-1,-1,0,0,0} {}
+		"TInCutawayNE2" "TownInt\TInCutawayNE2.I2D" 0xae72043c {-1,-1,0,0,0} {}
+		"Run" "Ruin\Run .I2D" 0xe96a06bb {-1,-1,0,0,0} {}
+		"RunGrey" "Ruin\Runfredgrey.I2D" 0x4906059b {-1,-1,0,0,0} {}
+		"RunPat" "Ruin\RunPat.I2D" 0x7af90127 {-1,-1,0,0,0} {}
+		"RunFred" "Ruin\RunFred.I2D" 0xa6360128 {-1,-1,0,0,0} {}
+		"RunSue" "Ruin\RunSue.I2D" 0xe6670129 {-1,-1,0,0,0} {}
+		"Rungtgt" "Ruin\Rungtgt.I2D" 0xc96f012a {-1,-1,0,0,0} {}
+		"Runggtt" "Ruin\Runggtt.I2D" 0x6c94012b {-1,-1,0,0,0} {}
+		"Runggtt2" "Ruin\Runggtt2.I2D" 0x129f012c {-1,-1,0,0,0} {}
+		"Rungtgt2" "Ruin\Rungtgt2.I2D" 0x1ec2012d {-1,-1,0,0,0} {}
+		"Runtgtt" "Ruin\Runtgtt.I2D" 0xedce012e {-1,-1,0,0,0} {}
+		"Runtgtg" "Ruin\Runtgtg.I2D" 0xdcf1012f {-1,-1,0,0,0} {}
+		"Runtgtg2" "Ruin\Runtgtg2.I2D" 0x6df90130 {-1,-1,0,0,0} {}
+		"Runttgt" "Ruin\Runttgt.I2D" 0x50280131 {-1,-1,0,0,0} {}
+		"Runttgg" "Ruin\Runttgg.I2D" 0xd35b0132 {-1,-1,0,0,0} {}
+		"Runttgg2" "Ruin\Runttgg2.I2D" 0xf47c0133 {-1,-1,0,0,0} {}
+		"Runtttg" "Ruin\Runtttg.I2D" 0x07880134 {-1,-1,0,0,0} {}
+		"RunFloor" "Ruin\RunFloor.I2D" 0x17ac0135 {-1,-1,0,0,0} {}
+		"RunRailS" "Ruin\RunRailS.I2D" 0xfdb20136 {-1,-1,0,0,0} {}
+		"RunRailE" "Ruin\RunRailE.I2D" 0x3bd70137 {-1,-1,0,0,0} {}
+		"RunRailN" "Ruin\RunRailN.I2D" 0x20030138 {-1,-1,0,0,0} {}
+		"RunRailW" "Ruin\RunRailW.I2D" 0x49490139 {-1,-1,0,0,0} {}
+		"RunRailJoin" "Ruin\RunRailJoin.I2D" 0x355a013a {-1,-1,0,0,0} {}
+		"RunRailJoinV" "Ruin\RunRailJoinV.I2D" 0x667c013b {-1,-1,0,0,0} {}
+		"RunStepsSr" "Ruin\RunStepsSr.I2D" 0x627f013c {-1,-1,0,0,0} {}
+		"RunStepsS" "Ruin\RunStepsS.I2D" 0x719d013d {-1,-1,0,0,0} {}
+		"RunStepsSl" "Ruin\RunStepsSl.I2D" 0x2ca7013e {-1,-1,0,0,0} {}
+		"RunStepsSrV" "Ruin\RunStepsSrV.I2D" 0x72d2013f {-1,-1,0,0,0} {}
+		"RunStepsSlV" "Ruin\RunStepsSlV.I2D" 0xafd90140 {-1,-1,0,0,0} {}
+		"RunStepsE" "Ruin\RunStepsE.I2D" 0x80fe0141 {-1,-1,0,0,0} {}
+		"RunStepsEl" "Ruin\RunStepsEl.I2D" 0x62060142 {-1,-1,0,0,0} {}
+		"RunStepsEr" "Ruin\RunStepsEr.I2D" 0x6c0d04ec {-1,-1,0,0,0} {}
+		"RunStepsN" "Ruin\RunStepsN.I2D" 0xef350143 {-1,-1,0,0,0} {}
+		"RunStepsNl" "Ruin\RunStepsNl.I2D" 0xd68c04ed {-1,-1,0,0,0} {}
+		"RunStepsNr" "Ruin\RunStepsNr.I2D" 0x1d3c0144 {-1,-1,0,0,0} {}
+		"RunStepsW" "Ruin\RunStepsW.I2D" 0xbf740145 {-1,-1,0,0,0} {}
+		"RunStepsWl" "Ruin\RunStepsWl.I2D" 0x45a40146 {-1,-1,0,0,0} {}
+		"RunStepsWr" "Ruin\RunStepsWr.I2D" 0xae3804ee {-1,-1,0,0,0} {}
+		"RunWallSr" "Ruin\RunWallSr.I2D" 0x08d20149 {-1,-1,0,0,0} {}
+		"RunWallEr" "Ruin\RunWallEr.I2D" 0x9df2014a {-1,-1,0,0,0} {}
+		"RunWallSl" "Ruin\RunWallSl.I2D" 0x3ffb014b {-1,-1,0,0,0} {}
+		"RunWallEl" "Ruin\RunWallEl.I2D" 0xa71b014c {-1,-1,0,0,0} {}
+		"RunCollumnS" "Ruin\RunCollumnS.I2D" 0xf91b01be {-1,-1,0,0,0} {}
+		"RunHeadboardS" "Ruin\RunHeadboardS.I2D" 0x363d014d {-1,-1,0,0,0} {}
+		"RunHeadboardE" "Ruin\RunHeadboardE.I2D" 0x2742014e {-1,-1,0,0,0} {}
+		"RunStatueSW" "Ruin\RunStatueSW.I2D" 0xa548014f {-1,-1,0,0,0} {}
+		"RunStatueSE" "Ruin\RunStatueSE.I2D" 0xa84e0150 {-1,-1,0,0,0} {}
+		"RunStatueNE" "Ruin\RunStatueNE.I2D" 0xda550151 {-1,-1,0,0,0} {}
+		"RunRoof" "Ruin\RunRoof.I2D" 0x80620152 {-1,-1,0,0,0} {}
+		"RunRoofN" "Ruin\RunRoofN.I2D" 0x849604ea {-1,-1,0,0,0} {}
+		"RunRoofS" "Ruin\RunRoofS.I2D" 0x0b6a0153 {-1,-1,0,0,0} {}
+		"RunRoofE" "Ruin\RunRoofE.I2D" 0x616f0154 {-1,-1,0,0,0} {}
+		"RunRoofW" "Ruin\RunRoofW.I2D" 0xe1ca04eb {-1,-1,0,0,0} {}
+		"RunRoofSW" "Ruin\RunRoofSW.I2D" 0x30740155 {-1,-1,0,0,0} {}
+		"RunRoofSE" "Ruin\RunRoofSE.I2D" 0x457a0156 {-1,-1,0,0,0} {}
+		"RunRoofNE" "Ruin\RunRoofNE.I2D" 0xab7f0157 {-1,-1,0,0,0} {}
+		"RunRoofNW" "Ruin\RunRoofNW.I2D" 0xf6820158 {-1,-1,0,0,0} {}
+		"RunHorsieSW" "Ruin\RunHorsieSW.I2D" 0x518c0159 {-1,-1,0,0,0} {}
+		"RunHorsieSE" "Ruin\RunHorsieSE.I2D" 0x7990015a {-1,-1,0,0,0} {}
+		"RunHorsieNE" "Ruin\RunHorsieNE.I2D" 0x8cac015b {-1,-1,0,0,0} {}
+		"RunHorsieNW" "Ruin\RunHorsieNW.I2D" 0x21ca015c {-1,-1,0,0,0} {}
+		"RunPyramid" "Ruin\RunPyramid.I2D" 0x84620504 {-1,-1,0,0,0} {}
+		"Kep" "Keep\Kep .I2D" 0xd63906b9 {-1,-1,0,0,0} {}
+		"KIn" "KeepInt\KIn .I2D" 0x494b06ba {-1,-1,0,0,0} {}
+		"KInFloor" "KeepInt\KInFloor.I2D" 0x3e26018f {-1,-1,0,0,0} {}
+		"KInFloor2" "KeepInt\KInFloor2.I2D" 0x1e28718f {-1,-1,0,0,0} {}
+		"KInWallN" "KeepInt\KInWallN.I2D" 0xc9350190 {-1,-1,0,0,0} {}
+		"KInWallW" "KeepInt\KInWallW.I2D" 0xb2530191 {-1,-1,0,0,0} {}
+		"KInWindowWallN" "KeepInt\KInWindowWallN.I2D" 0x4c770192 {-1,-1,0,0,0} {}
+		"KInWindowWallW" "KeepInt\KInWindowWallW.I2D" 0xa88f0193 {-1,-1,0,0,0} {}
+		"KInSGWindowWallN" "KeepInt\KInSGWindowWallN.I2D" 0x87ba0194 {-1,-1,0,0,0} {}
+		"KInSGWindowWallW" "KeepInt\KInSGWindowWallW.I2D" 0xc5e60195 {-1,-1,0,0,0} {}
+		"KInGrateWallN" "KeepInt\KInGrateWallN.I2D" 0x69060196 {-1,-1,0,0,0} {}
+		"KInGrateWallW" "KeepInt\KInGrateWallW.I2D" 0x90270197 {-1,-1,0,0,0} {}
+		"KInPillarN" "KeepInt\KInPillarN.I2D" 0x53520198 {-1,-1,0,0,0} {}
+		"KInPillarW" "KeepInt\KInPillarW.I2D" 0x13700199 {-1,-1,0,0,0} {}
+		"KInDoorwayN" "KeepInt\KInDoorwayN.I2D" 0xa792019a {-1,-1,0,0,0} {}
+		"KInDoorwayW" "KeepInt\KInDoorwayW.I2D" 0xa3bf019b {-1,-1,0,0,0} {}
+		"KInDoorframeN" "KeepInt\KInDoorframeN.I2D" 0xf9e9019c {-1,-1,0,0,0} {}
+		"KInDoorframeW" "KeepInt\KInDoorframeW.I2D" 0xcc0a019d {-1,-1,0,0,0} {}
+		"KInHeadboardN" "KeepInt\KInHeadboardN.I2D" 0xc528019e {-1,-1,0,0,0} {}
+		"KInHeadBoardW" "KeepInt\KInHeadBoardW.I2D" 0xb148019f {-1,-1,0,0,0} {}
+		"KInRug" "KeepInt\KInRug.I2D" 0xd46701a0 {-1,-1,0,0,0} {}
+		"KInRugN" "KeepInt\KInRugN.I2D" 0x658201a1 {-1,-1,0,0,0} {}
+		"KInRugW" "KeepInt\KInRugW.I2D" 0xb1a701a2 {-1,-1,0,0,0} {}
+		"KInLongRugN" "KeepInt\KInLongRugN.I2D" 0x03c701a3 {-1,-1,0,0,0} {}
+		"KInLongRugW" "KeepInt\KInLongRugW.I2D" 0xdcec01a4 {-1,-1,0,0,0} {}
+		"KInPictureN" "KeepInt\KInPictureN.I2D" 0x910801a5 {-1,-1,0,0,0} {}
+		"KInPictureW" "KeepInt\KInPictureW.I2D" 0xa82601a6 {-1,-1,0,0,0} {}
+		"KInPictureN2" "KeepInt\KInPictureN2.I2D" 0xf05e01a7 {-1,-1,0,0,0} {}
+		"KInPictureW2" "KeepInt\KInPictureW2.I2D" 0xe07a01a8 {-1,-1,0,0,0} {}
+		"KInPictureN3" "KeepInt\KInPictureN3.I2D" 0x6d9701a9 {-1,-1,0,0,0} {}
+		"KInPictureW3" "KeepInt\KInPictureW3.I2D" 0x9fb601aa {-1,-1,0,0,0} {}
+		"KInFireplaceN" "KeepInt\KInFireplaceN.I2D" 0xabc501ab {-1,-1,0,0,0} {}
+		"KInFireplaceW" "KeepInt\KInFireplaceW.I2D" 0x0fe101ac {-1,-1,0,0,0} {}
+		"KInFireplaceTopN" "KeepInt\KInFireplaceTopN.I2D" 0xfafc01ad {-1,-1,0,0,0} {}
+		"KInFireplaceTopW" "KeepInt\KInFireplaceTopW.I2D" 0xe21b01ae {-1,-1,0,0,0} {}
+		"KInBannerN" "KeepInt\KInBannerN.I2D" 0x5f3d01af {-1,-1,0,0,0} {}
+		"KInBannerW" "KeepInt\KInBannerW.I2D" 0xbd6101b0 {-1,-1,0,0,0} {}
+		"KInTableN" "KeepInt\KInTableN.I2D" 0xd17f01b1 {-1,-1,0,0,0} {}
+		"KInTableW" "KeepInt\KInTableW.I2D" 0xfbab01b2 {-1,-1,0,0,0} {}
+		"KInChairN" "KeepInt\KInChairN.I2D" 0x7ec801b3 {-1,-1,0,0,0} {}
+		"KInChairE" "KeepInt\KInChairE.I2D" 0x64e401b4 {-1,-1,0,0,0} {}
+		"KInChairS" "KeepInt\KInChairS.I2D" 0x120501b5 {-1,-1,0,0,0} {}
+		"KInChairW" "KeepInt\KInChairW.I2D" 0xd52101b6 {-1,-1,0,0,0} {}
+		"KInBenchN" "KeepInt\KInBenchN.I2D" 0x563f01b7 {-1,-1,0,0,0} {}
+		"KInBenchE" "KeepInt\KInBenchE.I2D" 0xe96801b8 {-1,-1,0,0,0} {}
+		"KInBenchS" "KeepInt\KInBenchS.I2D" 0x9e8601b9 {-1,-1,0,0,0} {}
+		"KInBenchW" "KeepInt\KInBenchW.I2D" 0x21a601ba {-1,-1,0,0,0} {}
+		"KInBanisterN" "KeepInt\KInBanisterN.I2D" 0xe5c401bb {-1,-1,0,0,0} {}
+		"KInBanisterW" "KeepInt\KInBanisterW.I2D" 0x21e101bc {-1,-1,0,0,0} {}
+		"KInBanisterPost" "KeepInt\KInBanisterPost.I2D" 0x86ff01bd {-1,-1,0,0,0} {}
+		"KInStairsN" "KeepInt\KInStairsN.I2D" 0xee5501bf {-1,-1,0,0,0} {}
+		"KInStairsE" "KeepInt\KInStairsE.I2D" 0x946d01c0 {-1,-1,0,0,0} {}
+		"KInStairsS" "KeepInt\KInStairsS.I2D" 0xc39101c1 {-1,-1,0,0,0} {}
+		"KInStairsW" "KeepInt\KInStairsW.I2D" 0xc3c001c2 {-1,-1,0,0,0} {}
+		"KInStairsN2" "KeepInt\KInStairsN2.I2D" 0x4ccb01c3 {-1,-1,0,0,0} {}
+		"KInStairsE2" "KeepInt\KInStairsE2.I2D" 0x81ec01c4 {-1,-1,0,0,0} {}
+		"KInStairsS2" "KeepInt\KInStairsS2.I2D" 0x271501c5 {-1,-1,0,0,0} {}
+		"KInStairsW2" "KeepInt\KInStairsW2.I2D" 0x594a01c6 {-1,-1,0,0,0} {}
+		"KInLandingNE" "KeepInt\KInLandingNE.I2D" 0x876401c7 {-1,-1,0,0,0} {}
+		"KInLandingSE" "KeepInt\KInLandingSE.I2D" 0x227b01c8 {-1,-1,0,0,0} {}
+		"KInLandingSW" "KeepInt\KInLandingSW.I2D" 0x93a201c9 {-1,-1,0,0,0} {}
+		"KInLandingNW" "KeepInt\KInLandingNW.I2D" 0x67da01ca {-1,-1,0,0,0} {}
+		"KInArmorW" "KeepInt\KInArmorW.I2D" 0xa5fd01cb {-1,-1,0,0,0} {}
+		"KInArmorN" "KeepInt\KInArmorN.I2D" 0x301e01cc {-1,-1,0,0,0} {}
+		"KInArmorcaseW" "KeepInt\KInArmorcaseW.I2D" 0x6b4001cd {-1,-1,0,0,0} {}
+		"KInArmorcaseN" "KeepInt\KInArmorcaseN.I2D" 0x146001ce {-1,-1,0,0,0} {}
+		"KInArmorshelfW" "KeepInt\KInArmorshelfW.I2D" 0x428a01cf {-1,-1,0,0,0} {}
+		"KInArmorshelfN" "KeepInt\KInArmorshelfN.I2D" 0xaaa701d0 {-1,-1,0,0,0} {}
+		"KInPlant" "KeepInt\KInPlant.I2D" 0x47ec01d1 {-1,-1,0,0,0} {}
+		"KInHeadboardN2" "KeepInt\KInHeadboardN2.I2D" 0xe40601d2 {-1,-1,0,0,0} {}
+		"KInHeadboardW2" "KeepInt\KInHeadboardW2.I2D" 0xe32201d3 {-1,-1,0,0,0} {}
+		"KInHalfwallN" "KeepInt\KInHalfwallN.I2D" 0xd34001d4 {-1,-1,0,0,0} {}
+		"KInHalfwallW" "KeepInt\KInHalfwallW.I2D" 0xeb5b01d5 {-1,-1,0,0,0} {}
+		"KInpillar" "KeepInt\KInpillar.I2D" 0xdc8201d6 {-1,-1,0,0,0} {}
+		"KInSomething" "KeepInt\KInSomething.I2D" 0x88a001d7 {-1,-1,0,0,0} {}
+		"KInSomething1" "KeepInt\KInSomething1.I2D" 0x7abf01d8 {-1,-1,0,0,0} {}
+		"KInElevatorFloor" "KeepInt\KinElevatorFloor.I2D" 0x01ac0128 {-1,-1,0,0,0} {}
+		"KInElevatorShaftN" "KeepInt\KinElevatorShaftN.I2D" 0x90fc0121 {-1,-1,0,0,0} {}
+		"KInElevatorShaftW" "KeepInt\KinElevatorShaftW.I2D" 0x31bce122 {-1,-1,0,0,0} {}
+		"KInElevatorShaftS" "KeepInt\KinElevatorShaftS.I2D" 0x4cac7163 {-1,-1,0,0,0} {}
+		"KInRotateFloorS" "KeepInt\KinRotateFloorS.I2D" 0x71aca12b {-1,-1,0,0,0} {}
+		"KInRotateFloorN" "KeepInt\KinRotateFloorN.I2D" 0xa1a0100b {-1,-1,0,0,0} {}
+		"For" "Forest\ForDUM.I2D" 0xf198069d {-1,-1,0,0,0} {}
+		"Forgggg" "Forest\Forgggg.I2D" 0x7abf01d9 {269488144,-1,0,0,0} {}
+		"ForTreetop1" "Forest\ForTreetop1.I2D" 0xe82b01da {-1,-1,0,0,0} {}
+		"Fordddd" "Forest\Fordddd.I2D" 0x806201db {538976288,-1,0,0,0} {}
+		"Forggdd" "Forest\Forggdd.I2D" 0xe6ad01dd {269492256,-1,0,0,0} {}
+		"Forddgg" "Forest\Forddgg.I2D" 0x7bcd01de {538972176,-1,0,0,0} {}
+		"Forgdgd" "Forest\Forgdgd.I2D" 0x811101df {270536736,-1,0,0,0} {}
+		"Fordgdg" "Forest\Fordgdg.I2D" 0x903701e0 {537927696,-1,0,0,0} {}
+		"Forgggd" "Forest\Forgggd.I2D" 0xab7a01e1 {269488160,-1,0,0,0} {}
+		"Forggdg" "Forest\Forggdg.I2D" 0x759e01e2 {269492240,-1,0,0,0} {}
+		"Forgdgg" "Forest\Forgdgg.I2D" 0xf8e201e3 {270536720,-1,0,0,0} {}
+		"Fordggg" "Forest\Fordggg.I2D" 0x3bee01e4 {537923600,-1,0,0,0} {}
+		"Fordddg" "Forest\Fordddg.I2D" 0xbd1601e5 {538976272,-1,0,0,0} {}
+		"Forddgd" "Forest\Forddgd.I2D" 0x492001e6 {538972192,-1,0,0,0} {}
+		"Fordgdd" "Forest\Fordgdd.I2D" 0x9e5401e7 {537927712,-1,0,0,0} {}
+		"Forgddd" "Forest\Forgddd.I2D" 0x226101e8 {270540832,-1,0,0,0} {}
+		"Forgddg" "Forest\Forgddg.I2D" 0xbe9101e9 {270540816,-1,0,0,0} {}
+		"Fordggd" "Forest\Fordggd.I2D" 0x4cc501eb {537923616,-1,0,0,0} {}
+		"Forddkk" "Forest\Forddkk.I2D" 0x75ee01ed {-1,-1,0,0,0} {}
+		"Forkkdd" "Forest\Forkkdd.I2D" 0xb7ff01ee {-1,-1,0,0,0} {}
+		"Fordkdk" "Forest\Fordkdk.I2D" 0x101f01ef {-1,-1,0,0,0} {}
+		"Forkdkd" "Forest\Forkdkd.I2D" 0x172d01f0 {-1,-1,0,0,0} {}
+		"Fordddk" "Forest\Fordddk.I2D" 0x7c4e01f1 {-1,-1,0,0,0} {}
+		"Forddkd" "Forest\Forddkd.I2D" 0xd07401f2 {-1,-1,0,0,0} {}
+		"Fordkdd" "Forest\Fordkdd.I2D" 0x80a201f3 {-1,-1,0,0,0} {}
+		"Forkddd" "Forest\Forkddd.I2D" 0xdac301f4 {-1,-1,0,0,0} {}
+		"Forkkkd" "Forest\Forkkkd.I2D" 0x38ce01f5 {286331168,-1,0,0,0} {}
+		"Forkkdk" "Forest\Forkkdk.I2D" 0xc8f001f6 {286334993,-1,0,0,0} {}
+		"Forkdkk" "Forest\Forkdkk.I2D" 0x4e1f01f7 {-1,-1,0,0,0} {}
+		"Fordkkk" "Forest\Fordkkk.I2D" 0x8c2c01f8 {537989393,-1,0,0,0} {}
+		"Fordkkd" "Forest\Fordkkd.I2D" 0x0e5301f9 {-1,-1,0,0,0} {}
+		"Forkddk" "Forest\Forkddk.I2D" 0xc45b01fa {-1,-1,0,0,0} {}
+		"Forggkk" "Forest\Forgggg.I2D" 0x1d8d01fb {269488401,538972433,0,0,0} {}
+		"Forkkgg" "Forest\Forgggg.I2D" 0x15b101fc {286330896,286335008,0,0,0} {}
+		"Forgkgk" "Forest\Forgggg.I2D" 0xd4bf01fd {269553681,537993233,0,0,0} {}
+		"Forkgkg" "Forest\Forgggg.I2D" 0x92e701fe {286265616,287314208,0,0,0} {}
+		"Forgggk" "Forest\Forgggg.I2D" 0x93f501ff {269488145,538976273,0,0,0} {}
+		"Forggkg" "Forest\Forgggg.I2D" 0x501a0200 {269488400,538972448,0,0,0} {}
+		"Forgkgg" "Forest\Forgggg.I2D" 0x86410201 {269553680,537993248,0,0,0} {}
+		"Forkggg" "Forest\Forgggg.I2D" 0x8d4f0202 {286265360,287318048,0,0,0} {}
+		"Forkkkg" "Forest\Forgggg.I2D" 0xb0850203 {286331152,286331168,0,0,0} {}
+		"Forkkgk" "Forest\Forgggg.I2D" 0x12920204 {286330897,286334993,0,0,0} {}
+		"Forkgkk" "Forest\Forgggg.I2D" 0x3bc30205 {286265617,287314193,0,0,0} {}
+		"Forgkkk" "Forest\Forgggg.I2D" 0xc1ec0206 {269553937,537989393,0,0,0} {}
+		"Forgkkg" "Forest\Forgggg.I2D" 0x5ef90207 {269553936,537989408,0,0,0} {}
+		"Forkggk" "Forest\Forgggg.I2D" 0x693b0208 {286265361,287318033,0,0,0} {}
+		"Forgdkk" "Forest\Forgdgd.I2D" 0xdeaf1234 {270536977,538972433,0,0,0} {}
+		"Fordgkk" "Forest\Fordgdg.I2D" 0xdea11235 {537923857,538972433,0,0,0} {}
+		"Forkkgd" "Forest\Forgdgd.I2D" 0xdea21236 {286330912,286335008,0,0,0} {}
+		"Forkkdg" "Forest\Fordgdg.I2D" 0xdea31237 {286334992,286335008,0,0,0} {}
+		"Forgkdk" "Forest\Forggdd.I2D" 0xdea41238 {269557777,537993233,0,0,0} {}
+		"Fordkgk" "Forest\Forddgg.I2D" 0xdea51239 {537989137,537993233,0,0,0} {}
+		"Forkgkd" "Forest\Forggdd.I2D" 0xdea6123a {286265632,287314208,0,0,0} {}
+		"Forkdkg" "Forest\Forddgg.I2D" 0xdea7123b {287314192,287314208,0,0,0} {}
+		"Forkrgr" "Forest\Forgrgr.I2D" 0x57530209 {290525264,290529360,0,0,0} {}
+		"Forrkrg" "Forest\Forrgrg.I2D" 0x507c020a {1360089104,1360089120,0,0,0} {}
+		"Forkgrr" "Forest\Forggrr.I2D" 0x497f020b {286282064,287330640,0,0,0} {}
+		"Forrrkg" "Forest\Forrrgg.I2D" 0x21af020c {1364201744,1364201760,0,0,0} {}
+		"Forrrrr" "Forest\Forrrrr.I2D" 0x01b4020d {-1,-1,0,0,0} {}
+		"Forddrr" "Forest\Forddrr.I2D" 0x15d2020e {-1,-1,0,0,0} {}
+		"Forrrdd" "Forest\Forrrdd.I2D" 0xf0da020f {-1,-1,0,0,0} {}
+		"Fordrdr" "Forest\Fordrdr.I2D" 0x8dfb0210 {-1,-1,0,0,0} {}
+		"Forrdrd" "Forest\Forrdrd.I2D" 0xd8210211 {-1,-1,0,0,0} {}
+		"Fordddr" "Forest\Fordddr.I2D" 0x86260212 {-1,-1,0,0,0} {}
+		"Forddrd" "Forest\Forddrd.I2D" 0xfd4a0213 {-1,-1,0,0,0} {}
+		"Fordrdd" "Forest\Fordrdd.I2D" 0x84520214 {-1,-1,0,0,0} {}
+		"Forrddd" "Forest\Forrddd.I2D" 0xe1840215 {-1,-1,0,0,0} {}
+		"Forrrrd" "Forest\Forrrrd.I2D" 0xdf8b0216 {-1,-1,0,0,0} {}
+		"Forrrdr" "Forest\Forrrdr.I2D" 0xd1bc0217 {-1,-1,0,0,0} {}
+		"Forrdrr" "Forest\Forrdrr.I2D" 0xa9c20218 {-1,-1,0,0,0} {}
+		"Fordrrr" "Forest\Fordrrr.I2D" 0xc4000219 {-1,-1,0,0,0} {}
+		"Fordrrd" "Forest\Fordrrd.I2D" 0x7d07021a {-1,-1,0,0,0} {}
+		"Forrddr" "Forest\Forrddr.I2D" 0x645c021b {-1,-1,0,0,0} {}
+		"Forgdrr" "Forest\Forgrrr.I2D" 0xef75021c {-1,-1,0,0,0} {}
+		"Forgrdr" "Forest\Forgrrr.I2D" 0x39af021d {-1,-1,0,0,0} {}
+		"Fordgrr" "Forest\Forrgrr.I2D" 0x87b9021e {-1,-1,0,0,0} {}
+		"Forrgrd" "Forest\Forrgrr.I2D" 0x4cf1021f {-1,-1,0,0,0} {}
+		"Fordrgr" "Forest\Forrrgr.I2D" 0x5df70220 {-1,-1,0,0,0} {}
+		"Forrrgd" "Forest\Forrrgr.I2D" 0xbd090221 {-1,-1,0,0,0} {}
+		"Forrdrg" "Forest\Forrrrg.I2D" 0xd4420222 {1344294928,1344294944,0,0,0} {}
+		"Forrrdg" "Forest\Forrrrg.I2D" 0x1b610223 {-1,-1,0,0,0} {}
+		"Forgrgr" "Forest\Forgrgr.I2D" 0x0f990224 {-1,-1,0,0,0} {}
+		"Forrgrg" "Forest\Forrgrg.I2D" 0x89a20225 {-1,-1,0,0,0} {}
+		"Forggrr" "Forest\Forggrr.I2D" 0x09dd0226 {-1,-1,0,0,0} {}
+		"Forrrgg" "Forest\Forrrgg.I2D" 0xeee60227 {-1,-1,0,0,0} {}
+		"Forrrrg" "Forest\Forrrrg.I2D" 0x7e220228 {-1,-1,0,0,0} {}
+		"Forrrgr" "Forest\Forrrgr.I2D" 0xc42a0229 {-1,-1,0,0,0} {}
+		"Forrgrr" "Forest\Forrgrr.I2D" 0x0264022a {-1,-1,0,0,0} {}
+		"Forgrrr" "Forest\Forgrrr.I2D" 0x436a022b {-1,-1,0,0,0} {}
+		"Forrggg" "Forest\Forrggg.I2D" 0x0185022c {-1,-1,0,0,0} {}
+		"Forgrgg" "Forest\Forgrgg.I2D" 0xf8a8022d {-1,-1,0,0,0} {}
+		"Forggrg" "Forest\Forggrg.I2D" 0x74e3022e {-1,-1,0,0,0} {}
+		"Forgggr" "Forest\Forgggr.I2D" 0x0bf0022f {-1,-1,0,0,0} {}
+		"Forgrrg" "Forest\Forgrrg.I2D" 0x932e0230 {-1,-1,0,0,0} {}
+		"Forrggr" "Forest\Forrggr.I2D" 0xc3370231 {-1,-1,0,0,0} {}
+		"Forrrkd" "Forest\Forrrkd.I2D" 0xd0640232 {1364201760,-1,0,0,0} {}
+		"Forrkrd" "Forest\Forrkrd.I2D" 0x01870233 {-1,-1,0,0,0} {}
+		"Forkdrr" "Forest\Forkdrr.I2D" 0xd6c60234 {287330640,-1,0,0,0} {}
+		"Forkrdr" "Forest\Forkrdr.I2D" 0xcfd40235 {-1,-1,0,0,0} {}
+		"Forirdr" "Forest\Forirdr.I2D" 0x6a0b0236 {341057616,-1,0,0,0} {}
+		"Forrird" "Forest\Forrird.I2D" 0x39270237 {1410617376,-1,0,0,0} {}
+		"Foridrr" "Forest\Foridrr.I2D" 0x58590238 {337663056,-1,0,0,0} {}
+		"Forrrid" "Forest\Forrrid.I2D" 0x036f0239 {1414534176,-1,0,0,0} {}
+		"Forirgr" "Forest\Forgrgr.I2D" 0xdaab023a {341053520,341057616,0,0,0} {}
+		"Forrirg" "Forest\Forrgrg.I2D" 0xfcc1023b {1410617360,1410617376,0,0,0} {}
+		"Forigrr" "Forest\Forggrr.I2D" 0x15fd023c {336614480,337663056,0,0,0} {}
+		"Forrrig" "Forest\Forrrgg.I2D" 0xfb04023d {1414534160,1414534176,0,0,0} {}
+		"Foroooo" "Forest\Foroooo.I2D" 0xa220023e {1616928864,-1,0,0,0} {}
+		"Forggoo" "Forest\Forggoo.I2D" 0xd35a023f {269508704,-1,0,0,0} {}
+		"Foroogg" "Forest\Foroogg.I2D" 0x3e6f0240 {1616908304,-1,0,0,0} {}
+		"Forgogo" "Forest\Forgogo.I2D" 0xb6760241 {274731104,-1,0,0,0} {}
+		"Forogog" "Forest\Forogog.I2D" 0x12a90242 {1611685904,-1,0,0,0} {}
+		"Forgggo" "Forest\Forgggo.I2D" 0xe2af0243 {269488224,-1,0,0,0} {}
+		"Forggog" "Forest\Forggog.I2D" 0x39e30244 {269508624,-1,0,0,0} {}
+		"Forgogg" "Forest\Forgogg.I2D" 0x8fea0245 {274731024,-1,0,0,0} {}
+		"Foroggg" "Forest\Foroggg.I2D" 0x691c0246 {1611665424,-1,0,0,0} {}
+		"Forooog" "Forest\Forooog.I2D" 0x774f0247 {1616928784,-1,0,0,0} {}
+		"Foroogo" "Forest\Foroogo.I2D" 0xe9550248 {1616908384,-1,0,0,0} {}
+		"Forogoo" "Forest\Forogoo.I2D" 0x6f6c0249 {1611685984,-1,0,0,0} {}
+		"Forgooo" "Forest\Forgooo.I2D" 0x3da8024a {274751584,-1,0,0,0} {}
+		"Forgoog" "Forest\Forgoog.I2D" 0xe3bb024b {274751504,-1,0,0,0} {}
+		"Foroggo" "Forest\Foroggo.I2D" 0x2ffa024c {1611665504,-1,0,0,0} {}
+		"Forgrrggrrggrrgoooo" "Forest\Forgrrggrrggrrgoooo.I2D" 0x4024024d {-1,-1,1,4,4} {}
+		"Forgggorrrorrrogggo" "Forest\Forgggorrrorrrogggo.I2D" 0x1d3e024e {-1,-1,1,4,4} {}
+		"Foroooogrrggrrggrrg" "Forest\Foroooogrrggrrggrrg.I2D" 0x8960024f {-1,-1,1,4,4} {}
+		"Forogggorrrorrroggg" "Forest\Forogggorrrorrroggg.I2D" 0xb16a0250 {-1,-1,1,4,4} {}
+		"Foriiix" "Forest\Foriiix.I2D" 0xa5800251 {336860160,-1,0,0,0} {}
+		"Foriixi" "Forest\Foriixi.I2D" 0x74950252 {336855060,-1,0,0,0} {}
+		"Forixii" "Forest\Forixii.I2D" 0x34a20253 {335549460,-1,0,0,0} {}
+		"Forxiii" "Forest\Forxiii.I2D" 0xdab20254 {1315860,-1,0,0,0} {}
+		"Forxxii" "Forest\Forxxii.I2D" 0xe8d20255 {5140,-1,0,0,0} {}
+		"Foriixx" "Forest\Foriixx.I2D" 0xb0f90256 {336855040,-1,0,0,0} {}
+		"Forxixi" "Forest\Forxixi.I2D" 0xae0c0257 {1310740,-1,0,0,0} {}
+		"Forixix" "Forest\Forixix.I2D" 0x221a0258 {335549440,-1,0,0,0} {}
+		"Forxxxi" "Forest\Forxxxi.I2D" 0x34310259 {20,-1,0,0,0} {}
+		"Forxxix" "Forest\Forxxix.I2D" 0xa446025a {5120,-1,0,0,0} {}
+		"Forxixx" "Forest\Forxixx.I2D" 0x8e5b025b {1310720,-1,0,0,0} {}
+		"Forixxx" "Forest\Forixxx.I2D" 0x8f6c025c {335544320,-1,0,0,0} {}
+		"Formdrr" "Forest\Formdrr.I2D" 0x047d025d {807424080,-1,0,0,0} {}
+		"Formdrr2" "Forest\Formdrr2.I2D" 0x2b8b025e {-1,-1,0,0,0} {}
+		"Forrrmd" "Forest\Forrrmd.I2D" 0x51a1025f {1347432480,-1,0,0,0} {}
+		"Forrrmd2" "Forest\Forrrmd2.I2D" 0x7bb40260 {-1,-1,0,0,0} {}
+		"Formrdr" "Forest\Formrdr.I2D" 0xdbbe0261 {810557520,-1,0,0,0} {}
+		"Formrdr2" "Forest\Formrdr2.I2D" 0x0fca0262 {-1,-1,0,0,0} {}
+		"Forrmrd" "Forest\Forrmrd.I2D" 0xacda0263 {1345343520,-1,0,0,0} {}
+		"Forrmrd2" "Forest\Forrmrd2.I2D" 0x99ef0264 {-1,-1,0,0,0} {}
+		"Formgrr" "Forest\Forggrr.I2D" 0x36030265 {806375504,807424080,0,0,0} {}
+		"Formgrr2" "Forest\Formgrr2.I2D" 0x29180266 {-1,-1,0,0,0} {}
+		"Forrrmg" "Forest\Forrrgg.I2D" 0x211e0267 {1347432464,1347432480,0,0,0} {}
+		"Forrrmg2" "Forest\Forrrmg2.I2D" 0x332d0268 {-1,-1,0,0,0} {}
+		"Formrgr" "Forest\Forgrgr.I2D" 0xbe330269 {810553424,810557520,0,0,0} {}
+		"Formrgr2" "Forest\Formrgr2.I2D" 0xc941026a {-1,-1,0,0,0} {}
+		"Forrmrg" "Forest\Forrgrg.I2D" 0xd148026b {1345343504,1345343520,0,0,0} {}
+		"Forrmrg2" "Forest\Forrmrg2.I2D" 0xb55d026c {-1,-1,0,0,0} {}
+		"Formmxx" "Forest\Formmxx.I2D" 0xc365026d {808452096,-1,0,0,0} {}
+		"Formmxx2" "Forest\Formmxx2.I2D" 0x5874026e {-1,-1,0,0,0} {}
+		"Formxmx" "Forest\Formxmx.I2D" 0x9187026f {805318656,-1,0,0,0} {}
+		"Formxmx2" "Forest\Formxmx2.I2D" 0x6fa50270 {-1,-1,0,0,0} {}
+		"Forxmxm" "Forest\Forxmxm.I2D" 0xe6b90271 {3145776,-1,0,0,0} {}
+		"Forxxmm" "Forest\Forxxmm.I2D" 0x3bc80272 {12336,-1,0,0,0} {}
+		"Formmmx" "Forest\Formmmx.I2D" 0x3fdb0273 {808464384,-1,0,0,0} {}
+		"Formmmx2" "Forest\Formmmx2.I2D" 0x97ea0274 {-1,-1,0,0,0} {}
+		"Forxmmm" "Forest\Forxmmm.I2D" 0x15fe0275 {3158064,-1,0,0,0} {}
+		"Formxmm" "Forest\Formxmm.I2D" 0xfb130276 {805318704,-1,0,0,0} {}
+		"Formxmm2" "Forest\Formxmm2.I2D" 0x572a0277 {-1,-1,0,0,0} {}
+		"Formmxm" "Forest\Formmxm.I2D" 0x8d350278 {808452144,-1,0,0,0} {}
+		"Formmxm2" "Forest\Formmxm2.I2D" 0xbd460279 {-1,-1,0,0,0} {}
+		"Forxmxx" "Forest\Forxmxx.I2D" 0xa354027a {3145728,-1,0,0,0} {}
+		"Forxmxx2" "Forest\Forxmxx2.I2D" 0xc163027b {-1,-1,0,0,0} {}
+		"Formxxx" "Forest\Formxxx.I2D" 0x6372027c {805306368,-1,0,0,0} {}
+		"Formxxx2" "Forest\Formxxx2.I2D" 0x3a7e027d {-1,-1,0,0,0} {}
+		"Forxxmx" "Forest\Forxxmx.I2D" 0x6a95027e {12288,-1,0,0,0} {}
+		"Forxxxm" "Forest\Forxxxm.I2D" 0xeda2027f {48,-1,0,0,0} {}
+		"ForPathNES" "Forest\ForPathNES.I2D" 0x35ff0284 {-1,-1,0,0,0} {}
+		"ForPathNS" "Forest\ForPathNS.I2D" 0x64120285 {-1,-1,0,0,0} {}
+		"ForPathEW" "Forest\ForPathEW.I2D" 0x901b0286 {-1,-1,0,0,0} {}
+		"ForPathNW" "Forest\ForPathNW.I2D" 0x13250287 {-1,-1,0,0,0} {}
+		"ForPathES" "Forest\ForPathES.I2D" 0xe32c0288 {-1,-1,0,0,0} {}
+		"ForPathSW" "Forest\ForPathSW.I2D" 0x1b360289 {-1,-1,0,0,0} {}
+		"ForPathNE" "Forest\ForPathNE.I2D" 0x6d42028a {-1,-1,0,0,0} {}
+		"ForPathN" "Forest\ForPathN.I2D" 0xb44b028b {-1,-1,0,0,0} {}
+		"ForPathS" "Forest\ForPathS.I2D" 0x9b52028c {-1,-1,0,0,0} {}
+		"ForPathW" "Forest\ForPathW.I2D" 0x675c028d {-1,-1,0,0,0} {}
+		"ForPathE" "Forest\ForPathE.I2D" 0x6c65028e {-1,-1,0,0,0} {}
+		"ForPathBN" "Forest\ForPathBN.I2D" 0x4b71028f {-1,-1,0,0,0} {}
+		"ForPathBS" "Forest\ForPathBS.I2D" 0x56780290 {-1,-1,0,0,0} {}
+		"ForPathBW" "Forest\ForPathBW.I2D" 0xee820291 {-1,-1,0,0,0} {}
+		"ForPathBE" "Forest\ForPathBE.I2D" 0xed8a0292 {-1,-1,0,0,0} {}
+		"ForPathNSW" "Forest\ForPathNSW.I2D" 0xca930293 {-1,-1,0,0,0} {}
+		"ForPathNEW" "Forest\ForPathNEW.I2D" 0x15a60294 {-1,-1,0,0,0} {}
+		"ForPathESW" "Forest\ForPathESW.I2D" 0x3fae0295 {-1,-1,0,0,0} {}
+		"ForBRock1" "Forest\ForRock1.I2D" 0x91b80296 {-1,-1,0,0,0} {}
+		"ForBRock2" "Forest\ForRock2.I2D" 0x5cc00297 {-1,-1,0,0,0} {}
+		"ForBRock3" "Forest\ForRock3.I2D" 0x23d10298 {-1,-1,0,0,0} {}
+		"ForBRock4" "Forest\ForRock4.I2D" 0x07db0299 {-1,-1,0,0,0} {}
+		"ForTree1" "Forest\ForTree1.I2D" 0x9fe5029a {-1,-1,0,0,0} {}
+		"ForTree2" "Forest\ForTree2.I2D" 0x3efa029b {-1,-1,0,0,0} {}
+		"ForTree3" "Forest\ForTree3.I2D" 0x9b08029c {-1,-1,0,0,0} {}
+		"ForTree4" "Forest\ForTree4.I2D" 0x871b029d {-1,-1,0,0,0} {}
+		"ForTree5" "Forest\ForTree5.I2D" 0xa741029e {-1,-1,0,0,0} {}
+		"ForTree6" "Forest\ForTree6.I2D" 0xd062029f {-1,-1,0,0,0} {}
+		"ForTree7" "Forest\ForTree7.I2D" 0x2b7302a0 {-1,-1,0,0,0} {}
+		"ForTree8" "Forest\ForTree8.I2D" 0x458a02a1 {-1,-1,0,0,0} {}
+		"ForTree9" "Forest\ForTree9.I2D" 0x659902a2 {-1,-1,0,0,0} {}
+		"ForTree10" "Forest\ForTree10.I2D" 0x4a4f03f4 {-1,-1,0,0,0} {}
+		"ForStump" "Forest\ForStump.I2D" 0x324f03f5 {-1,-1,0,0,0} {}
+		"ForTreeTop" "Forest\ForTreeTop.I2D" 0x324f03f6 {-1,-1,0,0,0} {}
+		"ForTreeTop2" "Forest\ForTreeTop2.I2D" 0x324f03f7 {-1,-1,0,0,0} {}
+		"ForBirch1" "Forest\ForBirch1.I2D" 0xecad02a3 {-1,-1,0,0,0} {}
+		"ForBirch2" "Forest\ForBirch2.I2D" 0x17c502a4 {-1,-1,0,0,0} {}
+		"ForBirch3" "Forest\ForBirch3.I2D" 0x02cf02a5 {-1,-1,0,0,0} {}
+		"ForBirch4" "Forest\ForBirch4.I2D" 0xe7d902a6 {-1,-1,0,0,0} {}
+		"ForBirch5" "Forest\ForBirch5.I2D" 0x76e302a7 {-1,-1,0,0,0} {}
+		"ForFerns1" "Forest\ForFerns1.I2D" 0x81ee02a8 {-1,-1,0,0,0} {}
+		"ForFerns2" "Forest\ForFerns2.I2D" 0xedf802a9 {-1,-1,0,0,0} {}
+		"ForFerns3" "Forest\ForFerns3.I2D" 0xf20202aa {-1,-1,0,0,0} {}
+		"ForFerns4" "Forest\ForFerns4.I2D" 0x340a02ab {-1,-1,0,0,0} {}
+		"ForPlants1" "Forest\ForPlants1.I2D" 0xe71302ac {-1,-1,0,0,0} {}
+		"ForPlants2" "Forest\ForPlants2.I2D" 0x161e02ad {-1,-1,0,0,0} {}
+		"ForPlants3" "Forest\ForPlants3.I2D" 0xa32802ae {-1,-1,0,0,0} {}
+		"ForPlants4" "Forest\ForPlants4.I2D" 0xe02f02af {-1,-1,0,0,0} {}
+		"ForFerns5" "Forest\ForFerns5.I2D" 0xed3902b0 {-1,-1,0,0,0} {}
+		"ForFerns6" "Forest\ForFerns6.I2D" 0x256202b1 {-1,-1,0,0,0} {}
+		"ForFerns7" "Forest\ForFerns7.I2D" 0x529102b2 {-1,-1,0,0,0} {}
+		"ForFerns8" "Forest\ForFerns8.I2D" 0x7cca02b3 {-1,-1,0,0,0} {}
+		"ForStalk1" "Forest\ForStalk1.I2D" 0x5dd402b4 {-1,-1,0,0,0} {}
+		"ForStalk2" "Forest\ForStalk2.I2D" 0x4cef02b5 {-1,-1,0,0,0} {}
+		"ForStalk3" "Forest\ForStalk3.I2D" 0xbbf902b6 {-1,-1,0,0,0} {}
+		"ForGrassTuft1" "Forest\ForGrassTuft1.I2D" 0xe60402b7 {-1,-1,0,0,0} {}
+		"ForGrassTuft2" "Forest\ForGrassTuft2.I2D" 0x6c0b02b8 {-1,-1,0,0,0} {}
+		"ForGrassTuft3" "Forest\ForGrassTuft3.I2D" 0x7a1c02b9 {-1,-1,0,0,0} {}
+		"ForGrassTuft4" "Forest\ForGrassTuft4.I2D" 0x605002ba {-1,-1,0,0,0} {}
+		"ForFern1" "Forest\ForFern1.I2D" 0xac9602bb {-1,-1,0,0,0} {}
+		"ForFern2" "Forest\ForFern2.I2D" 0x3fa202bc {-1,-1,0,0,0} {}
+		"ForFern3" "Forest\ForFern3.I2D" 0xd2c402bd {-1,-1,0,0,0} {}
+		"ForFern4" "Forest\ForFern4.I2D" 0x29e102be {-1,-1,0,0,0} {}
+		"ForPlant1" "Forest\ForPlant1.I2D" 0x210702bf {-1,-1,0,0,0} {}
+		"ForPlant2" "Forest\ForPlant2.I2D" 0xad1302c0 {-1,-1,0,0,0} {}
+		"ForPlant3" "Forest\ForPlant3.I2D" 0x5b2202c1 {-1,-1,0,0,0} {}
+		"ForPlant4" "Forest\ForPlant4.I2D" 0x4e2c02c2 {-1,-1,0,0,0} {}
+		"ForPlant5" "Forest\ForPlant5.I2D" 0xb13602c3 {-1,-1,0,0,0} {}
+		"ForPlant6" "Forest\ForPlant6.I2D" 0x473f02c4 {-1,-1,0,0,0} {}
+		"ForPlant7" "Forest\ForPlant7.I2D" 0xf94a02c5 {-1,-1,0,0,0} {}
+		"ForPlant8" "Forest\ForPlant8.I2D" 0x765402c6 {-1,-1,0,0,0} {}
+		"ForPlant9" "Forest\ForPlant9.I2D" 0x715e02c7 {-1,-1,0,0,0} {}
+		"ForPlant10" "Forest\ForPlant10.I2D" 0x956902c8 {-1,-1,0,0,0} {}
+		"ForPlant11" "Forest\ForPlant11.I2D" 0x9c7302c9 {-1,-1,0,0,0} {}
+		"ForPlant12" "Forest\ForPlant12.I2D" 0x217d02ca {-1,-1,0,0,0} {}
+		"ForPlant13" "Forest\ForPlant13.I2D" 0xfa8802cb {-1,-1,0,0,0} {}
+		"ForPlant14" "Forest\ForPlant14.I2D" 0xa39202cc {-1,-1,0,0,0} {}
+		"ForPlant15" "Forest\ForPlant15.I2D" 0xb79c02cd {-1,-1,0,0,0} {}
+		"ForPlant16" "Forest\ForPlant16.I2D" 0x43a502ce {-1,-1,0,0,0} {}
+		"ForMushrooms1" "Forest\ForMushrooms1.I2D" 0x78ae02cf {-1,-1,0,0,0} {}
+		"ForMushrooms2" "Forest\ForMushrooms2.I2D" 0xbcb802d0 {-1,-1,0,0,0} {}
+		"ForMushrooms3" "Forest\ForMushrooms3.I2D" 0xf4c202d1 {-1,-1,0,0,0} {}
+		"ForMushrooms4" "Forest\ForMushrooms4.I2D" 0x31d002d2 {-1,-1,0,0,0} {}
+		"ForBridge" "Forest\ForBridge.I2D" 0xfeda02d3 {-1,-1,0,0,0} {}
+		"ForRock1" "Forest\ForRock1TestX2.I2D" 0x91b80300 {-1,-1,0,0,0} {}
+		"ForRock2" "Forest\ForRockTwo.I2D" 0x5cc00301 {-1,-1,0,0,0} {}
+		"ForRock3" "Forest\ForRockThree.I2D" 0x23d10302 {-1,-1,0,0,0} {}
+		"ForRock4" "Forest\ForRockFour.I2D" 0x23d10303 {-1,-1,0,0,0} {}
+		"ForRock5" "Forest\ForRock5.I2D" 0x90e5059d {-1,-1,0,0,0} {}
+		"ForRock6" "Forest\ForRock6.I2D" 0x4987059e {-1,-1,0,0,0} {}
+		"ForRock7" "Forest\ForRock7.I2D" 0xf124059f {-1,-1,0,0,0} {}
+		"ForRock8" "Forest\ForRock8.I2D" 0xf1c005a0 {-1,-1,0,0,0} {}
+		"ForRock9" "Forest\ForRock9.I2D" 0xbb5e05a1 {-1,-1,0,0,0} {}
+		"ForRock10" "Forest\ForRock10.I2D" 0xe9fb05a2 {-1,-1,0,0,0} {}
+		"CavBones1" "Cave\CavBones1.I2D" 0x0d94036f {-1,-1,0,0,0} {}
+		"CavBones2" "Cave\CavBones2.I2D" 0xaea10370 {-1,-1,0,0,0} {}
+		"CavBones3" "Cave\CavBones3.I2D" 0x0da80371 {-1,-1,0,0,0} {}
+		"CavBones4" "Cave\CavBones4.I2D" 0x19ac0372 {-1,-1,0,0,0} {}
+		"LabWalkWay" "Labyrnth\LabWalkWay.I2D" 0x84ff0516 {-1,-1,0,0,0} {}
+		"LabSideN" "Labyrnth\LabSideN.I2D" 0x6c490534 {-1,-1,0,0,0} {}
+		"LabSideS" "Labyrnth\LabSideS.I2D" 0xd6cf0535 {-1,-1,0,0,0} {}
+		"LabSideE" "Labyrnth\LabSideE.I2D" 0x84be0532 {-1,-1,0,0,0} {}
+		"LabSideW" "Labyrnth\LabSideW.I2D" 0xe1880533 {-1,-1,0,0,0} {}
+		"LabSidePost" "Labyrnth\LabSidePost.I2D" 0xeb96051c {-1,-1,0,0,0} {}
+		"LabTorchPost" "Labyrnth\LabTorchPost.I2D" 0x840b052c {-1,-1,0,0,0} {}
+		"LabSpillar" "Labyrnth\LabSpillar.I2D" 0x0c66051f {-1,-1,0,0,0} {}
+		"LabStairE" "Labyrnth\LabStairE.I2D" 0xae440517 {-1,-1,0,0,0} {}
+		"LabStairS" "Labyrnth\LabStairS.I2D" 0xd6370519 {-1,-1,0,0,0} {}
+		"LabBarGateE" "Labyrnth\LabBarGateE.I2D" 0xae8a052d {-1,-1,0,0,0} {}
+		"LabBarGateS" "Labyrnth\LabBarGateS.I2D" 0x5262052e {-1,-1,0,0,0} {}
+		"LabCplatform" "Labyrnth\LabCplatform.I2D" 0xf1ba0518 {-1,-1,0,0,0} {}
+		"LabSkullE" "Labyrnth\LabSkullE.I2D" 0xb3a7051d {-1,-1,0,0,0} {}
+		"LabSkullS" "Labyrnth\LabSkullS.I2D" 0xa6b4051e {-1,-1,0,0,0} {}
+		"LabTorchS" "Labyrnth\LabTorchS.I2D" 0x3eca0520 {-1,-1,0,0,0} {}
+		"LabBrazier" "Labyrnth\LabBrazier.I2D" 0x0dc20521 {-1,-1,0,0,0} {}
+		"LabPyrDoor" "Labyrnth\LabPyrDoor.I2D" 0x84cd0522 {-1,-1,0,0,0} {}
+		"LabPyrStrS" "Labyrnth\LabPyrStrS.I2D" 0xae6f0523 {-1,-1,0,0,0} {}
+		"LabControlE" "Labyrnth\LabControlE.I2D" 0xbb410530 {-1,-1,0,0,0} {}
+		"LabControlS" "Labyrnth\LabControlS.I2D" 0xe9ca0531 {-1,-1,0,0,0} {}
+		"LabL_Hand" "Labyrnth\LabL_Hand.I2D" 0x845f0524 {-1,-1,0,0,0} {}
+		"LabL_WalkE" "Labyrnth\LabL_WalkE.I2D" 0xaeb70525 {-1,-1,0,0,0} {}
+		"LabL_WalkS" "Labyrnth\LabL_WalkS.I2D" 0xf11e0526 {-1,-1,0,0,0} {}
+		"LabL_Flr" "Labyrnth\LabL_Flr.I2D" 0xebcb0527 {-1,-1,0,0,0} {}
+		"TwnSidewalkSw2" "Town\TwnSidewalkSw2.I2D" 0x47a1008a {-1,-1,0,0,0} {}
+		"LabL_FlrXtraS" "Labyrnth\LabL_FlrXtraS.I2D" 0x3c8b0528 {-1,-1,0,0,0} {}
+		"LabL_FlrXtraE" "Labyrnth\LabL_FlrXtraE.I2D" 0x99940529 {-1,-1,0,0,0} {}
+		"LabL_FLrXtraE2" "Labyrnth\LabL_FLrXtraE2.I2D" 0x1cd3052a {-1,-1,0,0,0} {}
+		"LabL_DoorE" "Labyrnth\LabL_DoorE.I2D" 0xde08052b {-1,-1,0,0,0} {}
+		"ElevGlow" "Magic\Elevglow.I3D" 0x139a3f4f {-1,-1,0,0,0} {}
+		"Dun" "Dungeon\DunDUM.I2D" 0xae1c069c {-1,-1,0,0,0} {}
+		"DunBedN" "Dungeon\DunBedN.I2D" 0xebc9034b {-1,-1,0,0,0} {}
+		"DunBedW" "Dungeon\DunBedW.I2D" 0x8c17034c {-1,-1,0,0,0} {}
+		"Dunwwww" "Dungeon\Dunwwww.I2D" 0x6c980482 {-1,-1,0,0,0} {}
+		"Dunfffw" "Dungeon\Dunfffw.I2D" 0x84670483 {-1,-1,0,0,0} {}
+		"DunCanalEW" "Dungeon\DunCanalEW.I2D" 0xe1910485 {-1,-1,0,0,0} {}
+		"Dunffwf" "Dungeon\Dunffwf.I2D" 0x6ce20486 {-1,-1,0,0,0} {}
+		"Dunffww" "Dungeon\Dunffww.I2D" 0xae510488 {-1,-1,0,0,0} {}
+		"DunCanalW" "Dungeon\DunCanalW.I2D" 0x52bf0489 {-1,-1,0,0,0} {}
+		"Dunfwff" "Dungeon\Dunfwff.I2D" 0xf1ce048a {-1,-1,0,0,0} {}
+		"DunCanalNS" "Dungeon\DunCanalNS.I2D" 0xe927048c {-1,-1,0,0,0} {}
+		"DunCanalN" "Dungeon\DunCanalN.I2D" 0xeb7e048d {-1,-1,0,0,0} {}
+		"Dunfwfw" "Dungeon\Dunfwfw.I2D" 0xb3c5048e {-1,-1,0,0,0} {}
+		"Dunfwww" "Dungeon\Dunfwww.I2D" 0xa60e048f {-1,-1,0,0,0} {}
+		"Dunwfff" "Dungeon\Dunwfff.I2D" 0xdb580490 {-1,-1,0,0,0} {}
+		"DunCanalE" "Dungeon\DunCanalE.I2D" 0x99340492 {-1,-1,0,0,0} {}
+		"Dunwfwf" "Dungeon\Dunwfwf.I2D" 0x243c0493 {-1,-1,0,0,0} {}
+		"Dunwfww" "Dungeon\Dunwfww.I2D" 0x5e520494 {-1,-1,0,0,0} {}
+		"Dunwwff" "Dungeon\Dunwwff.I2D" 0x0d760495 {-1,-1,0,0,0} {}
+		"Dunwwfw" "Dungeon\Dunwwfw.I2D" 0x1cf70496 {-1,-1,0,0,0} {}
+		"Dunwwwf" "Dungeon\Dunwwwf.I2D" 0x062f0497 {-1,-1,0,0,0} {}
+		"DunCanalS" "Dungeon\DunCanalS.I2D" 0xb7760498 {-1,-1,0,0,0} {}
+		"DunFontS" "Dungeon\DunFontS.I2D" 0x84b80478 {-1,-1,0,0,0} {}
+		"DunFontE" "Dungeon\DunFontE.I2D" 0x6c71049b {-1,-1,0,0,0} {}
+		"DunArchE" "Dungeon\DunArchE.I2D" 0x846704f3 {-1,-1,0,0,0} {}
+		"DunArchS" "Dungeon\DunArchS.I2D" 0xe1ab04f4 {-1,-1,0,0,0} {}
+		"DunColE" "Dungeon\DuncolumnE.I2D" 0xa66204f5 {-1,-1,0,0,0} {}
+		"DunColS" "Dungeon\DunColumnS.I2D" 0xdbdd04f6 {-1,-1,0,0,0} {}
+		"DunColEL" "Dungeon\DunColEL.I2D" 0x84950571 {-1,-1,0,0,0} {}
+		"DunColER" "Dungeon\DunColER.I2D" 0xe18e0572 {-1,-1,0,0,0} {}
+		"DunColSL" "Dungeon\DunColSL.I2D" 0x6c690573 {-1,-1,0,0,0} {}
+		"DunColSR" "Dungeon\DunColSR.I2D" 0xd6450574 {-1,-1,0,0,0} {}
+		"DunColIn" "Dungeon\DunColIn.I2D" 0x84320592 {-1,-1,0,0,0} {}
+		"DunColOut" "Dungeon\DunColOut.I2D" 0xe16f0593 {-1,-1,0,0,0} {}
+		"DunCol2E" "Dungeon\DunCol2E.I2D" 0xa69f05f2 {-1,-1,0,0,0} {}
+		"DunCol2S" "Dungeon\DunCol2S.I2D" 0x7d3805f3 {-1,-1,0,0,0} {}
+		"DunColEnf" "Dungeon\DunColEnf.I2D" 0xae9005fa {-1,-1,0,0,0} {}
+		"DunColSnf" "Dungeon\DunDunColSnf.I2D" 0x84dd05f9 {-1,-1,0,0,0} {}
+		"DunbrkcolE" "Dungeon\DunbrkcolE.I2D" 0x84ae061d {-1,-1,0,0,0} {}
+		"DunbrkcolS" "Dungeon\DunbrkcolS.I2D" 0xae9f061e {-1,-1,0,0,0} {}
+		"Dunbrkcoldark" "Dungeon\Dunbrkcoldark.I2D" 0x8483061f {-1,-1,0,0,0} {}
+		"Dunbrkcoldark2" "Dungeon\Dunbrkcoldark2.I2D" 0xe1240620 {-1,-1,0,0,0} {}
+		"DunTorch1" "Dungeon\DunTorch1.I2D" 0xae3204a3 {-1,-1,0,0,0} {}
+		"DunTorch2" "Dungeon\DunTorch2.I2D" 0x52b304a4 {-1,-1,0,0,0} {}
+		"DunTorch_1" "Dungeon\DunTorch_1.I2D" 0xbb5004a9 {-1,-1,0,0,0} {}
+		"DunTorch_2" "Dungeon\DunTorch_2.I2D" 0xe9cd04aa {-1,-1,0,0,0} {}
+		"Dunffff" "Dungeon\Dunffff.I2D" 0x843b04ab {-1,-1,0,0,0} {}
+		"DunFsign" "Dungeon\DunFsign.I2D" 0x903f0559 {-1,-1,0,0,0} {}
+		"Dunssff" "Dungeon\Dunssff.I2D" 0x84150566 {-1,-1,0,0,0} {}
+		"Dunsssf" "Dungeon\Dunsssf.I2D" 0xe14e0567 {-1,-1,0,0,0} {}
+		"Dunsfsf" "Dungeon\Dunsfsf.I2D" 0x84e70556 {-1,-1,0,0,0} {}
+		"DunMidStain" "Dungeon\DunMidStain.I2D" 0xd612055b {-1,-1,0,0,0} {}
+		"Dunffff2" "Dungeon\Dunffff2.I2D" 0x49bc055a {-1,-1,0,0,0} {}
+		"DunWallS" "Dungeon\DunWallS.I2D" 0xe15504ac {-1,-1,0,0,0} {}
+		"DunWallE" "Dungeon\DunWallE.I2D" 0x6cd904ad {-1,-1,0,0,0} {}
+		"DunWallEB" "Dungeon\Dunwalleb.I2D" 0x847405b4 {-1,-1,0,0,0} {}
+		"DunWallEP" "Dungeon\Dunwallep.I2D" 0xe1e405b5 {-1,-1,0,0,0} {}
+		"DunWallET" "Dungeon\Dunwallet.I2D" 0x6c9505b6 {-1,-1,0,0,0} {}
+		"DunWallSB" "Dungeon\Dunwallsb.I2D" 0x84c905b7 {-1,-1,0,0,0} {}
+		"DunWallSP" "Dungeon\Dunwallsp.I2D" 0xe18705b8 {-1,-1,0,0,0} {}
+		"DunWallST" "Dungeon\Dunwallst.I2D" 0x6c8e05b9 {-1,-1,0,0,0} {}
+		"DunWallEQ" "Dungeon\DunWallEQ.I2D" 0x84580606 {-1,-1,0,0,0} {}
+		"DunWallSQ" "Dungeon\DunWallSQ.I2D" 0xae6c0607 {-1,-1,0,0,0} {}
+		"DunAlcoveS" "Dungeon\DunAlcoveS.I2D" 0x842e04ae {-1,-1,0,0,0} {}
+		"DunAlcoveE" "Dungeon\DunAlcoveE.I2D" 0xe16404af {-1,-1,0,0,0} {}
+		"DunAKingE" "Dungeon\DunAlcoveKingE.I2D" 0x843905fd {-1,-1,0,0,0} {}
+		"DunAKingS" "Dungeon\DunAlcoveKingS.I2D" 0xae5c05fe {-1,-1,0,0,0} {}
+		"DunAKnightE" "Dungeon\DunAlcoveKnightE.I2D" 0x847605ff {-1,-1,0,0,0} {}
+		"DunAKnightS" "Dungeon\DunAlcoveKnightS.I2D" 0xae490600 {-1,-1,0,0,0} {}
+		"DunAMonkE" "Dungeon\DunAlcoveMonkE.I2D" 0xf1bd0601 {-1,-1,0,0,0} {}
+		"DunAMonkS" "Dungeon\DunAlcoveMonkS.I2D" 0xeb7c0602 {-1,-1,0,0,0} {}
+		"DunAKKS" "Dungeon\DunAlcoveKKS.I2D" 0x3c1c0603 {-1,-1,0,0,0} {}
+		"DunAKME" "Dungeon\DunAlcoveKME.I2D" 0x99fc0604 {-1,-1,0,0,0} {}
+		"DunLgAlcoveE" "Dungeon\DunLgAlcoveE.I2D" 0xc81d05e3 {-1,-1,0,0,0} {}
+		"DunLgAlcoveS" "Dungeon\DunLgAlcoveS.I2D" 0xa63805e4 {-1,-1,0,0,0} {}
+		"DunAFlrE" "Dungeon\DunlgalcovefloorE.I2D" 0x84730615 {-1,-1,0,0,0} {}
+		"DunAFlrS" "Dungeon\DunlgalcovefloorS.I2D" 0xae1f0616 {-1,-1,0,0,0} {}
+		"DunCutBakRt" "Dungeon\DunCutBakRt.I2D" 0x847004d3 {-1,-1,0,0,0} {}
+		"DunCutFrntLft" "Dungeon\DunCutFrntLft.I2D" 0xe10704d4 {-1,-1,0,0,0} {}
+		"DunCutFrntRt" "Dungeon\DunCutFrntRt.I2D" 0x52dc04d5 {-1,-1,0,0,0} {}
+		"DunCutBakLft" "Dungeon\DunCutBakLft.I2D" 0xf14b04d6 {-1,-1,0,0,0} {}
+		"DunCutWallLft" "Dungeon\DunCutWallLft.I2D" 0x846504e5 {-1,-1,0,0,0} {}
+		"DunCutWallRt" "Dungeon\DunCutWallRt.I2D" 0xae9f04e6 {-1,-1,0,0,0} {}
+		"DunBrkCrn1E" "Dungeon\DunBrkCrn1E.I2D" 0x526105be {-1,-1,0,0,0} {}
+		"DunBrkCrn1S" "Dungeon\DunBrkCrn1S.I2D" 0x90d205bf {-1,-1,0,0,0} {}
+		"DunBrkCrn2E" "Dungeon\DunBrkCrn2E.I2D" 0x494405c0 {-1,-1,0,0,0} {}
+		"DunBrkCrn2S" "Dungeon\DunBrkCrn2S.I2D" 0xf1bc05c1 {-1,-1,0,0,0} {}
+		"DunBrkWall1E" "Dungeon\DunBrkWall1E.I2D" 0x844805c2 {-1,-1,0,0,0} {}
+		"DunBrkWall1S" "Dungeon\DunBrkWall1S.I2D" 0xae5605c3 {-1,-1,0,0,0} {}
+		"DunBrkWall2E" "Dungeon\DunBrkWall2E.I2D" 0xf11205c4 {-1,-1,0,0,0} {}
+		"DunBrkWall2S" "Dungeon\DunBrkWall2S.I2D" 0xeb1005c5 {-1,-1,0,0,0} {}
+		"DunColFreeS" "Dungeon\DunColFreeS.I2D" 0x84ae0515 {-1,-1,0,0,0} {}
+		"DunArchSEnd" "Dungeon\DunArchSEnd.I2D" 0xd6110551 {-1,-1,0,0,0} {}
+		"DunArchSEnd2" "Dungeon\DunArchSEnd2.I2D" 0xaeaa0552 {-1,-1,0,0,0} {}
+		"DunArchSEnd3" "Dungeon\DunArchSEnd3.I2D" 0xf1dc0553 {-1,-1,0,0,0} {}
+		"DunArchEEnd" "Dungeon\DunArchEEnd.I2D" 0xf1370554 {-1,-1,0,0,0} {}
+		"DunArchEEnd2" "Dungeon\DunArchEEnd2.I2D" 0xbb9c0555 {-1,-1,0,0,0} {}
+		"DunBridgeEW" "Dungeon\DunBridgeEW.I2D" 0x49de055c {-1,-1,0,0,0} {}
+		"DunBridgeNS" "Dungeon\DunBridgeNS.I2D" 0x84fb055e {-1,-1,0,0,0} {}
+		"DunChainEW" "Dungeon\DunChainEW.I2D" 0x84b7055f {-1,-1,0,0,0} {}
+		"DunChainNS" "Dungeon\DunChainNS.I2D" 0xe1c10560 {-1,-1,0,0,0} {}
+		"DunTorch1" "Dungeon\DunTorch1.I2D" 0x6cbd0561 {-1,-1,0,0,0} {}
+		"DunTorch2" "Dungeon\DunTorch2.I2D" 0xd6900562 {-1,-1,0,0,0} {}
+		"DunTorch4" "Dungeon\DunTorch4.I2D" 0x8447068b {-1,-1,0,0,0} {}
+		"DunManicleE" "Dungeon\DunManicleE.I2D" 0xf1790563 {-1,-1,0,0,0} {}
+		"DunWallE2" "Dungeon\DunWallE2.I2D" 0x6c420568 {-1,-1,0,0,0} {}
+		"DunFlrGrate" "Dungeon\DunFlrGrate.I2D" 0x84190569 {-1,-1,0,0,0} {}
+		"DunFlrGrate2" "Dungeon\Dunfloorgrate.I2D" 0xf1c9060f {-1,-1,0,0,0} {}
+		"DunFlrHole" "Dungeon\Dunfloorhole.I2D" 0xeb2d0610 {-1,-1,0,0,0} {}
+		"DunTorch1B" "Dungeon\DunTorch1B.I2D" 0x84c6056a {-1,-1,0,0,0} {}
+		"DunTorch2B" "Dungeon\DunTorch2B.I2D" 0xe12b056b {-1,-1,0,0,0} {}
+		"DunTorch3B" "Dungeon\DunTorch3B.I2D" 0x6cec056c {-1,-1,0,0,0} {}
+		"DunTorch4B" "Dungeon\DunTorch4B.I2D" 0xd65f056d {-1,-1,0,0,0} {}
+		"DunSconceE" "Dungeon\DunSconceE.I2D" 0xaee6056e {-1,-1,0,0,0} {}
+		"DunSconceS" "Dungeon\DunSconceS.I2D" 0x52a1056f {-1,-1,0,0,0} {}
+		"DunSignRed" "Dungeon\Dunsignred.I2D" 0x84130575 {-1,-1,0,0,0} {}
+		"DunBucketE" "Dungeon\DunBucketE.I2D" 0xe1f10577 {-1,-1,0,0,0} {}
+		"DunBucketS" "Dungeon\DunBucketS.I2D" 0x6cba0578 {-1,-1,0,0,0} {}
+		"DunBowl" "Dungeon\DunBowl.I2D" 0x84ab0576 {-1,-1,0,0,0} {}
+		"DunGoblet" "Dungeon\DunGoblet.I2D" 0xae15057a {-1,-1,0,0,0} {}
+		"DunJug" "Dungeon\DunJug.I2D" 0x52f8057b {-1,-1,0,0,0} {}
+		"DunPlate" "Dungeon\DunPlate.I2D" 0x9098057c {-1,-1,0,0,0} {}
+		"DunEndC" "Dungeon\DunEndC.I2D" 0x849b06ad {-1,-1,0,0,0} {}
+		"DunTableE" "Dungeon\DunTableE.I2D" 0x84c206ae {-1,-1,0,0,0} {}
+		"DunTableE2" "Dungeon\DunTableE2.I2D" 0xe1ca06af {-1,-1,0,0,0} {}
+		"DunChairE" "Dungeon\DunChairE.I2D" 0x6c9006b0 {-1,-1,0,0,0} {}
+		"DunChairS" "Dungeon\DunChairS.I2D" 0xd65406b1 {-1,-1,0,0,0} {}
+		"DunTableS" "Dungeon\DunTableS.I2D" 0xf16b057e {-1,-1,0,0,0} {}
+		"DunTableS2" "Dungeon\DunTableS2.I2D" 0xbb490580 {-1,-1,0,0,0} {}
+		"DunVase" "Dungeon\DunVase.I2D" 0xe9390581 {-1,-1,0,0,0} {}
+		"DunVase2" "Dungeon\DunVase2.I2D" 0xeb2a0582 {-1,-1,0,0,0} {}
+		"DunVase2G" "Dungeon\DunVase2G.I2D" 0xb3240583 {-1,-1,0,0,0} {}
+		"DunVase2O" "Dungeon\DunVase2O.I2D" 0xa6180584 {-1,-1,0,0,0} {}
+		"DunVase2OP" "Dungeon\DunVase2OP.I2D" 0xdb0d0585 {-1,-1,0,0,0} {}
+		"DunVase2R" "Dungeon\DunVase2R.I2D" 0x3c060586 {-1,-1,0,0,0} {}
+		"DunFlrTorch" "Dungeon\DunFlrTorch.I2D" 0xd6480587 {-1,-1,0,0,0} {}
+		"DunconNS" "Dungeon\DunconNS.I2D" 0x8461058b {-1,-1,0,0,0} {}
+		"DunconEW" "Dungeon\DunconEW.I2D" 0x496d058c {-1,-1,0,0,0} {}
+		"DunconNW" "Dungeon\DunconNW.I2D" 0xe91e058d {-1,-1,0,0,0} {}
+		"DunFsignB" "Dungeon\DunFsignB.I2D" 0xdbbc058e {-1,-1,0,0,0} {}
+		"DunconNE" "Dungeon\DunconNE.I2D" 0x8423058f {-1,-1,0,0,0} {}
+		"DunconSE" "Dungeon\DunconSE.I2D" 0xe1460590 {-1,-1,0,0,0} {}
+		"DunconSW" "Dungeon\DunconSW.I2D" 0x6c370591 {-1,-1,0,0,0} {}
+		"DunBarrel" "Dungeon\DunBarrel.I2D" 0x6c5a0594 {-1,-1,0,0,0} {}
+		"DunBanStairE" "Dungeon\Dunbanstaire.I2D" 0x845a05a3 {-1,-1,0,0,0} {}
+		"DunBanStairS" "Dungeon\Dunbanstairs.I2D" 0xae0605a4 {-1,-1,0,0,0} {}
+		"DunBanStrE" "Dungeon\Dunbanstre.I2D" 0xf16305a5 {-1,-1,0,0,0} {}
+		"DunBanStrS" "Dungeon\Dunbanstrs.I2D" 0xf1cb05a6 {-1,-1,0,0,0} {}
+		"DunStairE" "Dungeon\DunstairE.I2D" 0x846405a7 {-1,-1,0,0,0} {}
+		"DunStairS" "Dungeon\Dunstairs.I2D" 0xe1d105a8 {-1,-1,0,0,0} {}
+		"DunPenCol" "Dungeon\DunPenCol.I2D" 0x84c505a9 {-1,-1,0,0,0} {}
+		"DunPenPost" "Dungeon\DunPenPost.I2D" 0x842f05aa {-1,-1,0,0,0} {}
+		"DunGateDoorE" "Dungeon\DunGateDoorE.I2D" 0xaeef05ab {-1,-1,0,0,0} {}
+		"DunGateDoorS" "Dungeon\DunGateDoorS.I2D" 0xf11005ac {-1,-1,0,0,0} {}
+		"DunTopWallE" "Dungeon\DunTopWallE.I2D" 0xae4e05b1 {-1,-1,0,0,0} {}
+		"DunTopWallS" "Dungeon\DunTopWallS.I2D" 0x52d405b2 {-1,-1,0,0,0} {}
+		"DunDropCageFlr" "Dungeon\DunDropCageFlr.I2D" 0x842e05b3 {-1,-1,0,0,0} {}
+		"DunPenSideE" "Dungeon\DunPenSideE.I2D" 0x84ef05ba {-1,-1,0,0,0} {}
+		"DunPenSideS" "Dungeon\DunPenSideS.I2D" 0xe16a05bb {-1,-1,0,0,0} {}
+		"DunTombE" "Dungeon\DunTombE.I2D" 0x842105bc {-1,-1,0,0,0} {}
+		"DunTombS" "Dungeon\DunTombS.I2D" 0xe19005bd {-1,-1,0,0,0} {}
+		"DunTallColE" "Dungeon\DunTallColE.I2D" 0x848505c6 {-1,-1,0,0,0} {}
+		"DunTallColS" "Dungeon\DunTallColS.I2D" 0xae0605c7 {-1,-1,0,0,0} {}
+		"DuntTallColSE" "Dungeon\Duntoutcol.I2D" 0x848f0625 {-1,-1,0,0,0} {}
+		"DunTallDoorE" "Dungeon\DunTallDoorE.I2D" 0xeb7105c9 {-1,-1,0,0,0} {}
+		"DunTallDoorS" "Dungeon\DunTallDoorS.I2D" 0x3c1105ca {-1,-1,0,0,0} {}
+		"DunTallWallEP" "Dungeon\DunTallWallEP.I2D" 0x849c0621 {-1,-1,0,0,0} {}
+		"DunTallWallSP" "Dungeon\DunTallWallSP.I2D" 0xae1d0622 {-1,-1,0,0,0} {}
+		"DunTallWallE" "Dungeon\DunTallWallE.I2D" 0x992d05cb {-1,-1,0,0,0} {}
+		"DunTallWallS" "Dungeon\DunTallWallS.I2D" 0x1ce905cc {-1,-1,0,0,0} {}
+		"DunTallWallE2" "Dungeon\DunTallWallE2.I2D" 0x847e05cd {-1,-1,0,0,0} {}
+		"DunTallWallS2" "Dungeon\DunTallWallS2.I2D" 0xae3205ce {-1,-1,0,0,0} {}
+		"DunTallWallE3" "Dungeon\DunTallWallE3.I2D" 0xf11005cf {-1,-1,0,0,0} {}
+		"DunTallWallS3" "Dungeon\DunTallWallS3.I2D" 0xeb1f05d0 {-1,-1,0,0,0} {}
+		"DunTallWallE4" "Dungeon\DunTallWallE4.I2D" 0x3cfa05d1 {-1,-1,0,0,0} {}
+		"DunTallWallS4" "Dungeon\DunTallWallS4.I2D" 0x99bb05d2 {-1,-1,0,0,0} {}
+		"DunTallWallE5" "Dungeon\DunTallWallE5.I2D" 0x1cba05d3 {-1,-1,0,0,0} {}
+		"DunTallWallS5" "Dungeon\DunTallWallS5.I2D" 0xde0305d4 {-1,-1,0,0,0} {}
+		"DunAltarE" "Dungeon\DunAltarE.I2D" 0x849705d5 {-1,-1,0,0,0} {}
+		"DunTranE1" "Dungeon\DunTranE1.I2D" 0xd66905d6 {-1,-1,0,0,0} {}
+		"DunTranE2" "Dungeon\DunTranE2.I2D" 0x499905d7 {-1,-1,0,0,0} {}
+		"DunTranS1" "Dungeon\DunTranS1.I2D" 0xe96005d8 {-1,-1,0,0,0} {}
+		"DunTranS2" "Dungeon\DunTranS2.I2D" 0xdb2405d9 {-1,-1,0,0,0} {}
+		"Duntorche" "Dungeon\Duntorche.I2D" 0x848d05da {-1,-1,0,0,0} {}
+		"DunCrnCol" "Dungeon\DunCrnCol.I2D" 0x841f05db {-1,-1,0,0,0} {}
+		"DunTopCrn" "Dungeon\DunTopCrn.I2D" 0xaebf05dc {-1,-1,0,0,0} {}
+		"DunHeadRingE" "Dungeon\DunHeadRingE.I2D" 0xf15d05dd {-1,-1,0,0,0} {}
+		"DunHeadRingS" "Dungeon\DunHeadRingS.I2D" 0xeb9005de {-1,-1,0,0,0} {}
+		"DunPortDoorE" "Dungeon\DunPortDoorE.I2D" 0x3cda05df {-1,-1,0,0,0} {}
+		"DunPortDoorS" "Dungeon\DunPortDoorS.I2D" 0x99c005e0 {-1,-1,0,0,0} {}
+		"DunSmAltarE" "Dungeon\DunSmAltarE.I2D" 0x1c2905e1 {-1,-1,0,0,0} {}
+		"DunSmAltarS" "Dungeon\DunSmAltarS.I2D" 0xde8305e2 {-1,-1,0,0,0} {}
+		"DunCrnTorch" "Dungeon\DunCrnTorch.I2D" 0x7d8505e5 {-1,-1,0,0,0} {}
+		"Duntorchs" "Dungeon\Duntorchs.I2D" 0x843b05e6 {-1,-1,0,0,0} {}
+		"DunBRGEndE1" "Dungeon\DunBRGEndE1.I2D" 0x840c05e9 {-1,-1,0,0,0} {}
+		"DunBRGEndS1" "Dungeon\DunBRGEndS1.I2D" 0xaef205ea {-1,-1,0,0,0} {}
+		"DunBRGEndS2" "Dungeon\DunBRGEndS2.I2D" 0xf13705eb {-1,-1,0,0,0} {}
+		"DunBRGMidE" "Dungeon\Dunbrgmide.I2D" 0xeb4305ec {-1,-1,0,0,0} {}
+		"DunBRGMidS" "Dungeon\DunBRGMidS.I2D" 0x3c9a05ed {-1,-1,0,0,0} {}
+		"DunGarFront" "Dungeon\DunGarFront.I2D" 0xf19e05c8 {-1,-1,0,0,0} {}
+		"DunGriffinE" "Dungeon\Dungriffine.I2D" 0x999305ee {-1,-1,0,0,0} {}
+		"DunGriffinS" "Dungeon\Dungriffins.I2D" 0x1cfd05ef {-1,-1,0,0,0} {}
+		"DunRunePenE" "Dungeon\DunRunePenE.I2D" 0xde4605f0 {-1,-1,0,0,0} {}
+		"DunRunePenS" "Dungeon\DunRunePenS.I2D" 0xc86105f1 {-1,-1,0,0,0} {}
+		"DunWidePenE" "Dungeon\DunWidePenE.I2D" 0x841c05f4 {-1,-1,0,0,0} {}
+		"DunWidePenS" "Dungeon\DunWidePenS.I2D" 0xae8105f5 {-1,-1,0,0,0} {}
+		"DunBRGEndE2" "Dungeon\DunBRGEndE2.I2D" 0x843505f6 {-1,-1,0,0,0} {}
+		"DunWallColE" "Dungeon\DunWallColE.I2D" 0x847705fb {-1,-1,0,0,0} {}
+		"DunWallColS" "Dungeon\DunWallColS.I2D" 0x492105fc {-1,-1,0,0,0} {}
+		"DunFigHeadE" "Dungeon\DunfigheadE.I2D" 0x84d10608 {-1,-1,0,0,0} {}
+		"DunFigHeadS" "Dungeon\DunfigheadS.I2D" 0xe17a0609 {-1,-1,0,0,0} {}
+		"DunSpikHoleNS" "Dungeon\DunSpikHoleNS.I2D" 0x8453060c {-1,-1,0,0,0} {}
+		"DunSpikFlrEW" "Dungeon\DunspikfloorEW.I2D" 0x84b5060d {-1,-1,0,0,0} {}
+		"DunSpikFlrNS" "Dungeon\DunspikfloorNS.I2D" 0xae2a060e {-1,-1,0,0,0} {}
+		"DunFlrStar1" "Dungeon\Dunfloorstar1.I2D" 0x3c690611 {-1,-1,0,0,0} {}
+		"DunFlrStar2" "Dungeon\Dunfloorstar2.I2D" 0x990b0612 {-1,-1,0,0,0} {}
+		"DunFlrStar3" "Dungeon\Dunfloorstar3.I2D" 0x1c160613 {-1,-1,0,0,0} {}
+		"DunFlrStar4" "Dungeon\Dunfloorstar4.I2D" 0xdec90614 {-1,-1,0,0,0} {}
+		"DunClothS" "Dungeon\DunwallclothS.I2D" 0x84f80617 {-1,-1,0,0,0} {}
+		"DunClothSP" "Dungeon\DunwallclothpS.I2D" 0xae3e0618 {-1,-1,0,0,0} {}
+		"DunClothSG" "Dungeon\DunwallclothgS.I2D" 0xf1330619 {-1,-1,0,0,0} {}
+		"DunClothE" "Dungeon\DunwallclothE.I2D" 0xeb22061a {-1,-1,0,0,0} {}
+		"DunClothEP" "Dungeon\DunwallclothpE.I2D" 0x3c7b061b {-1,-1,0,0,0} {}
+		"DunClothEG" "Dungeon\DunwallclothgE.I2D" 0x9971061c {-1,-1,0,0,0} {}
+		"DunLBaseE" "Dungeon\DunLBaseE.I2D" 0xf1330623 {-1,-1,0,0,0} {}
+		"DunLBaseS" "Dungeon\DunLBaseS.I2D" 0xebb60624 {-1,-1,0,0,0} {}
+		"DuntallwallE2R" "Dungeon\DuntallwallE2R.I2D" 0x849b0626 {-1,-1,0,0,0} {}
+		"DuntallwallE3P" "Dungeon\DuntallwallE3P.I2D" 0xae4b0627 {-1,-1,0,0,0} {}
+		"DuntallwallE4B" "Dungeon\DuntallwallE4B.I2D" 0xf1f40628 {-1,-1,0,0,0} {}
+		"DuntallwallE5G" "Dungeon\DuntallwallE5G.I2D" 0xeb810629 {-1,-1,0,0,0} {}
+		"DuntallwallEPB" "Dungeon\DuntallwallEPB.I2D" 0x3c42062a {-1,-1,0,0,0} {}
+		"DuntallwallEPG" "Dungeon\DuntallwallEPG.I2D" 0x99cf062b {-1,-1,0,0,0} {}
+		"DuntallwallEPP" "Dungeon\DuntallwallEPP.I2D" 0x1cc6062c {-1,-1,0,0,0} {}
+		"DuntallwallEPR" "Dungeon\DuntallwallEPR.I2D" 0xdedd062d {-1,-1,0,0,0} {}
+		"DuntallwallER" "Dungeon\DuntallwallER.I2D" 0xc81d062e {-1,-1,0,0,0} {}
+		"DunBanBE" "Dungeon\DunBanBE.I2D" 0x841c0626 {-1,-1,0,0,0} {}
+		"DunBanBS" "Dungeon\DunBanBS.I2D" 0x84f70627 {-1,-1,0,0,0} {}
+		"DunBanGE" "Dungeon\DunBanGE.I2D" 0xae5f0628 {-1,-1,0,0,0} {}
+		"DunBanGS" "Dungeon\DunBanGS.I2D" 0xe9ff0629 {-1,-1,0,0,0} {}
+		"DunBanPE" "Dungeon\DunBanPE.I2D" 0xdbfb062a {-1,-1,0,0,0} {}
+		"DunBanPS" "Dungeon\DunBanPS.I2D" 0x3ec2062b {-1,-1,0,0,0} {}
+		"DunBanRE" "Dungeon\DunBanRE.I2D" 0x0dec062c {-1,-1,0,0,0} {}
+		"DunBanRS" "Dungeon\DunBanRS.I2D" 0x47c2062d {-1,-1,0,0,0} {}
+		"DunfullarchE" "Dungeon\DunfullarchE.I2D" 0x84d2062e {-1,-1,0,0,0} {}
+		"DunfullarchS" "Dungeon\DunfullarchS.I2D" 0xae7f062f {-1,-1,0,0,0} {}
+		"DunAltar" "Dungeon\DunAltar.I2D" 0x84b00626 {-1,-1,0,0,0} {}
+		"DunRoof" "Dungeon\DunRoof.I2D" 0x84320631 {-1,-1,0,0,0} {}
+		"DunBldfloor" "Dungeon\DunBldfloor.I2D" 0x84bc0661 {-1,-1,0,0,0} {}
+		"DunBldfloorE" "Dungeon\DunBldfloorE.I2D" 0xe1a70662 {-1,-1,0,0,0} {}
+		"DunBldfloorS" "Dungeon\DunBldfloorS.I2D" 0x6c9d0663 {-1,-1,0,0,0} {}
+		"DunBldWallE" "Dungeon\DunBldWallE.I2D" 0xd67c0664 {-1,-1,0,0,0} {}
+		"DunBldWallS" "Dungeon\DunBldWallS.I2D" 0xae6a0665 {-1,-1,0,0,0} {}
+		"DunHeadlessWall" "Dungeon\DunHeadlessWall.I2D" 0x524a0666 {-1,-1,0,0,0} {}
+		"DunGuyonstick" "Dungeon\DunGuyonstick.I2D" 0xbb140668 {-1,-1,0,0,0} {}
+		"DunTombfinal" "Dungeon\DunTombfinal.I2D" 0x84ef0669 {-1,-1,0,0,0} {}
+		"DunGarBack" "Dungeon\DunGarBack.I2D" 0x8461069e {-1,-1,0,0,0} {}
+		"DunGarFront2" "Dungeon\DunGarFront2.I2D" 0xae97069f {-1,-1,0,0,0} {}
+		"DunGarBack2" "Dungeon\DunGarBack2.I2D" 0xf19b06a0 {-1,-1,0,0,0} {}
+		"DunLionE" "Dungeon\DunLionE.I2D" 0x52ba063e {-1,-1,0,0,0} {}
+		"DunLionS" "Dungeon\DunLionS.I2D" 0x9081063f {-1,-1,0,0,0} {}
+		"Dunllhh" "Dungeon\Dunllhh.I2D" 0x8403068e {-1,-1,0,0,0} {}
+		"Dunhlhl" "Dungeon\Dunhlhl.I2D" 0xe1eb068f {-1,-1,0,0,0} {}
+		"Dunhhll" "Dungeon\Dunhhll.I2D" 0x6cad0690 {-1,-1,0,0,0} {}
+		"Dunlhlh" "Dungeon\Dunlhlh.I2D" 0xd6720691 {-1,-1,0,0,0} {}
+		"Dunlllh" "Dungeon\Dunlllh.I2D" 0xae390692 {-1,-1,0,0,0} {}
+		"Dunllhl" "Dungeon\Dunllhl.I2D" 0x52fe0693 {-1,-1,0,0,0} {}
+		"Dunhlll" "Dungeon\Dunhlll.I2D" 0x90c40694 {-1,-1,0,0,0} {}
+		"Dunlhll" "Dungeon\Dunlhll.I2D" 0x498c0695 {-1,-1,0,0,0} {}
+		"Dunhhhl" "Dungeon\Dunhhhl.I2D" 0xf1560696 {-1,-1,0,0,0} {}
+		"Dunhhlh" "Dungeon\Dunhhlh.I2D" 0xf11d0697 {-1,-1,0,0,0} {}
+		"Dunlhhh" "Dungeon\Dunlhhh.I2D" 0xbbe50698 {-1,-1,0,0,0} {}
+		"Dunhlhh" "Dungeon\Dunhlhh.I2D" 0xe9bd069a {-1,-1,0,0,0} {}
+		"DunRack2" "Dungeon\DunRack2.I2D" 0x849d06a6 {-1,-1,0,0,0} {}
+		"DunSAlcove1" "Dungeon\DunSAlcove1.I2D" 0xaec106a7 {-1,-1,0,0,0} {}
+		"DunSAlcove2" "Dungeon\DunSAlcove2.I2D" 0x52ba06a8 {-1,-1,0,0,0} {}
+		"DunSAlcove3" "Dungeon\DunSAlcove3.I2D" 0x909606a9 {-1,-1,0,0,0} {}
+		"DunSWall" "Dungeon\DunSWall.I2D" 0x843b06aa {-1,-1,0,0,0} {}
+		"DunBasicAltB" "Dungeon\DunBasicAltB.I2D" 0x841306b2 {-1,-1,0,0,0} {}
+		"DunIme2B" "Dungeon\DunIme2B.I2D" 0xe1e106b3 {-1,-1,0,0,0} {}
+		"DunImeB" "Dungeon\DunImeB.I2D" 0x6cbf06b4 {-1,-1,0,0,0} {}
+		"DunImsB" "Dungeon\DunImsB.I2D" 0xd69006b5 {-1,-1,0,0,0} {}
+		"DunWallAltEB" "Dungeon\DunWallAltEB.I2D" 0x524d06b7 {-1,-1,0,0,0} {}
+		"Cav" "Cave\CavDUM.I2D" 0x8421069a {-1,-1,0,0,0} {}
+		"CavFlr" "Cave\CavFlr.I2D" 0x84db063d {-1,-1,0,0,0} {}
+		"CavWaterA" "Cave\CavWaterA.I2D" 0x840206d5 {-1,-1,0,0,0} {}
+		"CavFlrL1" "Cave\CavFlrL1.I2D" 0xe148063e {-1,-1,0,0,0} {}
+		"CavFlrL2" "Cave\CavFlrL2.I2D" 0x6cb3063f {-1,-1,0,0,0} {}
+		"CavFlrL3" "Cave\CavFlrL3.I2D" 0xd6200640 {-1,-1,0,0,0} {}
+		"CavFlrM1" "Cave\CavFlrM1.I2D" 0xae8c0641 {-1,-1,0,0,0} {}
+		"CavFlrM2" "Cave\CavFlrM2.I2D" 0x52f90642 {-1,-1,0,0,0} {}
+		"CavFlrM3" "Cave\CavFlrM3.I2D" 0x90640643 {-1,-1,0,0,0} {}
+		"CavFlrS1" "Cave\CavFlrS1.I2D" 0x49d10644 {-1,-1,0,0,0} {}
+		"CavFlrS2" "Cave\CavFlrS2.I2D" 0xf13c0645 {-1,-1,0,0,0} {}
+		"CavFlrS3" "Cave\CavFlrS3.I2D" 0xf1a60646 {-1,-1,0,0,0} {}
+		"CavFlrEdge1" "Cave\CavFlrEdge1.I2D" 0x84c20647 {-1,-1,0,0,0} {}
+		"CavFlrEdge2" "Cave\CavFlrEdge2.I2D" 0xe12e0648 {-1,-1,0,0,0} {}
+		"CavFlrEdge3" "Cave\CavFlrEdge3.I2D" 0x6c990649 {-1,-1,0,0,0} {}
+		"CavFlrEdge4" "Cave\CavFlrEdge4.I2D" 0xd603064a {-1,-1,0,0,0} {}
+		"CavFlrEdge5" "Cave\CavFlrEdge5.I2D" 0xae6e064b {-1,-1,0,0,0} {}
+		"CavFlrWater1" "Cave\CavFlrWater1.I2D" 0x84e9064c {-1,-1,0,0,0} {}
+		"CavFlrWater2" "Cave\CavFlrWater2.I2D" 0xe164064d {-1,-1,0,0,0} {}
+		"CavFlrWater3" "Cave\CavFlrWater3.I2D" 0x6ce3064e {-1,-1,0,0,0} {}
+		"CavFlrWater4" "Cave\CavFlrWater4.I2D" 0xd658064f {-1,-1,0,0,0} {}
+		"CavFlrWater5" "Cave\CavFlrWater5.I2D" 0xaed40650 {-1,-1,0,0,0} {}
+		"CavFlrWater6" "Cave\CavFlrWater6.I2D" 0x524f0651 {-1,-1,0,0,0} {}
+		"CavFlrW1" "Cave\CavFlrW1.I2D" 0x90cb0652 {-1,-1,0,0,0} {}
+		"CavFlrW2" "Cave\CavFlrW2.I2D" 0x49430653 {-1,-1,0,0,0} {}
+		"CavFlrW3" "Cave\CavFlrW3.I2D" 0xf1c30654 {-1,-1,0,0,0} {}
+		"CavFlrW4" "Cave\CavFlrW4.I2D" 0xf13c0655 {-1,-1,0,0,0} {}
+		"CavFlrWS1" "Cave\CavFlrWS1.I2D" 0xbbba0656 {-1,-1,0,0,0} {}
+		"CavFlrWS2" "Cave\CavFlrWS2.I2D" 0xe9350657 {-1,-1,0,0,0} {}
+		"CavFlrWS3" "Cave\CavFlrWS3.I2D" 0xebb40658 {-1,-1,0,0,0} {}
+		"CavFlrPoolTop1" "Cave\CavFlrPoolTop1.I2D" 0x84c50659 {-1,-1,0,0,0} {}
+		"CavFlrPoolTop2" "Cave\CavFlrPoolTop2.I2D" 0xe136065a {-1,-1,0,0,0} {}
+		"CavFlrPoolTop3" "Cave\CavFlrPoolTop3.I2D" 0x6ca9065b {-1,-1,0,0,0} {}
+		"CavFlrPoolTop4" "Cave\CavFlrPoolTop4.I2D" 0xd61d065c {-1,-1,0,0,0} {}
+		"CavFlrPoolMid1" "Cave\CavFlrPoolMid1.I2D" 0xae91065d {-1,-1,0,0,0} {}
+		"CavFlrPoolMid2" "Cave\CavFlrPoolMid2.I2D" 0x5207065e {-1,-1,0,0,0} {}
+		"CavFlrPoolMid3" "Cave\CavFlrPoolMid3.I2D" 0x907b065f {-1,-1,0,0,0} {}
+		"CavFlrPoolMid4" "Cave\CavFlrPoolMid4.I2D" 0x49f00660 {-1,-1,0,0,0} {}
+		"CavFlrPoolBot1" "Cave\CavFlrPoolBot1.I2D" 0xf1650661 {-1,-1,0,0,0} {}
+		"CavFlrPoolBot2" "Cave\CavFlrPoolBot2.I2D" 0xf1dd0662 {-1,-1,0,0,0} {}
+		"CavFlrPoolBot3" "Cave\CavFlrPoolBot3.I2D" 0xbb540663 {-1,-1,0,0,0} {}
+		"CavFlrPoolBot4" "Cave\CavFlrPoolBot4.I2D" 0xe9cc0664 {-1,-1,0,0,0} {}
+		"CavFlrStepTop1" "Cave\CavFlrStepTop1.I2D" 0x844a0665 {-1,-1,0,0,0} {}
+		"CavFlrStepTop2" "Cave\CavFlrStepTop2.I2D" 0xe1c20666 {-1,-1,0,0,0} {}
+		"CavFlrStepTop3" "Cave\CavFlrStepTop3.I2D" 0x6c3e0667 {-1,-1,0,0,0} {}
+		"CavFlrStepTop4" "Cave\CavFlrStepTop4.I2D" 0xd6bd0668 {-1,-1,0,0,0} {}
+		"CavFlrStepMid1" "Cave\CavFlrStepMid1.I2D" 0xae390669 {-1,-1,0,0,0} {}
+		"CavFlrStepMid2" "Cave\CavFlrStepMid2.I2D" 0x52b5066a {-1,-1,0,0,0} {}
+		"CavFlrStepMid3" "Cave\CavFlrStepMid3.I2D" 0x9031066b {-1,-1,0,0,0} {}
+		"CavFlrStepMid4" "Cave\CavFlrStepMid4.I2D" 0x49ad066c {-1,-1,0,0,0} {}
+		"CavFlrStepBot1" "Cave\CavFlrStepBot1.I2D" 0xf12a066d {-1,-1,0,0,0} {}
+		"CavFlrStepBot2" "Cave\CavFlrStepBot2.I2D" 0xf1a6066e {-1,-1,0,0,0} {}
+		"CavFlrStepBot3" "Cave\CavFlrStepBot3.I2D" 0xbb25066f {-1,-1,0,0,0} {}
+		"CavFlrStepBot4" "Cave\CavFlrStepBot4.I2D" 0xe9a10670 {-1,-1,0,0,0} {}
+		"CavFlrBridge1" "Cave\CavFlrBridge1.I2D" 0x84de0671 {-1,-1,0,0,0} {}
+		"CavFlrBridge2" "Cave\CavFlrBridge2.I2D" 0xe1650672 {-1,-1,0,0,0} {}
+		"CavFlrBridge3" "Cave\CavFlrBridge3.I2D" 0x6cea0673 {-1,-1,0,0,0} {}
+		"CavFlrBridge4" "Cave\CavFlrBridge4.I2D" 0xd66d0674 {-1,-1,0,0,0} {}
+		"CavWall01" "Cave\CavWall01.I2D" 0xaef60675 {-1,-1,0,0,0} {}
+		"CavWall02" "Cave\CavWall02.I2D" 0x52780676 {-1,-1,0,0,0} {}
+		"CavWall03" "Cave\CavWall03.I2D" 0x90020677 {-1,-1,0,0,0} {}
+		"CavWall04" "Cave\CavWall04.I2D" 0x49880678 {-1,-1,0,0,0} {}
+		"CavWall05" "Cave\CavWall05.I2D" 0xf11f0679 {-1,-1,0,0,0} {}
+		"CavWall06" "Cave\CavWall06.I2D" 0xf1a5067a {-1,-1,0,0,0} {}
+		"CavWall07" "Cave\CavWall07.I2D" 0xbb2a067b {-1,-1,0,0,0} {}
+		"CavWall08" "Cave\CavWall08.I2D" 0xe9b1067c {-1,-1,0,0,0} {}
+		"CavWall09" "Cave\CavWall09.I2D" 0xeb3d067d {-1,-1,0,0,0} {}
+		"CavStaMB1" "Cave\CavStaMB1.I2D" 0x84a1067e {-1,-1,0,0,0} {}
+		"CavStaMB2" "Cave\CavStaMB2.I2D" 0xe131067f {-1,-1,0,0,0} {}
+		"CavStaMB3" "Cave\CavStaMB3.I2D" 0x6cbc0680 {-1,-1,0,0,0} {}
+		"CavStaMM1" "Cave\CavStaMM1.I2D" 0xd64b0681 {-1,-1,0,0,0} {}
+		"CavStaMM2" "Cave\CavStaMM2.I2D" 0xaeec0682 {-1,-1,0,0,0} {}
+		"CavStaMM3" "Cave\CavStaMM3.I2D" 0x527a0683 {-1,-1,0,0,0} {}
+		"CavStaMS1" "Cave\CavStaMS1.I2D" 0x900c0684 {-1,-1,0,0,0} {}
+		"CavStaMS2" "Cave\CavStaMS2.I2D" 0x49960685 {-1,-1,0,0,0} {}
+		"CavStaMS3" "Cave\CavStaMS3.I2D" 0xf1220686 {-1,-1,0,0,0} {}
+		"CavRockB1" "Cave\CavRockB1.I2D" 0xf1ac0687 {-1,-1,0,0,0} {}
+		"CavRockB2" "Cave\CavRockB2.I2D" 0xbb350688 {-1,-1,0,0,0} {}
+		"CavRockM1" "Cave\CavRockM1.I2D" 0xe9c20689 {-1,-1,0,0,0} {}
+		"CavRockM2" "Cave\CavRockM2.I2D" 0xeb60068a {-1,-1,0,0,0} {}
+		"CavRockS1" "Cave\CavRockS1.I2D" 0xb3ec068b {-1,-1,0,0,0} {}
+		"CavRockS2" "Cave\CavRockS2.I2D" 0xa679068c {-1,-1,0,0,0} {}
+		"CavCrystal1B" "Cave\CavCrystal1B.I2D" 0xb382068d {-1,-1,0,0,0} {}
+		"CavCrystal1M" "Cave\CavCrystal1M.I2D" 0x1212068e {-1,-1,0,0,0} {}
+		"CavCrystal1s" "Cave\CavCrystal1s.I2D" 0x4da1068f {-1,-1,0,0,0} {}
+		"CavCrystal2B" "Cave\CavCrystal2B.I2D" 0xc82f0690 {-1,-1,0,0,0} {}
+		"CavCrystal2B1" "Cave\Cavcrystal2b1.I2D" 0xaef60175 {-1,-1,0,0,0} {}
+		"CavCrystal2B2" "Cave\Cavcrystal2b2.I2D" 0x52780176 {-1,-1,0,0,0} {}
+		"CavCrystal2B3" "Cave\Cavcrystal2b3.I2D" 0x90020177 {-1,-1,0,0,0} {}
+		"CavEmeraldB" "Cave\Cavemeraldb.I2D" 0x49880178 {-1,-1,0,0,0} {}
+		"CavEmeraldM" "Cave\Cavemeraldm.I2D" 0xf11f0179 {-1,-1,0,0,0} {}
+		"CavEmeraldS" "Cave\Cavemeralds.I2D" 0xf1a5017a {-1,-1,0,0,0} {}
+		"CavFlrRim1" "Cave\Cavflrrim1.I2D" 0xbb2a017b {-1,-1,0,0,0} {}
+		"CavFlrRim2" "Cave\Cavflrrim2.I2D" 0xe9b1017c {-1,-1,0,0,0} {}
+		"CavFlrRim3" "Cave\Cavflrrim3.I2D" 0xeb3d017d {-1,-1,0,0,0} {}
+		"CavFlrRim4" "Cave\Cavflrrim4.I2D" 0xbb2a027b {-1,-1,0,0,0} {}
+		"CavRubyB" "Cave\Cavrubyb.I2D" 0xe9b1027c {-1,-1,0,0,0} {}
+		"CavRubyM" "Cave\Cavrubym.I2D" 0xeb3d027d {-1,-1,0,0,0} {}
+		"CavRubyS" "Cave\Cavrubys.I2D" 0xbb2a027b {-1,-1,0,0,0} {}
+		"CavWallB1" "Cave\CavWallB1.I2D" 0xe9b1037c {-1,-1,0,0,0} {}
+		"CavWallB2" "Cave\CavWallB2.I2D" 0xeb3d037d {-1,-1,0,0,0} {}
+		"CavWallB3" "Cave\CavWallB3.I2D" 0xe9b1047c {-1,-1,0,0,0} {}
+		"CavWallB4" "Cave\CavWallB4.I2D" 0xeb3d047d {-1,-1,0,0,0} {}
+		"CavWallB5" "Cave\CavWallB5.I2D" 0xe9b1057c {-1,-1,0,0,0} {}
+		"CavWallB6" "Cave\CavWallB6.I2D" 0xeb3d057d {-1,-1,0,0,0} {}
+		"CavWallS1" "Cave\CavWallS1.I2D" 0xe9b1077c {-1,-1,0,0,0} {}
+		"CavWallS2" "Cave\CavWallS2.I2D" 0xeb3d077d {-1,-1,0,0,0} {}
+		"CavWallS3" "Cave\CavWallS3.I2D" 0xe9b1087c {-1,-1,0,0,0} {}
+		"CavWallS4" "Cave\CavWallS4.I2D" 0xeb3d087d {-1,-1,0,0,0} {}
+		"CavWallS5" "Cave\CavWallS5.I2D" 0xe9b1097c {-1,-1,0,0,0} {}
+		"CavWallS6" "Cave\CavWallS6.I2D" 0xeb3d097d {-1,-1,0,0,0} {}
+		"CavTable1" "Cave\CavTable1.I2D" 0x841b062b {-1,-1,0,0,0} {}
+		"CavChair1" "Cave\CavChair1.I2D" 0xe1ba062c {-1,-1,0,0,0} {}
+		"CavChair2" "Cave\CavChair2.I2D" 0x6c56062d {-1,-1,0,0,0} {}
+		"CavDWallS06" "Cave\CavDWallS06.I2D" 0x8415062f {-1,-1,0,0,0} {}
+		"CavDWallS02" "Cave\CavDWallS02.I2D" 0x84dd0630 {-1,-1,0,0,0} {}
+		"CavDWallS03" "Cave\CavDWallS03.I2D" 0xe1c20631 {-1,-1,0,0,0} {}
+		"CavDWallS04" "Cave\CavDWallS04.I2D" 0x6c390632 {-1,-1,0,0,0} {}
+		"CavDWallS05" "Cave\CavDWallS05.I2D" 0xd6b10633 {-1,-1,0,0,0} {}
+		"CavDWallS01" "Cave\CavDWallS01.I2D" 0x49c30634 {-1,-1,0,0,0} {}
+		"CavDStaMB1" "Cave\CavDStaMB1.I2D" 0x84200635 {-1,-1,0,0,0} {}
+		"CavDStaMB2" "Cave\CavDStaMB2.I2D" 0xe19a0636 {-1,-1,0,0,0} {}
+		"CavDStaMB3" "Cave\CavDStaMB3.I2D" 0x6c130637 {-1,-1,0,0,0} {}
+		"CavWallInt01" "Cave\CavWallInt01.I2D" 0x844f0639 {-1,-1,0,0,0} {}
+		"CavWallInt02" "Cave\CavWallInt02.I2D" 0xe1ca063a {-1,-1,0,0,0} {}
+		"CavWallInt03" "Cave\CavWallInt03.I2D" 0x6c47063b {-1,-1,0,0,0} {}
+		"CavWallIntC01" "Cave\CavWallIntC01.I2D" 0x845b0640 {-1,-1,0,0,0} {}
+		"CavWallIntC02" "Cave\CavWallIntC02.I2D" 0xe1d70641 {-1,-1,0,0,0} {}
+		"CavWallInt04" "Cave\CavWallInt04.I2D" 0x84c90644 {-1,-1,0,0,0} {}
+		"CavWallInt05" "Cave\CavWallInt05.I2D" 0xe1470645 {-1,-1,0,0,0} {}
+		"CavWallTun1" "Cave\CavWallTun1.I2D" 0x90c50649 {-1,-1,0,0,0} {}
+		"CavWallTun2" "Cave\CavWallTun2.I2D" 0x4944064a {-1,-1,0,0,0} {}
+		"CavTun1" "Cave\CavWallTun1.I2D" 0x90c50649 {-1,-1,0,0,0} {}
+		"CavTun2" "Cave\CavWallTun2.I2D" 0x4944064a {-1,-1,0,0,0} {}
+		"CavStairNS" "Cave\CavStairNS.I2D" 0x84b4066e {-1,-1,0,0,0} {}
+		"CavStairs05" "Cave\CavStairs05.I2D" 0x840d06d5 {-1,-1,0,0,0} {}
+		"CavStairs06" "Cave\CavStairs06.I2D" 0xe14906d6 {-1,-1,0,0,0} {}
+		"CavStairs07" "Cave\CavStairs07.I2D" 0x6c9606d7 {-1,-1,0,0,0} {}
+		"CavMushG1" "Cave\CavMushG1.I2D" 0x8426067b {-1,-1,0,0,0} {}
+		"CavMushG2" "Cave\CavMushG2.I2D" 0x8446067c {-1,-1,0,0,0} {}
+		"CavMushG3" "Cave\CavMushG3.I2D" 0x8489067d {-1,-1,0,0,0} {}
+		"CavMushB1" "Cave\CavMushB1.I2D" 0xe1ab067e {-1,-1,0,0,0} {}
+		"CavMushB2" "Cave\CavMushB2.I2D" 0x6ccd067f {-1,-1,0,0,0} {}
+		"CavMushB3" "Cave\CavMushB3.I2D" 0xd6ef0680 {-1,-1,0,0,0} {}
+		"CavMushB4" "Cave\CavMushB4.I2D" 0xae110681 {-1,-1,0,0,0} {}
+		"CavMushM1" "Cave\CavMushM1.I2D" 0x52340682 {-1,-1,0,0,0} {}
+		"CavMushM2" "Cave\CavMushM2.I2D" 0x90710683 {-1,-1,0,0,0} {}
+		"CavMushM3" "Cave\CavMushM3.I2D" 0x49950684 {-1,-1,0,0,0} {}
+		"CavMushM4" "Cave\CavMushM4.I2D" 0xf1b90685 {-1,-1,0,0,0} {}
+		"CavMushS1" "Cave\CavMushS1.I2D" 0xf1dc0686 {-1,-1,0,0,0} {}
+		"CavMushS2" "Cave\CavMushS2.I2D" 0xbb010687 {-1,-1,0,0,0} {}
+		"CavMushS3" "Cave\CavMushS3.I2D" 0xe9270688 {-1,-1,0,0,0} {}
+		"CavMushS4" "Cave\CavMushS4.I2D" 0xeb4b0689 {-1,-1,0,0,0} {}
+		"CavWorm1" "Cave\CavWorm1.I2D" 0x84a6068a {-1,-1,0,0,0} {}
+		"CavCBones2" "Cave\CavCBones2.I2D" 0x840f068c {-1,-1,0,0,0} {}
+		"CavCBones1" "Cave\CavCBones1.I2D" 0xd62d068d {-1,-1,0,0,0} {}
+		"CavWallRoom01" "Cave\CavWallRoom01.I2D" 0x84d5069e {-1,-1,0,0,0} {}
+		"CavWallRoom02" "Cave\CavWallRoom02.I2D" 0xe1ff069f {-1,-1,0,0,0} {}
+		"CavWallRoom03" "Cave\CavWallRoom03.I2D" 0x6c2906a0 {-1,-1,0,0,0} {}
+		"CavWallRoom04" "Cave\CavWallRoom04.I2D" 0xd65e06a1 {-1,-1,0,0,0} {}
+		"CavWallRoomS01" "Cave\CavWallRoomS01.I2D" 0xae8a06a2 {-1,-1,0,0,0} {}
+		"CavWallRoomS02" "Cave\CavWallRoomS02.I2D" 0x52b606a3 {-1,-1,0,0,0} {}
+		"CavWallRoomS03" "Cave\CavWallRoomS03.I2D" 0x90e306a4 {-1,-1,0,0,0} {}
+		"CavWallRoomS04" "Cave\CavWallRoomS04.I2D" 0x490f06a5 {-1,-1,0,0,0} {}
+		"Twn" "Town\TwnDUM.I2D" 0xdb47069e {-1,-1,0,0,0} {}
+		"TwnDoorS" "Town\TwnDoorS.I2D" 0x847f0691 {-1,-1,0,0,0} {}
+		"TwnEndColLS" "Town\TwnEndColLS.I2D" 0xe1e00692 {-1,-1,0,0,0} {}
+		"TwnEndColRS" "Town\TwnEndColRS.I2D" 0x6c400693 {-1,-1,0,0,0} {}
+		"TwnEve" "Town\TwnEve.I2D" 0xd6a00694 {-1,-1,0,0,0} {}
+		"TwnMidColS" "Town\TwnMidColS.I2D" 0xae000695 {-1,-1,0,0,0} {}
+		"TwnTopEndColSL" "Town\TwnTopEndColSL.I2D" 0x52600696 {-1,-1,0,0,0} {}
+		"TwnTopEndColSR" "Town\TwnTopEndColSR.I2D" 0x90140697 {-1,-1,0,0,0} {}
+		"TwnTopMidColS" "Town\TwnTopMidColS.I2D" 0x49770698 {-1,-1,0,0,0} {}
+		"TwnWallWin2" "Town\TwnWallWin2.I2D" 0xf1d90699 {-1,-1,0,0,0} {}
+		"TwnWin1S" "Town\Twnwin1s.I2D" 0xf13b069a {-1,-1,0,0,0} {}
+		"TwnDoor1S" "Town\Twndoor1s.I2D" 0x844b0626 {-1,-1,0,0,0} {}
+		"TwnDoor2S" "Town\TwnDoor2S.I2D" 0x844b0628 {-1,-1,0,0,0} {}
+		"TwnWall3E" "Town\TwnWall3E.I2D" 0x844b0629 {-1,-1,0,0,0} {}
+		"TwnWall3S" "Town\TwnWall3S.I2D" 0x844b0630 {-1,-1,0,0,0} {}
+		"TwnWin5E" "Town\TwnWin5E.I2D" 0x844b0631 {-1,-1,0,0,0} {}
+		"TwnWin5S" "Town\Twnwin5s.I2D" 0x844b0632 {-1,-1,0,0,0} {}
+		"TwnWall2E" "Town\TwnWall2E.I2D" 0x844b0633 {-1,-1,0,0,0} {}
+		"TwnWall2S" "Town\TwnWall2S.I2D" 0x844b0634 {-1,-1,0,0,0} {}
+		"TwnEvesmlE" "Town\Twnevesmle.I2D" 0x84dd0627 {-1,-1,0,0,0} {}
+		"TwnEvesmlS" "Town\Twnevesmls.I2D" 0xe1440628 {-1,-1,0,0,0} {}
+		"TwnEveS" "Town\Twneves.I2D" 0x84560629 {-1,-1,0,0,0} {}
+		"Twnsideroofs" "Town\Twnsideroofs.I2D" 0x8465064b {-1,-1,0,0,0} {}
+		"Twnrooffrnts" "Town\Twnrooffrnts.I2D" 0xd6c3064d {-1,-1,0,0,0} {}
+		"Twnvein2s" "Town\Twnvein2s.I2D" 0x495f064e {-1,-1,0,0,0} {}
+		"Twnroofmids" "Town\Twnroofmids.I2D" 0xe986064f {-1,-1,0,0,0} {}
+		"Twnroofends" "Town\Twnroofends.I2D" 0xdb620650 {-1,-1,0,0,0} {}
+		"Twnroofwine" "Town\Twnroofwine.I2D" 0x841f0651 {-1,-1,0,0,0} {}
+		"Twnsideroofe" "Town\Twnsideroofe.I2D" 0xae7d0652 {-1,-1,0,0,0} {}
+		"Twnvein3e" "Town\Twnvein3e.I2D" 0xe9d70653 {-1,-1,0,0,0} {}
+		"Twnvein2e" "Town\Twnvein2e.I2D" 0xdbc60654 {-1,-1,0,0,0} {}
+		"Twndoor1e" "Town\Twndoor1e.I2D" 0x84740655 {-1,-1,0,0,0} {}
+		"Twnplain2s" "Town\Twnplain2s.I2D" 0x84500656 {-1,-1,0,0,0} {}
+		"Twnplain2e" "Town\Twnplain2e.I2D" 0xaecb0657 {-1,-1,0,0,0} {}
+		"Twnplain3s" "Town\Twnplain3s.I2D" 0xf1970658 {-1,-1,0,0,0} {}
+		"Twnplain3e" "Town\Twnplain3e.I2D" 0xeb6e0659 {-1,-1,0,0,0} {}
+		"Twnvein3s" "Town\Twnvein3s.I2D" 0x90ca065a {-1,-1,0,0,0} {}
+		"Twnroofwins" "Town\Twnroofwins.I2D" 0xd654065b {-1,-1,0,0,0} {}
+		"Twnevee" "Town\Twnevee.I2D" 0xb3a4065c {-1,-1,0,0,0} {}
+		"Twnwin2s" "Town\Twnwin2s.I2D" 0x846a065d {-1,-1,0,0,0} {}
+		"Twnrooffrnte" "Town\Twnrooffrnte.I2D" 0x8428065e {-1,-1,0,0,0} {}
+		"Twnroofmide" "Town\Twnroofmide.I2D" 0xaee1065f {-1,-1,0,0,0} {}
+		"Twnroofende" "Town\Twnroofende.I2D" 0xe9570660 {-1,-1,0,0,0} {}
+		"Twnendcolle" "Town\Twnendcolle.I2D" 0xf1fd066a {-1,-1,0,0,0} {}
+		"Twnendcolre" "Town\Twnendcolre.I2D" 0x8451066b {-1,-1,0,0,0} {}
+		"TwnDoor2E" "Town\TwnDoor2E.I2D" 0x84ca066c {-1,-1,0,0,0} {}
+		"TwnWin2E" "Town\TwnWin2E.I2D" 0x84ef066d {-1,-1,0,0,0} {}
+		"Twnwin1e" "Town\Twnwin1e.I2D" 0x8401066f {-1,-1,0,0,0} {}
+		"TwnWin2ETrans" "Town\TwnWin2ETrans.I2D" 0xd68d0670 {-1,-1,0,0,0} {}
+		"TwnHowPlain2e" "Town\TwnHowPlain2e.I2D" 0x84d90671 {-1,-1,0,0,0} {}
+		"TwnPlainE3" "Town\TwnPlainE3.I2D" 0x84cf0672 {-1,-1,0,0,0} {}
+		"TwnPlainE3v1" "Town\TwnPlainE3v1.I2D" 0xe15b0673 {-1,-1,0,0,0} {}
+		"TwnPlainE3v2" "Town\TwnPlainE3v2.I2D" 0x6cd90674 {-1,-1,0,0,0} {}
+		"TwnWin3E" "Town\TwnWin3E.I2D" 0x84f40675 {-1,-1,0,0,0} {}
+		"TwnWin3S" "Town\TwnWin3S.I2D" 0xe1600676 {-1,-1,0,0,0} {}
+		"Twndoor1s2" "Town\Twndoor1s2.I2D" 0xd6bb0678 {-1,-1,0,0,0} {}
+		"Twndoor1s3" "Town\Twndoor1s3.I2D" 0x49390679 {-1,-1,0,0,0} {}
+		"Twnplains" "Town\Twnplains.I2D" 0x84cf067a {-1,-1,0,0,0} {}
+		"CavWallU01" "Cave\CavWallU01.I2D" 0x84dc06c1 {-1,-1,0,0,0} {}
+		"CavWallUJ01" "Cave\CavWallUJ01.I2D" 0xe10e06c2 {-1,-1,0,0,0} {}
+		"CavWallUJ02" "Cave\CavWallUJ02.I2D" 0x6c4106c3 {-1,-1,0,0,0} {}
+		"CavWallUJ03" "Cave\CavWallUJ03.I2D" 0xd67306c4 {-1,-1,0,0,0} {}
+		"CavWallUJ04" "Cave\CavWallUJ04.I2D" 0xaea506c5 {-1,-1,0,0,0} {}
+		"CavWallUJ05" "Cave\CavWallUJ05.I2D" 0x52dd06c6 {-1,-1,0,0,0} {}
+		"CavWallUJ06" "Cave\CavWallUJ06.I2D" 0x901306c7 {-1,-1,0,0,0} {}
+		"CavWallUJ07" "Cave\CavWallUJ07.I2D" 0x495b06c8 {-1,-1,0,0,0} {}
+		"CavWallUJ08" "Cave\CavWallUJ08.I2D" 0xf19806c9 {-1,-1,0,0,0} {}
+		"CavWallUJ09" "Cave\CavWallUJ09.I2D" 0xf1ce06ca {-1,-1,0,0,0} {}
+		"CavWallUJ10" "Cave\CavWallUJ10.I2D" 0xbb0606cb {-1,-1,0,0,0} {}
+		"CavWallUJ11" "Cave\CavWallUJ11.I2D" 0xe93d06cc {-1,-1,0,0,0} {}
+		"CavWallUJ12" "Cave\CavWallUJ12.I2D" 0xeb7506cd {-1,-1,0,0,0} {}
+		"CavWallUJ13" "Cave\CavWallUJ13.I2D" 0xb3ae06ce {-1,-1,0,0,0} {}
+		"CavWallUJ14" "Cave\CavWallUJ14.I2D" 0xa6f206cf {-1,-1,0,0,0} {}
+		"CavWallUJ15" "Cave\CavWallUJ15.I2D" 0xdb2806d0 {-1,-1,0,0,0} {}
+		"CavWallUJ16" "Cave\CavWallUJ16.I2D" 0x3c5e06d1 {-1,-1,0,0,0} {}
+		"TwnMidColE" "Town\TwnMidColE.I2D" 0xd6cc06d2 {-1,-1,0,0,0} {}
+		"TwnTopMidColE" "Town\TwnTopMidColE.I2D" 0xae7606d3 {-1,-1,0,0,0} {}
+		"TwnTopEndColEL" "Town\TwnTopEndColEL.I2D" 0x524a06d4 {-1,-1,0,0,0} {}
+		"DunKCAltar" "Dungeon\DunKC Altar.I2D" 0x841506d9 {-1,-1,0,0,0} {}
+		"DunKCArch" "Dungeon\DunKC Arch.I2D" 0xe1eb06da {-1,-1,0,0,0} {}
+		"DunKCBsteps" "Dungeon\DunKC Bsteps.I2D" 0x6ccd06db {-1,-1,0,0,0} {}
+		"DunKCThrone" "Dungeon\DunKC Dedlok-throne.I2D" 0xd6a206dc {-1,-1,0,0,0} {}
+		"Dunkcfrontbase" "Dungeon\Dunkcfrontbase.I2D" 0x84ad06e1 {-1,-1,0,0,0} {}
+		"Dunkcfrontsteps" "Dungeon\Dunkcfrontsteps.I2D" 0xaefe06e2 {-1,-1,0,0,0} {}
+		"Dunkctentacles" "Dungeon\Dunkctentacles.I2D" 0xe96d06e3 {-1,-1,0,0,0} {}
+		"Dunkcthronebase" "Dungeon\Dunkcthronebase.I2D" 0xdbdf06e4 {-1,-1,0,0,0} {}
+		"Dunkcsentry" "Dungeon\Dunkcsentry.I2D" 0x3eb806e5 {-1,-1,0,0,0} {}
+		"CavWallRoom05" "Cave\CavWallRoom05.I2D" 0x849a06e7 {-1,-1,0,0,0} {}
+		"CavWallRoom06" "Cave\CavWallRoom06.I2D" 0xe1db06e8 {-1,-1,0,0,0} {}
+		"CavWallRoom07" "Cave\CavWallRoom07.I2D" 0x6c4606e9 {-1,-1,0,0,0} {}
+		"CavWallRoom08" "Cave\CavWallRoom08.I2D" 0xd68706ea {-1,-1,0,0,0} {}
+		"CavWallRoom09" "Cave\CavWallRoom09.I2D" 0xaec806eb {-1,-1,0,0,0} {}
+		"CavWallRoom10" "Cave\CavWallRoom10.I2D" 0x520a06ec {-1,-1,0,0,0} {}
+		"CavWallRoom11" "Cave\CavWallRoom11.I2D" 0x904c06ed {-1,-1,0,0,0} {}
+		"CavWallRoom12" "Cave\CavWallRoom12.I2D" 0x498f06ee {-1,-1,0,0,0} {}
+		"CavWallU02" "Cave\CavWallU02.I2D" 0x845406ef {-1,-1,0,0,0} {}
+		"CavWallU03" "Cave\CavWallU03.I2D" 0xe19006f0 {-1,-1,0,0,0} {}
+		"CavWallU04" "Cave\CavWallU04.I2D" 0x52f306f1 {-1,-1,0,0,0} {}
+		"CavWallU05" "Cave\CavWallU05.I2D" 0x903106f2 {-1,-1,0,0,0} {}
+		"CavWallU06" "Cave\CavWallU06.I2D" 0x496f06f3 {-1,-1,0,0,0} {}
+		"CavWallU07" "Cave\CavWallU07.I2D" 0xf1b006f4 {-1,-1,0,0,0} {}
+		"CavWallU08" "Cave\CavWallU08.I2D" 0xf1ef06f5 {-1,-1,0,0,0} {}
+		"CavWallU09" "Cave\CavWallU09.I2D" 0xbb2f06f6 {-1,-1,0,0,0} {}
+		"CavWallU10" "Cave\CavWallU10.I2D" 0xe97c06f7 {-1,-1,0,0,0} {}
+		"CavWallU11" "Cave\CavWallU11.I2D" 0xebbd06f8 {-1,-1,0,0,0} {}
+		"CavWallU12" "Cave\CavWallU12.I2D" 0xb3ff06f9 {-1,-1,0,0,0} {}
+		"CavFlrP02" "Cave\CavFlrP02.I2D" 0xae7e06fb {-1,-1,0,0,0} {}
+		"CavFlrP03" "Cave\CavFlrP03.I2D" 0x52c306fc {-1,-1,0,0,0} {}
+		"CavFlrP01" "Cave\CavFlrP01.I2D" 0xf12a06fd {-1,-1,0,0,0} {}
+	END
+
+END
+
+CLASS "EXIT"
+BEGIN
+
+
+	// Stat Defs: <StatName> <FourCharId> <Default> <Min> <Max>
+	STATS
+	BEGIN
+		Openable OPEN 0 0 1
+		Facing FACE 0 0 255
+		UseCenter USE 0 0 2
+		StopMoving STMV 0 1 1
+		Delay DLY 0 0 1000
+	END
+
+
+	// Stat Defs: <StatName> <FourCharId> <Default> <Min> <Max>
+	OBJSTATS
+	BEGIN
+		Locked LOCK 0 0 1
+		KeyId KEY 0 0 100000
+		PickDifficulty PICK 0 0 100000
+	END
+
+
+	TYPES
+	BEGIN
+		"Door" "Misc\Door.I3D" 0x036a03f6 {1,0,0,0,0} {0,0,0}
+		"Halfdoor" "Misc\Door.I3D" 0x258d03f7 {1,0,0,0,0} {0,0,0}
+		"Forcxcx" "Forest\Forcxcx.I2D" 0x9db40280 {0,192,0,0,0} {0,0,0}
+		"Forcxcx2" "Forest\Forcxcx2.I2D" 0x93c50281 {0,192,0,0,0} {0,0,0}
+		"Forccxx" "Forest\Forccxx.I2D" 0x92d30282 {0,0,0,0,0} {0,0,0}
+		"Forccxx2" "Forest\Forccxx2.I2D" 0x22e70283 {0,0,0,0,0} {0,0,0}
+		"DunTeleport" "Misc\DunTeleport.I2D" 0x999b04db {0,0,1,0,0} {0,0,0}
+		"LabGateE" "Misc\LabGateE.I2D" 0x49ff051a {0,0,0,0,0} {0,0,0}
+		"LabGateS" "Misc\LabGateS.I2D" 0xf120051b {0,0,0,0,0} {0,0,0}
+		"RunDoorwayE" "Ruin\RunDoorwayE.I2D" 0x9faa0147 {0,0,0,0,0} {0,0,0}
+		"RunDoorwayS" "Ruin\RunDoorwayS.I2D" 0x3fc70148 {0,0,0,0,0} {0,0,0}
+		"Elevator" "KeepInt\KinElevator.I2D" 0xf0012347 {0,0,1,0,0} {0,0,0}
+		"RotateWall" "KeepInt\RotateWall.I2D" 0xa39b2338 {0,0,2,0,0} {0,0,0}
+		"Grate" "Misc\Grate.I2D" 0x84b30588 {0,0,0,0,0} {0,0,0}
+		"UpBlock" "Misc\UpBlock.I3D" 0x84b30589 {0,0,0,0,0} {0,0,0}
+		"Door" "Misc\DunDoor.I3D" 0x84b30586 {1,0,0,0,0} {0,0,0}
+		"Lever" "Misc\Lever.I3D" 0x84b30590 {1,0,0,0,0} {0,0,0}
+		"DragonEnt" "Misc\DragonEnt.I2D" 0xd6850599 {0,0,0,0,0} {0,0,0}
+		"CryptDoor" "Misc\CryptDoor.I3D" 0x036a03f7 {1,0,0,0,0} {0,0,0}
+		"PortEW" "Misc\PortEW.I3D" 0x036a03f8 {1,0,0,0,0} {0,0,0}
+		"PortNS" "Misc\PortNS.I3D" 0x036a03fa {1,0,0,0,0} {0,0,0}
+		"PressPlate" "Dungeon\PressPlate.I2D" 0x036a03f9 {0,0,1,0,0} {0,0,0}
+		"IrisDoor" "Misc\IrisDoor.I3D" 0xfa07b3c2 {0,0,1,0,0} {0,0,0}
+		"UpBlock" "Misc\WallBlock.I3D" 0x84b305a0 {0,0,0,0,0} {0,0,0}
+		"DunStrDwnE" "Dungeon\DunStrDwnE.I2D" 0x844905ad {-1,-1,0,0,0} {0,0,0}
+		"DunStrDwnS" "Dungeon\DunStrDwnS.I2D" 0xe1d105ae {-1,-1,0,0,0} {0,0,0}
+		"DunStrUpE" "Dungeon\DunStrUpE.I2D" 0x6c3b05af {-1,-1,0,0,0} {0,0,0}
+		"DunStrUpS" "Dungeon\DunStrUpS.I2D" 0xd6ba05b0 {-1,-1,0,0,0} {0,0,0}
+	END
+
+END
+
+CLASS "PLAYER"
+BEGIN
+
+
+	// Stat Defs: <StatName> <FourCharId> <Default> <Min> <Max>
+	STATS
+	BEGIN
+		Radius RAD 16 16 256
+	END
+
+
+	// Stat Defs: <StatName> <FourCharId> <Default> <Min> <Max>
+	OBJSTATS
+	BEGIN
+		Aggressive AGGR 1 0 1
+		Poisoned PSND 0 0 1
+		Sleeping SLP 0 0 1
+		Health HLT 25 0 10000
+		Fatigue FAT 25 0 10000
+		Mana MAN 25 0 10000
+		Level LEV 1 1 100
+		Exp EXP 0 0 1000000
+		Strn STRN 14 0 100
+		Cons CONS 14 0 100
+		Agil AGIL 14 0 100
+		Rflx RFLX 14 0 100
+		Mind MIND 14 0 100
+		Luck LUCK 14 0 100
+		Attack ATK 0 0 100
+		Defense DEF 0 0 100
+		Invoke INV 0 0 100
+		Hands HAN 0 0 100
+		ShortBlades SBL 0 0 100
+		LongBlades LBL 0 0 100
+		Bludgeons BLD 0 0 100
+		Axes AXE 0 0 100
+		Bows BOW 0 0 100
+		Stealth SLT 0 0 100
+		LockPick LPK 0 0 100
+		AttackExp ATKE 0 0 1000000
+		DefenseExp DEFE 0 0 1000000
+		InvokeExp INVE 0 0 1000000
+		HandsExp HANE 0 0 1000000
+		ShortBladesExp SBLE 0 0 1000000
+		LongBladesExp LBLE 0 0 1000000
+		BludgeonsExp BLDE 0 0 1000000
+		AxesExp AXEE 0 0 1000000
+		BowsExp BOWE 0 0 1000000
+		StealthExp SLTE 0 0 1000000
+		LockPickExp LPKE 0 0 1000000
+	END
+
+
+	TYPES
+	BEGIN
+		"Locke" "Chars\locke.I3D" 0x00000080 {16} {1,0,0,25,25,25,1,0,14,14,14,14,14,14,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}
+		"Hog" "Chars\temp.I2D" 0x00000080 {16} {1,0,0,25,25,25,1,0,14,14,14,14,14,14,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}
+	END
+
+END
+
+CLASS "CHARACTER"
+BEGIN
+
+
+	// Stat Defs: <StatName> <FourCharId> <Default> <Min> <Max>
+	STATS
+	BEGIN
+		Radius RAD 16 16 256
+	END
+
+
+	// Stat Defs: <StatName> <FourCharId> <Default> <Min> <Max>
+	OBJSTATS
+	BEGIN
+		Aggressive AGGR 1 0 1
+		Poisoned PSND 0 0 1
+		Sleeping SLP 0 0 1
+		Health HLT 25 0 10000
+		Fatigue FAT 25 0 10000
+		Mana MAN 25 0 10000
+	END
+
+
+	TYPES
+	BEGIN
+		"Fatman" "Chars\fatman.I3D" 0x00000010 {16} {1,0,0,25,25,25}
+		"Ollihoot" "Chars\temp.I2D" 0x00000020 {16} {1,0,0,25,25,25}
+		"Gordo" "Chars\motion.i3d" 0x00000030 {16} {1,0,0,25,25,25}
+		"SkinnyGuy" "Chars\SkinnyGuy.I3D" 0x00000040 {16} {1,0,0,25,25,25}
+		"SkinnyGuard" "Chars\temp.I2D" 0x00000050 {16} {1,0,0,25,25,25}
+		"Sorcerer" "Chars\sorcerer.I3D" 0x00000060 {16} {1,0,0,25,25,25}
+		"Thickman" "Chars\temp.I2D" 0x00000070 {16} {1,0,0,25,25,25}
+		"Issathi" "Chars\lizardman.I3D" 0x00000080 {16} {1,0,0,25,25,25}
+		"Druhg" "Chars\Druhg.I3D" 0x00000090 {16} {1,0,0,25,25,25}
+		"Warrior2" "Chars\temp.I2D" 0x000000a0 {16} {1,0,0,25,25,25}
+		"Warrior3" "Chars\temp.I2D" 0x000000b0 {16} {1,0,0,25,25,25}
+		"ThickGuard" "Chars\temp.I2D" 0x000000c0 {16} {1,0,0,25,25,25}
+		"Hopper" "Chars\hopper.I3D" 0x000000d0 {16} {1,0,0,25,25,25}
+		"Dragon" "Chars\dragon.I3D" 0x000000e0 {16} {1,0,0,25,25,25}
+		"HighPriest" "Chars\highpriest.I3D" 0x000000f0 {16} {1,0,0,25,25,25}
+		"FineLady" "Chars\temp.I2D" 0x00000100 {16} {1,0,0,25,25,25}
+		"Dominatrix" "Chars\temp.I2D" 0x00000200 {16} {1,0,0,25,25,25}
+		"Arakna" "Chars\spider.I3D" 0x00000300 {16} {1,0,0,25,25,25}
+		"Duck" "Chars\duck.I3D" 0x00000400 {16} {1,0,0,25,25,25}
+		"Wraith" "Chars\wraith.I3D" 0x00000500 {16} {1,0,0,25,25,25}
+		"Cobra" "Chars\cobra.I3D" 0x00000600 {16} {1,0,0,25,25,25}
+		"Gina" "Chars\temp.I2D" 0x00000700 {16} {1,0,0,25,25,25}
+		"Sphere" "Chars\temp.I2D" 0x00000800 {16} {1,0,0,25,25,25}
+		"Ogrok" "Chars\Ogrok.i3d" 0x00000900 {16} {1,0,0,25,25,25}
+		"Harowen" "Chars\Harowen.I3D" 0x00000a00 {16} {1,0,0,25,25,25}
+		"Druhg2" "Chars\druhg2.I3D" 0x00000b00 {16} {1,0,0,25,25,25}
+		"Ogrok2" "Chars\Ogrok2.i3d" 0x00000900 {16} {1,0,0,25,25,25}
+		"Skeleton" "Chars\Skeleton.i3d" 0x00000901 {16} {1,0,0,25,25,25}
+		"StoneGiant" "Chars\StoneGiant.i3d" 0x00000902 {16} {1,0,0,25,25,25}
+		"NewLocke" "Chars\Biped.i3d" 0x00000903 {16} {1,0,0,25,25,25}
+	END
+
+END
+
+CLASS "TRAP"
+BEGIN
+
+
+	TYPES
+	BEGIN
+		"ArrowWallE" "Misc\ArrowWallE.I2D" 0x846705e7
+		"ArrowWallS" "Misc\ArrowWallS.I2D" 0xe18f05e8
+		"Scythe" "Misc\Scythe.I3D" 0x93abf017
+		"Astrolabe" "Misc\Astrolabe.I3D" 0xe18f05e9
+		"SpikeWall" "Misc\SpikeWall.I3D" 0x84b30587
+	END
+
+END
+
+CLASS "SHADOW"
+BEGIN
+
+
+	TYPES
+	BEGIN
+		"shadow_TindresserW" "Misc\shadow_dresserW.I2D" 0x12fd040a
+		"shadow_Tindressern" "Misc\shadow_dresserN.I2D" 0x12fdd40a
+		"shadow_TintableW" "Misc\shadow_tableW.I2D" 0x0a5b040b
+		"TestShadow" "Misc\TestShadow.I2D" 0xc461040c
+		"shadow_Tinbarrel2" "Misc\shadow_barrel2.I2D" 0x609f040d
+		"shadow_Tinbarrel" "Misc\shadow_barrel2.I2D" 0x21a2040e
+		"shadow_Tinbedn" "Misc\shadow_bed.I2D" 0x52a9040f
+		"shadow_Tinbedw" "Misc\shadow_bed2s.I2D" 0xd0c30410
+		"shadow_Tinbede" "Misc\shadow_bed2s.I2D" 0xd0c3d410
+		"shadow_Tinbeds" "Misc\shadow_bed1s.I2D" 0xd7e30411
+		"shadow_Tinstovew" "Misc\shadow_heatstove1.I2D" 0x30210412
+		"shadow_Tinstoven" "Misc\shadow_heatstove1.I2D" 0x3d210412
+		"shadow_Tinovenw" "Misc\shadow_cookstove1.I2D" 0x08440413
+		"shadow_Tinovenn" "Misc\shadow_cookstove2.I2D" 0x485f0414
+		"shadow_Tinclosedchest1" "Misc\shadow_closedchest1.I2D" 0xdc810415
+		"shadow_Tinclosedchest2" "Misc\shadow_closedchest2.I2D" 0x17b90416
+		"shadow_Tinbookcasen" "Misc\shadow_bookcase1.I2D" 0xb1bf0417
+		"shadow_Tinbookcasew" "Misc\shadow_bookcase2.I2D" 0x71de0418
+		"shadow_Tintablew" "Misc\shadow_longtab1.I2D" 0x34160419
+		"shadow_Tintablen" "Misc\shadow_longtab2.I2D" 0xd51c041a
+		"shadow_Tintableround" "Misc\shadow_roundtable.I2D" 0x623b041b
+		"shadow_Tincrate" "Misc\shadow_crate.I2D" 0xdd5d041c
+		"shadow_Tincrate2" "Misc\shadow_barrel2.I2D" 0xdd5d041c
+		"shadow_Tinnighttablen" "Misc\shadow_nighttable1.I2D" 0xb894041d
+		"shadow_Tinnighttablew" "Misc\shadow_nighttable1.I2D" 0xb89404dd
+		"shadow_DunTableE" "Misc\shadow_TableE.I2D" 0xb894041e
+		"shadow_DunTableS" "Misc\shadow_TableS.I2D" 0xb894041f
+		"Stain1" "Misc\Stain1.I2D" 0xa12f0420
+		"Stain2" "Misc\Stain2.I2D" 0xb8940421
+		"shadow_DunVase" "Misc\shadow_barrel2.I2D" 0xb8949422
+		"shadow_DunVase2" "Misc\shadow_barrel2.I2D" 0xb8949423
+		"shadow_DunVase2G" "Misc\shadow_barrel2.I2D" 0xb8949424
+		"shadow_DunVase2O" "Misc\shadow_barrel2.I2D" 0xb8949425
+		"shadow_DunVase2OP" "Misc\shadow_barrel2.I2D" 0xb8949426
+		"shadow_DunVaseR" "Misc\shadow_barrel2.I2D" 0xb8949427
+		"shadow_DunBarrel" "Misc\shadow_barrel2.I2D" 0xb8949428
+		"shadow_DunBucketE" "Misc\shadow_barrel2.I2D" 0xb8949429
+		"shadow_DunBucketS" "Misc\shadow_barrel2.I2D" 0xb8949430
+		"WindowS" "Misc\WindowS.I2D" 0xb8949431
+	END
+
+END
+
+CLASS "HELPER"
+BEGIN
+
+
+	TYPES
+	BEGIN
+		"Box" "Misc\box.i3d" 0x339b041e
+		"Axis" "Misc\Axis.i3d" 0xd2f1041f
+		"Plane" "Misc\Plane.I2D" 0x320e0420
+		"Plane3D" "Misc\Plane.I3D" 0x05320421
+	END
+
+END
+
+CLASS "KEY"
+BEGIN
+
+
+	// Stat Defs: <StatName> <FourCharId> <Default> <Min> <Max>
+	STATS
+	BEGIN
+		Value VAL 0 0 1000000
+	END
+
+
+	// Stat Defs: <StatName> <FourCharId> <Default> <Min> <Max>
+	OBJSTATS
+	BEGIN
+		KeyId KEY 0 0 1000000
+	END
+
+
+	TYPES
+	BEGIN
+		"Golden Sun" "Misc\GoldenSun.I2D" 0x346bc19f {0} {0}
+		"Golden Sun Key" "Misc\SunKey.I2D" 0xdefbc430 {0} {0}
+		"Copper" "Misc\Copper.I2D" 0xdefbc431 {0} {0}
+		"GoldRuby" "Misc\GoldRuby.I2D" 0xdefbc432 {0} {0}
+		"GoldSilver" "Misc\GoldSilver.I2D" 0xdefbc433 {0} {0}
+		"Silver" "Misc\Silver.I2D" 0xdefbc434 {0} {0}
+	END
+
+END
+
+CLASS "AMMO"
+BEGIN
+
+
+	// Stat Defs: <StatName> <FourCharId> <Default> <Min> <Max>
+	STATS
+	BEGIN
+		EqSlot EQSL 7 0 8
+		Value VAL 0 0 1000000
+	END
+
+
+	// Stat Defs: <StatName> <FourCharId> <Default> <Min> <Max>
+	OBJSTATS
+	BEGIN
+		Amount AMT 0 0 1000
+	END
+
+
+	TYPES
+	BEGIN
+		"Arrow" "Equip\Arrow.I2D" 0x2eef0424 {7,0} {25}
+		"Lightning Bolt" "Equip\Lightning Bolt.I2D" 0x74190425 {7,0} {10}
+		"Arrow3D" "Equip\Arrow.I3D" 0x74190426 {7,0} {25}
+	END
+
+END
+
+CLASS "SCROLL"
+BEGIN
+
+
+	// Stat Defs: <StatName> <FourCharId> <Default> <Min> <Max>
+	STATS
+	BEGIN
+		Value VAL 0 0 1000000
+	END
+
+
+	TYPES
+	BEGIN
+		"Scrol" "Equip\Scroll.I2D" 0x7042bb26 {0} {}
+		"Blubook" "Equip\Bbook.I2D" 0x4367cd28 {0} {}
+		"Grnbook" "Equip\Gbook.I2D" 0x4ee70429 {0} {}
+		"Purbook" "Equip\Pbook.I2D" 0xef67042a {0} {}
+		"Brnbook" "Equip\Sbook.I2D" 0x4367f42b {0} {}
+		"Tealbook" "Equip\Tbook.I2D" 0x43a7042c {0} {}
+		"RedBook" "Equip\Rbook.I2D" 0x4367c42d {0} {}
+	END
+
+END
+
+CLASS "RANGEDWEAPON"
+BEGIN
+
+
+	// Stat Defs: <StatName> <FourCharId> <Default> <Min> <Max>
+	STATS
+	BEGIN
+		EqSlot EQSL 6 0 8
+		Value VAL 0 0 1000000
+	END
+
+
+	TYPES
+	BEGIN
+		"Bow" "Equip\Bow.I3D" 0xe86b0428 {6,0} {}
+		"Crossbow" "Equip\Crossbow.I2D" 0x4d940429 {6,0} {}
+		"SteelBow" "Equip\SteelBow.I3D" 0x119a042a {6,0} {}
+		"Heavy Crossbow" "Equip\Heavy Crossbow.I2D" 0x1ea1042b {6,0} {}
+		"Delvagul" "Equip\Delvagul.I2D" 0x37ac042d {6,0} {}
+		"Charred Battlebow" "Equip\Charred Battlebow.I2D" 0x521d001c {6,0} {}
+		"GoldenBow" "Equip\GoldenBow.I3D" 0x59a7042c {6,0} {}
+	END
+
+END
+
+CLASS "EFFECT"
+BEGIN
+
+
+	TYPES
+	BEGIN
+		"Blood" "Misc\Blood.I3D" 0xddc4042e
+		"Fire" "Misc\Fire.I3D" 0x119f01e3
+		"Lightning" "Misc\lightning.I2D" 0x533e03f2
+		"Ice" "Misc\ice.I2D" 0x533e03f3
+		"Photon" "Magic\Photon.I3D" 0x113803f4
+		"Crystal" "Magic\Crystal.I3D" 0x113803f5
+		"Flare" "Misc\Flare.I3D" 0x11a80325
+		"Heal" "Magic\Heal.I3D" 0x19340bef
+		"Lightning2" "Magic\Lightning.I3D" 0x11a80525
+		"CyanFont" "Misc\Sparkle.I3D" 0x22491405
+		"RedFont" "Misc\Sparkle.I3D" 0x335a2516
+		"GreenFont" "Misc\Sparkle.I3D" 0x446b3627
+		"BlueFont" "Misc\Sparkle.I3D" 0x557c4738
+		"Ribbon" "Magic\Ribbon.I3D" 0x562c7439
+		"Shield" "Magic\Shield.I3D" 0x727c833a
+		"Shield2" "Magic\Shield2.I3D" 0x727c834b
+		"Flame" "Magic\Flame.I3D" 0x50ba373b
+		"FireBall" "Magic\NewFireBall.I3D" 0x63fd382a
+		"SymGlow" "Misc\SymGlow.I3D" 0x27df45be
+		"FlameDisc" "Magic\FlameDisc.I3D" 0x12daffce
+		"LightStrip" "Magic\NewLightStrip.I3D" 0x10da54d0
+		"Sparks" "Misc\Sparks.I3D" 0x14db0f2e
+		"IrisFlare" "Misc\IrisFlare.I3D" 0x120054d1
+		"BarrierEW" "Misc\BarrierEW.I3D" 0x224a5adf
+		"BarrierNS" "Misc\BarrierNS.I3D" 0x224b5adc
+		"Teleporter" "Misc\IrisFlare.I3D" 0x224a5adc
+		"FireColumn" "Magic\FireColumn.I3D" 0x12da54d2
+		"Smoke" "Misc\smoke.I3D" 0x224a5ccc
+		"MeteorStorm" "Magic\Meteor.I3D" 0xf32bcfac
+		"Vortex" "Magic\Vortex.I3D" 0x452dade0
+		"Flies" "Misc\Flies.I3D" 0xa21d9d00
+		"Fog" "Misc\Fog.I3D" 0xc24b2a85
+		"Cure" "Magic\cure.I3D" 0x152dafef
+		"Createfood" "Magic\createfood.I3D" 0x838cffba
+		"FireFlash" "Magic\fireflash.I3D" 0x37780ae2
+		"FireWind" "Magic\firewind.I3D" 0x98974eab
+		"BurnBabyBurn" "Magic\burnbabyburn.I3D" 0x55471bff
+		"PULP" "Misc\Pulp.I3D" 0x152dafdd
+		"Createfood" "Magic\createfood.I3D" 0x838cffba
+		"FireFlash" "Magic\fireflash.I3D" 0x37780ae2
+		"FireWind" "Magic\firewind.I3D" 0x3778abba
+		"IceBolt" "Magic\icebolt.I3D" 0xb1c4c90f
+		"Iced" "Magic\iced.i3d" 0xfacecabb
+		"Icedsparks" "Magic\iced.i3d" 0xacabfada
+		"Tornado" "Magic\Tornado.i3d" 0x2784abde
+		"Streamer" "Magic\streamer.i3d" 0x482dfe82
+		"Sand" "Magic\Sandswirl.i3d" 0xfecaface
+		"Snow" "Magic\iced.i3d" 0xfacedbed
+		"FireSwarm" "Magic\FireSwarm.i3d" 0x482dfe82
+		"Quicksand" "Magic\Quicksand.i3d" 0xbabeface
+		"Sandswirl" "Magic\Sandswirl.i3d" 0xbecefeda
+		"WindStrip" "Magic\wind.I3D" 0xdedbdbed
+		"Halo" "Magic\halo.I3D" 0xdedbdbed
+		"Ripple" "Misc\ripples.I3D" 0x12309867
+		"Drip" "Misc\drip.i3d" 0x5975abde
+		"Mist" "Misc\mist.i3d" 0x2093487a
+		"MistFog" "Misc\mistfog.i3d" 0x6471a673
+		"Water" "Misc\water.i3d" 0x27164897
+		"WaterFall" "Misc\water.i3d" 0x1714486a
+		"Faultfire" "Magic\faultfire.i3d" 0x51753bce
+		"FireCone" "Magic\firecone.I3D" 0xedbd1234
+		"WeaponSwipe" "Misc\weaponswipe.i3d" 0xedabf341
+	END
+
+END
+

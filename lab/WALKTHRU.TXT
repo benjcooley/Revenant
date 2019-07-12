@@ -1,0 +1,57 @@
+The Labyrinth is a maze of suspended walkways with locked gates and teleportaton
+gates.  The Labyrinth is the stronghold of the priests and it is where they
+have taken Andria to be sacrificed.  There are several levels to the Labyrinth,
+each being connected to the others through the teleportaion gates.  On the
+accompanying maps, you will see these gates, some with letters, others without.
+The lettered gates teleport the player to the gate with the matching letter
+on it, regardless of whether this is on the same level, or a different level.
+The gates without any letters will always be near a large crystal floating over
+a pool of water.  These gates are activated by magical crystals and the color
+of the crystal(s) determines where the gate will teleport the player.
+
+For example: If the player puts a red crystal into the pool underneath the
+floating crystal, the floating crystal turns read and the nearby gate becomes
+active.  When the player steps through the gate he will be teleported to the
+red gate.  If he puts a red and a blue crystal into the pool, the crystal will
+turn purple (red + blue), etc...
+
+In order to get the different colored crystals, the player must sacrafice a
+soul to the soul eaters.  There are three soul eaters spead throughout the
+Labyrinth, each giving the player a different colored crystal (reg, green, or
+blue).
+
+
+
+Here is a walkthough for how to get through the Labyrinth.
+
+You begin at the gate at the top of the Starting Level.
+You may take either of the teleportation gates (A or D).
+These will both take you to the Green Level.
+If you took A, follow the path around the top until you get to teleportation
+gate B.
+If you took D, follow the path to gate E and then from the other gate E, follow
+the maze down to gate B.
+Gate B takes you to the Cyan Level, where you can get to gate C.
+Gate C returns you to the Green Level where you can get your first crystal (the
+red crystal).
+Now you can go back the way you came and use the red crystal to open the green
+gate, or you can go to gate L which will take you back to the Cyan Level and
+you can open the cyan gate.
+Using the red crystal will take you to the red gate on the Red Level.
+Follow the paths to gate F.
+Gate F will take you back to the Cyan Level where you will go through the
+prison area to reach gate G.
+Gate G will take you back to the Red Level where you will go through gate H.
+Gate H moves you to the bottom left of the Red Level where you can fight your
+way through the priestly guards to get the blue crystal.
+Gate J is a short cut that takes you to the Yellow Level where you can fight
+your way through to use the yellow gate or you can back track to the red gate.
+Once at a gate, you can either use the blue crystal or a red and blue crystal
+(to get purple) to take you to the Blue / Purple Level.
+Once here, you can see the green skull, but you can't get to it yet.
+Follow the maze around to the multiple gates, and go into gate O.
+All the other gates will lead you nowhere.
+Gate O will take you (after quite a bit of fighting) to gate S.
+Gate S takes you to the green skull to get the green crystal.
+Now, once you can get to the White Level (a red, green, & blue crystal) where
+you can proceed to the pyramid and the end game sequence.

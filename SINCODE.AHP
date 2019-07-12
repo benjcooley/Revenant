@@ -1,0 +1,32 @@
+;#############################################################
+;MakeSinTable creates a 0-1023 integer sine table
+;#############################################################
+MakeSinTable:
+    push ds
+    pop es
+    mov di,offset SinTable
+    mov si,offset SinTable+2*256
+    push di
+    push si
+    mov cx,129
+    sub ax,ax
+L1:
+    mov [si],ax
+    dec si
+    dec si
+    stosw
+    mov dx,cx
+    shl dx,1
+    add ax,dx
+    Loop L1
+ 
+    pop di
+    pop si
+    mov cx,256
+L2:
+    lodsw
+    neg ax
+    stosw
+    Loop L2
+    ret
+Sintable:

@@ -1,0 +1,4 @@
+//SUPPRESSIONPROJ:exile
+//ENABLE:Yes
+ignore failure USER32.DLL:LoadIconA in function EXE:"TMainWindow::Initialize"
+

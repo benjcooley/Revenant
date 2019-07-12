@@ -1,0 +1,46 @@
+"hog idle" 100
+"hog drive" 101
+
+"swish1" 102
+"swish2" 103
+"swish3" 104
+
+"clang1" 105
+"clang2" 106
+"clang3" 107
+"clang4" 108
+
+"impact1" 109
+"impact2" 110
+"impact3" 111
+
+"collapse1" 112
+
+"lightning" 113
+"fireball grow" 500
+"fireball travel" 501
+"fireball explosion" 502
+"heal sound" 503
+"lightning sound" 504
+"vortex sound" 505
+"meteor fall" 506
+"meteor explode" 507
+
+"call meteor" 600
+"call lightning" 601
+"call heal" 602
+"call fireball" 603
+"call_vortex" 604
+
+"draw sword" 114
+"sheathe sword" 115
+
+"arrow" 116
+"arrow impact" 117
+
+"grind rock" 118
+"spike" 119
+
+"roar" 120
+"roargrunt" 121
+"drip" 122

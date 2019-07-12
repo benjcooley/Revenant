@@ -1,0 +1,113 @@
+--------------------Configuration: Revenant - Win32 Release--------------------
+Begining build with project "D:\Revenant\Revenant.dsp", at root.
+Active configuration is Win32 (x86) Application (based on Win32 (x86) Application)
+
+Project's tools are:
+			"32-bit C/C++ Compiler for 80x86" with flags "/nologo /MT /W3 /GX /Zi /Ot /Oy /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "REVENANT" /D "NOATOM" /D "NOCLIPBOARD" /D "NOMETAFILE" /D "NOSERVICE" /D "NOSOUND" /D "NOWH" /D "NOCOMM" /D "NOKANJI" /D "NOHELP" /D "NOPROFILER" /D "NODEFERWINDOWPOS" /D "NOMCX" /Fp"Revenant/Revenant.pch" /YX /Fo"Revenant/" /Fd"Revenant/" /FD /c "
+			"OLE Type Library Maker" with flags "/nologo /D "NDEBUG" /mktyplib203 /o NUL /win32 "
+			"Win32 Resource Compiler" with flags "/l 0x409 /fo"Revenant/Revenant.res" /d "NDEBUG" "
+			"Browser Database Maker" with flags "/nologo /o"Revenant/Revenant.bsc" "
+			"COFF Linker for 80x86" with flags "kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib winmm.lib msacm32.lib ddraw.lib d3drm.lib dplayx.lib dsound.lib dinput.lib .\blue\Release\bluerev.lib /nologo /subsystem:windows /incremental:no /pdb:"Revenant/Revenant.pdb" /debug /machine:I386 /out:"Revenant.exe" "
+			"Custom Build" with flags ""
+			"<Component 0xa>" with flags ""
+
+Creating temp file "C:\WINDOWS\TEMP\RSP62E3.TMP" with contents </nologo /MT /W3 /GX /Zi /Ot /Oy /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "REVENANT" /D "NOATOM" /D "NOCLIPBOARD" /D "NOMETAFILE" /D "NOSERVICE" /D "NOSOUND" /D "NOWH" /D "NOCOMM" /D "NOKANJI" /D "NOHELP" /D "NOPROFILER" /D "NODEFERWINDOWPOS" /D "NOMCX" /Fp"Revenant/Revenant.pch" /YX /Fo"Revenant/" /Fd"Revenant/" /FD /c 
+"D:\Revenant\RevMain.cpp"
+>
+Creating command line "cl.exe @C:\WINDOWS\TEMP\RSP62E3.TMP" 
+Creating temp file "C:\WINDOWS\TEMP\RSP62E4.TMP" with contents <kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib winmm.lib msacm32.lib ddraw.lib d3drm.lib dplayx.lib dsound.lib dinput.lib .\blue\Release\bluerev.lib /nologo /subsystem:windows /incremental:no /pdb:"Revenant/Revenant.pdb" /debug /machine:I386 /out:"Revenant.exe" 
+.\Revenant\3dcont.obj
+.\Revenant\3dimage.obj
+.\Revenant\3dscene.obj
+.\Revenant\animation.obj
+.\Revenant\animimage.obj
+.\Revenant\area.obj
+.\Revenant\array.obj
+.\Revenant\button.obj
+.\Revenant\chunkcache.obj
+.\Revenant\colortable.obj
+.\Revenant\command.obj
+.\Revenant\complexobj.obj
+.\Revenant\ctrlmap.obj
+.\Revenant\cursor.obj
+.\Revenant\d3dmath.obj
+.\Revenant\directinput.obj
+.\Revenant\dls.obj
+.\Revenant\editor.obj
+.\Revenant\File.obj
+.\Revenant\imagery.obj
+.\Revenant\mainwnd.obj
+.\Revenant\Mappane.obj
+.\Revenant\MissileEffect.obj
+.\Revenant\multi.obj
+.\Revenant\object.obj
+.\Revenant\parse.obj
+.\Revenant\playscreen.obj
+.\Revenant\resource.obj
+.\Revenant\RevMain.obj
+.\Revenant\rules.obj
+.\Revenant\savegame.obj
+.\Revenant\screen.obj
+.\Revenant\script.obj
+.\Revenant\Sector.obj
+.\Revenant\sound.obj
+.\Revenant\Stream.obj
+.\Revenant\StripEffect.obj
+.\Revenant\swscene.obj
+.\Revenant\template.obj
+.\Revenant\timer.obj
+.\Revenant\videocap.obj
+.\Revenant\bitmap.obj
+.\Revenant\bmsurface.obj
+.\Revenant\ddsurface.obj
+.\Revenant\directdraw.obj
+.\Revenant\display.obj
+.\Revenant\font.obj
+.\Revenant\graphics.obj
+.\Revenant\mosaicsurf.obj
+.\Revenant\multisurface.obj
+.\Revenant\surface.obj
+.\Revenant\ammo.obj
+.\Revenant\armor.obj
+.\Revenant\character.obj
+.\Revenant\charanimator.obj
+.\Revenant\container.obj
+.\Revenant\effect.obj
+.\Revenant\effect2.obj
+.\Revenant\effect3.obj
+.\Revenant\effectcomp.obj
+.\Revenant\exit.obj
+.\Revenant\food.obj
+.\Revenant\helper.obj
+.\Revenant\key.obj
+.\Revenant\lightsource.obj
+.\Revenant\money.obj
+.\Revenant\player.obj
+.\Revenant\rangedweapon.obj
+.\Revenant\scroll.obj
+.\Revenant\shadow.obj
+.\Revenant\talisman.obj
+.\Revenant\tile.obj
+.\Revenant\tool.obj
+.\Revenant\trap.obj
+.\Revenant\weapon.obj
+.\Revenant\automap.obj
+.\Revenant\death.obj
+.\Revenant\dialog.obj
+.\Revenant\equip.obj
+.\Revenant\inventory.obj
+.\Revenant\multictrl.obj
+.\Revenant\spell.obj
+.\Revenant\SpellPane.obj
+.\Revenant\statpane.obj
+.\Revenant\statusbar.obj
+.\Revenant\textbar.obj
+.\Revenant\Revenant.res>
+Creating command line "link.exe @C:\WINDOWS\TEMP\RSP62E4.TMP" 
+Compiling...
+RevMain.cpp
+Linking...
+
+
+
+Revenant.exe - 0 error(s), 0 warning(s)

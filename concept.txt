@@ -1,0 +1,51 @@
+% show classes
+Classes:
+    TILE
+    CHARACTER
+    WEAPON
+    ARMOR
+    FOOD
+    TALISMAN
+% show weapon
+Class: WEAPON
+Stats: Weight, Length, Durability, Thrust, Swing, Chop, Hands, Sharpness
+Types:
+    Dagger
+    Dirk
+    Shortsword
+    Longsword
+    Hand Axe
+    Mace
+% add weapon type Morning Star
+Adding new type "Morning Star" to class WEAPON.
+% add weapon stat Puncture Depth
+Adding new stat "Puncture" to class WEAPON.
+% set weapon stat punc default=0
+WEAPON stat "Puncture" default set to 0.
+% stat weapon.morning star
+Class: WEAPON                       Type: Morning Star
+Id: 0x00200101
+Stats: Weight       = 5             Length      = 1
+       Durability   = 1             Thrust      = 0
+       Swing        = 0             Chop        = 0
+       Hands        = 1             Sharpness   = 0
+       Puncture     = 0
+Health: 100/100
+% set weapon.morn weight= 12
+WEAPON.Morning Star, stat Weight set to 12.
+% add weap.morn
+New instance of WEAPON.Morning Star created at (4057, 3280, 0) created.
+% stat
+Selected Object 1/1:
+Class: WEAPON                       Type: Morning Star
+Stats: Weight       = 12            Length      = 1
+       Durability   = 1             Thrust      = 0
+       Swing        = 0             Chop        = 0
+       Hands        = 1             Sharpness   = 0
+Health: 100/100
+% delete
+WEAPON.Morning Star instance deleted.
+% del weapon type morning star
+WEAPON type "Morning Star" deleted.
+% 
+

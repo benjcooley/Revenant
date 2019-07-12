@@ -1,0 +1,534 @@
+template "drdr"
+begin
+	"Tree2" -48, -26, 29
+end
+
+template "kkdd"
+begin
+	"Tree3" -3, -11, -22
+	"Ferns8" -49, 21, 0
+	"Fern2" 30, -28, 37
+end
+
+template "kdkd"
+begin
+	"Tree9" -56, -14, 20
+	"Stalk2" 8, -10, -16
+	"Plants3" -56, 38, 18
+	"Fern3" -17, 1, -16
+	"Stalk3" 6, 4, -16
+end
+
+template "ddkd"
+begin
+	"Stalk1" -18, 26, -16
+	"Plant12" -18, 6, 5
+	"Plant11" -59, 23, 31
+end
+
+template "kddd"
+begin
+	"Fern4" -30, -32, -6
+	"Plant1" -19, -47, -4
+	"Fern3" -45, -13, -6
+	"Stalk1" 7, -61, -16
+	"Stalk2" -56, 8, -2
+	"GrassTuft1" -59, -11, -6
+	"Fern4" -59, -35, 19
+	"Plant12" -33, -57, 25
+end
+
+template "dkdd"
+begin
+	"Ferns5" 57, 1, 2
+	"Stalk2" 43, 7, -16
+	"Plant12" -9, -43, 0
+	"Plant11" 46, -24, 31
+end
+
+template "ddkd"
+begin
+	"Fern4" -35, 9, -6
+	"Stalk1" 3, 41, -16
+	"Stalk1" -18, 10, -16
+	"Fern1" -9, 33, -9
+	"Fern1" -26, -16, -9
+	"Ferns2" -56, 4, 17
+end
+
+template "kddk"
+begin
+	"Fern1" 48, -32, -16
+	"Fern1" -22, 42, -9
+	"Plant14" 35, 33, 26
+	"Ferns3" 55, 43, 15
+	"Fern4" -41, -45, -6
+	"Plant12" -61, -19, 5
+	"Plant11" 4, -52, 31
+	"Stalk1" -6, -20, -16
+	"Ferns5" -38, -50, 28
+end
+
+template "kkdd"
+begin
+	"Plant1" 45, 19, 24
+	"Plant5" 51, 1, 16
+	"Plant11" 11, -29, 38
+	"Plant13" -23, 35, -15
+	"Plant14" -3, -11, 11
+	"Plant16" -33, -13, 10
+	"Plant13" -32, -50, 11
+	"Fern1" -20, -16, -9
+end
+
+template "dkdd"
+begin
+	"Ferns1" 31, -43, 12
+	"Ferns4" 49, -51, 27
+	"Plants2" 56, -28, -3
+end
+
+template "ddkk"
+begin
+	"Plants1" -37, 19, 15
+	"Plants3" -32, -6, 15
+	"Plants4" -62, 18, 15
+	"Plants4" 21, 23, 15
+	"Plants4" -48, 42, 15
+end
+
+template "dddk"
+begin
+	"Ferns4" 18, 6, 15
+	"Ferns5" 4, 36, 15
+end
+
+template "ddgg"
+begin
+	"Plants4" 35, 43, 7
+	"Plants3" -32, -4, 7
+	"Plants2" -61, 15, 7
+end
+
+template "ggdd"
+begin
+	"Plants1" -3, -27, 4
+	"Ferns2" -12, -48, 7
+	"Plants3" -36, 14, 7
+end
+
+template "ddgg"
+begin
+	"Plants4" 35, 43, 7
+	"Plants3" -32, -4, 7
+	"Plants2" -61, 15, 7
+end
+
+template "dggd"
+begin
+	"Plants4" 53, -59, 7
+end
+
+template "dddg"
+begin
+end
+
+template "ddgd"
+begin
+	"Plants4" -27, 11, 7
+	"Plants3" -16, 58, 7
+end
+
+template "gddd"
+begin
+	"Ferns1" -18, -6, 7
+end
+
+template "gddd"
+begin
+	"Plants4" -20, -22, -8
+	"Plants4" -42, 10, -8
+end
+
+template "dggd"
+begin
+	"Plants4" 53, -59, 7
+	"Plants3" -16, 28, -8
+end
+
+template "gddg"
+begin
+	"Ferns4" 60, 48, -8
+	"Plants1" 5, 19, -8
+	"Plants3" -35, -49, 7
+	"Plants4" -48, -26, -8
+end
+
+template "dgdd"
+begin
+	"Plants2" 7, -31, -8
+end
+
+template "ddkk"
+begin
+	"Birch3" 0, 8, 0
+	"Fern1" 5, -31, 0
+	"Plant1" -45, 19, 20
+end
+
+template "ddkk"
+begin
+	"Ferns1" 14, -22, 0
+end
+
+template "kkdd"
+begin
+	"Tree7" -17, 19, 0
+	"Fern3" 32, -30, 20
+	"Stalk3" 54, -40, 30
+end
+
+template "kkdd"
+begin
+	"Plants1" -48, -8, 0
+end
+
+template "dkdk"
+begin
+	"Plants4" -30, -38, 0
+	"Birch1" 39, 37, 32
+end
+
+template "dkdk"
+begin
+	"Plant2" -42, -46, 0
+	"Ferns8" -42, 20, 0
+end
+
+template "kdkd"
+begin
+	"Tree1" -30, -24, -17
+	"Fern2" 17, -25, 0
+	"Fern3" -40, 10, 20
+end
+
+template "kdkd"
+begin
+	"Plant3" -5, 13, 0
+	"Ferns5" 19, -35, 0
+	"Fern4" -47, -21, 20
+end
+
+template "dddk"
+begin
+	"Birch3" 61, -19, 0
+	"Fern1" -44, 30, 0
+	"Stalk2" -33, -17, 0
+	"Stalk2" 15, -3, 0
+	"Stalk1" -18, 12, 0
+	"Stalk1" -10, -6, 0
+	"Plant3" -19, -41, 0
+end
+
+template "dddk"
+begin
+	"Plants3" 21, -33, 0
+end
+
+template "ddkd"
+begin
+	"Tree2" -22, -20, 0
+	"Ferns3" -29, 13, 0
+end
+
+template "ddkd"
+begin
+	"Plant10" -35, -15, 0
+end
+
+template "dkdd"
+begin
+	"Birch2" 61, -29, 27
+	"Fern4" 26, -2, 0
+	"Fern3" -11, -39, 0
+end
+
+template "dkdd"
+begin
+	"Plants4" 32, 32, 0
+	"Plant12" -38, -50, 0
+end
+
+template "kddd"
+begin
+	"Tree4" -59, 1, 0
+	"Ferns1" 3, -3, 0
+end
+
+template "kddd"
+begin
+	"Fern1" 12, -48, 0
+	"Plants4" -29, -5, 0
+	"Plant8" -39, -25, 28
+end
+
+template "kkkd"
+begin
+	"Birch3" 1, 53, 0
+	"Plants2" 8, 2, 0
+end
+
+template "kkkd"
+begin
+	"Ferns8" -42, 8, 24
+	"Plant3" 24, -6, 0
+	"Fern4" -9, 15, 0
+end
+
+template "kkdk"
+begin
+	"Tree9" -11, -3, 14
+	"Fern1" 19, -45, 23
+	"Fern2" 33, 47, 24
+end
+
+template "kkdk"
+begin
+	"Plant7" -23, -31, 24
+	"Plants2" -24, 18, 0
+end
+
+template "kdkk"
+begin
+	"Birch1" 38, 18, 0
+end
+
+template "kdkk"
+begin
+	"Ferns4" 3, -41, 0
+end
+
+template "dkkk"
+begin
+	"Tree6" -46, -10, 0
+	"Fern3" 4, -36, 0
+end
+
+template "dkkk"
+begin
+	"Plant4" -54, -24, 0
+end
+
+template "dkkd"
+begin
+	"Fern2" -51, -17, 0
+	"Plant6" 48, 8, 0
+	"Plant2" 32, -38, 30
+end
+
+template "kddk"
+begin
+	"Ferns1" -29, -23, 0
+	"Fern3" -19, 49, 0
+	"Plant2" 7, -61, 0
+end
+
+template "ddrr"
+begin
+	"Stalk3" -20, 46, 0
+	"Stalk2" -37, 11, 0
+	"Stalk2" 6, 56, 0
+	"Stalk1" -5, 27, 0
+end
+
+template "rrdd"
+begin
+	"Stalk3" 37, -53, 0
+	"Stalk1" -37, -37, 0
+end
+
+template "drdr"
+begin
+	"Stalk1" -7, 17, 0
+	"Stalk1" 143, 169, 0
+	"Stalk1" 61, -39, 0
+end
+
+template "rdrd"
+begin
+	"Stalk3" -27, 15, 0
+	"Stalk2" -38, 44, 0
+	"Stalk2" 37, 63, 0
+	"Stalk1" -48, -50, 0
+end
+
+template "dddr"
+begin
+	"Stalk3" 19, 31, 0
+	"Stalk2" 2, -4, 0
+	"Stalk2" 45, 41, 0
+	"Stalk1" 34, 12, 0
+end
+
+template "ddrd"
+begin
+	"Stalk3" -17, 37, 0
+	"Stalk2" -34, 2, 0
+	"Stalk2" 9, 47, 0
+	"Stalk1" -2, 18, 0
+end
+
+template "drdd"
+begin
+	"Stalk3" 14, 16, 0
+	"Stalk2" 1, -15, 0
+	"Stalk2" 17, -47, 0
+	"Stalk1" 1, 9, 0
+	"Stalk1" 36, -60, 0
+	"Stalk1" 45, 27, 0
+	"Stalk1" 42, -22, 0
+	"Stalk3" -31, -35, 0
+end
+
+template "rddd"
+begin
+	"Stalk3" -38, -14, 0
+	"Stalk3" -4, -26, 0
+	"Stalk2" -47, -55, 0
+	"Stalk1" -202, -114, 0
+end
+
+template "rrrd"
+begin
+	"Stalk3" -16, -12, 0
+	"Stalk2" -63, 53, 0
+	"Stalk2" -33, -47, 0
+	"Stalk2" 10, -2, 0
+	"Stalk2" -16, 46, 0
+	"Stalk1" -1, -31, 0
+end
+
+template "rrdr"
+begin
+	"Stalk3" 5, 27, 0
+	"Stalk2" -8, -4, 0
+	"Stalk2" 8, -36, 0
+	"Stalk1" -8, 20, 0
+	"Stalk1" 27, -49, 0
+	"Stalk1" 36, 38, 0
+	"Stalk1" 33, -11, 0
+	"Stalk3" -40, -24, 0
+end
+
+template "rdrr"
+begin
+	"Stalk2" -55, 59, 0
+	"Stalk1" -36, 46, 0
+	"Stalk1" -18, -32, 0
+	"Stalk1" -71, 115, 0
+end
+
+template "drrr"
+begin
+	"Stalk3" 30, -40, 0
+	"Stalk2" -1, 49, 0
+	"Stalk2" 15, 17, 0
+	"Stalk1" 34, 4, 0
+	"Stalk1" 34, 4, 0
+	"Stalk1" 40, 42, 0
+	"Stalk3" -33, 29, 0
+end
+
+template "drrd"
+begin
+	"Stalk2" -30, 64, 0
+	"Stalk1" -11, 51, 0
+	"Stalk1" 7, -27, 0
+	"Stalk1" -11, 51, 0
+end
+
+template "rddr"
+begin
+	"Stalk2" 62, -62, 0
+	"Stalk1" 23, 3, 0
+	"Stalk1" 7, -275, 0
+	"Stalk1" -44, -14, 0
+end
+
+template "rrdd"
+begin
+	"Fern2" 0, 0, 0
+end
+
+template "drdr"
+begin
+	"Plant3" -31, 15, 0
+end
+
+template "rdrd"
+begin
+	"Fern4" -7, -49, 0
+end
+
+template "dddr"
+begin
+	"Ferns1" -6, -68, 0
+end
+
+template "ddrd"
+begin
+	"Plant13" -7, 1, 0
+	"Plant1" -48, -28, 0
+	"Fern4" 1, -29, 20
+end
+
+template "drdd"
+begin
+	"Ferns4" -5, -45, 0
+end
+
+template "rddd"
+begin
+	"Tree1" -4, -16, 8
+	"Plant1" -27, 21, 21
+end
+
+template "rrrd"
+begin
+	"Plant5" 41, 37, 8
+end
+
+template "rrdr"
+begin
+	"Fern1" -61, 11, 0
+end
+
+template "rdrr"
+begin
+end
+
+template "drrr"
+begin
+	"Tree9" -47, -43, 3
+	"Fern4" -13, -33, 0
+	"Fern2" 2, -56, 0
+	"Stalk2" -36, 16, 0
+	"Stalk2" -24, -4, 0
+end
+
+template "drrd"
+begin
+	"Fern2" -34, -38, 24
+end
+
+template "rddr"
+begin
+	"Fern2" -36, 36, 24
+end
+
+template "kkkd"
+begin
+	"Fern1" 0, -32, 0
+	"Plants4" -2, 24, 0
+end
+

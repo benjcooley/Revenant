@@ -1,0 +1,56 @@
+Dialog Tags:
+------------
+
+	Tags are keywords inclosed in [] brackets.  Tags are used to display
+	game information such as object prices, player names, etc.
+	
+	To allow the script programmer to use brackets in his dialog lines, 
+	the tags "[[" and "[]" translate to the characters "[" and "]" 
+	respectively.
+
+Dialog lines follow the format below
+
+	"This is dialog [tag] this is more dialog [[ [] these are brackets"
+
+Where, if the value of the tag was "Ima Tag" the line would display as...
+
+	"This is dialog Ima Tag this is more dialog [ ] these are brackets"
+
+The '+' modifier can be used to add a '+ sign to positive numbers.  This
+is useful for showing stats of weapons.
+
+	"Weapon modifier is [+damage]"
+
+If damage is negative, it will show
+
+	"Weapon modifier is -3"
+
+If the damage is positive, it will show
+
+	"Weapon modifier is +2"
+
+
+Current Object Tag:
+-------------------
+
+The current object can be set using the <> characters.  Once the current
+object is set, all other tags refer to it.
+
+	"<Flaming Sword> Buy a [name] for [price] with [+damage] damage"
+
+
+Special Current Object Tags:
+
+	<me>		The current player character
+	<you>		Who we are currently talking to
+	<this>		The current object
+
+Note that these are the same tags
+
+
+List of Tags:
+-------------
+
+	[chr]	The name of the players character (normally "Locke")
+	[to]	The name of the player you are talking to
+	[obj]	The name of the current object

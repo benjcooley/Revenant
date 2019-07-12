@@ -1,0 +1,177 @@
+File MAPPANE.CPP:
+        int bgbuffer = Display->UseBackgroundArea(MAPPANEX, MAPPANEY,
+                else if (cursorx >= (Display->Width() - 1))
+                else if (cursory >= (Display->Height() - 1))
+        Display->Put(spos.x - bitmap->width / 2,
+        Display->AddBackgroundUpdateRect(
+        Display->SetClipRect(MAPPANEX, MAPPANEY, GetWidth(), GetHeight());
+        Display->ResetClipRect();
+        Display->SetClipRect(-posx + (2*MAPPANEX), -posy + (2*MAPPANEY), GetWidth(), GetHeight());
+                        Display->ZPut(screenpos.x, screenpos.y, screenpos.z, EditorData->Bitmap("grid"), DM_TRANSPARENT | DM_WRAPCLIP | DM_ZBUFFER | DM_USEREG);
+                        Display->Put(screenpos.x, screenpos.y, EditorData->Bitmap("gridout"), DM_TRANSPARENT | DM_WRAPCLIP | DM_USEREG | DM_CHANGECOLOR, &color);
+        Display->ResetClipRect();
+File DISPLAY.CPP:
+        Display->surface      = back;
+        Display->flags        = Back->flags;
+    Display->stride               = Back->Stride();
+    Display->originx      = 0;
+    Display->originy      = 0;
+    Display->clipmode     = CLIP_EDGES;
+        Display->clipx            = 0;
+        Display->clipy            = 0;
+        Display->width        = dwidth;
+        Display->height       = dheight;
+        Display->clipwidth    = dwidth;
+        Display->clipheight   = dheight;
+                Display->bitsperpixel = 15;
+                Display->bitsperpixel = 16;
+                Display->bitsperpixel = 16;
+                Display->bitsperpixel = 15;
+                Display->AddBackgroundUpdateRect(loop, 
+        Display->AddUpdateRect(dp->dx+dp->originx, dp->dy+dp->originy, dp->swidth, dp->sheight, 
+File SCREEN.CPP:
+        Display->InitBackgroundSystem();
+        Display->Reset();
+        Display->Reset();
+        Display->Reset();
+        Display->Reset();
+        Display->Reset();
+        Display->Reset();
+        Display->Reset();
+        Display->Reset();
+        Display->Reset();
+        Display->Reset();
+        Display->Reset();
+        Display->Reset();
+        Display->Reset();
+        Display->Reset();
+        SetCursorPos(Display->Width() >> 1, Display->Height() >> 1);
+        if (hwnd == NULL || Closing || !Display->Width())
+                Display->Reset();
+                        Display->RestoreBackgroundAreas();
+                            Display->WriteText(buf, 40, 40, 1, SystemFont, NULL, DM_TRANSPARENT | DM_ALIAS);
+                                                Display->FlipPage(TRUE);  // Don't flip page the first time
+        Display->SetOrigin(x - scrollx, y - scrolly);
+        Display->SetClipRect(x, y, width, height);
+        Display->SetClipMode(CLIP_EDGES);
+                Display->ScrollBackground(backgroundbuffer, scrollx, scrolly);
+        Display->DrawRestoreRect(backgroundbuffer, x, y, width, height, drawmode);
+File PLAYSC~1.CPP:
+        Display->CreateBackgroundArea(0, 0, Display->Width(), MAPPANEY);
+        Display->CreateBackgroundArea(0, MAPPANEY, MAPPANEX, MAPPANEHEIGHT);
+        Display->CreateBackgroundArea(MAPPANEX+MAPPANEWIDTH, MAPPANEY,
+                                        Display->Width() - (MAPPANEX+MAPPANEWIDTH), MAPPANEHEIGHT);
+        Display->CreateBackgroundArea(0, MAPPANEY+MAPPANEHEIGHT, Display->Width(),
+                                        Display->Height() - MAPPANEY - MAPPANEHEIGHT);
+        Display->Put(0, 0, bitmap, DM_NOCLIP | DM_BACKGROUND);
+                        Display->Put(oh[i].x, oh[i].y, overhang[i], DM_TRANSPARENT | DM_BACKGROUND);
+                                Display->ZPut(postanim[i].x, postanim[i].y, postanim[i].z, postanim[i].bm, postanim[i].drawmode);
+                                Display->PutDim(postanim[i].x, postanim[i].y, postanim[i].bm, postanim[i].drawmode, postanim[i].dim);
+                Display->Reset();
+                        Display->Put(oh[i].x, oh[i].y, overhang[i], DM_TRANSPARENT | DM_NORESTORE);
+                                screen = (BYTE *)(Display->FrontBuffer()->Lock());
+                                Display->FrontBuffer()->Unlock();
+                                                        if (Display->BitsPerPixel() == 15)
+                                        Display->Put(0, 0, bitmap, DM_NOCLIP | DM_BACKGROUND | DM_TRANSPARENT);
+        Display->Put(0, 0, bitmap, DM_NOCLIP | DM_BACKGROUND);
+File GRAPHICS.CPP:
+    if (Display->BitsPerPixel() == 15)
+    if (Display->BitsPerPixel() == 15)
+    if (Display->BitsPerPixel() == 15)
+    if (Display->BitsPerPixel() == 15)
+File EDITOR.CPP:
+        Display->Clear(STATUSBARX, STATUSBARY, Display->Width() - STATUSBARX,
+                                        Display->Height() - STATUSBARY, 0, 0xffff, DM_BACKGROUND);
+                Display->Clear(0, 0, GetWidth(), GetHeight(), 0, 0xffff, DM_BACKGROUND);
+                Display->WriteText(text+offset, 0, 0, winheight);
+                cx = ((cursorx * chained->xspan) / Display->Width()) + chained->xmin;
+                cy = ((cursory * chained->yspan) / Display->Height()) + chained->ymin;
+        sprintf(buf, "Display bits per pixel: %d\n", Display->BitsPerPixel());
+                Display->Clear(112, 0, GetWidth() - 200 - 112, GetHeight(), c, 0xffff, DM_BACKGROUND);
+                                Display->WriteText(buf, 114, 0);
+                        Display->WriteText(buf, 200, 0);
+                Display->Clear(0, 0, GetWidth(), GetHeight(), 0, 0xffff, DM_BACKGROUND);
+                ClassPane.SetWidth(Display->Width() - CONSOLEX - MULTIPANEX);
+                ClassPane.SetWidth(Display->Width() - CONSOLEX - CONSOLEX);
+                Display->SetClipRect(GetPosX(), GetPosY(), GetWidth() - 32, GetHeight());
+                Display->Clear(0, 0, GetWidth() - 32, GetHeight(), 0, 0xffff, DM_BACKGROUND);
+                                        Display->Clear(x, y, OBJWIDTH, OBJHEIGHT, TranslateColor(color), 0xffff, DM_BACKGROUND);
+                                        Display->Put(x, y, tn, DM_TRANSPARENT | DM_BACKGROUND);
+                                Display->WriteText(inf->name, x+THUMBNAILWIDTH+2, y);
+File EXLMAIN.CPP:
+        Display->Close();
+        Display->Close();
+        if (!Display->Initialize(WIDTH, HEIGHT, BPP))
+File ANIMIM~1.CPP:
+        Display->Put(x, y, invitem, DM_TRANSPARENT | DM_BACKGROUND);
+File EQUIP.CPP:
+                Display->Put(0, 0, portrait, DM_BACKGROUND);
+        Display->Put(EquipLoc[inst->InventNum() - 256].x, EquipLoc[inst->InventNum() - 256].y, bm);
+File 3DIMAGE.CPP:
+                Display->PutDim(x - (bitmap->width / 2),
+        if (Display->BitsPerPixel() == 15)
+                if (Display->BitsPerPixel() == 15)
+        Display->AddUpdateRect(r.left, r.top, r.right - r.left + 1, r.bottom - r.top + 1,
+File CHARAC~1.CPP:
+                                        Display->WriteText((char *)doing->data, x0, y0, 1, GameFont, &color, DM_TRANSPARENT | DM_ALIAS);
+                        Display->WriteText((char *)doing->data, x, y, 1, GameFont, &color, DM_TRANSPARENT | DM_ALIAS);
+File BITMAP.CPP:
+        if (Display->BitsPerPixel() == 16)
+File BUTTON.CPP:
+                        Display->Put(x, y, downbitmap, DM_USEREG | DM_BACKGROUND);
+                        Display->Put(x, y, upbitmap, DM_USEREG | DM_BACKGROUND);
+                Display->Frame(x, y, w, h, down);
+                Display->WriteText(name, nx + add, ny + add, 1, SystemFont, &color);
+File HOLEANIM.CPP:
+                                Display->Put(inst->GetScreenX(), inst->GetScreenY(), bm[(frame >> 1)], 
+                                Display->Put(inst->GetScreenX(), inst->GetScreenY(), bm[(frame >> 1)],  
+File DLS.CPP:
+                Display->AddUpdateRect(r.left, r.top,
+                Display->AddUpdateRect(r.left, r.top,
+File INVENT~1.CPP:
+                Display->Clear(INVENTORYCONTX, INVENTORYCONTY,
+                                Display->Clear((x * INVITEMHEIGHT) + INVENTORYSTARTX,
+                                        Display->WriteText(buf, x+1, y+1, 1, LittleNumbers);
+                Display->GetClipRect(sx, sy, sw, sh);
+                Display->Put(x, y, bm);
+                Display->SetClipRect(sx, sy, sw, sh);
+File LOGOSC~1.CPP:
+        //Display->SetClipRect(64, 0, 512, 480);
+        dpanim->dwidth  = Display->Width(); 
+        dpanim->dheight = Display->Height(); 
+                        Display->FlipPage(TRUE);
+                        Display->FlipPage(TRUE);
+        Display->Put(dp, bitmap);
+        Display->Put(dp, bitmap);
+        Display->FlipPage(TRUE);
+        Display->Put(dp, bitmap);
+        SetCursorPos(Display->Width() >> 1, Display->Height() >> 1);
+File COLORT~1.CPP:
+        if (Display->BitsPerPixel() == 15)
+                        if (Display->BitsPerPixel() == 16)
+                        if (Display->BitsPerPixel() == 16)
+File SPELL.CPP:
+                Display->Put(0, 0, background, DM_BACKGROUND);
+                                        Display->Put(x, y, icon[c], DM_BACKGROUND);
+                                        Display->WriteText(names[c], x + 24, y, 1, GameFont);
+                                Display->Put(12 + (s * 21), 92, icon[spell[s]], DM_BACKGROUND | DM_TRANSPARENT);
+File AUTOMAP.CPP:
+                Display->Put(0, 0, map, scrollx, scrolly, map->width, map->height, DM_BACKGROUND);
+File SCROLL.CPP:
+                Display->Put((WIDTH - scroll->width) / 2, (HEIGHT - scroll->height) / 2, scroll, DM_TRANSPARENT);
+File CURSOR.CPP:
+                Display->Put(cursorx - grabx, cursory - graby, DragBitmap, DM_TRANSPARENT | DM_USEREG);
+                Display->Put(cursorx, cursory, MouseCursor, DM_TRANSPARENT | DM_USEREG | DM_ALIAS);
+File STATPANE.CPP:
+                Display->Clear(0, 0xffff, DM_BACKGROUND);
+                Display->WriteText(buf, 12, 4, NUM_SKILLS, GameFont);
+                        Display->WriteText(buf, 106, 4, NUM_SKILLS, GameFont);
+File LIGHTN~2.CPP:
+        Display->Clear();
+                        Display->FlipPage();
+                        Display->Clear();
+File LIGHTN~3.CPP:
+                                Display->Put(inst->GetScreenX(), inst->GetScreenY(), bm[numframes - frame], 
+                                Display->Put(inst->GetScreenX(), inst->GetScreenY(), bm[LIGHTNINGBITMAPS - 1], 
+                                Display->Put(((PTLightningInst)inst)->GetScreenX2(), 
+                                Display->Put(((PTLightningInst)inst)->GetScreenX2(), 

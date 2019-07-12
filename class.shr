@@ -1,0 +1,1317 @@
+Unique Type ID = 0x0433
+
+CLASS "WEAPON"
+begin
+
+
+	STATS
+	begin
+		"EqSlot" 0x3 0x0 0x8
+		"Combining" 0x0 0x0 0x10
+	end
+
+
+	TYPES
+	begin
+		"Club" "Equip\Club.I2D" 0xd0d40000
+		"Stone Axe" "Equip\Stone Axe.I2D" 0x3f040001
+		"Bone Pickaxe" "Equip\Bone Pickaxe.I2D" 0xba200002
+		"Sword" "Equip\Sword.I2D" 0x20240003
+		"Dagger" "Equip\Dagger.I2D" 0xd8420004
+		"Spiked Handaxe" "Equip\Spiked Handaxe.I2D" 0xa1450005
+		"Flanged Mace" "Equip\Flanged Mace.I2D" 0x684d0006
+		"Battle-Axe" "Equip\Battle-Axe.I2D" 0xe26f0007
+		"Morning Star" "Equip\Morning Star.I2D" 0x73980008
+		"Shortsword" "Equip\Shortsword.I2D" 0x709b0009
+		"Broadsword" "Equip\Broadsword.I2D" 0x5ea3000a
+		"Hand-and-a-Half Sword" "Equip\Hand-and-a-Half Sword.I2D" 0x17c9000b
+		"Horseman's Flail" "Equip\Horseman's Flail.I2D" 0xcee5000c
+		"Maul" "Equip\Maul.I2D" 0xb3e8000d
+		"Tulwar" "Equip\Tulwar.I2D" 0xd8eb000e
+		"Katana" "Equip\Katana.I2D" 0x1fee000f
+		"Flamberge" "Equip\Flamberge.I2D" 0x9af20010
+		"Dwarven Axe" "Equip\Dwarven Axe.I2D" 0xe8f50011
+		"Valkyrie's Sword" "Equip\Valkyrie's Sword.I2D" 0xadf80012
+		"Golden Morningstar" "Equip\Golden Morningstar.I2D" 0x81fc0013
+		"Jeweled Dagger" "Equip\Jeweled Dagger.I2D" 0x0f000014
+		"Writhing Kris" "Equip\Writhing Kris.I2D" 0xf7040015
+		"Charred Claymore" "Equip\Charred Claymore.I2D" 0x77070016
+		"Berserker Sword" "Equip\Berserker Sword.I2D" 0x820a0017
+		"Blackened Axe" "Equip\Blackened Axe.I2D" 0x310e0018
+		"Blackened Morningstar" "Equip\Blackened Morningstar.I2D" 0x65130019
+		"Zikastar" "Equip\Zikastar.I2D" 0xf416001a
+		"Serpentine Dagger" "Equip\Serpentine Dagger.I2D" 0xf61a001b
+		"Charred Battlebow" "Equip\Charred Battlebow.I2D" 0x521d001c
+		"Axe of Wrath" "Equip\Axe of Wrath.I2D" 0xca21001d
+		"Mercurous" "Equip\Mercurous.I2D" 0xac24001e
+		"Deathwreaker" "Equip\Deathwreaker.I2D" 0x5628001f
+		"Pommel" "Equip\Pommel.I2D" 0xd82c0020 Combining = 0x1
+		"Crosspiece" "Equip\Crosspiece.I2D" 0x85300021 Combining = 0x2
+		"Hilt" "Equip\Hilt.I2D" 0xd4340022 Combining = 0x1
+		"Blade" "Equip\Blade.I2D" 0x13390023 Combining = 0x2
+		"Angsaar" "Equip\Angsaar.I2D" 0x403c0024
+	end
+
+end
+
+CLASS "ARMOR"
+begin
+
+
+	STATS
+	begin
+		"EqSlot" 0x4 0x0 0x8
+		"Combining" 0x0 0x0 0x10
+	end
+
+
+	TYPES
+	begin
+		"Sigil Ring" "Equip\Sigil Ring.I2D" 0xae410025
+		"Serpent Ring" "Equip\Serpent Ring.I2D" 0x734c0026
+		"Gloves of Thieving" "Equip\Gloves of Thieving.I2D" 0x2a510027
+		"Cestus of Slicing" "Equip\Cestus of Slicing.I2D" 0x63560028
+		"Wyrmtooth Necklace" "Equip\Wyrmtooth Necklace.I2D" 0x4c590029 EqSlot = 0x0
+		"Emerald Ring" "Equip\Emerald Ring.I2D" 0xc35e002a
+		"Emerald Bracelet" "Equip\Emerald Bracelet.I2D" 0xf962002b
+		"Emerald Collar" "Equip\Emerald Collar.I2D" 0xf865002c EqSlot = 0x0
+		"Amulet of Thunderbolts" "Equip\Amulet of Thunderbolts.I2D" 0xc869002d EqSlot = 0x0
+		"Wolfsbane Pendant" "Equip\Wolfsbane Pendant.I2D" 0xda6c002e EqSlot = 0x0
+		"Leather Vest" "Equip\Leather Vest.I2D" 0x5072002f EqSlot = 0x1
+		"Shadowsilk Shirt" "Equip\Shadowsilk Shirt.I2D" 0x5b770030 EqSlot = 0x1
+		"Chainmail" "Equip\Chainmail.I2D" 0xa27b0031 EqSlot = 0x1
+		"Scale Mail" "Equip\Scale Mail.I2D" 0x897e0032 EqSlot = 0x1
+		"Studded Vest" "Equip\Studded Vest.I2D" 0xcc840033 EqSlot = 0x1
+		"Hauberk" "Equip\Hauberk.I2D" 0x8d880034 EqSlot = 0x1
+		"Breastplate" "Equip\Breastplate.I2D" 0x638c0035 EqSlot = 0x1
+		"Field Plate" "Equip\Field Plate.I2D" 0x85900036 EqSlot = 0x1
+		"Spiked Garde" "Equip\Spiked Garde.I2D" 0x60960037 EqSlot = 0x1
+		"Ancient Armor of Wizardry" "Equip\Ancient Armor of Wizardry.I2D" 0x7b9a0038 EqSlot = 0x1
+		"Icen Band" "Equip\Icen Band.I2D" 0xd39e0039
+		"Fireruby Ring" "Equip\Fireruby Ring.I2D" 0xc4a3003a
+		"Blacken Ring" "Equip\Blacken Ring.I2D" 0x35a8003b
+		"Twindragon Bracelet" "Equip\Twindragon Bracelet.I2D" 0x83ac003c
+		"Shadowsilk Boots" "Equip\Shadowsilk Boots.I2D" 0x6bb1003d EqSlot = 0x8
+		"Ancient Boots of Wizardry" "Equip\Ancient Boots of Wizardry.I2D" 0x2ab5003e EqSlot = 0x8
+		"Leather Boots" "Equip\Leather Boots.I2D" 0xb4b9003f EqSlot = 0x8
+		"Climbing Boots" "Equip\Climbing Boots.I2D" 0x34bf0040 EqSlot = 0x8
+		"High Boots" "Equip\High Boots.I2D" 0x0dc20041 EqSlot = 0x8
+		"Spiked-Toed Boots" "Equip\Spiked-Toed Boots.I2D" 0x65c90042 EqSlot = 0x8
+		"Amulet of Channeling" "Equip\Amulet of Channeling.I2D" 0xe1cd0043 EqSlot = 0x0 Combining = 0x1
+		"Staff" "Equip\Staff.I2D" 0x55d10044 EqSlot = 0x2 Combining = 0x1
+		"Staff of Channeling" "Equip\Staff of Channeling.I2D" 0xf3d70045 EqSlot = 0x2
+	end
+
+end
+
+CLASS "TALISMAN"
+begin
+
+
+	TYPES
+	begin
+		"Law" "Magic\Law.I2D" 0x16db0046
+		"Sun" "Magic\Sun.I2D" 0xeae80047
+		"Soul" "Magic\Soul.I2D" 0x29ec0048
+		"Life" "Magic\Life.I2D" 0xe6ef0049
+		"Ocean" "Magic\Ocean.I2D" 0x31f2004a
+		"Stars" "Magic\Stars.I2D" 0xfff6004b
+		"Death" "Magic\Death.I2D" 0xf2f9004c
+		"Chaos" "Magic\Chaos.I2D" 0xb0fb004d
+		"Sky" "Magic\Sky.I2D" 0xa6ff004e
+		"Earth" "Magic\Earth.I2D" 0x6501004f
+		"Ward" "Magic\Ward.I2D" 0xb4050050
+		"Moon" "Magic\Moon.I2D" 0xd3080051
+		"Rubert" "Magic\Rubert.I2D" 0x410b0052
+		"Gilmor" "Magic\Gilmor.I2D" 0xc60f0053
+		"Barry" "Magic\Barry.I2D" 0x3b110054
+	end
+
+end
+
+CLASS "FOOD"
+begin
+
+
+	TYPES
+	begin
+		"Meat" "Misc\Meat.I2D" 0x7b150055
+		"Cheese" "Misc\Cheese.I2D" 0xce3b0056
+		"Apple" "Misc\Apple.I2D" 0xcc530057
+		"Bread" "Misc\Bread.I2D" 0x5f560058
+		"Grapes" "Misc\Grapes.I2D" 0xb2590059
+		"Bottle" "Misc\Bottle.I2D" 0x826e005a
+		"Glass" "Misc\Glass.I2D" 0xee75005b
+		"Fish" "Misc\Fish.I2D" 0x8786005c
+		"Mug" "Misc\Mug.I2D" 0xd38b005d
+		"Watermelon" "Misc\Watermelon.I2D" 0x968e005e
+		"Celery" "Misc\Celery.I2D" 0x8992005f
+	end
+
+end
+
+CLASS "CONTAINER"
+begin
+
+
+	TYPES
+	begin
+		"Chest" "Misc\Chest.I2D" 0x6c950060
+		"Pouch" "Misc\Pouch.I2D" 0x41980061
+		"Vial" "Misc\Vial.I2D" 0x359c0062
+		"Spell Pouch" "Misc\Spell Pouch.I2D" 0x329f0063
+	end
+
+end
+
+CLASS "LIGHTSOURCE"
+begin
+
+
+	STATS
+	begin
+		"EqSlot" 0x4 0x0 0x6
+	end
+
+
+	TYPES
+	begin
+		"Lantern" "Misc\Lantern.I2D" 0x20a30064 EqSlot = 0x2
+		"Torch" "Misc\Torch.I2D" 0x58a70065 EqSlot = 0x2
+	end
+
+end
+
+CLASS "TOOL"
+begin
+
+
+	TYPES
+	begin
+		"Lockpicks" "Equip\Lockpicks.I2D" 0x98ac0066
+		"Galvorn Lockpicks" "Equip\Galvorn Lockpicks.I2D" 0x4bc40067
+	end
+
+end
+
+CLASS "MONEY"
+begin
+
+
+	TYPES
+	begin
+		"Coin" "Misc\Coin.I2D" 0x4ec80068
+	end
+
+end
+
+CLASS "TILE"
+begin
+
+
+	STATS
+	begin
+		"Code" 0xffffffff 0x0 0xffffffff
+		"Extra" 0xffffffff 0x0 0xffffffff
+		"Supertile" 0x0 0x0 0x1
+		"Width" 0x0 0x0 0x10
+		"Height" 0x0 0x0 0x10
+	end
+
+
+	TYPES
+	begin
+		"TwnLight" "Town\TwnLight.I2D" 0xa4dc0069
+		"TwnBrazier" "Town\TwnBrazier.I2D" 0x70dc006a
+		"TwnStreet" "Town\TwnStreet.I2D" 0xd4f5006b
+		"TwnSidewalkSWin" "Town\TwnSidewalkSWin.I2D" 0xc313006c
+		"TwnSidewalkSEin" "Town\TwnSidewalkSEin.I2D" 0x512e006d
+		"TwnSidewalkNWin" "Town\TwnSidewalkNWin.I2D" 0x8432006e
+		"TwnSidewalkNEin" "Town\TwnSidewalkNEin.I2D" 0x8436006f
+		"TwnSidewalkSWinT" "Town\TwnSidewalkSWinT.I2D" 0x2d3c0070
+		"TwnSidewalkSEinT" "Town\TwnSidewalkSEinT.I2D" 0xe33f0071
+		"TwnSidewalkNWinT" "Town\TwnSidewalkNWinT.I2D" 0x9b440072
+		"TwnSidewalkNEinT" "Town\TwnSidewalkNEinT.I2D" 0x18460073
+		"TwnSidewalkE2" "Town\TwnSidewalkE2.I2D" 0x234a0074
+		"TwnSidewalkE1" "Town\TwnSidewalkE1.I2D" 0x284e0075
+		"TwnSidewalkN2" "Town\TwnSidewalkN2.I2D" 0x9c520076
+		"TwnSidewalkN1" "Town\TwnSidewalkN1.I2D" 0xec570077
+		"TwnSidewalkS2" "Town\TwnSidewalkS2.I2D" 0x665b0078
+		"TwnSidewalkS1" "Town\TwnSidewalkS1.I2D" 0x6a5e0079
+		"TwnSidewalkW2" "Town\TwnSidewalkW2.I2D" 0xf462007a
+		"TwnSidewalkW1" "Town\TwnSidewalkW1.I2D" 0xc875007b
+		"TwnSidewalkNE" "Town\TwnSidewalkNE.I2D" 0x677a007c
+		"TwnSidewalkNW" "Town\TwnSidewalkNW.I2D" 0xe880007d
+		"TwnSidewalkSE" "Town\TwnSidewalkSE.I2D" 0x3882007e
+		"TwnSidewalkSW" "Town\TwnSidewalkSW.I2D" 0xfc87007f
+		"TwnSidewalkW2" "Town\TwnSidewalkW2.I2D" 0x098b0080
+		"TwnSidewalkN1" "Town\TwnSidewalkN1.I2D" 0x888b0081
+		"TwnSidewalkN2" "Town\TwnSidewalkN2.I2D" 0x0b8b0082
+		"TwnSidewalkW1" "Town\TwnSidewalkW1.I2D" 0xaf8b0083
+		"TwnSidewalkNs" "Town\TwnSidewalkNs.I2D" 0xa78e0084
+		"TwnSidewalkEs" "Town\TwnSidewalkEs.I2D" 0xc6920085
+		"TwnSidewalkSs" "Town\TwnSidewalkSs.I2D" 0x43960086
+		"TwnSidewalkWs" "Town\TwnSidewalkWs.I2D" 0x74990087
+		"TwnSidewalkNw" "Town\TwnSidewalkNw.I2D" 0x599d0088
+		"TwnSidewalkEw" "Town\TwnSidewalkEw.I2D" 0xf09d0089
+		"TwnSidewalkSw" "Town\TwnSidewalkSw.I2D" 0x47a1008a
+		"TwnSidewalkWw" "Town\TwnSidewalkWw.I2D" 0x1ea1008b
+		"TwnTierSE" "Town\TwnTierSE.I2D" 0x73a6008c
+		"TwnTierS2" "Town\TwnTierS2.I2D" 0x95aa008d
+		"TwnTierS1" "Town\TwnTierS1.I2D" 0xbbaf008e
+		"TwnTierSW" "Town\TwnTierSW.I2D" 0xd6b4008f
+		"TwnTierE2" "Town\TwnTierE2.I2D" 0x4fb80090
+		"TwnTierE1" "Town\TwnTierE1.I2D" 0x3bbc0091
+		"TwnTierNE" "Town\TwnTierNE.I2D" 0x60c00092
+		"TwnTierW1" "Town\TwnTierW1.I2D" 0x6ac50093
+		"TwnTierW2" "Town\TwnTierW2.I2D" 0x4dca0094
+		"TwnTierN1" "Town\TwnTierN1.I2D" 0x50cd0095
+		"TwnTierN2" "Town\TwnTierN2.I2D" 0x35d30096
+		"TwnTierNW" "Town\TwnTierNW.I2D" 0xe8d70097
+		"TwnTier" "Town\TwnTier.I2D" 0x17db0098
+		"TwnBlankwallE" "Town\TwnBlankwallE.I2D" 0x63e10099
+		"TwnBlankwallS" "Town\TwnBlankwallS.I2D" 0xe3e4009a
+		"TwnChimney" "Town\TwnChimney.I2D" 0x6ceb009b
+		"TwnDoorwayE" "Town\TwnDoorwayE.I2D" 0x2aef009c
+		"TwnDoorwayS" "Town\TwnDoorwayS.I2D" 0x94f3009d
+		"TwnPillarSW" "Town\TwnPillarSW.I2D" 0x57f9009e
+		"TwnPillarSE" "Town\TwnPillarSE.I2D" 0x36fd009f
+		"TwnPillarNE" "Town\TwnPillarNE.I2D" 0x920300a0
+		"TwnPillartopS" "Town\TwnPillartopS.I2D" 0x490a00a1
+		"TwnPillartopE" "Town\TwnPillartopE.I2D" 0xb11100a2
+		"TwnStonewallS" "Town\TwnStonewallS.I2D" 0xff1500a3
+		"TwnStonewallS2" "Town\TwnStonewallS2.I2D" 0xf41800a4
+		"TwnStonewallE" "Town\TwnStonewallE.I2D" 0x231e00a5
+		"TwnWinwallS" "Town\TwnWinwallS.I2D" 0x5d2300a6
+		"TwnWinwallS2" "Town\TwnWinwallS2.I2D" 0x8d2900a7
+		"TwnWinwallS3" "Town\TwnWinwallS3.I2D" 0xd22e00a8
+		"TwnWinwallE" "Town\TwnWinwallE.I2D" 0x314400a9
+		"TwnWinwallE2" "Town\TwnWinwallE2.I2D" 0x7f5c00aa
+		"TwnWinwallE3" "Town\TwnWinwallE3.I2D" 0x866300ab
+		"TwnWinopenwallS" "Town\TwnWinopenwallS.I2D" 0x0b6800ac
+		"TwnWinopenwallS2" "Town\TwnWinopenwallS2.I2D" 0x636e00ad
+		"TwnWinopenwallE" "Town\TwnWinopenwallE.I2D" 0x957200ae
+		"TwnWinopenwallE2" "Town\TwnWinopenwallE2.I2D" 0x827c00af
+		"TwnGableroofE" "Town\TwnGableroofE.I2D" 0xa18000b0
+		"TwnGableroofS" "Town\TwnGableroofS.I2D" 0x418600b1
+		"TwnBlankwallEp" "Town\TwnBlankwallEp.I2D" 0x588c00b2
+		"TwnBlankwallSp" "Town\TwnBlankwallSp.I2D" 0x639200b3
+		"TwnDoorwayEp" "Town\TwnDoorwayEp.I2D" 0xbf9700b4
+		"TwnDoorwaySp" "Town\TwnDoorwaySp.I2D" 0xdc9d00b5
+		"TwnPillarSWp" "Town\TwnPillarSWp.I2D" 0xe2a200b6
+		"TwnPillarSEp" "Town\TwnPillarSEp.I2D" 0xe9a800b7
+		"TwnPillarNEp" "Town\TwnPillarNEp.I2D" 0xfbaf00b8
+		"TwnPillartopSp" "Town\TwnPillartopSp.I2D" 0x05b300b9
+		"TwnPillartopEp" "Town\TwnPillartopEp.I2D" 0x16ba00ba
+		"TwnStonewallSp" "Town\TwnStonewallSp.I2D" 0x81c000bb
+		"TwnStonewallS2p" "Town\TwnStonewallS2p.I2D" 0xd8c400bc
+		"TwnStonewallEp" "Town\TwnStonewallEp.I2D" 0xbeca00bd
+		"TwnWinwallSp" "Town\TwnWinwallSp.I2D" 0x3dd500be
+		"TwnWinwallS2p" "Town\TwnWinwallS2p.I2D" 0x5edc00bf
+		"TwnWinwallS3p" "Town\TwnWinwallS3p.I2D" 0x8fe000c0
+		"TwnWinwallEp" "Town\TwnWinwallEp.I2D" 0xeee600c1
+		"TwnWinwallE2p" "Town\TwnWinwallE2p.I2D" 0xeded00c2
+		"TwnWinwallE3p" "Town\TwnWinwallE3p.I2D" 0xcbf300c3
+		"TwnWinopenwallSp" "Town\TwnWinopenwallSp.I2D" 0x0ff800c4
+		"TwnWinopenwallS2p" "Town\TwnWinopenwallS2p.I2D" 0x59fe00c5
+		"TwnWinopenwallEp" "Town\TwnWinopenwallEp.I2D" 0x2f0400c6
+		"TwnWinopenwallE2p" "Town\TwnWinopenwallE2p.I2D" 0xc00b00c7
+		"TwnGableroofEp" "Town\TwnGableroofEp.I2D" 0x421000c8
+		"TwnGableroofSp" "Town\TwnGableroofSp.I2D" 0xce1600c9
+		"TInInsidewallW" "TownInt\TInInsidewallW.I2D" 0xe02600ca
+		"TInInsidewallN" "TownInt\TInInsidewallN.I2D" 0xb34800cb
+		"TInFloor" "TownInt\TInFloor.I2D" 0x926400cc
+		"TInCutawayS" "TownInt\TInCutawayS.I2D" 0xa26d00cd
+		"TInCutawayE" "TownInt\TInCutawayE.I2D" 0x587d00ce
+		"TInCutawaySE" "TownInt\TInCutawaySE.I2D" 0xb08f00cf
+		"TInCutawaySW" "TownInt\TInCutawaySW.I2D" 0xac9400d0
+		"TInCutawayNE" "TownInt\TInCutawayNE.I2D" 0x5ea600d1
+		"TInCutawayDoorW" "TownInt\TInCutawayDoorW.I2D" 0x4ab000d2
+		"TInCutawayDoorN" "TownInt\TInCutawayDoorN.I2D" 0xacc200d3
+		"TInWeaponwallN" "TownInt\TInWeaponwallN.I2D" 0x83d400d4
+		"TInWeaponwallW" "TownInt\TInWeaponwallW.I2D" 0xb5da00d5
+		"TInBarrelwallW" "TownInt\TInBarrelwallW.I2D" 0xebee00d6
+		"TInBarrelwallN" "TownInt\TInBarrelwallN.I2D" 0x17ff00d7
+		"TInBakerwallW" "TownInt\TInBakerwallW.I2D" 0x980d00d8
+		"TInBakerwallN" "TownInt\TInBakerwallN.I2D" 0xb92c00d9
+		"TInArrowwallW" "TownInt\TInArrowwallW.I2D" 0x573b00da
+		"TInArrowwallN" "TownInt\TInArrowwallN.I2D" 0xb04800db
+		"TInDoorframeW" "TownInt\TInDoorframeW.I2D" 0x7a5c00dc
+		"TInDoorframeN" "TownInt\TInDoorframeN.I2D" 0x4e6d00dd
+		"TInToolwallW" "TownInt\TInToolwallW.I2D" 0x307800de
+		"TInToolwallN" "TownInt\TInToolwallN.I2D" 0x9d8800df
+		"TInPotwallW" "TownInt\TInPotwallW.I2D" 0x88a100e0
+		"TInPotwallN" "TownInt\TInPotwallN.I2D" 0xdeb500e1
+		"TInArmorwallW" "TownInt\TInArmorwallW.I2D" 0x88c800e2
+		"TInArmorwallN" "TownInt\TInArmorwallN.I2D" 0xbbda00e3
+		"TInWindowwallW" "TownInt\TInWindowwallW.I2D" 0xfefc00e4
+		"TInWindowwallN" "TownInt\TInWindowwallN.I2D" 0x4e2000e5
+		"TInWindowwall2W" "TownInt\TInWindowwall2W.I2D" 0x014100e6
+		"TInWindowwall2N" "TownInt\TInWindowwall2N.I2D" 0x336400e7
+		"TInStairsN" "TownInt\TInStairsN.I2D" 0x30a200e8
+		"TInStairsW" "TownInt\TInStairsW.I2D" 0x31bb00e9
+		"TInPostW" "TownInt\TInPostW.I2D" 0x32e800ea
+		"TInPostN" "TownInt\TInPostN.I2D" 0x4e0800eb
+		"TInPostSW" "TownInt\TInPostSW.I2D" 0x102500ec
+		"TInPostNW" "TownInt\TInPostNW.I2D" 0x3c4700ed
+		"TInPostNE" "TownInt\TInPostNE.I2D" 0x4d7100ee
+		"TInFireplaceW" "TownInt\TInFireplaceW.I2D" 0x8a9c00ef
+		"TInFireplaceN" "TownInt\TInFireplaceN.I2D" 0xf6c600f0
+		"TInStovewallW" "TownInt\TInStovewallW.I2D" 0xfaf900f1
+		"TInStovewallN" "TownInt\TInStovewallN.I2D" 0xff1d00f2
+		"TInStoveW" "TownInt\TInStoveW.I2D" 0xed4a00f3
+		"TInStoveN" "TownInt\TInStoveN.I2D" 0xa19000f4
+		"TInOvenW" "TownInt\TInOvenW.I2D" 0xc1a300f5
+		"TInOvenN" "TownInt\TInOvenN.I2D" 0x98d000f6
+		"TInTableW" "TownInt\TInTableW.I2D" 0x99ee00f7
+		"TInTableN" "TownInt\TInTableN.I2D" 0x791e00f8
+		"TInTableRound" "TownInt\TInTableRound.I2D" 0xe54a00f9
+		"TInNighttableW" "TownInt\TInNighttableW.I2D" 0x6c7600fa
+		"TInNighttableN" "TownInt\TInNighttableN.I2D" 0xa18c00fb
+		"TInCounterW" "TownInt\TInCounterW.I2D" 0x16ba00fc
+		"TInCounterN" "TownInt\TInCounterN.I2D" 0x2be500fd
+		"TInDresserW" "TownInt\TInDresserW.I2D" 0x791d00fe
+		"TInDresserN" "TownInt\TInDresserN.I2D" 0x1b3a00ff
+		"TInStool" "TownInt\TInStool.I2D" 0x066a0100
+		"TInChairW" "TownInt\TInChairW.I2D" 0x81960101
+		"TInChairN" "TownInt\TInChairN.I2D" 0x4ab20102
+		"TInChairE" "TownInt\TInChairE.I2D" 0x76ce0103
+		"TInChairS" "TownInt\TInChairS.I2D" 0xcbea0104
+		"TInBookcaseN" "TownInt\TInBookcaseN.I2D" 0xec0a0105
+		"TInBedN" "TownInt\TInBedN.I2D" 0x1b270106
+		"TInBedW" "TownInt\TInBedW.I2D" 0x0e490107
+		"TInChestW" "TownInt\TInChestW.I2D" 0x246d0108
+		"TInChestN" "TownInt\TInChestN.I2D" 0xc1950109
+		"TInCandle" "TownInt\TInCandle.I2D" 0x3db5010a
+		"TInSconceW" "TownInt\TInSconceW.I2D" 0xfed3010b
+		"TInSconceN" "TownInt\TInSconceN.I2D" 0x8ef4010c
+		"TInLampW" "TownInt\TInLampW.I2D" 0x18f9010d
+		"TInLampN" "TownInt\TInLampN.I2D" 0xbc11010e
+		"TInBarrel" "TownInt\TInBarrel.I2D" 0x352d010f
+		"TInBarrel2" "TownInt\TInBarrel2.I2D" 0x09490110
+		"TInCrate" "TownInt\TInCrate.I2D" 0x7e6b0111
+		"TInCrate2" "TownInt\TInCrate2.I2D" 0x40890112
+		"TInPictureN" "TownInt\TInPictureN.I2D" 0xcd9d0113
+		"TInPictureW" "TownInt\TInPictureW.I2D" 0x1fb90114
+		"TInPicture2N" "TownInt\TInPicture2N.I2D" 0xead90115
+		"TInCounterEndS" "TownInt\TInCounterEndS.I2D" 0x31f60116
+		"TInCounterEndE" "TownInt\TInCounterEndE.I2D" 0x98120117
+		"TInCounterEndN" "TownInt\TInCounterEndN.I2D" 0x233e0118
+		"TInCounterEndW" "TownInt\TInCounterEndW.I2D" 0xf3910119
+		"TInCounterNE" "TownInt\TInCounterNE.I2D" 0x1ea4011a
+		"TInCounterNW" "TownInt\TInCounterNW.I2D" 0xfbc6011b
+		"TInCounterSW" "TownInt\TInCounterSW.I2D" 0xb7e5011c
+		"TInCounterSE" "TownInt\TInCounterSE.I2D" 0x3f09011d
+		"TInCounterN" "TownInt\TInCounterN.I2D" 0x6023011e
+		"TInCounterW" "TownInt\TInCounterW.I2D" 0xff25011f
+		"TInCounterS" "TownInt\TInCounterS.I2D" 0x90250120
+		"TInCounterE" "TownInt\TInCounterE.I2D" 0x3f470121
+		"TInBanisterS" "TownInt\TInBanisterS.I2D" 0xfa610122
+		"TInBanisterE" "TownInt\TInBanisterE.I2D" 0xa58e0123
+		"TInBanisterN" "TownInt\TInBanisterN.I2D" 0x7eab0124
+		"TInBanister4" "TownInt\TInBanister4.I2D" 0x19c80125
+		"TInBanisterPost" "TownInt\TInBanisterPost.I2D" 0xc4db0126
+		"RunPat" "Ruin\RunPat.I2D" 0x7af90127
+		"RunFred" "Ruin\RunFred.I2D" 0xa6360128
+		"RunSue" "Ruin\RunSue.I2D" 0xe6670129
+		"Rungtgt" "Ruin\Rungtgt.I2D" 0xc96f012a
+		"Runggtt" "Ruin\Runggtt.I2D" 0x6c94012b
+		"Runggtt2" "Ruin\Runggtt2.I2D" 0x129f012c
+		"Rungtgt2" "Ruin\Rungtgt2.I2D" 0x1ec2012d
+		"Runtgtt" "Ruin\Runtgtt.I2D" 0xedce012e
+		"Runtgtg" "Ruin\Runtgtg.I2D" 0xdcf1012f
+		"Runtgtg2" "Ruin\Runtgtg2.I2D" 0x6df90130
+		"Runttgt" "Ruin\Runttgt.I2D" 0x50280131
+		"Runttgg" "Ruin\Runttgg.I2D" 0xd35b0132
+		"Runttgg2" "Ruin\Runttgg2.I2D" 0xf47c0133
+		"Runtttg" "Ruin\Runtttg.I2D" 0x07880134
+		"RunFloor" "Ruin\RunFloor.I2D" 0x17ac0135
+		"RunRailS" "Ruin\RunRailS.I2D" 0xfdb20136
+		"RunRailE" "Ruin\RunRailE.I2D" 0x3bd70137
+		"RunRailN" "Ruin\RunRailN.I2D" 0x20030138
+		"RunRailW" "Ruin\RunRailW.I2D" 0x49490139
+		"RunRailJoin" "Ruin\RunRailJoin.I2D" 0x355a013a
+		"RunRailJoinV" "Ruin\RunRailJoinV.I2D" 0x667c013b
+		"RunStepsSr" "Ruin\RunStepsSr.I2D" 0x627f013c
+		"RunStepsS" "Ruin\RunStepsS.I2D" 0x719d013d
+		"RunStepsSl" "Ruin\RunStepsSl.I2D" 0x2ca7013e
+		"RunStepsSrV" "Ruin\RunStepsSrV.I2D" 0x72d2013f
+		"RunStepsSlV" "Ruin\RunStepsSlV.I2D" 0xafd90140
+		"RunStepsE" "Ruin\RunStepsE.I2D" 0x80fe0141
+		"RunStepsEl" "Ruin\RunStepsEl.I2D" 0x62060142
+		"RunStepsN" "Ruin\RunStepsN.I2D" 0xef350143
+		"RunStepsNr" "Ruin\RunStepsNr.I2D" 0x1d3c0144
+		"RunStepsW" "Ruin\RunStepsW.I2D" 0xbf740145
+		"RunStepsWl" "Ruin\RunStepsWl.I2D" 0x45a40146
+		"RunDoorwayE" "Ruin\RunDoorwayE.I2D" 0x9faa0147
+		"RunDoorwayS" "Ruin\RunDoorwayS.I2D" 0x3fc70148
+		"RunWallSr" "Ruin\RunWallSr.I2D" 0x08d20149
+		"RunWallEr" "Ruin\RunWallEr.I2D" 0x9df2014a
+		"RunWallSl" "Ruin\RunWallSl.I2D" 0x3ffb014b
+		"RunWallEl" "Ruin\RunWallEl.I2D" 0xa71b014c
+		"RunHeadboardS" "Ruin\RunHeadboardS.I2D" 0x363d014d
+		"RunHeadboardE" "Ruin\RunHeadboardE.I2D" 0x2742014e
+		"RunStatueSW" "Ruin\RunStatueSW.I2D" 0xa548014f
+		"RunStatueSE" "Ruin\RunStatueSE.I2D" 0xa84e0150
+		"RunStatueNE" "Ruin\RunStatueNE.I2D" 0xda550151
+		"RunRoof" "Ruin\RunRoof.I2D" 0x80620152
+		"RunRoofS" "Ruin\RunRoofS.I2D" 0x0b6a0153
+		"RunRoofE" "Ruin\RunRoofE.I2D" 0x616f0154
+		"RunRoofSW" "Ruin\RunRoofSW.I2D" 0x30740155
+		"RunRoofSE" "Ruin\RunRoofSE.I2D" 0x457a0156
+		"RunRoofNE" "Ruin\RunRoofNE.I2D" 0xab7f0157
+		"RunRoofNW" "Ruin\RunRoofNW.I2D" 0xf6820158
+		"RunHorsieSW" "Ruin\RunHorsieSW.I2D" 0x518c0159
+		"RunHorsieSE" "Ruin\RunHorsieSE.I2D" 0x7990015a
+		"RunHorsieNE" "Ruin\RunHorsieNE.I2D" 0x8cac015b
+		"RunHorsieNW" "Ruin\RunHorsieNW.I2D" 0x21ca015c
+		"KepTowergate1" "Keep\KepTowergate1.I2D" 0xa9d2015d
+		"KepTowergate2" "Keep\KepTowergate2.I2D" 0x27e9015e
+		"KepPillarS" "Keep\KepPillarS.I2D" 0x9b17015f
+		"KepPillarSE" "Keep\KepPillarSE.I2D" 0xea380160
+		"KepPillarE" "Keep\KepPillarE.I2D" 0xac3f0161
+		"KepTowerRoof" "Keep\KepTowerRoof.I2D" 0x48700162
+		"KepTowerWallS" "Keep\KepTowerWallS.I2D" 0xfd780163
+		"KepTowerWallE" "Keep\KepTowerWallE.I2D" 0xb2980164
+		"KepRoofWindowS" "Keep\KepRoofWindowS.I2D" 0xc5a00165
+		"KepRoofWindowE" "Keep\KepRoofWindowE.I2D" 0xe6bf0166
+		"KepRoofWindowN" "Keep\KepRoofWindowN.I2D" 0xa4c10167
+		"KepRoofWindowW" "Keep\KepRoofWindowW.I2D" 0x76e10168
+		"KepRoofSE" "Keep\KepRoofSE.I2D" 0x8fe40169
+		"KepRoofNE" "Keep\KepRoofNE.I2D" 0x822f016a
+		"KepRoofNW" "Keep\KepRoofNW.I2D" 0x204e016b
+		"KepRoofSW" "Keep\KepRoofSW.I2D" 0x5252016c
+		"KepRoofS" "Keep\KepRoofS.I2D" 0x486d016d
+		"KepRoofE" "Keep\KepRoofE.I2D" 0xb474016e
+		"KepRoofN" "Keep\KepRoofN.I2D" 0xb8a0016f
+		"KepRoofW" "Keep\KepRoofW.I2D" 0x44a50170
+		"KepChimneyE" "Keep\KepChimneyE.I2D" 0x83ce0171
+		"KepChimneyW" "Keep\KepChimneyW.I2D" 0x11d40172
+		"KepPillar2" "Keep\KepPillar2.I2D" 0xbafe0173
+		"KepWallS2" "Keep\KepWallS2.I2D" 0x331c0174
+		"KepWallE2" "Keep\KepWallE2.I2D" 0x1c530175
+		"KepWallS" "Keep\KepWallS.I2D" 0x515b0176
+		"KepWallE" "Keep\KepWallE.I2D" 0x0f7c0177
+		"KepWallN" "Keep\KepWallN.I2D" 0x30b80178
+		"KepwallW" "Keep\KepwallW.I2D" 0x71c20179
+		"KepBanner1" "Keep\KepBanner1.I2D" 0xb2f8017a
+		"KepBanner2" "Keep\KepBanner2.I2D" 0x12fe017b
+		"KepBanner3" "Keep\KepBanner3.I2D" 0xfb2f017c
+		"KepTowerDoorwayS" "Keep\KepTowerDoorwayS.I2D" 0xcf34017d
+		"KepTowersidedoor2" "Keep\KepTowersidedoor2.I2D" 0x9739017e
+		"KepMiniWallS" "Keep\KepMiniWallS.I2D" 0xa34a017f
+		"KepMiniWallE" "Keep\KepMiniWallE.I2D" 0xc95b0180
+		"KepMiniTowerRoof" "Keep\KepMiniTowerRoof.I2D" 0x2b810181
+		"KepParpetS" "Keep\KepParpetS.I2D" 0x75880182
+		"KepParpetE" "Keep\KepParpetE.I2D" 0x768d0183
+		"KepParpetN" "Keep\KepParpetN.I2D" 0x44c60184
+		"KepParpetW" "Keep\KepParpetW.I2D" 0x13ca0185
+		"KepRoofS" "Keep\KepRoofS.I2D" 0xefee0186
+		"KepRoofE" "Keep\KepRoofE.I2D" 0xb1ef0187
+		"KepRoofN" "Keep\KepRoofN.I2D" 0xd4ef0188
+		"KepRoofW" "Keep\KepRoofW.I2D" 0xe4ef0189
+		"KepRoofSE" "Keep\KepRoofSE.I2D" 0x40ef018a
+		"KepRoofNE" "Keep\KepRoofNE.I2D" 0xb7f2018b
+		"KepRoofNW" "Keep\KepRoofNW.I2D" 0x1df2018c
+		"KepRoofSW" "Keep\KepRoofSW.I2D" 0x3cf2018d
+		"KepRoof" "Keep\KepRoof.I2D" 0xdaf2018e
+		"KInFloor" "KeepInt\KInFloor.I2D" 0x3e26018f
+		"KInWallN" "KeepInt\KInWallN.I2D" 0xc9350190
+		"KInWallW" "KeepInt\KInWallW.I2D" 0xb2530191
+		"KInWindowWallN" "KeepInt\KInWindowWallN.I2D" 0x4c770192
+		"KInWindowWallW" "KeepInt\KInWindowWallW.I2D" 0xa88f0193
+		"KInSGWindowWallN" "KeepInt\KInSGWindowWallN.I2D" 0x87ba0194
+		"KInSGWindowWallW" "KeepInt\KInSGWindowWallW.I2D" 0xc5e60195
+		"KInGrateWallN" "KeepInt\KInGrateWallN.I2D" 0x69060196
+		"KInGrateWallW" "KeepInt\KInGrateWallW.I2D" 0x90270197
+		"KInPillarN" "KeepInt\KInPillarN.I2D" 0x53520198
+		"KInPillarW" "KeepInt\KInPillarW.I2D" 0x13700199
+		"KInDoorwayN" "KeepInt\KInDoorwayN.I2D" 0xa792019a
+		"KInDoorwayW" "KeepInt\KInDoorwayW.I2D" 0xa3bf019b
+		"KInDoorframeN" "KeepInt\KInDoorframeN.I2D" 0xf9e9019c
+		"KInDoorframeW" "KeepInt\KInDoorframeW.I2D" 0xcc0a019d
+		"KInHeadboardN" "KeepInt\KInHeadboardN.I2D" 0xc528019e
+		"KInHeadBoardW" "KeepInt\KInHeadBoardW.I2D" 0xb148019f
+		"KInRug" "KeepInt\KInRug.I2D" 0xd46701a0
+		"KInRugN" "KeepInt\KInRugN.I2D" 0x658201a1
+		"KInRugW" "KeepInt\KInRugW.I2D" 0xb1a701a2
+		"KInLongRugN" "KeepInt\KInLongRugN.I2D" 0x03c701a3
+		"KInLongRugW" "KeepInt\KInLongRugW.I2D" 0xdcec01a4
+		"KInPictureN" "KeepInt\KInPictureN.I2D" 0x910801a5
+		"KInPictureW" "KeepInt\KInPictureW.I2D" 0xa82601a6
+		"KInPictureN2" "KeepInt\KInPictureN2.I2D" 0xf05e01a7
+		"KInPictureW2" "KeepInt\KInPictureW2.I2D" 0xe07a01a8
+		"KInPictureN3" "KeepInt\KInPictureN3.I2D" 0x6d9701a9
+		"KInPictureW3" "KeepInt\KInPictureW3.I2D" 0x9fb601aa
+		"KInFireplaceN" "KeepInt\KInFireplaceN.I2D" 0xabc501ab
+		"KInFireplaceW" "KeepInt\KInFireplaceW.I2D" 0x0fe101ac
+		"KInFireplaceTopN" "KeepInt\KInFireplaceTopN.I2D" 0xfafc01ad
+		"KInFireplaceTopW" "KeepInt\KInFireplaceTopW.I2D" 0xe21b01ae
+		"KInBannerN" "KeepInt\KInBannerN.I2D" 0x5f3d01af
+		"KInBannerW" "KeepInt\KInBannerW.I2D" 0xbd6101b0
+		"KInTableN" "KeepInt\KInTableN.I2D" 0xd17f01b1
+		"KInTableW" "KeepInt\KInTableW.I2D" 0xfbab01b2
+		"KInChairN" "KeepInt\KInChairN.I2D" 0x7ec801b3
+		"KInChairE" "KeepInt\KInChairE.I2D" 0x64e401b4
+		"KInChairS" "KeepInt\KInChairS.I2D" 0x120501b5
+		"KInChairW" "KeepInt\KInChairW.I2D" 0xd52101b6
+		"KInBenchN" "KeepInt\KInBenchN.I2D" 0x563f01b7
+		"KInBenchE" "KeepInt\KInBenchE.I2D" 0xe96801b8
+		"KInBenchS" "KeepInt\KInBenchS.I2D" 0x9e8601b9
+		"KInBenchW" "KeepInt\KInBenchW.I2D" 0x21a601ba
+		"KInBanisterN" "KeepInt\KInBanisterN.I2D" 0xe5c401bb
+		"KInBanisterW" "KeepInt\KInBanisterW.I2D" 0x21e101bc
+		"KInBanisterPost" "KeepInt\KInBanisterPost.I2D" 0x86ff01bd
+		"RunCollumnS" "Ruin\RunCollumnS.I2D" 0xf91b01be
+		"KInStairsN" "KeepInt\KInStairsN.I2D" 0xee5501bf
+		"KInStairsE" "KeepInt\KInStairsE.I2D" 0x946d01c0
+		"KInStairsS" "KeepInt\KInStairsS.I2D" 0xc39101c1
+		"KInStairsW" "KeepInt\KInStairsW.I2D" 0xc3c001c2
+		"KInStairsN2" "KeepInt\KInStairsN2.I2D" 0x4ccb01c3
+		"KInStairsE2" "KeepInt\KInStairsE2.I2D" 0x81ec01c4
+		"KInStairsS2" "KeepInt\KInStairsS2.I2D" 0x271501c5
+		"KInStairsW2" "KeepInt\KInStairsW2.I2D" 0x594a01c6
+		"KInLandingNE" "KeepInt\KInLandingNE.I2D" 0x876401c7
+		"KInLandingSE" "KeepInt\KInLandingSE.I2D" 0x227b01c8
+		"KInLandingSW" "KeepInt\KInLandingSW.I2D" 0x93a201c9
+		"KInLandingNW" "KeepInt\KInLandingNW.I2D" 0x67da01ca
+		"KInArmorW" "KeepInt\KInArmorW.I2D" 0xa5fd01cb
+		"KInArmorN" "KeepInt\KInArmorN.I2D" 0x301e01cc
+		"KInArmorcaseW" "KeepInt\KInArmorcaseW.I2D" 0x6b4001cd
+		"KInArmorcaseN" "KeepInt\KInArmorcaseN.I2D" 0x146001ce
+		"KInArmorshelfW" "KeepInt\KInArmorshelfW.I2D" 0x428a01cf
+		"KInArmorshelfN" "KeepInt\KInArmorshelfN.I2D" 0xaaa701d0
+		"KInPlant" "KeepInt\KInPlant.I2D" 0x47ec01d1
+		"KInHeadboardN2" "KeepInt\KInHeadboardN2.I2D" 0xe40601d2
+		"KInHeadboardW2" "KeepInt\KInHeadboardW2.I2D" 0xe32201d3
+		"KInHalfwallN" "KeepInt\KInHalfwallN.I2D" 0xd34001d4
+		"KInHalfwallW" "KeepInt\KInHalfwallW.I2D" 0xeb5b01d5
+		"KInpillar" "KeepInt\KInpillar.I2D" 0xdc8201d6
+		"KInSomething" "KeepInt\KInSomething.I2D" 0x88a001d7
+		"KInSomething" "KeepInt\KInSomething.I2D" 0x7abf01d8
+		"Forgggg" "Forest\Forgggg.I2D" 0x7abf01d9 Code = 0x10101010
+		"ForVinecol" "Forest\ForVinecol.I2D" 0xe82b01da
+		"Fordddd" "Forest\Fordddd.I2D" 0x806201db Code = 0x20202020
+		"Fordddd2" 989 0x7d7601dc Code = 0x20202020
+		"Forggdd" "Forest\Forggdd.I2D" 0xe6ad01dd Code = 0x10102020
+		"Forddgg" "Forest\Forddgg.I2D" 0x7bcd01de Code = 0x20201010
+		"Forgdgd" "Forest\Forgdgd.I2D" 0x811101df Code = 0x10201020
+		"Fordgdg" "Forest\Fordgdg.I2D" 0x903701e0 Code = 0x20102010
+		"Forgggd" "Forest\Forgggd.I2D" 0xab7a01e1 Code = 0x10101020
+		"Forggdg" "Forest\Forggdg.I2D" 0x759e01e2 Code = 0x10102010
+		"Forgdgg" "Forest\Forgdgg.I2D" 0xf8e201e3 Code = 0x10201010
+		"Fordggg" "Forest\Fordggg.I2D" 0x3bee01e4 Code = 0x20101010
+		"Fordddg" "Forest\Fordddg.I2D" 0xbd1601e5 Code = 0x20202010
+		"Forddgd" "Forest\Forddgd.I2D" 0x492001e6 Code = 0x20201020
+		"Fordgdd" "Forest\Fordgdd.I2D" 0x9e5401e7 Code = 0x20102020
+		"Forgddd" "Forest\Forgddd.I2D" 0x226101e8 Code = 0x10202020
+		"Forgddg" "Forest\Forgddg.I2D" 0xbe9101e9 Code = 0x10202010
+		"Forgddg2" "Forest\Forgddg2.I2D" 0x5f9d01ea Code = 0x10202010
+		"Fordggd" "Forest\Fordggd.I2D" 0x4cc501eb Code = 0x20101020
+		"Fordggd2" "Forest\Fordggd2.I2D" 0x89c901ec Code = 0x20101020
+		"Forddkk" "Forest\Forddkk.I2D" 0x75ee01ed Code = 0x20201111
+		"Forkkdd" "Forest\Forkkdd.I2D" 0xb7ff01ee Code = 0x11112020
+		"Fordkdk" "Forest\Fordkdk.I2D" 0x101f01ef Code = 0x20112011
+		"Forkdkd" "Forest\Forkdkd.I2D" 0x172d01f0 Code = 0x11201120
+		"Fordddk" "Forest\Fordddk.I2D" 0x7c4e01f1 Code = 0x20202011
+		"Forddkd" "Forest\Forddkd.I2D" 0xd07401f2 Code = 0x20201120
+		"Fordkdd" "Forest\Fordkdd.I2D" 0x80a201f3 Code = 0x20112020
+		"Forkddd" "Forest\Forkddd.I2D" 0xdac301f4 Code = 0x11202020
+		"Forkkkd" "Forest\Forkkkd.I2D" 0x38ce01f5 Code = 0x11111120
+		"Forkkdk" "Forest\Forkkdk.I2D" 0xc8f001f6 Code = 0x11112011
+		"Forkdkk" "Forest\Forkdkk.I2D" 0x4e1f01f7 Code = 0x11201111
+		"Fordkkk" "Forest\Fordkkk.I2D" 0x8c2c01f8 Code = 0x20111111
+		"Fordkkd" "Forest\Fordkkd.I2D" 0x0e5301f9 Code = 0x20111120
+		"Forkddk" "Forest\Forkddk.I2D" 0xc45b01fa Code = 0x11202011
+		"Forggkk" "Forest\Forggkk.I2D" 0x1d8d01fb Code = 0x10101111 Extra = 0x20201111
+		"Forkkgg" "Forest\Forkkgg.I2D" 0x15b101fc Code = 0x11111010 Extra = 0x11112020
+		"Forgkgk" "Forest\Forgkgk.I2D" 0xd4bf01fd Code = 0x10111011 Extra = 0x20112011
+		"Forkgkg" "Forest\Forkgkg.I2D" 0x92e701fe Code = 0x11101110 Extra = 0x11201120
+		"Forgggk" "Forest\Forgggk.I2D" 0x93f501ff Code = 0x10101011 Extra = 0x20202011
+		"Forggkg" "Forest\Forggkg.I2D" 0x501a0200 Code = 0x10101110 Extra = 0x20201120
+		"Forgkgg" "Forest\Forgkgg.I2D" 0x86410201 Code = 0x10111010 Extra = 0x20112020
+		"Forkggg" "Forest\Forkggg.I2D" 0x8d4f0202 Code = 0x11101010 Extra = 0x11202020
+		"Forkkkg" "Forest\Forkkkg.I2D" 0xb0850203 Code = 0x11111110 Extra = 0x11111120
+		"Forkkgk" "Forest\Forkkgk.I2D" 0x12920204 Code = 0x11111011 Extra = 0x11112011
+		"Forkgkk" "Forest\Forkgkk.I2D" 0x3bc30205 Code = 0x11101111 Extra = 0x11201111
+		"Forgkkk" "Forest\Forgkkk.I2D" 0xc1ec0206 Code = 0x10111111 Extra = 0x20111111
+		"Forgkkg" "Forest\Forgkkg.I2D" 0x5ef90207 Code = 0x10111110 Extra = 0x20111120
+		"Forkggk" "Forest\Forkggk.I2D" 0x693b0208 Code = 0x11101011 Extra = 0x11202011
+		"Forkrgr" "Forest\Forkrgr.I2D" 0x57530209 Code = 0x11511050 Extra = 0x11512050
+		"Forrkrg" "Forest\Forrkrg.I2D" 0x507c020a Code = 0x51115010 Extra = 0x51115020
+		"Forkgrr" "Forest\Forkgrr.I2D" 0x497f020b Code = 0x11105150 Extra = 0x11205150
+		"Forrrkg" "Forest\Forrrkg.I2D" 0x21af020c Code = 0x51501110 Extra = 0x51501120
+		"Forrrrr" "Forest\Forrrrr.I2D" 0x01b4020d Code = 0x50505050
+		"Forddrr" "Forest\Forddrr.I2D" 0x15d2020e Code = 0x20205050
+		"Forrrdd" "Forest\Forrrdd.I2D" 0xf0da020f Code = 0x50502020
+		"Fordrdr" "Forest\Fordrdr.I2D" 0x8dfb0210 Code = 0x20502050
+		"Forrdrd" "Forest\Forrdrd.I2D" 0xd8210211 Code = 0x50205020
+		"Fordddr" "Forest\Fordddr.I2D" 0x86260212 Code = 0x20202050
+		"Forddrd" "Forest\Forddrd.I2D" 0xfd4a0213 Code = 0x20205020
+		"Fordrdd" "Forest\Fordrdd.I2D" 0x84520214 Code = 0x20502020
+		"Forrddd" "Forest\Forrddd.I2D" 0xe1840215 Code = 0x50202020
+		"Forrrrd" "Forest\Forrrrd.I2D" 0xdf8b0216 Code = 0x50505020
+		"Forrrdr" "Forest\Forrrdr.I2D" 0xd1bc0217 Code = 0x50502050
+		"Forrdrr" "Forest\Forrdrr.I2D" 0xa9c20218 Code = 0x50205050
+		"Fordrrr" "Forest\Fordrrr.I2D" 0xc4000219 Code = 0x20505050
+		"Fordrrd" "Forest\Fordrrd.I2D" 0x7d07021a Code = 0x20505020
+		"Forrddr" "Forest\Forrddr.I2D" 0x645c021b Code = 0x50202050
+		"Forgdrr" "Forest\Forgdrr.I2D" 0xef75021c Code = 0x10205050 Extra = 0x20205050
+		"Forgrdr" "Forest\Forgrdr.I2D" 0x39af021d Code = 0x10502050 Extra = 0x20502050
+		"Fordgrr" "Forest\Fordgrr.I2D" 0x87b9021e Code = 0x20105050 Extra = 0x20205050
+		"Forrgrd" "Forest\Forrgrd.I2D" 0x4cf1021f Code = 0x50105020 Extra = 0x50205020
+		"Fordrgr" "Forest\Fordrgr.I2D" 0x5df70220 Code = 0x20501050 Extra = 0x20502050
+		"Forrrgd" "Forest\Forrrgd.I2D" 0xbd090221 Code = 0x50501020 Extra = 0x50502020
+		"Forrdrg" "Forest\Forrdrg.I2D" 0xd4420222 Code = 0x50205010 Extra = 0x50205020
+		"Forrrdg" "Forest\Forrrdg.I2D" 0x1b610223 Code = 0x50502010 Extra = 0x50502020
+		"Forgrgr" "Forest\Forgrgr.I2D" 0x0f990224 Code = 0x10501050 Extra = 0x20502050
+		"Forrgrg" "Forest\Forrgrg.I2D" 0x89a20225 Code = 0x50105010 Extra = 0x50205020
+		"Forggrr" "Forest\Forggrr.I2D" 0x09dd0226 Code = 0x10105050 Extra = 0x20205050
+		"Forrrgg" "Forest\Forrrgg.I2D" 0xeee60227 Code = 0x50501010 Extra = 0x50502020
+		"Forrrrg" "Forest\Forrrrg.I2D" 0x7e220228 Code = 0x50505010 Extra = 0x50505020
+		"Forrrgr" "Forest\Forrrgr.I2D" 0xc42a0229 Code = 0x50501050 Extra = 0x50502050
+		"Forrgrr" "Forest\Forrgrr.I2D" 0x0264022a Code = 0x50105050 Extra = 0x50205050
+		"Forgrrr" "Forest\Forgrrr.I2D" 0x436a022b Code = 0x10505050 Extra = 0x20505050
+		"Forrggg" "Forest\Forrggg.I2D" 0x0185022c Code = 0x50101010 Extra = 0x50202020
+		"Forgrgg" "Forest\Forgrgg.I2D" 0xf8a8022d Code = 0x10501010 Extra = 0x20502020
+		"Forggrg" "Forest\Forggrg.I2D" 0x74e3022e Code = 0x10105010 Extra = 0x20205020
+		"Forgggr" "Forest\Forgggr.I2D" 0x0bf0022f Code = 0x10101050 Extra = 0x20202050
+		"Forgrrg" "Forest\Forgrrg.I2D" 0x932e0230 Code = 0x10505010 Extra = 0x20505020
+		"Forrggr" "Forest\Forrggr.I2D" 0xc3370231 Code = 0x50101050 Extra = 0x50202050
+		"Forrrkd" "Forest\Forrrkd.I2D" 0xd0640232 Code = 0x51501120
+		"Forrkrd" "Forest\Forrkrd.I2D" 0x01870233 Code = 0x51115020
+		"Forkdrr" "Forest\Forkdrr.I2D" 0xd6c60234 Code = 0x11205150
+		"Forkrdr" "Forest\Forkrdr.I2D" 0xcfd40235 Code = 0x11512050
+		"Forirdr" "Forest\Forirdr.I2D" 0x6a0b0236 Code = 0x14542050
+		"Forrird" "Forest\Forrird.I2D" 0x39270237 Code = 0x54145020
+		"Foridrr" "Forest\Foridrr.I2D" 0x58590238 Code = 0x14205450
+		"Forrrid" "Forest\Forrrid.I2D" 0x036f0239 Code = 0x54501420
+		"Forirgr" "Forest\Forirgr.I2D" 0xdaab023a Code = 0x14541050 Extra = 0x14542050
+		"Forrirg" "Forest\Forrirg.I2D" 0xfcc1023b Code = 0x54145010 Extra = 0x54145020
+		"Forigrr" "Forest\Forigrr.I2D" 0x15fd023c Code = 0x14105450 Extra = 0x14205450
+		"Forrrig" "Forest\Forrrig.I2D" 0xfb04023d Code = 0x54501410 Extra = 0x54501420
+		"Foroooo" "Forest\Foroooo.I2D" 0xa220023e Code = 0x60606060
+		"Forggoo" "Forest\Forggoo.I2D" 0xd35a023f Code = 0x10106060
+		"Foroogg" "Forest\Foroogg.I2D" 0x3e6f0240 Code = 0x60601010
+		"Forgogo" "Forest\Forgogo.I2D" 0xb6760241 Code = 0x10601060
+		"Forogog" "Forest\Forogog.I2D" 0x12a90242 Code = 0x60106010
+		"Forgggo" "Forest\Forgggo.I2D" 0xe2af0243 Code = 0x10101060
+		"Forggog" "Forest\Forggog.I2D" 0x39e30244 Code = 0x10106010
+		"Forgogg" "Forest\Forgogg.I2D" 0x8fea0245 Code = 0x10601010
+		"Foroggg" "Forest\Foroggg.I2D" 0x691c0246 Code = 0x60101010
+		"Forooog" "Forest\Forooog.I2D" 0x774f0247 Code = 0x60606010
+		"Foroogo" "Forest\Foroogo.I2D" 0xe9550248 Code = 0x60601060
+		"Forogoo" "Forest\Forogoo.I2D" 0x6f6c0249 Code = 0x60106060
+		"Forgooo" "Forest\Forgooo.I2D" 0x3da8024a Code = 0x10606060
+		"Forgoog" "Forest\Forgoog.I2D" 0xe3bb024b Code = 0x10606010
+		"Foroggo" "Forest\Foroggo.I2D" 0x2ffa024c Code = 0x60101060
+		"Forgrrggrrggrrgoooo" "Forest\Forgrrggrrggrrgoooo.I2D" 0x4024024d Supertile = 0x1 Width = 0x4 Height = 0x4
+		"Forgggorrrorrrogggo" "Forest\Forgggorrrorrrogggo.I2D" 0x1d3e024e Supertile = 0x1 Width = 0x4 Height = 0x4
+		"Foroooogrrggrrggrrg" "Forest\Foroooogrrggrrggrrg.I2D" 0x8960024f Supertile = 0x1 Width = 0x4 Height = 0x4
+		"Forogggorrrorrroggg" "Forest\Forogggorrrorrroggg.I2D" 0xb16a0250 Supertile = 0x1 Width = 0x4 Height = 0x4
+		"Foriiix" "Forest\Foriiix.I2D" 0xa5800251 Code = 0x14141400
+		"Foriixi" "Forest\Foriixi.I2D" 0x74950252 Code = 0x14140014
+		"Forixii" "Forest\Forixii.I2D" 0x34a20253 Code = 0x14001414
+		"Forxiii" "Forest\Forxiii.I2D" 0xdab20254 Code = 0x141414
+		"Forxxii" "Forest\Forxxii.I2D" 0xe8d20255 Code = 0x1414
+		"Foriixx" "Forest\Foriixx.I2D" 0xb0f90256 Code = 0x14140000
+		"Forxixi" "Forest\Forxixi.I2D" 0xae0c0257 Code = 0x140014
+		"Forixix" "Forest\Forixix.I2D" 0x221a0258 Code = 0x14001400
+		"Forxxxi" "Forest\Forxxxi.I2D" 0x34310259 Code = 0x14
+		"Forxxix" "Forest\Forxxix.I2D" 0xa446025a Code = 0x1400
+		"Forxixx" "Forest\Forxixx.I2D" 0x8e5b025b Code = 0x140000
+		"Forixxx" "Forest\Forixxx.I2D" 0x8f6c025c Code = 0x14000000
+		"Formdrr" "Forest\Formdrr.I2D" 0x047d025d Code = 0x30205050
+		"Formdrr2" "Forest\Formdrr2.I2D" 0x2b8b025e
+		"Forrrmd" "Forest\Forrrmd.I2D" 0x51a1025f Code = 0x50503020
+		"Forrrmd2" "Forest\Forrrmd2.I2D" 0x7bb40260
+		"Formrdr" "Forest\Formrdr.I2D" 0xdbbe0261 Code = 0x30502050
+		"Formrdr2" "Forest\Formrdr2.I2D" 0x0fca0262
+		"Forrmrd" "Forest\Forrmrd.I2D" 0xacda0263 Code = 0x50305020
+		"Forrmrd2" "Forest\Forrmrd2.I2D" 0x99ef0264
+		"Formgrr" "Forest\Formgrr.I2D" 0x36030265 Code = 0x30105050 Extra = 0x30205050
+		"Formgrr2" "Forest\Formgrr2.I2D" 0x29180266
+		"Forrrmg" "Forest\Forrrmg.I2D" 0x211e0267 Code = 0x50503010 Extra = 0x50503020
+		"Forrrmg2" "Forest\Forrrmg2.I2D" 0x332d0268
+		"Formrgr" "Forest\Formrgr.I2D" 0xbe330269 Code = 0x30501050 Extra = 0x30502050
+		"Formrgr2" "Forest\Formrgr2.I2D" 0xc941026a
+		"Forrmrg" "Forest\Forrmrg.I2D" 0xd148026b Code = 0x50305010 Extra = 0x50305020
+		"Forrmrg2" "Forest\Forrmrg2.I2D" 0xb55d026c
+		"Formmxx" "Forest\Formmxx.I2D" 0xc365026d Code = 0x30300000
+		"Formmxx2" "Forest\Formmxx2.I2D" 0x5874026e
+		"Formxmx" "Forest\Formxmx.I2D" 0x9187026f Code = 0x30003000
+		"Formxmx2" "Forest\Formxmx2.I2D" 0x6fa50270
+		"Forxmxm" "Forest\Forxmxm.I2D" 0xe6b90271 Code = 0x300030
+		"Forxxmm" "Forest\Forxxmm.I2D" 0x3bc80272 Code = 0x3030
+		"Formmmx" "Forest\Formmmx.I2D" 0x3fdb0273 Code = 0x30303000
+		"Formmmx2" "Forest\Formmmx2.I2D" 0x97ea0274
+		"Forxmmm" "Forest\Forxmmm.I2D" 0x15fe0275 Code = 0x303030
+		"Formxmm" "Forest\Formxmm.I2D" 0xfb130276 Code = 0x30003030
+		"Formxmm2" "Forest\Formxmm2.I2D" 0x572a0277
+		"Formmxm" "Forest\Formmxm.I2D" 0x8d350278 Code = 0x30300030
+		"Formmxm2" "Forest\Formmxm2.I2D" 0xbd460279
+		"Forxmxx" "Forest\Forxmxx.I2D" 0xa354027a Code = 0x300000
+		"Forxmxx2" "Forest\Forxmxx2.I2D" 0xc163027b
+		"Formxxx" "Forest\Formxxx.I2D" 0x6372027c Code = 0x30000000
+		"Formxxx2" "Forest\Formxxx2.I2D" 0x3a7e027d
+		"Forxxmx" "Forest\Forxxmx.I2D" 0x6a95027e Code = 0x3000
+		"Forxxxm" "Forest\Forxxxm.I2D" 0xeda2027f Code = 0x30
+		"Forcxcx" "Forest\Forcxcx.I2D" 0x9db40280
+		"Forcxcx2" "Forest\Forcxcx2.I2D" 0x93c50281
+		"Forccxx" "Forest\Forccxx.I2D" 0x92d30282
+		"Forccxx2" "Forest\Forccxx2.I2D" 0x22e70283
+		"ForPathNES" "Forest\ForPathNES.I2D" 0x35ff0284
+		"ForPathNS" "Forest\ForPathNS.I2D" 0x64120285
+		"ForPathEW" "Forest\ForPathEW.I2D" 0x901b0286
+		"ForPathNW" "Forest\ForPathNW.I2D" 0x13250287
+		"ForPathES" "Forest\ForPathES.I2D" 0xe32c0288
+		"ForPathSW" "Forest\ForPathSW.I2D" 0x1b360289
+		"ForPathNE" "Forest\ForPathNE.I2D" 0x6d42028a
+		"ForPathN" "Forest\ForPathN.I2D" 0xb44b028b
+		"ForPathS" "Forest\ForPathS.I2D" 0x9b52028c
+		"ForPathW" "Forest\ForPathW.I2D" 0x675c028d
+		"ForPathE" "Forest\ForPathE.I2D" 0x6c65028e
+		"ForPathBN" "Forest\ForPathBN.I2D" 0x4b71028f
+		"ForPathBS" "Forest\ForPathBS.I2D" 0x56780290
+		"ForPathBW" "Forest\ForPathBW.I2D" 0xee820291
+		"ForPathBE" "Forest\ForPathBE.I2D" 0xed8a0292
+		"ForPathNSW" "Forest\ForPathNSW.I2D" 0xca930293
+		"ForPathNEW" "Forest\ForPathNEW.I2D" 0x15a60294
+		"ForPathESW" "Forest\ForPathESW.I2D" 0x3fae0295
+		"ForRock1" "Forest\ForRock1.I2D" 0x91b80296
+		"ForRock2" "Forest\ForRock2.I2D" 0x5cc00297
+		"ForRock3" "Forest\ForRock3.I2D" 0x23d10298
+		"ForRock4" "Forest\ForRock4.I2D" 0x07db0299
+		"ForTree1" "Forest\ForTree1.I2D" 0x9fe5029a
+		"ForTree2" "Forest\ForTree2.I2D" 0x3efa029b
+		"ForTree3" "Forest\ForTree3.I2D" 0x9b08029c
+		"ForTree4" "Forest\ForTree4.I2D" 0x871b029d
+		"ForTree5" "Forest\ForTree5.I2D" 0xa741029e
+		"ForTree6" "Forest\ForTree6.I2D" 0xd062029f
+		"ForTree7" "Forest\ForTree7.I2D" 0x2b7302a0
+		"ForTree8" "Forest\ForTree8.I2D" 0x458a02a1
+		"ForTree9" "Forest\ForTree9.I2D" 0x659902a2
+		"ForBirch1" "Forest\ForBirch1.I2D" 0xecad02a3
+		"ForBirch2" "Forest\ForBirch2.I2D" 0x17c502a4
+		"ForBirch3" "Forest\ForBirch3.I2D" 0x02cf02a5
+		"ForBirch4" "Forest\ForBirch4.I2D" 0xe7d902a6
+		"ForBirch5" "Forest\ForBirch5.I2D" 0x76e302a7
+		"ForFerns1" "Forest\ForFerns1.I2D" 0x81ee02a8
+		"ForFerns2" "Forest\ForFerns2.I2D" 0xedf802a9
+		"ForFerns3" "Forest\ForFerns3.I2D" 0xf20202aa
+		"ForFerns4" "Forest\ForFerns4.I2D" 0x340a02ab
+		"ForPlants1" "Forest\ForPlants1.I2D" 0xe71302ac
+		"ForPlants2" "Forest\ForPlants2.I2D" 0x161e02ad
+		"ForPlants3" "Forest\ForPlants3.I2D" 0xa32802ae
+		"ForPlants4" "Forest\ForPlants4.I2D" 0xe02f02af
+		"ForFerns5" "Forest\ForFerns5.I2D" 0xed3902b0
+		"ForFerns6" "Forest\ForFerns6.I2D" 0x256202b1
+		"ForFerns7" "Forest\ForFerns7.I2D" 0x529102b2
+		"ForFerns8" "Forest\ForFerns8.I2D" 0x7cca02b3
+		"ForStalk1" "Forest\ForStalk1.I2D" 0x5dd402b4
+		"ForStalk2" "Forest\ForStalk2.I2D" 0x4cef02b5
+		"ForStalk3" "Forest\ForStalk3.I2D" 0xbbf902b6
+		"ForGrassTuft1" "Forest\ForGrassTuft1.I2D" 0xe60402b7
+		"ForGrassTuft2" "Forest\ForGrassTuft2.I2D" 0x6c0b02b8
+		"ForGrassTuft3" "Forest\ForGrassTuft3.I2D" 0x7a1c02b9
+		"ForGrassTuft4" "Forest\ForGrassTuft4.I2D" 0x605002ba
+		"ForFern1" "Forest\ForFern1.I2D" 0xac9602bb
+		"ForFern2" "Forest\ForFern2.I2D" 0x3fa202bc
+		"ForFern3" "Forest\ForFern3.I2D" 0xd2c402bd
+		"ForFern4" "Forest\ForFern4.I2D" 0x29e102be
+		"ForPlant1" "Forest\ForPlant1.I2D" 0x210702bf
+		"ForPlant2" "Forest\ForPlant2.I2D" 0xad1302c0
+		"ForPlant3" "Forest\ForPlant3.I2D" 0x5b2202c1
+		"ForPlant4" "Forest\ForPlant4.I2D" 0x4e2c02c2
+		"ForPlant5" "Forest\ForPlant5.I2D" 0xb13602c3
+		"ForPlant6" "Forest\ForPlant6.I2D" 0x473f02c4
+		"ForPlant7" "Forest\ForPlant7.I2D" 0xf94a02c5
+		"ForPlant8" "Forest\ForPlant8.I2D" 0x765402c6
+		"ForPlant9" "Forest\ForPlant9.I2D" 0x715e02c7
+		"ForPlant10" "Forest\ForPlant10.I2D" 0x956902c8
+		"ForPlant11" "Forest\ForPlant11.I2D" 0x9c7302c9
+		"ForPlant12" "Forest\ForPlant12.I2D" 0x217d02ca
+		"ForPlant13" "Forest\ForPlant13.I2D" 0xfa8802cb
+		"ForPlant14" "Forest\ForPlant14.I2D" 0xa39202cc
+		"ForPlant15" "Forest\ForPlant15.I2D" 0xb79c02cd
+		"ForPlant16" "Forest\ForPlant16.I2D" 0x43a502ce
+		"ForMushrooms1" "Forest\ForMushrooms1.I2D" 0x78ae02cf
+		"ForMushrooms2" "Forest\ForMushrooms2.I2D" 0xbcb802d0
+		"ForMushrooms3" "Forest\ForMushrooms3.I2D" 0xf4c202d1
+		"ForMushrooms4" "Forest\ForMushrooms4.I2D" 0x31d002d2
+		"ForBridge" "Forest\ForBridge.I2D" 0xfeda02d3
+		"DunFloor" "Dungeon\DunFloor.I2D" 0x76ea02d4
+		"DunFloorDesign" "Dungeon\DunFloorDesign.I2D" 0x260302d5
+		"DunWater" "Dungeon\DunWater.I2D" 0xc10a02d6
+		"Dungggw" "Dungeon\Dungggw.I2D" 0x1d1c02d7
+		"Dungwgg" "Dungeon\Dungwgg.I2D" 0xef2202d8
+		"Dunwggg" "Dungeon\Dunwggg.I2D" 0x7e2c02d9
+		"Dunggwg" "Dungeon\Dunggwg.I2D" 0xad3302da
+		"Dungwww" "Dungeon\Dungwww.I2D" 0xb43e02db
+		"Dunwwwg" "Dungeon\Dunwwwg.I2D" 0x555e02dc
+		"Dunwwgw" "Dungeon\Dunwwgw.I2D" 0x036a02dd
+		"Dunwgww" "Dungeon\Dunwgww.I2D" 0x397102de
+		"Dunwgwg" "Dungeon\Dunwgwg.I2D" 0x097b02df
+		"Dunwwgg" "Dungeon\Dunwwgg.I2D" 0xac8302e0
+		"Dungwgw" "Dungeon\Dungwgw.I2D" 0x3c8c02e1
+		"Dunggww" "Dungeon\Dunggww.I2D" 0x169302e2
+		"DunFountain" "Dungeon\DunFountain.I2D" 0x199e02e3
+		"DunWallN" "Dungeon\DunWallN.I2D" 0xcba302e4
+		"DunWallW" "Dungeon\DunWallW.I2D" 0x2fbd02e5
+		"DunPillarN" "Dungeon\DunPillarN.I2D" 0x85c002e6
+		"DunPillarW" "Dungeon\DunPillarW.I2D" 0x2dc702e7
+		"DunPillar" "Dungeon\DunPillar.I2D" 0xa8e502e8
+		"DunPillarNW" "Dungeon\DunPillarNW.I2D" 0x900202e9
+		"DunPillarN2" "Dungeon\DunPillarN2.I2D" 0xc00802ea
+		"DunPillarW2" "Dungeon\DunPillarW2.I2D" 0xae0f02eb
+		"DunPillarTopN" "Dungeon\DunPillarTopN.I2D" 0xd61402ec
+		"DunPillarTopW" "Dungeon\DunPillarTopW.I2D" 0x321902ed
+		"DunHeadboardN" "Dungeon\DunHeadboardN.I2D" 0x951d02ee
+		"DunHeadboardW" "Dungeon\DunHeadboardW.I2D" 0x3a2402ef
+		"DunArchJoinN" "Dungeon\DunArchJoinN.I2D" 0x4c2702f0
+		"DunArchJoinW" "Dungeon\DunArchJoinW.I2D" 0xc12f02f1
+		"DunHalfwallN" "Dungeon\DunHalfwallN.I2D" 0x543302f2
+		"DunHalfwallW" "Dungeon\DunHalfwallW.I2D" 0xf73802f3
+		"DunRuneWallN" "Dungeon\DunRuneWallN.I2D" 0x683f02f4
+		"DunRuneWallW" "Dungeon\DunRuneWallW.I2D" 0xb34402f5
+		"DunRuneWallN2" "Dungeon\DunRuneWallN2.I2D" 0xeb4a02f6
+		"DunRuneWallW2" "Dungeon\DunRuneWallW2.I2D" 0x285802f7
+		"DunGrateWallN" "Dungeon\DunGrateWallN.I2D" 0x347902f8
+		"DunGrateWallW" "Dungeon\DunGrateWallW.I2D" 0x7c8002f9
+		"DunWordWallN" "Dungeon\DunWordWallN.I2D" 0x508702fa
+		"DunWordWallW" "Dungeon\DunWordWallW.I2D" 0xfe8c02fb
+		"DunWinWallN" "Dungeon\DunWinWallN.I2D" 0xe79102fc
+		"DunWinWallW" "Dungeon\DunWinWallW.I2D" 0x019802fd
+		"DunCauldronWallN" "Dungeon\DunCauldronWallN.I2D" 0x1fc402fe
+		"DunCauldronWallW" "Dungeon\DunCauldronWallW.I2D" 0xb0d602ff
+		"DunStatueN" "Dungeon\DunStatueN.I2D" 0xafe10300
+		"DunStatueW" "Dungeon\DunStatueW.I2D" 0x50f50301
+		"DunDoorwayN" "Dungeon\DunDoorwayN.I2D" 0x850d0302
+		"DunDoorwayW" "Dungeon\DunDoorwayW.I2D" 0xce110303
+		"DunPortcullisN" "Dungeon\DunPortcullisN.I2D" 0xad180304
+		"DunPortcullisW" "Dungeon\DunPortcullisW.I2D" 0x8e1f0305
+		"DunAlcoveN" "Dungeon\DunAlcoveN.I2D" 0x5c480306
+		"DunAlcoveTopN" "Dungeon\DunAlcoveTopN.I2D" 0xd2670307
+		"DunAlcoveTopN2" "Dungeon\DunAlcoveTopN2.I2D" 0x418c0308
+		"DunAlcoveW" "Dungeon\DunAlcoveW.I2D" 0x30930309
+		"DunAlcoveTopW" "Dungeon\DunAlcoveTopW.I2D" 0x979a030a
+		"DunAlcoveTopW2" "Dungeon\DunAlcoveTopW2.I2D" 0xf8a1030b
+		"DunBreakawayWallN" "Dungeon\DunBreakawayWallN.I2D" 0x89ab030c
+		"DunBreakawayWallW" "Dungeon\DunBreakawayWallW.I2D" 0x6fb2030d
+		"DunEyeWallN" "Dungeon\DunEyeWallN.I2D" 0xe1bc030e
+		"DunEyeWallW" "Dungeon\DunEyeWallW.I2D" 0x4fd1030f
+		"DunFireballWallN" "Dungeon\DunFireballWallN.I2D" 0x24d80310
+		"DunFireballWallW" "Dungeon\DunFireballWallW.I2D" 0xf5dd0311
+		"DunRevolvingWallN" "Dungeon\DunRevolvingWallN.I2D" 0x81ec0312
+		"DunRevolvingWallW" "Dungeon\DunRevolvingWallW.I2D" 0x10f00313
+		"DunFloorPresPlate" "Dungeon\DunFloorPresPlate.I2D" 0x3cff0314
+		"DunFloorPresPlate2" "Dungeon\DunFloorPresPlate2.I2D" 0xdd0f0315
+		"DunFloorTrapdoor" "Dungeon\DunFloorTrapdoor.I2D" 0x811d0316
+		"DunFloorSpikePit" "Dungeon\DunFloorSpikePit.I2D" 0x2f2d0317
+		"DunBanisterPost" "Dungeon\DunBanisterPost.I2D" 0xc33b0318
+		"DunBanisterN" "Dungeon\DunBanisterN.I2D" 0xda500319
+		"DunBanisterN2" "Dungeon\DunBanisterN2.I2D" 0x0f57031a
+		"DunBanisterW" "Dungeon\DunBanisterW.I2D" 0x315d031b
+		"DunBanisterW2" "Dungeon\DunBanisterW2.I2D" 0xfc64031c
+		"DunBridgeFloorEW" "Dungeon\DunBridgeFloorEW.I2D" 0xb669031d
+		"DunBridgeFloorNS" "Dungeon\DunBridgeFloorNS.I2D" 0x237e031e
+		"DunBridgeMatNS" "Dungeon\DunBridgeMatNS.I2D" 0x3d95031f
+		"DunBridgeMatEW" "Dungeon\DunBridgeMatEW.I2D" 0x3e9c0320
+		"DunBridgeArchEW" "Dungeon\DunBridgeArchEW.I2D" 0xffa30321
+		"DunBridgeArchNS" "Dungeon\DunBridgeArchNS.I2D" 0x62aa0322
+		"DunBridgePost" "Dungeon\DunBridgePost.I2D" 0x75b00323
+		"DunStepN" "Dungeon\DunStepN.I2D" 0xf5b70324
+		"DunStepE" "Dungeon\DunStepE.I2D" 0xfdbe0325
+		"DunStepS" "Dungeon\DunStepS.I2D" 0x43c50326
+		"DunStepW" "Dungeon\DunStepW.I2D" 0x87cd0327
+		"DunStepNW" "Dungeon\DunStepNW.I2D" 0xe9d40328
+		"DunStepSE" "Dungeon\DunStepSE.I2D" 0xe6da0329
+		"DunStepSW" "Dungeon\DunStepSW.I2D" 0x70e0032a
+		"DunStepNE" "Dungeon\DunStepNE.I2D" 0x7ee7032b
+		"DunStepNWin" "Dungeon\DunStepNWin.I2D" 0xc3ef032c
+		"DunStepSEin" "Dungeon\DunStepSEin.I2D" 0x55f5032d
+		"DunStepSWin" "Dungeon\DunStepSWin.I2D" 0x6fff032e
+		"DunStepNEin" "Dungeon\DunStepNEin.I2D" 0xdf06032f
+		"DunStairsN" "Dungeon\DunStairsN.I2D" 0xcd0d0330
+		"DunStairsE" "Dungeon\DunStairsE.I2D" 0xf9130331
+		"DunStairsS" "Dungeon\DunStairsS.I2D" 0x811a0332
+		"DunStairsW" "Dungeon\DunStairsW.I2D" 0xf1210333
+		"DunStairsN2" "Dungeon\DunStairsN2.I2D" 0xf9470334
+		"DunStairsE2" "Dungeon\DunStairsE2.I2D" 0x8a6d0335
+		"DunStairsS2" "Dungeon\DunStairsS2.I2D" 0xca770336
+		"DunStairsW2" "Dungeon\DunStairsW2.I2D" 0x5c860337
+		"DunLandingNE" "Dungeon\DunLandingNE.I2D" 0x25930338
+		"DunLandingSE" "Dungeon\DunLandingSE.I2D" 0x02a20339
+		"DunLandingSW" "Dungeon\DunLandingSW.I2D" 0xb3ab033a
+		"DunLandingNW" "Dungeon\DunLandingNW.I2D" 0xf5b2033b
+		"DunPool1" "Dungeon\DunPool1.I2D" 0x9db8033c
+		"DunPool2" "Dungeon\DunPool2.I2D" 0x09c3033d
+		"DunBrazier" "Dungeon\DunBrazier.I2D" 0x8dc9033e
+		"DunCrankN" "Dungeon\DunCrankN.I2D" 0xd9df033f
+		"DunCrankW" "Dungeon\DunCrankW.I2D" 0xe1ef0340
+		"DunSwitchN" "Dungeon\DunSwitchN.I2D" 0xb1f60341
+		"DunSwitchW" "Dungeon\DunSwitchW.I2D" 0x77fd0342
+		"DunWardN" "Dungeon\DunWardN.I2D" 0xb9050343
+		"DunWardW" "Dungeon\DunWardW.I2D" 0xa90b0344
+		"DunThroneDias" "Dungeon\DunThroneDias.I2D" 0x631f0345
+		"DunDaisBack" "Dungeon\DunDaisBack.I2D" 0x812c0346
+		"DunCoffinN" "Dungeon\DunCoffinN.I2D" 0x74390347
+		"DunCoffinW" "Dungeon\DunCoffinW.I2D" 0x275b0348
+		"DunCoffinS" "Dungeon\DunCoffinS.I2D" 0x1a7b0349
+		"DunCoffinE" "Dungeon\DunCoffinE.I2D" 0x11a9034a
+		"DunBedN" "Dungeon\DunBedN.I2D" 0xebc9034b
+		"DunBedW" "Dungeon\DunBedW.I2D" 0x8c17034c
+		"DunCampefire1" "Dungeon\DunCampefire1.I2D" 0xce2b034d
+		"DunCampfire2" "Dungeon\DunCampfire2.I2D" 0x865a034e
+		"DunTransporter" "Dungeon\DunTransporter.I2D" 0x1184034f
+		"CavdunTransN" "Cave\CavdunTransN.I2D" 0xcda00350
+		"CavdunTransW" "Cave\CavdunTransW.I2D" 0x34e20351
+		"CavdunTransW2" "Cave\CavdunTransW2.I2D" 0x1cf60352
+		"CavdunTransN2" "Cave\CavdunTransN2.I2D" 0x41160353
+		"CavFloor" "Cave\CavFloor.I2D" 0xa7370354
+		"Caviigg" "Cave\Caviigg.I2D" 0xa4550355
+		"Caviigg2" "Cave\Caviigg2.I2D" 0x0f750356
+		"Cavigig" "Cave\Cavigig.I2D" 0xd59a0357
+		"Cavigig2" "Cave\Cavigig2.I2D" 0xe1bd0358
+		"Caviggg" "Cave\Caviggg.I2D" 0x5acf0359
+		"Cavgigg" "Cave\Cavgigg.I2D" 0x04f0035a
+		"Cavggig" "Cave\Cavggig.I2D" 0xf40f035b
+		"Cavigii" "Cave\Cavigii.I2D" 0xd12b035c
+		"Caviigi" "Cave\Caviigi.I2D" 0xe256035d
+		"Caviiig" "Cave\Caviiig.I2D" 0xa47a035e
+		"Cavccgg" "Cave\Cavccgg.I2D" 0xab90035f
+		"Cavcgcg" "Cave\Cavcgcg.I2D" 0x21a70360
+		"Cavgwgw" "Cave\Cavgwgw.I2D" 0xcebf0361
+		"Cavwgwg" "Cave\Cavwgwg.I2D" 0x8ad30362
+		"Cavggww" "Cave\Cavggww.I2D" 0x3fda0363
+		"Cavwwgg" "Cave\Cavwwgg.I2D" 0xd3e50364
+		"Cavgwww" "Cave\Cavgwww.I2D" 0xaaf20365
+		"Cavwgww" "Cave\Cavwgww.I2D" 0x5ff90366
+		"Cavwwgw" "Cave\Cavwwgw.I2D" 0xc2020367
+		"Cavwwwg" "Cave\Cavwwwg.I2D" 0x83080368
+		"Cavwggg" "Cave\Cavwggg.I2D" 0x322b0369
+		"Cavgwgg" "Cave\Cavgwgg.I2D" 0x434b036a
+		"Cavggwg" "Cave\Cavggwg.I2D" 0xe556036b
+		"Cavgggw" "Cave\Cavgggw.I2D" 0xec5d036c
+		"Cavgwwg" "Cave\Cavgwwg.I2D" 0xc268036d
+		"Cavwggw" "Cave\Cavwggw.I2D" 0x6f6f036e
+		"CavBones1" "Cave\CavBones1.I2D" 0x0d94036f
+		"CavBones2" "Cave\CavBones2.I2D" 0xaea10370
+		"CavBones3" "Cave\CavBones3.I2D" 0x0da80371
+		"CavBones4" "Cave\CavBones4.I2D" 0x19ac0372
+		"CavAltar" "Cave\CavAltar.I2D" 0xa9b20373
+		"CavWallN" "Cave\CavWallN.I2D" 0x4fb60374
+		"CavWallW" "Cave\CavWallW.I2D" 0x12bc0375
+		"CavTallWallN" "Cave\CavTallWallN.I2D" 0x98d40376
+		"CavTallWallW" "Cave\CavTallWallW.I2D" 0xc20f0377
+		"CavWallTopN" "Cave\CavWallTopN.I2D" 0x7f3c0378
+		"CavWallTopW" "Cave\CavWallTopW.I2D" 0x4c510379
+		"CavWallTopN2" "Cave\CavWallTopN2.I2D" 0xc957037a
+		"CavWallTopW2" "Cave\CavWallTopW2.I2D" 0xd36c037b
+		"CavFountainW" "Cave\CavFountainW.I2D" 0xa072037c
+		"CavFountainN" "Cave\CavFountainN.I2D" 0x2979037d
+		"CavDoorN" "Cave\CavDoorN.I2D" 0xb180037e
+		"CavDoorW" "Cave\CavDoorW.I2D" 0xdc85037f
+		"CavBrazier" "Cave\CavBrazier.I2D" 0x85910380
+		"CavBrazier2" "Cave\CavBrazier2.I2D" 0xbe960381
+		"CavBridgeFloorEW" "Cave\CavBridgeFloorEW.I2D" 0x649d0382
+		"CavBridgeFloorNS" "Cave\CavBridgeFloorNS.I2D" 0xb2a30383
+		"CavBridgeArchEW" "Cave\CavBridgeArchEW.I2D" 0x7aa90384
+		"CavBridgeArchNS" "Cave\CavBridgeArchNS.I2D" 0xb9b00385
+		"CavBridgePost" "Cave\CavBridgePost.I2D" 0x25b40386
+		"Cavgggl" "Cave\Cavgggl.I2D" 0x99d20387
+		"Cavglgg" "Cave\Cavglgg.I2D" 0x85280388
+		"Cavlggg" "Cave\Cavlggg.I2D" 0x972c0389
+		"Cavgglg" "Cave\Cavgglg.I2D" 0xce58038a
+		"Cavlggl" "Cave\Cavlggl.I2D" 0x147b038b
+		"Cavgllg" "Cave\Cavgllg.I2D" 0xec9a038c
+		"Cavllgg" "Cave\Cavllgg.I2D" 0x17ba038d
+		"Cavlglg" "Cave\Cavlglg.I2D" 0x73dc038e
+		"Cavggll" "Cave\Cavggll.I2D" 0xfc01038f
+		"Cavglgl" "Cave\Cavglgl.I2D" 0xf7080390
+		"Cavlllg" "Cave\Cavlllg.I2D" 0xee0e0391
+		"Cavlgll" "Cave\Cavlgll.I2D" 0x42130392
+		"Cavglll" "Cave\Cavglll.I2D" 0xd0190393
+		"Cavllgl" "Cave\Cavllgl.I2D" 0xf7380394
+		"Cavllll" "Cave\Cavllll.I2D" 0xbc3e0395
+		"Cavlllo" "Cave\Cavlllo.I2D" 0xad450396
+		"Cavloll" "Cave\Cavloll.I2D" 0x4c490397
+		"Cavolll" "Cave\Cavolll.I2D" 0x87510398
+		"Cavllol" "Cave\Cavllol.I2D" 0x3f560399
+		"Cavllls" "Cave\Cavllls.I2D" 0xcc5d039a
+		"Cavlsll" "Cave\Cavlsll.I2D" 0x3d64039b
+		"Cavslll" "Cave\Cavslll.I2D" 0x126c039c
+		"Cavllsl" "Cave\Cavllsl.I2D" 0xc673039d
+		"Cavlllu" "Cave\Cavlllu.I2D" 0xfc79039e
+		"Cavlull" "Cave\Cavlull.I2D" 0x9380039f
+		"Cavulll" "Cave\Cavulll.I2D" 0x968603a0
+		"Cavllul" "Cave\Cavllul.I2D" 0xe98d03a1
+		"Cavlloo" "Cave\Cavlloo.I2D" 0xcd9b03a2
+		"Cavlolo" "Cave\Cavlolo.I2D" 0xb8a503a3
+		"Cavooll" "Cave\Cavooll.I2D" 0xa7d103a4
+		"Cavolol" "Cave\Cavolol.I2D" 0x78e703a5
+		"Cavllss" "Cave\Cavllss.I2D" 0x1bee03a6
+		"Cavlsls" "Cave\Cavlsls.I2D" 0x20f503a7
+		"Cavssll" "Cave\Cavssll.I2D" 0xb6fc03a8
+		"Cavslsl" "Cave\Cavslsl.I2D" 0xb10203a9
+		"Cavlluu" "Cave\Cavlluu.I2D" 0x7a0903aa
+		"Cavlulu" "Cave\Cavlulu.I2D" 0x221703ab
+		"Cavuull" "Cave\Cavuull.I2D" 0x931e03ac
+		"Cavulul" "Cave\Cavulul.I2D" 0xb62403ad
+		"Cavlool" "Cave\Cavlool.I2D" 0xd82b03ae
+		"Cavollo" "Cave\Cavollo.I2D" 0x062f03af
+		"Cavlooo" "Cave\Cavlooo.I2D" 0x313603b0
+		"Cavoolo" "Cave\Cavoolo.I2D" 0x3e3d03b1
+		"Cavoool" "Cave\Cavoool.I2D" 0x5d4403b2
+		"Cavoloo" "Cave\Cavoloo.I2D" 0x5f4b03b3
+		"Cavlssl" "Cave\Cavlssl.I2D" 0xaa5203b4
+		"Cavslls" "Cave\Cavslls.I2D" 0x8a5903b5
+		"Cavlsss" "Cave\Cavlsss.I2D" 0x966603b6
+		"Cavssls" "Cave\Cavssls.I2D" 0x9b6d03b7
+		"Cavsssl" "Cave\Cavsssl.I2D" 0x827303b8
+		"Cavslss" "Cave\Cavslss.I2D" 0x9b7a03b9
+		"Cavluul" "Cave\Cavluul.I2D" 0xd38103ba
+		"Cavullu" "Cave\Cavullu.I2D" 0xd88803bb
+		"Cavluuu" "Cave\Cavluuu.I2D" 0x309403bc
+		"Cavuulu" "Cave\Cavuulu.I2D" 0xa29a03bd
+		"Cavuuul" "Cave\Cavuuul.I2D" 0xcda103be
+		"Cavuluu" "Cave\Cavuluu.I2D" 0xf9a803bf
+		"Cavnnnn" "Cave\Cavnnnn.I2D" 0xdaaf03c0
+		"Cavnnnu" "Cave\Cavnnnu.I2D" 0xb8b603c1
+		"Cavnunn" "Cave\Cavnunn.I2D" 0x8cbd03c2
+		"Cavunnn" "Cave\Cavunnn.I2D" 0xf9c303c3
+		"Cavnnun" "Cave\Cavnnun.I2D" 0x61cd03c4
+		"Cavnnuu" "Cave\Cavnnuu.I2D" 0xcfd403c5
+		"Cavnunu" "Cave\Cavnunu.I2D" 0x88f603c6
+		"Cavuunn" "Cave\Cavuunn.I2D" 0x800003c7
+		"Cavunun" "Cave\Cavunun.I2D" 0x9d2f03c8
+		"Cavnuun" "Cave\Cavnuun.I2D" 0xe84003c9
+		"Cavnuuu" "Cave\Cavnuuu.I2D" 0x0f5403ca
+		"Cavuunu" "Cave\Cavuunu.I2D" 0xb45d03cb
+		"Cavuuun" "Cave\Cavuuun.I2D" 0xea6503cc
+		"Cavunuu" "Cave\Cavunuu.I2D" 0x876e03cd
+		"Cavssss" "Cave\Cavssss.I2D" 0xe67503ce
+		"Cavuuuu" "Cave\Cavuuuu.I2D" 0x527c03cf
+		"LabFloorSE" "Labyrnth\LabFloorSE.I2D" 0xe38303d0
+		"LabFloorNE" "Labyrnth\LabFloorNE.I2D" 0x649b03d1
+		"LabFloorNW" "Labyrnth\LabFloorNW.I2D" 0x33a403d2
+		"LabFloorSW" "Labyrnth\LabFloorSW.I2D" 0xfdaa03d3
+		"LabPillar" "Labyrnth\LabPillar.I2D" 0x6db303d4
+		"LabFloorEW" "Labyrnth\LabFloorEW.I2D" 0x64bb03d5
+		"LabFloorNS" "Labyrnth\LabFloorNS.I2D" 0x9ac203d6
+		"LabStairsW" "Labyrnth\LabStairsW.I2D" 0xd6c703d7
+		"LabStairsS" "Labyrnth\LabStairsS.I2D" 0xf8d203d8
+		"LabStairsE" "Labyrnth\LabStairsE.I2D" 0xc7db03d9
+		"LabStairsN" "Labyrnth\LabStairsN.I2D" 0xa7e403da
+		"LabFloorENS" "Labyrnth\LabFloorENS.I2D" 0x4cea03db
+		"LabFloorESW" "Labyrnth\LabFloorESW.I2D" 0x01f503dc
+		"LabFloorNES" "Labyrnth\LabFloorNES.I2D" 0xa3fb03dd
+		"LabFloorNEW" "Labyrnth\LabFloorNEW.I2D" 0x6c0603de
+		"LabFloorNESW" "Labyrnth\LabFloorNESW.I2D" 0x360c03df
+		"LabFloorPylon" "Labyrnth\LabFloorPylon.I2D" 0xdb1503e0
+		"LabFloorEw" "Labyrnth\LabFloorEw.I2D" 0x911b03e1
+		"LabFloorNs" "Labyrnth\LabFloorNs.I2D" 0x6b1d03e2
+		"LabFloorWe" "Labyrnth\LabFloorWe.I2D" 0x1f1d03e3
+		"LabFloorSn" "Labyrnth\LabFloorSn.I2D" 0xb04603e4
+		"LabDoorwayN" "Labyrnth\LabDoorwayN.I2D" 0xa64f03e5
+		"LabDoorwayW" "Labyrnth\LabDoorwayW.I2D" 0xb67d03e6
+		"LabFloorNESW2" "Labyrnth\LabFloorNESW2.I2D" 0xe08803e7
+		"LabBrazierW" "Labyrnth\LabBrazierW.I2D" 0xc38f03e8
+		"LabBrazierE" "Labyrnth\LabBrazierE.I2D" 0xa59a03e9
+		"LabPyramidDoor" "Labyrnth\LabPyramidDoor.I2D" 0x54ad03ea
+		"LabPyramidPillar" "Labyrnth\LabPyramidPillar.I2D" 0x75bc03eb
+		"LabPyramidSW" "Labyrnth\LabPyramidSW.I2D" 0xf7d003ec
+		"LabPyramidSE" "Labyrnth\LabPyramidSE.I2D" 0x72e103ed
+		"LabPyramidS" "Labyrnth\LabPyramidS.I2D" 0xe7ed03ee
+		"LabPyrdoorwall" "Labyrnth\LabPyrdoorwall.I2D" 0x091103ef
+		"LabControl1" "Labyrnth\LabControl1.I2D" 0x952703f0
+		"LabControl2" "Labyrnth\LabControl2.I2D" 0xca3103f1
+		"LabPlatform" "Labyrnth\LabPlatform.I2D" 0x8c3703f2
+		"lightning" "Misc\lightning.I2D" 0x533e03f3
+		"ForTree2" "Forest\ForTree2.I2D" 0x4a4f03f4
+		"ForStump" "Forest\ForStump.I2D" 0x324f03f5
+		"ForGrassA" "Forest\ForGrassA.I2D" 0x29e50430
+		"ForGrassB" "Forest\ForGrassB.I2D" 0x84850432
+	end
+
+end
+
+CLASS "EXIT"
+begin
+
+
+	TYPES
+	begin
+		"Door" "Misc\Door.I2D" 0x036a03f6
+		"Halfdoor" "Misc\Halfdoor.I2D" 0x258d03f7
+	end
+
+end
+
+CLASS "PLAYER"
+begin
+
+
+	TYPES
+	begin
+		"Locke" "locke.i3d" 0x6f9403f8
+		"Hog" "Chars\Hog.I2D" 0x2dbd03f9
+	end
+
+end
+
+CLASS "CHARACTER"
+begin
+
+
+	TYPES
+	begin
+		"Ollihoot" "Chars\Ollihoot.I2D" 0x10e303fa
+		"Fatman" "Chars\Fatman.I2D" 0x423103fb
+		"Gordo" "gordo.i3d" 0x8d3903fc
+		"FatGuard" "Chars\FatGuard.I2D" 0xb26503fd
+		"SkinnyGuard" "Chars\SkinnyGuard.I2D" 0x208d03fe
+		"Sorcerer" "Chars\Sorcerer.I2D" 0x71b803ff
+		"Thickman" "Chars\Thickman.I2D" 0x21c00400
+		"Lizardman" "Chars\Lizardman.I2D" 0xddde0401
+		"SkinnyGuy" "Chars\SkinnyGuy.I2D" 0x30fd0402
+		"Warrior1" "Chars\Warrior1.I2D" 0xcf1b0403
+		"Warrior2" "Chars\Warrior2.I2D" 0x9c3e0404
+		"Warrior3" "Chars\Warrior3.I2D" 0xe55c0405
+		"ThickGuard" "Chars\ThickGuard.I2D" 0xeb7b0406
+		"Hopper" "Chars\Hopper.I2D" 0x699d0407
+		"Dragon" "Chars\Dragon.I2D" 0xaebc0408
+		"HighPriest" "Chars\HighPriest.I2D" 0x4eda0409
+	end
+
+end
+
+CLASS "SHADOW"
+begin
+
+
+	TYPES
+	begin
+		"shadow_dresserW" "Misc\shadow_dresserW.I2D" 0x12fd040a
+		"shadow_tableW" "Misc\shadow_tableW.I2D" 0x0a5b040b
+		"TestShadow" "Misc\TestShadow.I2D" 0xc461040c
+		"shadow_barrel2" "Misc\shadow_barrel2.I2D" 0x609f040d
+		"shadow_barrel" "Misc\shadow_barrel.I2D" 0x21a2040e
+		"shadow_bed" "Misc\shadow_bed.I2D" 0x52a9040f
+		"shadow_bed2s" "Misc\shadow_bed2s.I2D" 0xd0c30410
+		"shadow_bed1s" "Misc\shadow_bed1s.I2D" 0xd7e30411
+		"shadow_heatstove1" "Misc\shadow_heatstove1.I2D" 0x30210412
+		"shadow_cookstove1" "Misc\shadow_cookstove1.I2D" 0x08440413
+		"shadow_cookstove2" "Misc\shadow_cookstove2.I2D" 0x485f0414
+		"shadow_closedchest1" "Misc\shadow_closedchest1.I2D" 0xdc810415
+		"shadow_closedchest2" "Misc\shadow_closedchest2.I2D" 0x17b90416
+		"shadow_bookcase1" "Misc\shadow_bookcase1.I2D" 0xb1bf0417
+		"shadow_bookcase2" "Misc\shadow_bookcase2.I2D" 0x71de0418
+		"shadow_longtab1" "Misc\shadow_longtab1.I2D" 0x34160419
+		"shadow_longtab2" "Misc\shadow_longtab2.I2D" 0xd51c041a
+		"shadow_roundtable" "Misc\shadow_roundtable.I2D" 0x623b041b
+		"shadow_crate" "Misc\shadow_crate.I2D" 0xdd5d041c
+		"shadow_nighttable1" "Misc\shadow_nighttable1.I2D" 0xb894041d
+	end
+
+end
+
+CLASS "HELPER"
+begin
+
+
+	TYPES
+	begin
+		"Box" "box.i3d" 0x339b041e
+		"Axis" "axis.i3d" 0xd2f1041f
+		"Plane" "Misc\Plane.I2D" 0x320e0420
+		"Plane3D" "Misc\Plane3D.I2D" 0x05320421
+	end
+
+end
+
+CLASS "Lightning"
+begin
+
+
+	TYPES
+	begin
+		"Lightning" 932 0xa4590422
+	end
+
+end
+
+CLASS "Hole"
+begin
+
+
+	TYPES
+	begin
+		"Hole" 934 0xb3b20423
+	end
+
+end
+
+CLASS "AMMO"
+begin
+
+
+	STATS
+	begin
+		"EqSlot" 0x7 0x0 0x8
+	end
+
+
+	TYPES
+	begin
+		"Arrow" "Equip\Arrow.I2D" 0x2eef0424
+		"Lightning Bolt" "Equip\Lightning Bolt.I2D" 0x74190425
+	end
+
+end
+
+CLASS "SCROLL"
+begin
+
+
+	TYPES
+	begin
+		"Scroll" "Misc\Scroll.I2D" 0x70420426
+		"Book" "Misc\Book.I2D" 0x43670427
+	end
+
+end
+
+CLASS "RANGEDWEAPON"
+begin
+
+
+	STATS
+	begin
+		"EqSlot" 0x6 0x0 0x8
+	end
+
+
+	TYPES
+	begin
+		"Bow" "Equip\Bow.I2D" 0xe86b0428
+		"Crossbow" "Equip\Crossbow.I2D" 0x4d940429
+		"Steel Bow" "Equip\Steel Bow.I2D" 0x119a042a
+		"Heavy Crossbow" "Equip\Heavy Crossbow.I2D" 0x1ea1042b
+		"Golden Bow" "Equip\Golden Bow.I2D" 0x59a7042c
+		"Delvagul" "Equip\Delvagul.I2D" 0x37ac042d
+	end
+
+end
+
+CLASS "EFFECT"
+begin
+
+
+	TYPES
+	begin
+		"Blood" "Misc\Blood.I2D" 0xddc4042e
+	end
+
+end
+

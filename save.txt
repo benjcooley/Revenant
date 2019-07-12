@@ -1,0 +1,284 @@
+8entityMatrix();
+			}
+
+			mat = localmat * pivotoffsetmat;	// Make sure pivots align
+	
+		  // Convert matrix to pos, rot, scl
+			AffineParts parts;
+			decomp_affine(mat, &parts);
+			QuatToEuler(parts.q, (float *)(&rot));			
+			pos = parts.t * stretchmat;
+			if (noscale)
+				scl.x = scl.y = scl.z = 1.0;
+			else
+				scl = parts.k;
+
+		  // Get ready do keys
+			dopos = dorot = doscl = FALSE;
+			if (fr == 0)
+			{
+				lpos = pos;
+				lrot = rot;
+				lscl = scl;
+			}
+
+		  // Get first delta for previous key (no change of putting a key here now)
+
+		  // Do a new key if delta changes too much, direction of delta changes, or
+		  // last frame, and values are different
+/*				if (fr == 0 ||
+				abs(kdpos.x - dpos.x) >= MAXPOSDELTACHANGE || 
+				abs(kdpos.y - dpos.y) >= MAXPOSDELTACHANGE || 
+				abs(kdpos.z - dpos.z) >= MAXPOSDELTACHANGE || 
+				(lastframe && abs(kpos.x - lpos.x) >= MAXPOSCHANGE) || 
+				(lastframe && abs(kpos.y - lpos.y) >= MAXPOSCHANGE) || 
+				(lastframe && abs(kpos.z - lpos.z) >= MAXPOSCHANGE))
+					dopos = TRUE;
+
+		  // Do a new key if delta changes too much, direction of delta changes, or
+		  // last frame, and values are different
+			if (fr == 0 ||
+				abs(kdrot.x - drot.x) >= MAXROTDELTACHANGE ||
+				abs(kdrot.y - drot.y) >= MAXROTDELTACHANGE ||
+				abs(kdrot.z - drot.z) >= MAXROTDELTACHANGE ||
+				(lastframe && abs(krot.x - lrot.x) >= MAXROTCHANGE) || 
+				(lastframe && abs(krot.y - lrot.y) >= MAXROTCHANGE) || 
+				(lastframe && abs(krot.z - lrot.z) >= MAXROTCHANGE)) 
+					dorot = TRUE;
+
+		  // Do a new key if delta changes too much, direction of delta changes, or
+		  // last frame, and values are different
+			if (fr == 0 ||
+				abs(kdscl.x - dscl.x) >= MAXSCLDELTACHANGE ||
+				abs(kdscl.y - dscl.y) >= MAXSCLDELTACHANGE ||
+				abs(kdscl.z - dscl.z) >= MAXSCLDELTACHANGE ||
+				(lastframe && abs(kscl.x - lscl.x) >= MAXSCLCHANGE) || 
+				(lastframe && abs(kscl.y - lscl.y) >= MAXSCLCHANGE) || 
+				(lastframe && abs(kscl.z - lscl.z) >= MAXSCLCHANGE))
+					doscl = TRUE;
+*/
+
+		  // Do a new key if delta changes too much, direction of delta changes, or
+		  // last frame, and values are different
+			if (fr == 0 ||
+				Round(pos.x * (double)ANIKEY32_POSSCALE) != Round(lpos.x * (double)ANIKEY32_POSSCALE) || 
+				Round(pos.y * (double)ANIKEY32_POSSCALE) != Round(lpos.y * (double)ANIKEY32_POSSCALE) || 
+				Round(pos.z * (double)ANIKEY32_POSSCALE) != Round(lpos.z * (double)ANIKEY32_POSSCALE))
+					dopos = TRUE;
+
+		  // Do a new key if delta changes too much, direction of delta changes, or
+		  // last frame, and values are different
+			if (fr == 0 ||
+				Round(rot.x * (double)ANIKEY32_ROTSCALE) != Round(lrot.x * (double)ANIKEY32_ROTSCALE) || 
+				Round(rot.y * (double)ANIKEY32_ROTSCALE) != Round(lrot.y * (double)ANIKEY32_ROTSCALE) || 
+				Round(rot.z * (double)ANIKEY32_ROTSCALE) != Round(lrot.z * (double)ANIKEY32_ROTSCALE))
+					dorot = TRUE;
+
+		  // Do a new key if delta changes too much, direction of delta changes, or
+		  // last frame, and values are different
+			if ((fr == 0 && !(scl.x == 1.0 && scl.y == 1.0 && scl.z == 1.0)) ||
+				Round(scl.x * (double)ANIKEY32_SCLSCALE) != Round(lscl.x * (double)ANIKEY32_SCLSCALE) || 
+				Round(scl.y * (double)ANIKEY32_SCLSCALE) != Round(lscl.y * (double)ANIKEY32_SCLSCALE) || 
+				Round(scl.z * (double)ANIKEY32_SCLSCALE) != Round(lscl.z * (double)ANIKEY32_SCLSCALE))
+					doscl = TRUE;
+
+
+		 // If we are doing a new key (or last frame).. check
+		 // and see if we need a skip key
+			BOOL doskip = FALSE;
+			if (dopos || dorot || doscl)
+			{
+			  // If we are more that one frames from last key, do a skip
+				if (fr > 0 && fr > lastkeyframe + 1)
+				{
+					ak32->flags = ANIFLAG32_CODE;
+					ak32->code = ANICODE32_SKIP;
+					ak32->value = fr - lastkeyframe;
+					ak32++;
+					numanikeys++;
+					doskip = TRUE;
+				}
+			}
+
+		  // The animation key stream doesn't store frame numbers, instead the
+		  // frame number is advanced whenever it finds a key that is equal to
+		  // or less than the current key's type, or a skip or next is encountered.
+		  // In other words, any keys that go in the ascending order of 
+		  // pos-rot-scl is considered to be the same frame (even if one of the
+		  // pos-rot-scl keys is ommited.. i.e. pos-scl).  If any keys are
+		  // repeated (i.e. pos-pos, rot-rot, or scl-scl), or the order descends 
+		  // (i.e. rot-pos, scl-rot, or scl-pos) the key that repeats or descends
+		  // is the first key of the next frame.  This crazy scheme allows us to
+		  // compress the key stream by eliminating the frame numbers from keys.
+
+		  // These two checks below ensure that we always have repeating
+		  // or descending keys when a new frame is added to the key stream by
+		  // adding an extra NEXTFRAME key whenever we find something that will 
+		  // confuse the regular system.
+
+			if (!doskip &&
+				// Can't have a confusing POS key since they always force new frame
+				((dorot && !(dopos || ldorot || ldoscl)) || // A confusing ROT key
+				 (doscl && !(dopos || dorot || ldoscl)))    // A confusing SCL key
+			   )
+			{
+				ak32->flags = ANIFLAG32_CODE;
+				ak32->code = ANICODE32_NEXTFRAME;
+				ak32->value = 0;
+				ak32++;
+				numanikeys++;
+			}
+
+			int x, y, z;
+
+		  // Do position
+			if (dopos)
+			{
+				x = Round(pos.x * (double)ANIKEY32_POSSCALE);
+				y = Round(pos.y * (double)ANIKEY32_POSSCALE);
+				z = Round(pos.z * (double)ANIKEY32_POSSCALE);
+
+				if (fr == 0 ||			// First frame always accurate
+					(flags & AF_ACCURATEKEYS) ||
+					x > SMALLKEYMAX || x < SMALLKEYMIN ||
+					y > SMALLKEYMAX || y < SMALLKEYMIN ||
+					z > SMALLKEYMAX || z < SMALLKEYMIN)
+				{
+					ak32->flags = ANIFLAG32_CODE;
+					ak32->code = ANICODE32_POSX;
+					ak32->value = Round(pos.x * (double)ANIKEY32_CODESCALE);
+					ak32++;
+					numanikeys++;
+					ak32->flags = ANIFLAG32_CODE;
+					ak32->code = ANICODE32_POSY;
+					ak32->value = Round(pos.y * (double)ANIKEY32_CODESCALE);
+					ak32++;
+					numanikeys++;
+					ak32->flags = ANIFLAG32_CODE;
+					ak32->code = ANICODE32_POSZ;
+					ak32->value = Round(pos.z * (double)ANIKEY32_CODESCALE);
+					ak32++;
+					numanikeys++;
+				}
+				else
+				{
+					ak32->flags = ANIFLAG32_POS;
+					ak32->x = x;
+					ak32->y = y;
+					ak32->z = z;
+					ak32++;
+					numanikeys++;
+				}
+
+				kpos = pos;
+			}
+
+		  // Do rotation
+			if (dorot)
+			{
+				x = (int)(rot.x * (double)ANIKEY32_ROTSCALE);
+				x = (x << (32 - SMALLKEYBITS)) >> (32 - SMALLKEYBITS);
+				y = (int)(rot.y * (double)ANIKEY32_ROTSCALE);
+				y = (y << (32 - SMALLKEYBITS)) >> (32 - SMALLKEYBITS);
+				z = (int)(rot.z * (double)ANIKEY32_ROTSCALE);
+				z = (z << (32 - SMALLKEYBITS)) >> (32 - SMALLKEYBITS);
+
+				if (fr == 0 ||		// First frame always accurate
+					(flags & AF_ACCURATEKEYS) ||
+					x > SMALLKEYMAX || x < SMALLKEYMIN ||
+					y > SMALLKEYMAX || y < SMALLKEYMIN ||
+					z > SMALLKEYMAX || z < SMALLKEYMIN)
+				{
+					ak32->flags = ANIFLAG32_CODE;
+					ak32->code = ANICODE32_ROTX;
+					ak32->value = Round(rot.x * (double)ANIKEY32_CODESCALE);
+					ak32++;
+					numanikeys++;
+					ak32->flags = ANIFLAG32_CODE;
+					ak32->code = ANICODE32_ROTY;
+					ak32->value = Round(rot.y * (double)ANIKEY32_CODESCALE);
+					ak32++;
+					numanikeys++;
+					ak32->flags = ANIFLAG32_CODE;
+					ak32->code = ANICODE32_ROTZ;
+					ak32->value = Round(rot.z * (double)ANIKEY32_CODESCALE);
+					ak32++;
+					numanikeys++;
+				}
+				else
+				{
+					ak32->flags = ANIFLAG32_ROT;
+					ak32->x = x;
+					ak32->y = y;
+					ak32->z = z;
+					ak32++;
+					numanikeys++;
+				}
+
+				krot = rot;
+			}
+
+		  // Do scale
+			if (doscl)
+			{
+				if (fr == 0 ||		// First frame always accurate
+					(flags & AF_ACCURATEKEYS) ||
+					x > SMALLKEYMAX || x < SMALLKEYMIN ||
+					y > SMALLKEYMAX || y < SMALLKEYMIN ||
+					z > SMALLKEYMAX || z < SMALLKEYMIN)
+				{
+					ak32->flags = ANIFLAG32_CODE;
+					ak32->code = ANICODE32_SCLX;
+					ak32->value = Round(scl.x * (double)ANIKEY32_CODESCALE);
+					ak32++;
+					numanikeys++;
+					ak32->flags = ANIFLAG32_CODE;
+					ak32->code = ANICODE32_SCLY;
+					ak32->value = Round(scl.y * (double)ANIKEY32_CODESCALE);
+					ak32++;
+					numanikeys++;
+					ak32->flags = ANIFLAG32_CODE;
+					ak32->code = ANICODE32_SCLZ;
+					ak32->value = Round(scl.z * (double)ANIKEY32_CODESCALE);
+					ak32++;
+					numanikeys++;
+				}
+				else
+				{
+					ak32->flags = ANIFLAG32_SCL;
+					ak32->x = x;
+					ak32->y = y;
+					ak32->z = z;
+					ak32++;
+					numanikeys++;
+				}
+
+				kscl = scl;
+			}
+
+		 // If we added a new key, save which ones to the lxxx variables
+			if (dopos || dorot || doscl)
+				lastkeyframe = fr;
+
+		 // Set last stuff
+			ldopos = dopos;
+			ldorot = dorot;
+			ldoscl = doscl;
+			lpos = pos;
+			lrot = rot;
+			lscl = scl;
+		  }
+
+		// Now that we have keys, allocate key array and copy keys from buffer 
+		  PSAniKey32 keys = new SAniKey32[numanikeys];
+		  objanikeys[filestates[s].hdrstate][objmesh->numobjects] = keys;
+		  memcpy(keys, anikeybuf, numanikeys * sizeof(SAniKey32));
+		  objnumanikeys[filestates[s].hdrstate][objmesh->numobjects] = numanikeys;
+
+		// Update state with new bounding rect
+		  objhdr->states[filestates[s].hdrstate].regx = -minx; // reg's are positive
+		  objhdr->states[filestates[s].hdrstate].regy = -miny; // reg's are positive
+		  objhdr->states[filestates[s].hdrstate].width = maxx - minx + 1;
+		  objhdr->states[filestates[s].hdrstate].height = maxy - miny + 1;
+		}
+	}

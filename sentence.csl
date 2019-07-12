@@ -1,0 +1,14 @@
+include "file.csl".
+ignore this is my comment.
+make a person have name, age and dollars.
+make a bulletin	have numpeople as 5 and	person as numpeople of a person;
+	do	ListNames by: repeat with x: set name to GetName x and show name; numpeople times;
+		ListName with index by: set name to name in person index, show name;
+		GetName with index by: give name in person index;
+		GetName with p of a people by: give name in p;
+		GetPerson as a person with index by: give person index;
+		InputName with index by: show index and show  " >" and set person index to input;
+		InputNames by: repeat with x: do InputName x; numpeople times;
+		ExecuteLoop by: do InputNames, do ListNames, wait.
+declare bulletin as a bulletin.
+do ExecuteLoop in bulletin.

@@ -1,0 +1,3340 @@
+// *************************************************************************
+// *                        Cinematix FORSAKEN                             *
+// *                    Copyright (C) 1996 Cinematix                       *
+// *                    mappane.cpp - Map pane object                      *
+// *************************************************************************
+
+#include <windows.h>
+#include <mmsystem.h>
+
+#include <string.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <memory.h>
+#include <math.h>
+
+#include "exile.h"
+#include "graphics.h"
+#include "mappane.h"
+#include "stream.h"
+#include "3dscene.h"
+#include "directdraw.h"
+#include "bmsurface.h"
+#include "ddsurface.h"
+#include "display.h"
+#include "dls.h"
+#include "editor.h"
+#include "playscreen.h"
+#include "inventory.h"
+#include "player.h"
+#include "spell.h"
+#include "script.h"
+#include "cursor.h"
+#include "multi.h"
+#include "savegame.h"
+#include "money.h"
+
+extern TEditStatusPane StatusBar;
+extern TEditClassPane ClassPane;
+extern PTBitmap PointerCursor;
+extern PTMulti EditorData;
+
+#define GRIDZOFF	334
+
+// For self-running demo
+int TimeSinceInput = 0;
+
+// ************************
+// * Initialize and Close *
+// ************************
+
+BOOL TMapPane::Initialize()
+{
+	oldposx = posx = oldposy = posy = 
+	oldsectorx = oldsectory = sectorx = sectory =
+	oldscrollx = scrollx = oldscrolly = scrolly = 0x80000000;
+	oldlevel = level = 0;
+
+	for (int sy = 0; sy < SECTORWINDOWY; sy++)
+		for (int sx = 0; sx < SECTORWINDOWX; sx++)
+			sectors[sx][sy] = NULL;
+
+  // Get unlit scrolling buffer (used as background buffer for map pane)
+  // NOTE: I reprogrammed the TVideoSurface stuff to automatically try to reserve system
+  // memory, but I'll leave this here just in case!
+  	unlitbuffer  = new TBitmapSurface(&UnlitBuffer);
+	if (GetAvailableVRAM() - (SCROLLBUFWIDTH * SCROLLBUFHEIGHT * 2) < TEXTURERESERVE)
+		litbuffer    = new TVideoSurface(SCROLLBUFWIDTH, SCROLLBUFHEIGHT, VSURF_SYSTEMMEM);
+	else
+		litbuffer    = new TVideoSurface(SCROLLBUFWIDTH, SCROLLBUFHEIGHT, VSURF_VIDEOMEM);
+
+  // Get zbuffer for scrolling buffer (used as background z buffer for map pane)
+  // NOTE: the zbuffer has to use the data segment 'ZBuffer' global since the DLS system
+  // uses a !!!fixed!!! DATA SEGMENT address for its DLS lighting routines.  See the DLS module
+  // for more info.  Eventually we should reprogram the DLS routines to use a pointer for
+  // the zbuffer data so we can use a video surface.
+	zbuffer      = new TBitmapSurface(&ZBuffer);  // Should change to Video Surface, but can't
+												  // since DLS uses buffer in program data
+												  // segment
+//	zbuffer      = new TVideoSurface(SCROLLBUFWIDTH, SCROLLBUFHEIGHT); // Can't do this right now
+
+  // Get the normal buffer
+  // Like the ZBuffer, the normal buffer is also a DATA SEGMENT global.  See the DLS module 
+  // for more info
+	normalbuffer = new TBitmapSurface(&NormalBuffer);
+
+	unlitmulti   = new TMultiSurface(unlitbuffer, zbuffer, normalbuffer);
+	litmulti     = new TMultiSurface(litbuffer, zbuffer, normalbuffer);
+
+	int bgbuffer = Display->UseBackgroundArea(MAPPANEX, MAPPANEY,
+						MAPPANEWIDTH, MAPPANEHEIGHT, litmulti);
+	
+	SetBackgroundBuffer(bgbuffer);
+
+	SColor c;
+	c.red = 255;
+	c.green = 255;
+	c.blue = 255;
+	SetLightColor(0, c, 35);
+
+	SColor color = {(BYTE)255, (BYTE)255, (BYTE)255};
+	Scene3D.SetAmbientLight(color);
+
+	int scene3dx      = MAPPANEX;
+	int scene3dy      = MAPPANEY;
+	int scene3dwidth  = MAPPANEWIDTH;
+	int scene3dheight = MAPPANEHEIGHT;
+
+	Scene3D.Initialize(scene3dx, scene3dy, scene3dwidth, scene3dheight);
+
+  // Init master script system
+	ScriptManager.Initialize();
+
+  // Initialize Dynamic Light
+	dlight.intensity = 0;
+	dlight.lightindex = -1;
+	dlight.pos.x = dlight.pos.y = dlight.pos.z = 0;
+
+  // Init cash
+	TMoney::Initialize();
+
+  // Target finder
+	targetcallback = NULL;
+	abortcallback = NULL;
+
+  // Walkmap draw
+	wmrevealx = 0;
+	wmrevealy = 0;
+	wmrevealsizex = (SECTORHEIGHT >> WALKMAPSHIFT);
+	wmrevealsizey = (SECTORWIDTH >> WALKMAPSHIFT);
+
+	dragmode = FALSE;
+	clicked = FALSE;
+
+	memset(&center, 0, sizeof(S3DPoint));
+
+	if (!Editor)
+	{
+		SaveGame.ReadGame();
+		if (Locke)
+			Locke->GetPos(center);
+	}
+
+	SetMapPos(center);
+
+	return TRUE;
+}
+
+void TMapPane::Close()
+{
+//	Display.RemoveRestoreArea(restorebuffer);
+	if (!Editor)
+	{
+		//SaveGame.Save();
+		//SaveGame.WriteGame();
+	}
+
+	if (unlitbuffer)
+	{
+  		delete unlitbuffer;
+		unlitbuffer = NULL;
+	}
+
+	if (unlitbuffer)
+	{
+		delete litbuffer;
+		litbuffer = NULL;
+	}
+
+	if (zbuffer)
+	{
+		delete zbuffer;
+		zbuffer = NULL;
+	}
+
+	if (normalbuffer)
+	{
+		delete normalbuffer;
+		normalbuffer = NULL;
+	}
+
+	if (unlitmulti)
+	{
+		delete unlitmulti;
+		unlitmulti = NULL;
+	}
+
+	if (litmulti)
+	{
+		delete litmulti;
+		litmulti = NULL;
+	}
+
+  // Delete all sectors (saving them if in editor)
+	FreeAllSectors();
+
+  // Kill master script system
+	ScriptManager.Close();
+	
+  // Free imagery in imagery system
+	TObjectImagery::FreeAllImagery();
+
+  // Death to realtime 3D
+	Scene3D.Close();
+}
+
+// ******************
+// * Input Handling *
+// ******************
+
+#define convang(ang)	((ang - 0x20) < 0 ? (ang + 0xE0) : (ang - 0x20))
+#define MOVE_LOCKE(ang) if (Locke) Locke->Go(convang(ang));
+
+void TMapPane::KeyPress(int key, BOOL down)
+{
+	BOOL interuptforreals = TRUE;
+
+	if (down && Editor && StatusBar.EditWalkmap())
+	{
+		switch (key)
+		{
+		  case VK_UP:
+			if (CtrlDown)
+				wmrevealy--;
+			else
+				wmrevealsizey--;
+
+			RedrawAll();
+			break;
+		  case VK_DOWN:
+			if (CtrlDown)
+				wmrevealy++;
+			else
+				wmrevealsizey++;
+
+			RedrawAll();
+			break;
+		  case VK_LEFT:
+			if (CtrlDown)
+				wmrevealx--;
+			else
+				wmrevealsizex--;
+
+			RedrawAll();
+			break;
+		  case VK_RIGHT:
+			if (CtrlDown)
+				wmrevealx++;
+			else
+				wmrevealsizex++;
+
+			RedrawAll();
+			break;
+		  case VK_HOME:
+			if (CtrlDown)
+			{
+				wmrevealx = (center.x - ((sectorx + 1) << SECTORWSHIFT)) >> WALKMAPSHIFT;
+				wmrevealy = (center.y - ((sectory + 1) << SECTORHSHIFT)) >> WALKMAPSHIFT;
+			}
+			else
+			{
+				wmrevealsizex = (center.x - ((sectorx + 1) << SECTORWSHIFT)) >> WALKMAPSHIFT;
+				wmrevealsizey = (center.y - ((sectory + 1) << SECTORHSHIFT)) >> WALKMAPSHIFT;
+			}
+
+			RedrawAll();
+			break;
+		  case VK_END:
+			PTObjectInstance inst = GetInstance(StatusBar.GetSelectedObj());
+			if (inst)
+			{
+				S3DPoint pos;
+				inst->GetPos(pos);
+				pos.x >>= WALKMAPSHIFT;
+				pos.y >>= WALKMAPSHIFT;
+				pos.x %= SECTORWIDTH >> WALKMAPSHIFT;
+				pos.y %= SECTORHEIGHT >> WALKMAPSHIFT;
+
+				int x = inst->GetImagery()->GetWorldRegX(inst->GetState());
+				int y = inst->GetImagery()->GetWorldRegY(inst->GetState());
+
+				wmrevealx = pos.x - x;
+				wmrevealy = pos.y - y;
+
+				int width, length, height;
+				inst->GetImagery()->GetWorldBoundBox(inst->GetState(), width, length, height);
+
+				wmrevealsizex = wmrevealx + width;
+				wmrevealsizey = wmrevealy + length;
+			}
+			RedrawAll();
+			break;
+		}
+	}
+
+	if (down && !Editor && Locke)
+	{
+		S3DPoint pos;
+
+		switch (key)
+		{/*
+		  case '1':
+			if (Locke && CtrlDown)
+				Locke->Say("I'm good.  Get over it.");
+			break;
+		  case '2':
+			if (Locke && CtrlDown)
+				Locke->Say("Even with this outfit, you'd never look as good as me.");
+			break;
+		  case '3':
+			if (Locke && CtrlDown)
+				Locke->Say("Yeah, I could use ya - for target practice!");
+			break;
+		  case '4':
+			if (Locke && CtrlDown)
+				Locke->Say("When was the last time your hair had an oil change?");
+			break;*/
+		  case 'd':
+		  case 'D':
+			if (Locke)
+				Locke->ToggleCombat();
+			break;
+		  case 'a':
+		  case 'A':
+			if (Locke)
+			{
+				Locke->GetPos(pos);
+				
+				int targ[1];
+				if (MapPane.FindObjectsInRange(pos, targ, 200, -1, OBJCLASS_CHARACTER, 1))
+					Locke->Attack(targ[0]);
+				else
+					Locke->Attack();
+			}
+			break;
+		  case 'J':
+		  case 'j':
+			if (Locke)
+				Locke->Defend();
+			break;
+		  case VK_LEFT:
+			MOVE_LOCKE(0xC0);
+			break;
+		  case VK_RIGHT:
+			MOVE_LOCKE(0x40);
+			break;
+		  case VK_UP:
+			MOVE_LOCKE(0x0);
+			break;
+		  case VK_DOWN:
+			MOVE_LOCKE(0x80);
+			break;
+		  case VK_PRIOR:					// pgup
+			MOVE_LOCKE(0x20);
+			break;
+		  case VK_NEXT:						// pgdwn
+  			MOVE_LOCKE(0x60);
+			break;
+		  case VK_HOME:
+			MOVE_LOCKE(0xE0);
+			break;
+		  case VK_END:
+			MOVE_LOCKE(0xA0);
+			break;
+		  case ' ':
+		  case VK_CLEAR:
+			if (Locke)
+				Locke->Stop();
+			break;
+		  default:
+			interuptforreals = FALSE;
+		}
+	}
+
+	if (down && interuptforreals)
+	{
+		TimeSinceInput = 0;
+		if (Locke && Locke->GetScript() && !Locke->GetScript()->IsPaused())
+		{
+			Locke->GetScript()->Break();
+			Locke->Stop();
+		}
+	}
+
+	if (down && key == VK_ESCAPE)
+		PostQuitMessage(0);
+}
+
+void TMapPane::MouseClick(int button, int x, int y)
+{
+	TimeSinceInput = 0;
+	if (Locke && Locke->GetScript() && !Locke->GetScript()->IsPaused())
+	{
+		Locke->GetScript()->Break();
+		Locke->Stop();
+	}
+
+	if (Editor)
+	{
+		if (button == MB_LEFTDOWN && InPane(x, y))
+		{
+			if (dragmode)
+			{
+				StatusBar.StopMoving();
+			}
+			else if (StatusBar.EditWalkmap())
+			{
+				for (int sy = SECTORWINDOWY - 1; sy >= 0; sy--)
+					for (int sx = SECTORWINDOWX - 1; sx >= 0; sx--)
+						if (sectors[sx][sy])
+						{
+							for (int gy = min(wmrevealsizey, (SECTORHEIGHT >> WALKMAPSHIFT)) - 1; gy >= wmrevealy; gy--)
+								for (int gx = min(wmrevealsizex, (SECTORWIDTH >> WALKMAPSHIFT)) - 1; gx >= wmrevealx; gx--)
+								{
+									S3DPoint pos, screenpos, wpos;
+									pos.x = gx;
+									pos.y = gy;
+									wpos.x = ((sectorx + sx) << SECTORWSHIFT) + (gx << WALKMAPSHIFT);
+									wpos.y = ((sectory + sy) << SECTORHSHIFT) + (gy << WALKMAPSHIFT);
+									wpos.z = sectors[sx][sy]->ReturnWalkmap(pos);
+
+									int scrx, scry;
+									WorldToScreen(wpos, scrx, scry);
+
+									// wacky formula to get diamond shape
+									int dx = (scrx - (x + posx)) / 2;
+									int dy = scry - (y + posy);
+									if ((absval(dx) + absval(dy)) < 8)
+									{
+										// hang onto the data for dragging
+										grabx = sectorx + sx;
+										graby = sectory + sy;
+										objx = gx;
+										objy = gy;
+										onobject = wpos.z;
+										oldz = y + posy;
+
+										SRect ir;
+										ir.left = scrx - 16;
+										ir.top = scry - 17;
+										ir.right = scrx + 15;
+										ir.bottom = scry;
+										AddBgUpdateRect(ir);
+										return;
+									}
+								}
+						}
+
+				grabx = graby = objx = objy = oldz = onobject = -1;
+			}
+			else
+			{
+				int index = OnObject(x, y);
+				PTObjectInstance oi = GetInstance(index);
+				if (oi)
+				{
+					S3DPoint pos;
+					oi->GetPos(pos);
+					WorldToScreen(pos, objx, objy);
+					grabx = posx - objx;
+					graby = posy - objy;
+					objx = x + grabx;
+					objy = y + graby;
+					oldz = pos.z;
+					StatusBar.Select(index, CtrlDown);
+				}
+			}
+		}
+		else if (button == MB_LEFTUP)
+		{
+			if (targetcallback)
+			{
+				S3DPoint pos;
+				ScreenToWorld(x+posx-objx, y+posy-objy + (int)((center.z * 866)/1000), pos);
+				pos.z = center.z;
+				if (StatusBar.GridSnap())
+				{
+					pos.x = pos.x & GRIDMASK;
+					pos.y = pos.y & GRIDMASK;
+					pos.z = pos.z & GRIDMASK;
+				}
+
+				(*targetcallback)(pos);
+				if (mode == MODE_MOVE)
+				{
+					dragmode = FALSE;
+					targetcallback = NULL;
+					SetMouseBitmap(PointerCursor);
+				}
+			}
+			else if (StatusBar.EditWalkmap())
+			{
+				if (objx >= 0 && objy >= 0)
+				{
+					S3DPoint wpos, pos;
+					pos.x = objx;
+					pos.y = objy;
+					wpos.x = (grabx << SECTORWSHIFT) + (objx << WALKMAPSHIFT);
+					wpos.y = (graby << SECTORHSHIFT) + (objy << WALKMAPSHIFT);
+					wpos.z = sectors[grabx - sectorx][graby - sectory]->ReturnWalkmap(pos);
+					int scrx, scry;
+					WorldToScreen(wpos, scrx, scry);
+					SRect ir;
+					ir.left = scrx - 16;
+					ir.top = scry - 17;
+					ir.right = scrx + 15;
+					ir.bottom = scry;
+					AddBgUpdateRect(ir);
+					grabx = graby = objx = objy = oldz = onobject = -1;
+				}
+			}
+			else
+				StatusBar.StopMoving();
+		}
+		else if (button == MB_RIGHTDOWN)
+		{
+			if (dragmode)
+				dragmode = FALSE;
+			
+			if (targetcallback)
+			{
+				if (abortcallback)
+					(*abortcallback)();
+
+				targetcallback = NULL;
+				SetMouseBitmap(PointerCursor);
+				//PlayScreen.ReleaseExclusivePane(&MapPane);
+				dragmode = FALSE;
+			}
+			else
+				while (StatusBar.Deselect());
+		}
+	}
+	else		// if not in the editor (normal gameplay)
+	{
+		if (button == MB_LEFTDOWN)
+		{
+			if (Locke)
+			{
+				S3DPoint curpos, target;
+				Locke->GetPos(curpos);
+				ScreenToWorld(x+posx, y+posy + (int)((curpos.z * 866)/1000), target);
+				target -= curpos;
+				if (absval(target.x) > 6 && absval(target.y) > 6)
+				{
+					int dist = (int)sqrt((double)(sqr(target.x) + sqr(target.y)));
+					target.x = (target.x * SPEED_WALK) / dist;
+					target.y = (target.y * SPEED_WALK) / dist;
+					target.z = 0;
+					Locke->Go(target);
+					clicked = TRUE;
+				}
+			}
+		}
+		else if (button == MB_LEFTUP)
+		{
+			if (Locke)
+			{
+				if (clicked)
+				{
+					Locke->Stop();
+					clicked = FALSE;
+				}
+				else if (InPane(x, y))
+				{
+					// dragging from the inventory pane - drop object on the ground
+					PTObjectInstance inst = MapPane.InventoryItem(Inventory.GetContainer(), Inventory.GetHeldSlot());
+					if (!inst && Locke)
+						inst = MapPane.InventoryItem(Locke, EquipPane.GetHeldSlot() + 256);
+
+					if (inst)
+					{
+						if (inst->InventNum() >= 256)
+							((PTPlayer)Locke)->Equip(NULL, EquipPane.GetHeldSlot());	// clear from eq list
+
+						RemoveFromInventory(Locke, inst->InventNum());
+
+						S3DPoint curpos, target;
+						Locke->GetPos(curpos);
+						ScreenToWorld(x+posx, y+posy + (int)((curpos.z * 866)/1000), target);
+						target.z = curpos.z;
+						inst->SetPos(target);
+						AddObjectUpdateRect(inst->GetMapIndex());
+					}
+				}
+			}
+		}
+		else if (button == MB_RIGHTDOWN)
+		{
+			if (Locke)
+			{
+				int objindex = OnObject(x, y);
+				PTObjectInstance inst = MapPane.GetInstance(objindex);
+
+				if (inst == NULL || !inst->IsInventoryItem())
+				{
+					if (inst && inst->ObjClass() == OBJCLASS_EXIT)
+						inst->Use();
+					else
+					{
+						S3DPoint target, curpos;
+						Locke->GetPos(curpos);
+						ScreenToWorld(x+posx, y+posy + (int)((curpos.z * 866)/1000), target);
+						Locke->Goto(target.x, target.y);
+					}
+				}
+				else
+					Locke->Pickup(objindex);
+			}
+		}
+	}
+}
+
+#define MOUSESCROLLSPEED	8
+
+void TMapPane::MouseMove(int button, int x, int y)
+{
+	extern int cursorx, cursory;
+
+	if (Editor)
+	{
+		// mouse scrolling on screen edges
+		mx = my = 0;
+
+		if (cursorx == 0)
+			mx = -MOUSESCROLLSPEED;
+		else if (cursorx >= (Display->Width() - 1))
+			mx = MOUSESCROLLSPEED;
+
+		if (cursory == 0)
+			my = -MOUSESCROLLSPEED;
+		else if (cursory >= (Display->Height() - 1))
+			my = MOUSESCROLLSPEED;
+
+		if (InPane(x, y) &&
+			((button == MB_LEFTDOWN && !dragmode) || (dragmode && button != MB_LEFTDOWN)))
+		{
+			if (StatusBar.EditWalkmap() && !dragmode)
+			{
+				if (objx >= 0 && objy >= 0)
+				{
+					S3DPoint pos;
+					pos.x = objx;
+					pos.y = objy;
+					pos.z = min(255, max(0, (((oldz - (y + posy)) * 1000) / 866) + onobject));
+					sectors[grabx - sectorx][graby - sectory]->SetWalkmap(pos);
+				}
+			}
+			else
+			{
+				if (ShiftDown)
+				{
+					int index = OnObject(x, y);
+					if (index >= 0)
+						StatusBar.Select(index, TRUE);
+				}
+				else
+				{
+					PTObjectInstance oi = GetInstance(StatusBar.GetSelectedObj());
+					if (oi && !(oi->GetFlags() & OF_LOCK))
+					{
+						if (!(oi->GetFlags() & OF_SELDRAW))
+						{
+							// avoid accidental dragging
+							if (!dragmode &&
+								(absval((posx + x) - grabx) + absval((posy + y) - graby)) <= 3)
+								return;
+
+							StatusBar.StartMoving();
+						}
+						
+						S3DPoint oldpos;
+						oi->GetPos(oldpos);
+
+						MapPane.MoveObjScreen(StatusBar.GetSelectedObj(), x - objx, y - objy);
+
+						S3DPoint newpos;
+						oi->GetPos(newpos);
+
+						// handle z moving here, since it is relative to the object, not the map
+						if (!StatusBar.RestrictZ())
+						{
+							newpos.z = oldz - (y - (objy - graby));
+							if (StatusBar.GridSnap())
+								newpos.z &= GRIDMASK;
+							oi->SetPos(newpos);
+						}
+
+						// move other selected objects relative to this one
+						S3DPoint delta = newpos;
+						delta -= oldpos;
+
+						for (int i = StatusBar.GetFirstObj(); i >= 0; i = StatusBar.GetNextObj())
+						{
+							PTObjectInstance inst = GetInstance(i);
+							if (!inst || inst == oi)
+								continue;
+
+							S3DPoint pos;
+							inst->GetPos(pos);
+							pos += delta;
+							inst->SetPos(pos);
+						}
+					}
+				}
+			}
+		}
+	}
+	else		// if not in the editor (normal gameplay)
+	{
+		if (button == MB_LEFTDOWN && clicked)
+		{
+			if (Locke)
+			{
+				S3DPoint curpos, target;
+				Locke->GetPos(curpos);
+				ScreenToWorld(x+posx, y+posy + (int)((curpos.z * 866)/1000), target);
+				target -= curpos;
+				if (absval(target.x) > 6 && absval(target.y) > 6)
+				{
+					int dist = (int)sqrt((double)(sqr(target.x) + sqr(target.y)));
+					target.x = (target.x * SPEED_WALK) / dist;
+					target.y = (target.y * SPEED_WALK) / dist;
+					target.z = 0;
+					Locke->Go(target);
+					clicked = TRUE;
+				}
+			}
+		}
+	}
+}
+
+// utility function for dragging objects with the mouse
+void TMapPane::MoveObjScreen(int index, int x, int y)
+{
+	if (index < 0)
+		return;
+
+	PTObjectInstance oi = GetInstance(index);
+	if (oi)
+	{
+		S3DPoint newpos;
+		oi->GetPos(newpos);
+/*
+		PTObjectInstance overinst = GetInstance(OnObject(x, y));
+		if (overinst)
+		{
+			S3DPoint opos;
+			overinst->GetPos(opos);
+			ScreenToWorld(x + posx, y + posy + opos.z, newpos);
+			newpos.z = opos.z;
+		}
+		else*/
+		{
+			S3DPoint tmppos = newpos;
+			ScreenToWorld(x + posx, y + posy + (int)((tmppos.z * 866)/1000), newpos);
+			if (StatusBar.GridSnap())
+			{
+				newpos.x = newpos.x & GRIDMASK;
+				newpos.y = newpos.y & GRIDMASK;
+			}
+			if (StatusBar.RestrictX())
+				newpos.x = tmppos.x;
+			if (StatusBar.RestrictY())
+				newpos.y = tmppos.y;
+
+			newpos.z = tmppos.z;
+		}
+
+		oi->SetPos(newpos);
+		StatusBar.SetDirty(TRUE);
+	}
+}
+
+// *********************
+// * Pane Manipulation *
+// *********************
+
+// Set Map Pos
+void TMapPane::SetMapPos(RS3DPoint newpos)
+{
+	int nposx, nposy;
+	WorldToScreen(newpos, nposx, nposy);
+	SetScrollPos(nposx - (MAPPANEWIDTH/2), nposy - (MAPPANEHEIGHT/2));
+
+	center = newpos;
+}
+
+// ********************
+// * Object Functions *
+// ********************
+
+// Create object
+int TMapPane::NewObject(PSObjectDef def)
+{
+	PTObjectClass oc = TObjectClass::GetClass(def->objclass);
+	if (!oc)
+		return -1;
+	PTObjectInstance oi = oc->NewObject(def);
+	if (!oi)
+		return -1;
+
+	int shadowindex = AddShadow(oi);
+
+	int index = AddObject(oi);
+
+	if (index < 0)
+	{
+		PTObjectInstance shadow = RemoveObject(shadowindex);
+		delete shadow;
+	}
+
+	return index;
+}
+
+
+// Add object
+int TMapPane::AddObject(PTObjectInstance oi)
+{
+	S3DPoint pos;
+	oi->GetPos(pos);
+
+	int sx = (pos.x >> SECTORWSHIFT);
+	int sy = (pos.y >> SECTORHSHIFT);
+
+	if ((DWORD)sx >= MAXSECTORX || sx < sectorx || sx >= sectorx + SECTORWINDOWX ||
+		(DWORD)sy >= MAXSECTORY || sy < sectory || sy >= sectory + SECTORWINDOWY)
+		return -1;
+
+	PTSector sect = sectors[sx - sectorx][sy - sectory];
+	if (!sect)
+		return -1;
+
+	return AddObjectSector(oi, sect);
+}
+
+int TMapPane::AddObjectSector(PTObjectInstance oi, PTSector sect, int sectindex)
+{
+	int item = sect->AddObject(oi, sectindex);
+	if (item < 0)
+		return -1;
+
+	int index = MAKEINDEX(level, sect->SectorX(), sect->SectorY(), item);
+	oi->SetMapIndex(index);
+
+	TransferWalkmap(oi);
+
+	if (!oi->GetScript())
+		oi->InitScript(ScriptManager.ObjectScript(oi));
+
+	AddObjectUpdateRect(index);
+
+	return index;
+}
+
+// Remove object
+PTObjectInstance TMapPane::RemoveObject(int index)
+{
+	int lv = GETLEVEL(index);
+	if (lv != level)
+		return NULL;
+
+	int sx = GETSECTORX(index);
+	int sy = GETSECTORY(index);
+
+	if ((DWORD)sx >= MAXSECTORX || sx < sectorx || sx >= sectorx + SECTORWINDOWX ||
+		(DWORD)sy >= MAXSECTORY || sy < sectory || sy >= sectory + SECTORWINDOWY)
+			return NULL;
+
+	if (!sectors[sx - sectorx][sy - sectory])
+		return NULL; 
+
+	AddObjectUpdateRect(index);
+
+	ExtractWalkmap(GetInstance(index));
+
+	PTObjectInstance inst = sectors[sx - sectorx][sy - sectory]->RemoveObject(GETITEM(index));
+
+	if (inst && inst->GetShadow() >= 0)
+		RemoveObject(inst->GetShadow());
+
+	if (inst && inst->HasAnimator())
+		inst->FreeAnimator();
+
+	return inst;
+}
+
+// Add the shadow (if any) associated with an object
+int TMapPane::AddShadow(PTObjectInstance oi)
+{
+	extern TObjectClass ShadowClass;
+
+	if (oi->ObjClass() == OBJCLASS_SHADOW)
+	{
+		oi->SetShadow(-1);
+		return -1;
+	}
+
+	SObjectDef def;
+	memset(&def, 0, sizeof(SObjectDef));
+
+	char buf[80];
+	sprintf(buf, "shadow_%s", oi->GetTypeName());
+
+	def.objclass = OBJCLASS_SHADOW;
+	def.objtype = ShadowClass.FindObjType(buf);
+	oi->GetPos(def.pos);
+
+	int index = NewObject(&def);
+	oi->SetShadow(index);
+
+	return index;
+}
+
+// Object find functions
+int TMapPane::FindObject(char *name, int occurance)
+{
+	int found = 0;
+
+	for (int sx = 0; sx < SECTORWINDOWX; sx++)
+	{
+		for (int sy = 0; sy < SECTORWINDOWY; sy++)
+		{
+			if (sectors[sx][sy])
+			{
+				int item = sectors[sx][sy]->FindObject(name, found, occurance);
+				if (item >= 0)
+					return MAKEINDEX(level, sx + sectorx, sy + sectory, item);
+			}
+		}
+	}
+
+	return -1;
+}
+
+void TMapPane::FindClosestLights(S3DPoint center)
+{
+	for (int loop = 0; loop < MAXLIGHTS; loop++)
+	{
+		lightdist[loop]  = 0x7FFFFFFF;
+		lightindex[loop] = -1;
+	}
+
+	int sx = (center.x >> SECTORWSHIFT) - sectorx;
+	int sy = (center.y >> SECTORHSHIFT) - sectory;
+	int bsx = ((center.x - 320) >> SECTORWSHIFT) - sectorx;
+	int bsy = ((center.y - 240) >> SECTORHSHIFT) - sectory;
+	int esx = ((center.x + 320) >> SECTORWSHIFT) - sectorx;
+	int esy = ((center.y + 240) >> SECTORHSHIFT) - sectory;
+
+	int found = 0;
+
+	if (sx < 0 || sy < 0 || sx >= SECTORWINDOWX || sy >= SECTORWINDOWY)
+		return;
+
+	if (bsx < 0 || bsx >= SECTORWINDOWX)
+		bsx = sx;
+		
+	if (bsy < 0 || bsy >= SECTORWINDOWY)
+		bsy = sy;
+
+	if (esx < 0 || esx >= SECTORWINDOWX)
+		esx = sx;
+		
+	if (esy < 0 || esy >= SECTORWINDOWY)
+		esy = sy;
+	
+	if (!sectors[sx][sy])
+		return;
+
+	for (int outerloop = 0; outerloop < 4; outerloop++)
+	{
+		int tsx, tsy;
+
+		switch(outerloop)
+		{
+			case 0:
+				tsx = sx;
+				tsy = sy;
+				break;
+
+			case 1:
+				if (bsx < sx)
+					tsx = sx - 1;
+				
+				else if (esx > sx)
+					tsx = sx + 1;
+				
+				else
+					continue;
+				
+				tsy = sy;
+
+				break;
+
+			case 2:
+				if (bsy < sy)
+					tsy = sy - 1;
+				
+				else if (esy > sy)
+					tsy = sy + 1;
+				
+				else
+					continue;
+				
+				tsx = sx;
+
+				break;
+
+			case 3:
+				if (bsx < sx && bsy < sy)
+				{
+					tsy = sy - 1;
+					tsx = sx - 1;
+				}
+				
+				else if (esx < sx && esy < sy)
+				{
+					tsx = sx + 1;
+					tsy = sy + 1;
+				}
+
+				else
+					continue;
+				
+				break;
+		}
+
+		if (!sectors[tsx][tsy])
+			continue;
+
+		for (TObjectIterator i(sectors[tsx][tsy]->ObjectArray()); i; i++)
+		{
+			PTObjectInstance inst = i.Item();
+			
+			if (!inst)
+				continue;
+
+			PSLightDef light;
+			light = inst->GetLightDef();
+
+			if (!(inst->GetFlags() & OF_LIGHT) || !light->intensity || (!light->color.red && 
+				!light->color.green && !light->color.blue))
+				continue;
+
+			S3DPoint pos;
+			inst->GetPos(pos);
+			
+			pos.x += light->pos.x;
+			pos.y += light->pos.y;
+			pos.z += light->pos.z;
+
+			int dist = absval(SQRDIST(pos, center));
+			
+			BOOL added = FALSE;
+
+			for (int loop = 0; loop < MAXLIGHTS; loop++)
+			{
+				if (dist < lightdist[loop])
+				{
+					added = TRUE;
+
+					if (found < MAXLIGHTS)
+						found++;
+
+					PTObjectInstance lightinst = GetInstance(lightindex[MAXLIGHTS - 1]);
+
+					if (lightinst && lightinst->GetLightDef()->lightindex)
+					{
+						if (lightinst->GetLightDef()->lightindex != -1)
+						{
+							Scene3D.DeleteLight(lightinst->GetLightDef()->lightindex);
+							lightinst->GetLightDef()->lightindex = -1;
+						}
+					}
+
+					for (int moved = MAXLIGHTS - 1; moved > loop; moved --)
+					{
+						lightdist[moved]  = lightdist[moved - 1];			
+						lightindex[moved] = lightindex[moved - 1];			
+					}
+					
+					lightdist[loop]  = dist;
+					lightindex[loop] = inst->GetMapIndex();
+
+					break;
+				}
+			}
+
+			if (light->lightindex != -1 && added == FALSE)
+			{
+				Scene3D.DeleteLight(light->lightindex);
+				light->lightindex = -1;
+			}
+		}
+	}
+
+	for (loop = 0; loop < found; loop++)
+	{
+		PTObjectInstance lightinst = GetInstance(lightindex[loop]);
+		S3DPoint lpos;
+
+		if (!lightinst)
+			continue;
+
+		lightinst->GetPos(lpos);
+		PSLightDef lightdef = lightinst->GetLightDef();
+
+		lpos += lightdef->pos;
+		if (lightdef->lightindex < 0)
+			lightdef->lightindex = Scene3D.AddLight(lpos, lightdef->color, 
+			lightdef->intensity);
+	}
+}
+
+int TMapPane::FindClosestObject(char *name, S3DPoint frompos, BOOL partial)
+{
+	int closest = -1;
+	int closestdist = 0x800000;
+
+	for (int sx = 0; sx < SECTORWINDOWX; sx++)
+	{
+		for (int sy = 0; sy < SECTORWINDOWY; sy++)
+		{
+			if (sectors[sx][sy])
+			{
+				int item = sectors[sx][sy]->FindClosestObject(name, frompos, partial);
+				if (item >= 0)
+				{
+					S3DPoint pos;
+					PTObjectInstance oi = sectors[sx][sy]->GetInstance(item);
+					if (oi)
+					{
+						oi->GetPos(pos);
+						if (SQRDIST(pos, frompos) < closestdist)
+						{
+							closest = MAKEINDEX(level, sx + sectorx, sy + sectory, item);
+							closestdist = SQRDIST(pos, frompos);
+						}
+					}
+				}
+			}
+		}
+	}
+
+	return closest;
+}
+
+int TMapPane::FindClosestObject(char *name, PTObjectInstance from, BOOL partial)
+{
+	S3DPoint frompos;
+	int closest;
+
+	if (from)
+		from->GetPos(frompos);
+	else
+		frompos = center;
+
+	closest = FindClosestObject(name, frompos, FALSE);
+
+	if (closest < 0 && partial)
+		closest = FindClosestObject(name, frompos, TRUE);
+
+	return closest;
+}
+
+int TMapPane::FindObjectsInRange(S3DPoint pos, int *array, int width, int height, int objclass, int maxnum)
+{
+	if (maxnum < 1)
+		return 0;
+
+	S3DPoint itempos;
+	int sqrwidth = sqr(width);
+	int found = 0; 
+
+	int sx = (pos.x >> SECTORWSHIFT) - sectorx;
+	int sy = (pos.y >> SECTORHSHIFT) - sectory;
+	int bsx = ((pos.x - (width  >> 1)) >> SECTORWSHIFT) - sectorx;
+	int bsy = ((pos.y - (height >> 1)) >> SECTORHSHIFT) - sectory;
+	int esx = ((pos.x + (width  >> 1)) >> SECTORWSHIFT) - sectorx;
+	int esy = ((pos.y + (height >> 1)) >> SECTORHSHIFT) - sectory;
+
+	if (sx < 0 || sy < 0 || sx >= SECTORWINDOWX || sy >= SECTORWINDOWY)
+		return found;
+
+	if (bsx < 0 || bsx >= SECTORWINDOWX)
+		bsx = sx;
+		
+	if (bsy < 0 || bsy >= SECTORWINDOWY)
+		bsy = sy;
+
+	if (esx < 0 || esx >= SECTORWINDOWX)
+		esx = sx;
+		
+	if (esy < 0 || esy >= SECTORWINDOWY)
+		esy = sy;
+	
+	if (!sectors[sx][sy])
+		return found;
+
+	int *dist = new int[maxnum];
+	int d;
+
+	for (int outerloop = 0; outerloop < 4; outerloop++)
+	{
+		int tsx, tsy;
+
+		switch(outerloop)
+		{
+			case 0:
+				tsx = sx;
+				tsy = sy;
+				break;
+
+			case 1:
+				if (bsx < sx)
+					tsx = sx - 1;
+				
+				else if (esx > sx)
+					tsx = sx + 1;
+				
+				else
+					continue;
+				
+				tsy = sy;
+
+				break;
+
+			case 2:
+				if (bsy < sy)
+					tsy = sy - 1;
+				
+				else if (esy > sy)
+					tsy = sy + 1;
+				
+				else
+					continue;
+				
+				tsx = sx;
+
+				break;
+
+			case 3:
+				if (bsx < sx && bsy < sy)
+				{
+					tsy = sy - 1;
+					tsx = sx - 1;
+				}
+				
+				else if (esx < sx && esy < sy)
+				{
+					tsx = sx + 1;
+					tsy = sy + 1;
+				}
+
+				else
+					continue;
+				
+				break;
+		}
+
+		if (!sectors[tsx][tsy])
+			continue;
+
+		for (TObjectIterator i(sectors[tsx][tsy]->ObjectArray()); i; i++)
+		{
+			PTObjectInstance inst = i.Item();
+
+			if (!inst || (objclass != -1 && inst->ObjClass() != objclass))
+				continue;
+
+			inst->GetPos(itempos);
+
+			if (height < 1)
+			{
+				if ((d = SQRDIST(pos, itempos)) < sqrwidth)
+				{
+					for (int j = 0; j < found && d > dist[j]; j++)
+						;
+
+					if (j >= maxnum)
+						continue;
+
+					if (j != found)
+						memcpy(&(dist[j+1]), &(dist[j]), min(maxnum - 1, found) - j);
+
+					array[j] = MakeIndex(inst, i.ItemNum());
+					if (found < maxnum)
+						found++;
+				}
+			}
+
+			else
+			{
+				int dx = absval(pos.x - itempos.x);
+				int dy = absval(pos.y - itempos.y);
+
+				if (dx <= (width >> 1) && dy <= (height >> 1))
+				{
+					d = sqr(dx) + sqr(dy);
+
+					for (int j = 0; j < found && d > dist[j]; j++)
+						;
+
+					if (j >= maxnum)
+						continue;
+
+					if (j != found)
+						memcpy(&(dist[j+1]), &(dist[j]), min(maxnum - 1, found) - j);
+
+					array[j] = MakeIndex(inst, i.ItemNum());
+
+					if (found < maxnum)
+						found++;
+				}
+			}
+		}
+	}
+
+	delete dist;
+	return found;
+}
+
+int TMapPane::MakeIndex(PTObjectInstance oi, int itemnum)
+{
+	if (!oi)
+		return -1;
+
+	S3DPoint pos;
+	oi->GetPos(pos);
+
+	int sx = pos.x >> SECTORWSHIFT;
+	int sy = pos.y >> SECTORHSHIFT;
+
+	if ((DWORD)sx >= MAXSECTORX || (DWORD)sy >= MAXSECTORY)
+		return -1;
+
+	if (itemnum < 0)
+		return -1;
+
+	return MAKEINDEX(level, sx, sy, itemnum);
+}
+
+int TMapPane::OnObject(int screenx, int screeny)
+{
+	BOOL IsPriorityItem = FALSE;
+
+	screenx += posx;
+	screeny += posy;
+
+	SRect r(screenx, screeny, screenx+1, screeny+1);
+
+	unlitmulti->SetClipRect(screenx, screeny, 1, 1);
+	int retval = -1;
+
+	for (int sx = 0; sx < SECTORWINDOWX; sx++)
+	{
+		for (int sy = 0; sy < SECTORWINDOWY; sy++)
+		{
+		  if (!sectors[sx][sy])
+			continue;
+
+			// Does rectangle intersect sector
+			SRect sr;
+			sectors[sx][sy]->GetMaxScreenRect(sr);
+			if (!r.Intersects(sr))
+				continue;
+
+			for (TObjectIterator i(sectors[sx][sy]->ObjectArray()); i; i++)
+			{
+				PTObjectInstance inst = i.Item();
+
+				if (!inst || inst->IsInInventory())
+					continue;
+
+				SRect ir;
+				inst->GetScreenRect(ir);
+
+				if (r.Intersects(ir))
+                    if (inst->AlwaysOnTop() ||
+                        (!IsPriorityItem && inst->GetZ(unlitmulti)))
+					{
+						retval = MakeIndex(inst, i.ItemNum());
+						IsPriorityItem = inst->AlwaysOnTop();
+					}
+			}
+		}
+	}
+
+	unlitmulti->ResetClipRect();
+
+	return retval;
+}
+
+// Returns the instance structure given an object index
+PTObjectInstance TMapPane::GetInstance(int index)
+{
+	int lv = GETLEVEL(index);
+
+	if (lv != level)
+		return NULL;
+
+	int sx = GETSECTORX(index);
+	int sy = GETSECTORY(index);
+
+	if ((DWORD)sx >= MAXSECTORX || sx < sectorx || sx >= sectorx + SECTORWINDOWX ||
+		(DWORD)sy >= MAXSECTORY || sy < sectory || sy >= sectory + SECTORWINDOWY)
+			return NULL;
+
+	if (!sectors[sx - sectorx][sy - sectory])
+		return NULL; 
+
+	return sectors[sx - sectorx][sy - sectory]->GetInstance(GETITEM(index));
+}
+
+// *********************
+// * Walkmap Functions *
+// *********************
+
+// General purpose handler for transfer, extract, clear etc
+void TMapPane::WalkmapHandler(PTObjectInstance oi, int mode)
+{
+	if (!oi)
+		return;
+
+	PTObjectImagery imagery = oi->GetImagery();
+	if (!imagery)
+		return;
+
+	BYTE *walk = imagery->GetWalkMap(oi->GetState());
+	if (!walk)
+		return;
+
+	int width, length, height;
+	imagery->GetWorldBoundBox(oi->GetState(), width, length, height);
+
+	int regx = imagery->GetWorldRegX(oi->GetState());
+	int regy = imagery->GetWorldRegY(oi->GetState());
+
+	BYTE *appliedwalk = NULL;
+	if (oi->GetFace() != 0)
+	{
+		// apply rotations to walkmap based on facing
+		appliedwalk = (BYTE *)malloc(width * length);
+		int nx = regx, ny = regy, nsx = width, nsy = length;
+
+		if (oi->GetFace() < 128)
+		{
+			nx = regy;
+			ny = regx;
+			nsx = length;
+			nsy = width;
+
+			for (int y = 0; y < nsy; y++)
+				for (int x = 0; x < nsx; x++)
+					*(appliedwalk+(y*nsx)+x) = *(walk+((length-x-1)*width)+y);
+		}
+		else if (oi->GetFace() < 196)
+		{
+			nx = width - regx - 1;
+
+			for (int y = 0; y < nsy; y++)
+				for (int x = 0; x < nsx; x++)
+					*(appliedwalk+(y*nsx)+x) = *(walk+(y*width)+(width-x-1));
+		}
+		else
+		{
+			ny = width - regx - 1;
+			nsx = length;
+			nsy = width;
+
+			for (int y = 0; y < nsy; y++)
+				for (int x = 0; x < nsx; x++)
+					*(appliedwalk+(y*nsx)+x) = *(walk+((length-x-1)*width)+(width-x-1));
+		}
+
+		regx = nx;
+		regy = ny;
+		width = nsx;
+		length = nsy;
+	}
+
+	S3DPoint pos;
+	oi->GetPos(pos);
+
+	int x = (pos.x >> WALKMAPSHIFT) - regx;
+	int y = (pos.y >> WALKMAPSHIFT) - regy;
+
+	int startsectx = (x << WALKMAPSHIFT) >> SECTORWSHIFT;
+	int startsecty = (y << WALKMAPSHIFT) >> SECTORHSHIFT;
+	int endsectx = ((x + width - 1) << WALKMAPSHIFT) >> SECTORWSHIFT;
+	int endsecty = ((y + length - 1) << WALKMAPSHIFT) >> SECTORHSHIFT;
+
+	for (int sy = startsecty; sy <= endsecty; sy++)
+		for (int sx = startsectx; sx <= endsectx; sx++)
+		{
+			if ((DWORD)sx >= MAXSECTORX || sx < sectorx || sx >= sectorx + SECTORWINDOWX ||
+				(DWORD)sy >= MAXSECTORY || sy < sectory || sy >= sectory + SECTORWINDOWY)
+				continue;
+
+			PTSector sect = sectors[sx - sectorx][sy - sectory];
+			if (!sect)
+				continue;
+
+			if (mode == WALK_EXTRACT)
+			{
+				sect->WalkmapHandler(WALK_CLEAR, appliedwalk ? appliedwalk : walk, 0, x, y, width, length, width);
+				RedrawWalkmapRect(oi, x, y, width, length, sect);
+			}
+			else
+				sect->WalkmapHandler(mode, appliedwalk ? appliedwalk : walk, pos.z, x, y, width, length, width);
+		}
+
+	imagery->SetHeaderDirty(TRUE);
+
+	if (appliedwalk)
+		free(appliedwalk);
+}
+
+void TMapPane::RedrawWalkmapRect(PTObjectInstance oi, int x, int y, int w, int l, PTSector dsect)
+{
+	for (int sx = 0; sx < SECTORWINDOWX; sx++)
+		for (int sy = 0; sy < SECTORWINDOWY; sy++)
+		{
+			PTSector sect = sectors[sx][sy];
+			if (!sect)
+				continue;
+
+			for (TObjectIterator i(sect->ObjectArray()); i; i++)
+			{
+				PTObjectInstance inst = i.Item();
+
+				if (!inst || oi == inst || inst->IsInInventory())
+					continue;
+
+				PTObjectImagery imagery = inst->GetImagery();
+				if (!imagery)
+					continue;
+
+				BYTE *walk = imagery->GetWalkMap(inst->GetState());
+				if (!walk)
+					continue;
+
+				int iw, il, ih;
+				imagery->GetWorldBoundBox(inst->GetState(), iw, il, ih);
+
+				int rx, ry;
+				rx = imagery->GetWorldRegX(inst->GetState());
+				ry = imagery->GetWorldRegY(inst->GetState());
+
+				S3DPoint pos;
+				inst->GetPos(pos);
+
+				int ix = (pos.x >> WALKMAPSHIFT) - rx;
+				int iy = (pos.y >> WALKMAPSHIFT) - ry;
+
+				// clip this bad boy
+				int cx = ix - x, cy = iy - y, cw = iw, cl = il;
+				int ax = 0, ay = 0;
+
+				if (cx < 0)
+				{
+					cw += cx;
+					ax = -cx;
+					cx = 0;
+				}
+
+				if (cy < 0)
+				{
+					cl += cy;
+					ay = -cy;
+					cy = 0;
+				}
+
+				if ((cx + cw) > w)
+					cw = w - cx;
+
+				if ((cy + cl) > l)
+					cl = l - cy;
+
+				if (cw <= 0 || cl <= 0)
+					continue;
+
+				cx += x;
+				cy += y;
+				walk += (ay * iw) + ax;
+
+				dsect->WalkmapHandler(WALK_TRANSFER, walk, pos.z, cx, cy, cw, cl, iw);
+			}
+		}
+}
+
+int TMapPane::GetWalkHeight(RS3DPoint pos)
+{
+	int sx = (pos.x >> SECTORWSHIFT) - sectorx;
+	int sy = (pos.y >> SECTORHSHIFT) - sectory;
+
+	if (sx < 0 || sx >= SECTORWINDOWX || sy < 0 || sy >= SECTORWINDOWY || !sectors[sx][sy])
+		return 255;
+
+	S3DPoint walkpos;
+	walkpos.x = (pos.x & (SECTORWIDTH - 1)) >> WALKMAPSHIFT;
+	walkpos.y = (pos.y & (SECTORHEIGHT - 1)) >> WALKMAPSHIFT;
+	walkpos.z = 0;
+
+	return sectors[sx][sy]->ReturnWalkmap(walkpos);
+}
+
+void TMapPane::TransferAllWalkmaps()
+{
+	for (int sx = 0; sx < SECTORWINDOWX; sx++)
+	{
+		for (int sy = 0; sy < SECTORWINDOWY; sy++)
+		{
+			if (!sectors[sx][sy])
+				continue;
+
+			for (TObjectIterator i(sectors[sx][sy]->ObjectArray()); i; i++)
+			{
+				PTObjectInstance inst = i.Item();
+				if (!inst)
+					continue;
+
+				TransferWalkmap(inst);
+			}
+		}
+	}
+}
+
+void TMapPane::SetOwners(PTSector sect)
+{
+	if (!sect)
+		return;
+
+	for (TObjectIterator i(sect->ObjectArray()); i; i++)
+	{
+		PTObjectInstance inst = i.Item();
+		if (!inst)
+			continue;
+
+		inst->SetOwner(GetOwner(inst));
+	}
+}
+
+BOOL TMapPane::CanMove(RS3DPoint pos, RS3DPoint to, SRect rect, PS3DPoint obst)
+{
+	int facing = ConvertToFacing(pos, to);
+
+	int changex = (to.x >> WALKMAPSHIFT) - (pos.x >> WALKMAPSHIFT);
+	int changey = (to.y >> WALKMAPSHIFT) - (pos.y >> WALKMAPSHIFT);
+
+	int xdist = (((rect.right - rect.left) >> 1) + WALKMAPSHIFT >> 1) 
+		>> WALKMAPSHIFT;
+
+	int ydist = (((rect.bottom - rect.top) >> 1) + WALKMAPSHIFT >> 1) 
+		>> WALKMAPSHIFT;
+
+	int sx = pos.x >> SECTORWSHIFT;
+	int sy = pos.y >> SECTORHSHIFT;
+
+	S3DPoint walkpos;
+	walkpos.x = (pos.x & (SECTORWIDTH - 1)) >> WALKMAPSHIFT;
+	walkpos.y = (pos.y & (SECTORHEIGHT - 1)) >> WALKMAPSHIFT;
+	walkpos.z = 0;
+
+	int xdir, ydir, yterm, xterm, dist, walkdist;
+
+	if (changex > changey)
+	{
+		xdir  = changex / absval(changex);
+		ydir  = changey / absval(changey);
+		yterm = absval((changey << 16) / absval(changex));
+		dist  = (xdir) * changex;
+
+		int yerror = 0;
+		SRect rect;
+		for (int distance = 0; distance < dist; distance++)
+		{
+			walkdist	= walkpos.z;
+			rect.top    = walkpos.y - ydist;
+			rect.left   = walkpos.x - xdist;
+			rect.bottom = walkpos.y + ydist;
+			rect.right  = walkpos.x + xdist;
+			
+			if (sectors[sx][sy]->CheckRect(rect, walkdist, facing) == FALSE)
+			{
+				if (obst)
+				{
+					obst->x = walkpos.x;
+					obst->y = walkpos.y;
+					obst->z = walkpos.z;
+				}
+
+				return FALSE;
+			}
+
+			pos.z = walkdist;
+			
+			walkpos.x += xdir;
+			
+			yerror += yterm;
+
+			if (yerror > 65535)
+			{
+				yerror -= 65536;
+				walkpos.y += ydir;
+			}
+		}
+	}
+	
+	else 
+	{
+		ydir  = changey / absval(changey);
+		xdir  = changex / absval(changex);
+		xterm = absval((changex << 16) / absval(changey));
+		dist  = (ydir) * changey;
+
+		int xerror = 0;
+
+		for (int distance = 0; distance < dist; distance++)
+		{
+			walkdist    = walkpos.z;
+			rect.top    = walkpos.y - ydist;
+			rect.left   = walkpos.x - xdist;
+			rect.bottom = walkpos.y + ydist;
+			rect.right  = walkpos.x + xdist;
+			
+			if (sectors[sx][sy]->CheckRect(rect, walkdist, facing) == FALSE)
+			{
+				if (obst)
+				{
+					obst->x = walkpos.x;
+					obst->y = walkpos.y;
+					obst->z = walkpos.z;
+				}
+
+				return FALSE;
+			}
+
+			pos.z = walkdist;
+			
+			walkpos.y += ydir;
+			
+			xerror += xterm;
+
+			if (xerror > 65535)
+			{
+				xerror -= 65536;
+				walkpos.x += xdir;
+			}
+		}
+	}
+	
+	return TRUE;
+}
+
+BOOL TMapPane::LineOfSight(RS3DPoint pos, RS3DPoint to, PS3DPoint obst)
+{
+	return TRUE;
+	int sx = (pos.x >> SECTORWSHIFT) - sectorx;
+	int sy = (pos.y >> SECTORHSHIFT) - sectory;
+
+	if (sx < 0 || sy < 0 || sx >= SECTORWINDOWX || sy >= SECTORWINDOWY)
+		return FALSE;
+
+	if (!sectors[sx][sy])
+		return FALSE;
+
+	int changex = ((to.x - (sx << SECTORWSHIFT)) - (pos.x - 
+		(sx << SECTORWSHIFT))) >> WALKMAPSHIFT;
+	
+	int changey = ((to.y - (sy << SECTORHSHIFT)) - (pos.y - 
+		(sy << SECTORHSHIFT))) >> WALKMAPSHIFT;
+
+	S3DPoint walkpos;
+	walkpos.x = (pos.x & (SECTORWIDTH  - 1)) >> WALKMAPSHIFT;
+	walkpos.y = (pos.y & (SECTORHEIGHT - 1)) >> WALKMAPSHIFT;
+   	walkpos.z = pos.z;
+
+	int xdir, ydir, yterm, xterm, dist, walkdist;
+
+	if (absval(changex) > absval(changey))
+	{
+		xdir  = changex / absval(changex);
+
+		if (changey)
+			ydir  = changey / absval(changey);
+
+
+		else
+			ydir = 0;
+
+		yterm = absval((changey << 16) / absval(changex));
+
+		dist  = (xdir) * changex;
+
+		int yerror = 0;
+
+		for (int distance = 0; distance < dist; distance++)
+		{
+			if (walkpos.x < 0)
+			{
+				sx--;
+				walkpos.x += 64;
+			}
+
+			if (walkpos.y < 0)
+			{
+				sy--;
+				walkpos.y += 64;
+			}
+
+			if (walkpos.y > 63)
+			{
+				sx++;
+				walkpos.x -= 64;
+			}
+
+			if (walkpos.y > 63)
+			{
+				sy++;
+				walkpos.y -= 64;
+			}
+
+			if (sectors[sx][sy])
+			{
+				walkdist = sectors[sx][sy]->ReturnWalkmap(walkpos);
+				
+				if (walkdist != 0xff)
+					walkdist -= 42;
+			}
+
+			else
+				walkdist = 0;
+
+			if (walkdist > (pos.z + STEPDISTANCE) ||
+				walkdist < ((pos.z - STEPDISTANCE)))
+			{
+				if (obst)
+				{
+					obst->x = walkpos.x;
+					obst->y = walkpos.y;
+					obst->z = walkpos.z;
+				}
+
+				return FALSE;
+			}
+
+			//pos.z = walkdist;
+		
+			walkpos.x += xdir;
+			
+			yerror += yterm;
+
+			if (yerror > 65535)
+			{
+				yerror -= 65536;
+				walkpos.y += ydir;
+			}
+		}
+	}
+	
+	else 
+	{
+		if (changey)
+			ydir  = changey / absval(changey);
+		
+		else
+			ydir = 0;
+
+		if (changex)
+			xdir  = changex / absval(changex);
+
+		else 
+			xdir = 0;
+
+		if (changey)
+			xterm = absval((changex << 16) / absval(changey));
+		
+		else 
+			xterm = 0;
+
+		dist  = (ydir) * changey;
+
+		int xerror = 0;
+
+		for (int distance = 0; distance < dist; distance++)
+		{
+			if (walkpos.x < 0)
+			{
+				sx--;
+				walkpos.x += 64;
+			}
+
+			if (walkpos.y < 0)
+			{
+				sy--;
+				walkpos.y += 64;
+			}
+
+			if (walkpos.y > 63)
+			{
+				sx++;
+				walkpos.x -= 64;
+			}
+
+			if (walkpos.y > 63)
+			{
+				sy++;
+				walkpos.y -= 64;
+			}
+
+ 			if (sectors[sx][sy])
+			{
+				walkdist = sectors[sx][sy]->ReturnWalkmap(walkpos);
+			
+				if (walkdist != 0xff)
+					walkdist -= 42;
+			}
+
+			else
+				walkdist = 0;
+
+			if (walkdist > (pos.z + STEPDISTANCE) ||
+				walkdist < ((pos.z - STEPDISTANCE)))
+			{
+				if (obst)
+				{
+					obst->x = walkpos.x;
+					obst->y = walkpos.y;
+					obst->z = walkpos.z;
+				}
+
+						
+				return FALSE;
+			}
+
+			//pos.z = walkdist;
+			
+			walkpos.y += ydir;
+			
+			xerror += xterm;
+
+			if (xerror > 65535)
+			{
+				xerror -= 65536;
+				walkpos.x += xdir;
+			}
+		}
+	}
+	
+	if (obst)
+	{
+		obst->x = obst->y = obst->z = 0;
+	}
+						
+	return TRUE;
+}
+
+BOOL TMapPane::CheckRect(SRect rect, int height, int facing)
+{
+	int sx = rect.left >> SECTORWSHIFT;
+	int sy = rect.top  >> SECTORHSHIFT;
+
+	SRect rct;
+	rct.top    = rect.top & (SECTORHEIGHT -1);
+	rct.left   = rect.left & (SECTORHEIGHT -1);
+	rct.bottom = rect.bottom & (SECTORHEIGHT -1);
+	rct.right  = rect.right & (SECTORHEIGHT -1);
+	
+	sectors[sx][sy]->CheckRect(rect, height, facing);
+
+	if (rct.right < rct.left || rct.bottom < rct.top)
+	{
+		SRect tmp;
+		tmp.right = rct.right;
+		if (rct.right < rct.left)
+		{
+			tmp.left  = SECTORWIDTH - 1;
+			rct.left  = 0;
+			rct.right = rect.right & (SECTORWIDTH - 1);
+		}
+
+		else 
+			tmp.left = rct.left;
+
+		if  (rct.bottom < rct.top)
+		{		
+			tmp.bottom = SECTORHEIGHT - 1;
+			rct.top    = 0;
+			rct.bottom = rect.bottom & (SECTORWIDTH - 1);
+		}
+
+		else
+			tmp.bottom - rct.bottom;
+
+		if (sectors[sx][sy]->CheckRect(tmp, height, facing) == FALSE)
+			return FALSE;
+	}
+
+	return sectors[rect.left >> SECTORWSHIFT][rect.bottom >> SECTORHSHIFT]->CheckRect(rct, 
+		height, facing);
+}
+// ***************************
+// * Dynamic Light Functions *
+// ***************************
+
+void TMapPane::DrawDLight()
+{
+	static int oldintensity = 0;
+
+	if (oldintensity != dlight.intensity && dlight.lightindex >= 0)
+	{
+		Scene3D.DeleteLight(dlight.lightindex);
+		dlight.lightindex = -1;
+	}
+	oldintensity = dlight.intensity;
+
+    if (dlight.intensity == 0)
+		return;
+
+	if (dlight.lightindex < 0)
+	{
+		dlight.lightindex = Scene3D.AddLight(dlight.pos, dlight.color, dlight.intensity);
+	}
+	else
+	{
+		Scene3D.SetLightPosition(dlight.lightindex, dlight.pos);
+	}
+
+	S3DPoint spos;
+	WorldToScreen(dlight.pos, spos);
+
+	if (NoNormals)
+		DrawLightNoNormals(spos, dlight.color, dlight.intensity, Display);
+	else
+		DrawLight(spos, dlight.color, dlight.intensity, Display);
+
+    PTBitmap bitmap = GameData->Bitmap("dlight");
+	Display->Put(spos.x - bitmap->width / 2,
+				 spos.y - bitmap->width / 2 - 20, 
+				 bitmap, DM_ALPHALIGHTEN); //, NULL, 31 - (dlight.intensity / 8));
+}
+
+void TMapPane::SetAmbientLight(int hnormal, int vnormal, int intensityval, int ambientval)
+{
+	static int intensity, ambient;
+
+	if (intensityval >= 0)
+		intensity = intensityval;
+	if (ambientval >= 0)
+		ambient = ambientval;
+
+	::SetAmbientLight(hnormal, vnormal, intensityval, ambientval);
+	Scene3D.AdjustAmbientLight(min(255, ambient));
+}	
+
+// ********************************
+// * Background Drawing Functions *
+// ********************************
+
+void TMapPane::Update3DScenePos()
+{
+	S3DPoint source;
+	S3DPoint target;
+	S3DPoint scrn;
+
+	target = center;
+
+	// hack alert
+	if (target.z > 0)
+	{
+		int x, y;
+		WorldToScreen(target, x, y);
+		ScreenToWorld(x, y, target);
+	}
+
+
+	WorldToScreen(target, scrn);
+
+	//FindClosestLights(target);
+
+	Scene3D.SetCameraPos(target, (int)(scrn.z * ZSCALE));
+}
+
+void TMapPane::DrawBackground()
+{
+	if (Locke && Locke->GetScript() && Locke->GetScript()->IsPaused() && TimeSinceInput++ > 1000)
+	{
+		SetMapLevel(0);
+		ReloadSectors();
+		SaveGame.ReadGame();
+		PlayScreen.LoadEnvironment("default.env");
+		SetDLightIntensity(180);
+	}
+
+	start:
+  // Set posx,posy
+	oldposx     = posx;
+	posx        = GetNewScrollX();
+	oldposy     = posy;
+	posy        = GetNewScrollY();
+	int updatex = GetNewScrollX() & 0xfffffff8; //UPDATEMASKX;
+	int updatey = GetNewScrollY() & 0xfffffff8; //UPDATEMASKY;
+
+  // Update Sectors
+	UpdateSectors();
+
+  // Restore game, if any
+	if (SaveGame.Restore() && Locke)
+	{
+		Locke->GetPos(center);
+		SetMapPos(center);
+		UpdateBackgroundScrollPos();
+		goto start;			// giant hack to keep first frame from jumping around
+	}
+
+  // Update 3D position
+	Update3DScenePos();
+
+  // Update edges of screen
+	UpdateEdges(updatex, updatey);
+
+  // Refresh background rects
+	for (int c = 0; c < numbgrects; c++)
+	{
+		int x = bgrects[c].rect.left;
+		int y = bgrects[c].rect.top;
+		int w = bgrects[c].rect.right - x + 1;
+		int h = bgrects[c].rect.bottom - y + 1;
+
+	  // Clip the rectangle..
+		if (x >= scrollx + SCROLLBUFWIDTH || y >= scrolly + SCROLLBUFHEIGHT ||
+			x + w <= scrollx || y + h <= scrolly)
+				continue;
+
+		if (x < scrollx)
+		{
+			w += x - scrollx;
+			x = scrollx;
+		}
+		if (y < scrolly)
+		{
+			h += y - scrolly;
+			y = scrolly;
+		}
+		if (x + w > scrollx + SCROLLBUFWIDTH)
+		{
+			w = scrollx + SCROLLBUFWIDTH - x;
+		}
+		if (y + h > scrolly + SCROLLBUFHEIGHT)
+		{
+			h = scrolly + SCROLLBUFHEIGHT - y;
+		}
+
+		DrawBackgroundRect(SRect(x, y, x + w - 1, y + h - 1), bgrects[c].bgdraw);
+	}
+
+	numbgrects = 0;
+}
+
+void TMapPane::UpdateEdges(int updatex, int updatey)
+{
+	oldscrollx = scrollx;
+	oldscrolly = scrolly;
+
+	scrollx    = updatex;
+	scrolly    = updatey;
+
+  // Draw edges of screen
+	if (scrollx != oldscrollx || scrolly != oldscrolly || IsDirty())
+	{
+		if ((DWORD)((scrollx + SCROLLBUFWIDTH - 1) - oldscrollx) >= (DWORD)(SCROLLBUFWIDTH * 2 - 1) ||
+			(DWORD)((scrolly + SCROLLBUFHEIGHT - 1) - oldscrolly) >= (DWORD)(SCROLLBUFHEIGHT * 2 - 1) ||
+			IsDirty())
+		{
+			DrawBackgroundRect(SRect(scrollx, scrolly, scrollx + SCROLLBUFWIDTH - 1, scrolly + SCROLLBUFHEIGHT - 1));
+			numbgrects = 0; // Don't redraw everything again!
+		}
+
+		else
+		{
+			int x, y, w, h;
+
+			if (scrollx != oldscrollx)
+			{
+				if (scrollx > oldscrollx)
+					x = oldscrollx + SCROLLBUFWIDTH;
+			
+				else
+					x = scrollx;
+			
+				y = scrolly;
+				w = abs(scrollx - oldscrollx);
+				h = SCROLLBUFHEIGHT;
+				DrawBackgroundRect(SRect(x, y, x + w - 1, y + h - 1));
+			}
+
+			if (scrolly != oldscrolly)
+			{
+				if (scrollx >= oldscrollx)
+					x = scrollx;
+				else
+					x = oldscrollx;
+				
+				if (scrolly > oldscrolly)
+					y = oldscrolly + SCROLLBUFHEIGHT;
+
+				else
+					y = scrolly;
+
+				w = SCROLLBUFWIDTH - abs(scrollx - oldscrollx);
+				h = abs(scrolly - oldscrolly);
+				DrawBackgroundRect(SRect(x, y, x + w - 1, y + h - 1));
+			}
+		}
+
+		SetDirty(FALSE);
+	}
+
+  // Refresh background rects
+	for (int c = 0; c < numbgrects; c++)
+	{
+		int x = bgrects[c].rect.left;
+		int y = bgrects[c].rect.top;
+		int w = bgrects[c].rect.right - x + 1;
+		int h = bgrects[c].rect.bottom - y + 1;
+
+	  // Clip the rectangle..
+		if (x >= scrollx + SCROLLBUFWIDTH || y >= scrolly + SCROLLBUFHEIGHT ||
+			x + w <= scrollx || y + h <= scrolly)
+				continue;
+
+		if (x < scrollx)
+		{
+			w += x - scrollx;
+			x = scrollx;
+		}
+		if (y < scrolly)
+		{
+			h += y - scrolly;
+			y = scrolly;
+		}
+		if (x + w > scrollx + SCROLLBUFWIDTH)
+		{
+			w = scrollx + SCROLLBUFWIDTH - x;
+		}
+		if (y + h > scrolly + SCROLLBUFHEIGHT)
+		{
+			h = scrolly + SCROLLBUFHEIGHT - y;
+		}
+
+		DrawBackgroundRect(SRect(x, y, x + w - 1, y + h - 1), bgrects[c].bgdraw);
+	}
+
+	numbgrects = 0;
+}
+
+void TMapPane::ForceDrawEdges(int updatex, int updatey, DWORD UpdateRect)
+{
+}
+
+void TMapPane::QueueEdges(int updatex, int updatey)
+{
+}
+
+void TMapPane::UpdateQueue(BOOL tick)
+{
+}
+
+void TMapPane::RedrawAll()
+{
+	SetDirty(TRUE);
+	scrollx += 1000000;
+	scrolly += 1000000;
+	ClearLights();
+}
+
+void TMapPane::AddBgUpdateRect(SRect &r, int bgdraw)
+{
+	if (numbgrects >= MAXMAPBGRECTS)
+		return;
+
+	bgrects[numbgrects].rect = r;
+	bgrects[numbgrects].bgdraw = bgdraw;
+	numbgrects++;
+}
+
+void TMapPane::AddObjectUpdateRect(int index)
+{
+	PTObjectInstance inst = GetInstance(index);
+	if (!inst)
+		return;
+
+	SRect ir;
+	inst->GetScreenRect(ir);
+	AddBgUpdateRect(ir);
+
+	inst->RedrawLight();			// in case it's a light
+}
+
+void TMapPane::ReloadImagery()
+{
+	if (NoNormals == TRUE)
+		TObjectImagery::SetImageryPath(NONORMALPATH);
+	else
+		TObjectImagery::SetImageryPath(NORMALPATH);
+	
+	TObjectImagery::ReloadImagery();
+
+	RedrawAll();
+}
+
+void TMapPane::DrawBackgroundRect(RSRect r, int bgdraw)
+{
+  // Draw the tile and lighting pipeline - unlit first, then lights, then lit
+	if (bgdraw <= BGDRAW_UNLIT)
+		DrawUnlitObjects(r);
+	if (bgdraw <= BGDRAW_LIGHTS)
+		DrawStaticLights(r);
+	if (bgdraw <= BGDRAW_LIT)
+		DrawLitObjects(r);
+	if (Editor)
+		DrawSelectedObjects(r);
+  // Now cause rectangle to be updated to the display (if scrolling is not forcing
+  // redraw already)
+	Display->AddBackgroundUpdateRect(
+		GetBackgroundBuffer(), 
+		r.left, r.top, r.right - r.left + 1, r.bottom - r.top + 1,
+		UPDATE_BUFFERTOSCREEN | UPDATE_NEXTFRAME);
+}
+
+void TMapPane::DrawUnlitObjects(SRect &r)
+{
+	unlitmulti->SetClipRect(r.left, r.top,
+		r.right - r.left + 1, r.bottom - r.top + 1);
+
+	if (ClearBeforeDraw)
+		unlitmulti->Clear(r.left, r.top, r.right - r.left + 1, r.bottom - r.top + 1, 0, 0xFFFF,
+			DM_WRAPCLIP | DM_ZBUFFER | DM_NORMALS);
+
+	for (int sx = 0; sx < SECTORWINDOWX; sx++)
+	{
+		for (int sy = 0; sy < SECTORWINDOWY; sy++)
+		{
+
+		  if (!sectors[sx][sy])
+			continue;
+
+			// Does rectangle intersect sector
+			SRect sr;
+			sectors[sx][sy]->GetMaxScreenRect(sr);
+			if (!r.Intersects(sr))
+				continue;
+
+			for (TObjectIterator i(sectors[sx][sy]->ObjectArray()); i; i++)
+			{
+				PTObjectInstance inst = i.Item();
+
+				if (!inst)
+					continue;
+
+			// Skip item if deleted, above current cutoff height, or moving
+				if ((inst->GetFlags() & (OF_INVISIBLE | OF_MOVING | OF_SELDRAW)) ||
+					((inst->GetFlags() & OF_EDITOR) && !Editor) ||
+					inst->IsInInventory())
+						continue;
+
+				SRect ir;
+				inst->GetScreenRect(ir);
+
+			// Draw object to background if it intersects the update rect
+				if (r.Intersects(ir))
+					inst->DrawUnlit(unlitmulti);
+			}
+		}
+	}
+
+	unlitmulti->ResetClipRect();
+}
+
+void TMapPane::PulseObjects()
+{
+	for (int sx = 0; sx < SECTORWINDOWX; sx++)
+	{
+		for (int sy = 0; sy < SECTORWINDOWY; sy++)
+		{
+			if (!sectors[sx][sy])
+				continue;
+
+			for (TObjectIterator i(sectors[sx][sy]->ObjectArray()); i; i++)
+			{
+				// object's pulse update
+				PTObjectInstance inst = i.Item();
+				if (!inst)
+					continue;
+
+				if (inst->GetFlags() & OF_KILL)
+				{
+					RemoveObject(inst->GetMapIndex());
+					delete inst;
+				}
+				else
+					inst->Pulse();
+			}
+		}
+	}
+}
+
+void TMapPane::AnimateObjects(BOOL draw)
+{
+	SRect r;
+	r.top    = scrolly;
+	r.left   = scrollx;
+	r.bottom = scrolly + GetHeight() - 1;
+	r.right  = scrollx + GetWidth() - 1;
+
+	Display->SetClipRect(MAPPANEX, MAPPANEY, GetWidth(), GetHeight());
+
+	for (int sx = 0; sx < SECTORWINDOWX; sx++)
+	{
+		for (int sy = 0; sy < SECTORWINDOWY; sy++)
+		{
+			if (!sectors[sx][sy])
+				continue;
+
+			SRect sr;
+			sectors[sx][sy]->GetMaxScreenRect(sr);
+			
+			if (!r.Intersects(sr))
+				continue;
+
+			for (TObjectIterator i(sectors[sx][sy]->ObjectArray()); i; i++)
+			{
+				PTObjectInstance inst = i.Item();
+				if (!inst)
+					continue;
+
+				SRect ir;
+				inst->GetScreenRect(ir);
+
+				BOOL intersects = r.Intersects(ir);
+
+				if (intersects && !inst->HasAnimator())
+					inst->OnScreen();
+
+				else if (!intersects)
+					inst->OffScreen();
+
+				inst->Animate(draw);
+			}
+		}
+	}
+
+	Display->ResetClipRect();
+}
+
+void TMapPane::DrawStaticLights(SRect &r)
+{
+	unlitmulti->SetClipRect(r.left, r.top, r.right - r.left + 1, r.bottom - r.top + 1);
+
+	DrawAmbientLight(unlitmulti, r);
+
+	SRect sr;
+
+	for (int sx = 0; sx < SECTORWINDOWX; sx++)
+	{
+		for (int sy = 0; sy < SECTORWINDOWY; sy++)
+		{
+			if (!sectors[sx][sy])
+				continue;
+
+		  // Does rectangle intersect sector
+			sectors[sx][sy]->GetMaxScreenRect(sr);
+			if (!r.Intersects(sr))
+				continue;
+
+			for (TObjectIterator i(sectors[sx][sy]->ObjectArray()); i; i++)
+			{
+				PTObjectInstance inst = i.Item();
+				if (!inst)
+					continue;
+
+			  // Skip item if deleted, above current cutoff height, or moving
+				if ((inst->GetFlags() & (OF_INVISIBLE|OF_DISABLED|OF_MOVING|OF_SELDRAW)) ||
+					!(inst->GetFlags() & OF_LIGHT) ||
+					//((inst->GetFlags() & OF_EDITOR) && !Editor) ||
+					inst->IsInInventory())
+						continue;
+
+				if (inst->GetLightIntensity() == 0)
+					continue;
+
+				SRect ir;
+				inst->GetLightRect(ir);
+
+			  // Draw object to background if it intersects the update rect
+				if (r.Intersects(ir))
+					inst->DrawLight(unlitmulti, IsDirty());
+				else
+					inst->FreeLight();
+			}
+		}
+	}
+
+	unlitmulti->ResetClipRect();
+
+	Transfer32to16(litmulti, unlitmulti, r);
+}
+
+void TMapPane::DrawLitObjects(SRect &r)
+{
+	SRect sr;
+	int sx, sy;
+
+	litmulti->SetClipRect(r.left, r.top, r.right - r.left + 1, r.bottom - r.top + 1);
+
+	if (Editor && StatusBar.EditWalkmap())
+	{
+		// draw walkmap
+		for (sx = 0; sx < SECTORWINDOWX; sx++)
+		{
+			for (sy = 0; sy < SECTORWINDOWY; sy++)
+			{
+				if (sectors[sx][sy])
+				{
+					sectors[sx][sy]->GetMaxScreenRect(sr);
+					if (!r.Intersects(sr))
+						continue;
+
+					for (int y = wmrevealy; y < (SECTORHEIGHT >> WALKMAPSHIFT) && y < wmrevealsizey; y++)
+						for (int x = wmrevealx; x < (SECTORWIDTH >> WALKMAPSHIFT) && x < wmrevealsizex; x++)
+						{
+							if (x == objx && y == objy &&
+								(sectorx+sx) == grabx && (sectory+sy) == graby)
+								continue;			// dragging it
+
+							S3DPoint pos, screenpos;
+
+							pos.x = x;
+							pos.y = y;
+							pos.z = sectors[sx][sy]->ReturnWalkmap(pos);
+
+							pos.x = ((sectorx + sx) << SECTORWSHIFT) + (x << WALKMAPSHIFT);
+							pos.y = ((sectory + sy) << SECTORHSHIFT) + (y << WALKMAPSHIFT);
+							WorldToScreen(pos, screenpos);
+							screenpos.y += 8;
+							screenpos.z -= GRIDZOFF;
+
+							SColor color;
+							color.red = max(30, 255 - 4*absval(pos.z - 20));
+							color.green = max(30, 255 - 4*absval(pos.z - 100));
+							color.blue = max(30, 255 - 4*absval(pos.z - 180));
+							if (pos.z > 0)
+								litmulti->ZPut(screenpos.x, screenpos.y, screenpos.z, EditorData->Bitmap("grid"), DM_TRANSPARENT | DM_WRAPCLIP | DM_ZBUFFER | DM_USEREG | DM_BACKGROUND);
+							litmulti->Put(screenpos.x, screenpos.y, EditorData->Bitmap("gridout"), DM_TRANSPARENT | DM_WRAPCLIP | DM_USEREG | DM_BACKGROUND | DM_CHANGECOLOR, &color);
+						}
+				}
+			}
+		}
+	}
+
+	for (sx = 0; sx < SECTORWINDOWX; sx++)
+	{
+		for (sy = 0; sy < SECTORWINDOWY; sy++)
+		{
+			if (!sectors[sx][sy])
+				continue;
+
+		  // Does rectangle intersect sector
+			sectors[sx][sy]->GetMaxScreenRect(sr);
+			if (!r.Intersects(sr))
+				continue;
+
+			for (TObjectIterator i(sectors[sx][sy]->ObjectArray()); i; i++)
+			{
+				PTObjectInstance inst = i.Item();
+				if (!inst)
+					continue;
+
+			  // Skip item if deleted, above current cutoff height, or moving
+				if ((inst->GetFlags() & (OF_INVISIBLE | OF_MOVING | OF_SELDRAW)) ||
+					((inst->GetFlags() & OF_EDITOR) && !Editor) ||
+					inst->IsInInventory())
+						continue;
+
+				SRect ir;
+				inst->GetScreenRect(ir);
+
+			  // Draw object to background if it intersects the update rect
+				if (r.Intersects(ir))
+					inst->DrawLit(litmulti);
+			}
+		}
+	}
+
+	litmulti->ResetClipRect();
+
+	// debug stuff
+	if (ShowZBuffer)
+		litbuffer->Put(0, 0, &ZBuffer); 
+	if (ShowNormalBuffer)
+		litbuffer->Put(0, 0, &NormalBuffer); 
+}
+
+void TMapPane::DrawSelectedObjects(SRect &r)
+{
+	SRect sr;
+	SColor color;
+	color.red = 220; color.green = 20; color.blue = 50;
+
+	litmulti->SetClipRect(r.left, r.top, r.right - r.left + 1, r.bottom - r.top + 1);
+
+	for (int i = StatusBar.GetFirstObj(); i >= 0; i = StatusBar.GetNextObj())
+	{
+		PTObjectInstance inst = GetInstance(i);
+		if (!inst || inst->IsInInventory() || inst->GetFlags() & OF_SELDRAW)
+			continue;
+
+		inst->DrawSelected(litmulti);
+	}
+
+	litmulti->ResetClipRect();
+}
+
+void TMapPane::AnimateSelectedObjects()
+{
+	Display->SetClipRect(-posx + (2*MAPPANEX), -posy + (2*MAPPANEY), GetWidth(), GetHeight());
+
+	if (StatusBar.EditWalkmap())
+	{
+		if (objx >= 0 && objy >= 0)
+		{
+			S3DPoint pos, screenpos;
+			pos.x = objx;
+			pos.y = objy;
+			pos.z = sectors[grabx - sectorx][graby - sectory]->ReturnWalkmap(pos);
+			pos.x = (grabx << SECTORWSHIFT) + (objx << WALKMAPSHIFT);
+			pos.y = (graby << SECTORHSHIFT) + (objy << WALKMAPSHIFT);
+			WorldToScreen(pos, screenpos);
+			screenpos.x += MAPPANEX - PosX();
+			screenpos.y += MAPPANEY - PosY();
+			screenpos.y += 8;
+			screenpos.z -= GRIDZOFF;
+
+			SColor color;
+			color.red = max(30, 255 - 4*absval(pos.z - 20));
+			color.green = max(30, 255 - 4*absval(pos.z - 100));
+			color.blue = max(30, 255 - 4*absval(pos.z - 180));
+			Display->ZPut(screenpos.x, screenpos.y, screenpos.z, EditorData->Bitmap("grid"), DM_TRANSPARENT | DM_WRAPCLIP | DM_ZBUFFER | DM_USEREG);
+			Display->Put(screenpos.x, screenpos.y, EditorData->Bitmap("gridout"), DM_TRANSPARENT | DM_WRAPCLIP | DM_USEREG | DM_CHANGECOLOR, &color);
+		}
+	}
+
+	for (int i = StatusBar.GetFirstObj(); i >= 0; i = StatusBar.GetNextObj())
+	{
+		PTObjectInstance inst = GetInstance(i);
+		if (!inst || inst->IsInInventory() || !(inst->GetFlags() & OF_SELDRAW))
+			continue;
+
+		inst->DrawSelected(Display);
+
+		if (inst->GetShadow() >= 0)
+		{
+			PTObjectInstance s = GetInstance(inst->GetShadow());
+			if (!s || s->IsInInventory() || !(s->GetFlags() & OF_SELDRAW))
+				continue;
+
+			s->DrawSelected(Display);
+		}
+	}
+
+	Display->ResetClipRect();
+}
+
+// *******************************
+// * Sector Management Functions *
+// *******************************
+
+void TMapPane::SaveAllSectors()
+{
+	int sx, sy;
+
+	for (sx = 0; sx < SECTORWINDOWX; sx++)
+		for (sy = 0; sy < SECTORWINDOWY; sy++)
+			if (sectors[sx][sy])
+				sectors[sx][sy]->Save();
+}
+
+void TMapPane::FreeAllSectors()
+{
+	int sx, sy;
+
+	for (sx = 0; sx < SECTORWINDOWX; sx++)
+		for (sy = 0; sy < SECTORWINDOWY; sy++)
+			if (sectors[sx][sy])
+			{
+				delete sectors[sx][sy];
+				sectors[sx][sy] = NULL;
+			}
+}
+
+void TMapPane::ReloadSectors()
+{
+	FreeAllSectors();
+	sectorx += 10000000;
+	sectory += 10000000;
+	RedrawAll();
+}
+
+void TMapPane::UpdateSectors()
+{
+	int x, y;
+
+  // Change sector position
+	oldlevel = level;
+	level = newlevel;
+	oldsectorx = sectorx;
+	oldsectory = sectory;
+
+  // account for the character actually being at (sectorx+1, sectory+1)
+	sectorx = (center.x >> SECTORWSHIFT) - 1;
+	sectory = (center.y >> SECTORHSHIFT) - 1;
+
+  // If sector has changed.. reload sectors
+	if (sectorx != oldsectorx || sectory != oldsectory || level != oldlevel || IsDirty())
+	{
+	  // Temporary sectors
+		PTSector tempsectors[SECTORWINDOWX][SECTORWINDOWY];
+
+	  // Clear sector pointers
+		PTSector *s = (PTSector *)tempsectors;
+		for (int c = 0; c < SECTORWINDOWX * SECTORWINDOWY; c++, s++)
+			*s = NULL;
+
+	  // Delete unused sectors
+		int nx, ny;
+
+		for (x = 0; x < SECTORWINDOWX; x++)
+		{
+			for (y = 0; y < SECTORWINDOWY; y++)
+			{
+				// offset by one, because sectorx refers to middle sector
+				nx = oldsectorx - sectorx + x;
+				ny = oldsectory - sectory + y;
+
+				if (level != oldlevel || (DWORD)nx >= SECTORWINDOWX || (DWORD)ny >= SECTORWINDOWY)
+				{
+					if (sectors[x][y])
+					{
+						delete sectors[x][y];
+						sectors[x][y] = NULL;
+					}
+				}
+				else
+					if ((DWORD)nx >= MAXSECTORX || (DWORD)ny >= MAXSECTORY)
+						tempsectors[nx][ny] = NULL;
+					else
+						tempsectors[nx][ny] = sectors[x][y];
+			}
+		}
+
+	  // Load new sectors if needed
+		BOOL loaded = FALSE;
+
+		for (x = 0; x < SECTORWINDOWX; x++)
+		{
+			for (y = 0; y < SECTORWINDOWY; y++)
+			{
+				if (!tempsectors[x][y])
+				{
+					if ((DWORD)(sectorx+x) < MAXSECTORX && (DWORD)(sectory+y) < MAXSECTORY)
+					{
+					 	sectors[x][y] = new TSector(level, sectorx+x, sectory+y);
+						sectors[x][y]->Load(FALSE);
+						SetOwners(sectors[x][y]);
+						loaded = TRUE;
+					}
+					else
+						sectors[x][y] = NULL;
+				}
+				else
+					sectors[x][y] = tempsectors[x][y];
+			}
+		}
+
+		if (loaded)
+			TransferAllWalkmaps();
+
+/*  uncomment this if you want to be able to have locke on the map instead of in a savegame
+	// Set up equipment pointers
+	if (Locke)
+	{
+	PTObjectInstance inst;
+	for (int item = Locke->FirstInvent(); item >= 0; item = inst->NextObj())
+	{
+		inst = GetInstance(MapPane.MakeIndex(Locke, item));
+		if (!inst)
+			break;
+
+		if (inst->InventNum() > 255)
+			Locke->Equip(inst, inst->InventNum() - 256);
+	}
+	}*/
+
+		// Make sure all selected objects are still valid
+		if (Editor)
+			StatusBar.Validate();
+
+	}
+}
+
+// ***************************
+// * Main Animation Function *
+// ***************************
+
+#define LEASHX		120
+#define MINDISTX	20
+#define LEASHY		80
+#define MINDISTY	10
+#define LEASHZ		60
+#define MINDISTZ	10
+
+void leash_update(int c, int p, int &n, int d, int l)
+{
+	int i = p - c;
+	if (absval(i) < d)
+		return;
+
+	if (i < 0)
+		i += d;
+	else
+		i -= d;
+
+	int j = sqr(i) / l;
+	if (j > absval(i))
+		 j = absval(i);
+
+	if (i < 0)
+		n -= j;
+	else
+		n += j;
+}
+
+#define SCROLLEDGESIDES		32
+#define SCROLLEDGETOP		32
+#define SCROLLEDGEBOTTOM	32
+
+#define CHARACTER_HEIGHT	32
+
+#define MAPGRIDWIDTH		(MAPPANEWIDTH - (SCROLLEDGESIDES * 2))
+#define MAPGRIDHEIGHT		(MAPPANEHEIGHT - SCROLLEDGETOP - SCROLLEDGEBOTTOM)
+
+inline int ScreenGrid(int n, int s)
+{
+	if (absval(n) < (s/2))
+		return 0;
+
+	if (n < 0)
+		n -= s / 2;
+	else
+		n += s / 2;
+
+	return (n / s);
+}
+
+void TMapPane::Animate(BOOL draw)
+{
+	if (Editor)
+	{
+		if (SmoothScroll)
+		{
+			if (mx || my)
+			{
+				S3DPoint mpos;
+				ScreenToWorld(mx, my, mpos);
+				mpos += center;
+				SetMapPos(mpos);
+				StatusBar.SetDirty(TRUE);
+			}
+		}
+		else
+		{
+			int sx, sy;
+			WorldToScreen(center, sx, sy);
+			int x = ScreenGrid(sx, MAPGRIDWIDTH) * MAPGRIDWIDTH;
+			int y = ScreenGrid(sy - CHARACTER_HEIGHT, MAPGRIDHEIGHT) * MAPGRIDHEIGHT;
+
+			if (x != sx || y != sy)
+			{
+				S3DPoint newpos;
+				ScreenToWorld(x, y, newpos);
+				SetMapPos(newpos);
+				RedrawAll();
+			}
+		}
+	}
+	else if (Locke)
+	{
+		S3DPoint pos, newpos = center;
+		Locke->GetPos(pos);
+
+		if (SmoothScroll)
+		{
+			leash_update(center.x, pos.x, newpos.x, MINDISTX, LEASHX);
+			leash_update(center.y, pos.y, newpos.y, MINDISTY, LEASHY);
+			leash_update(center.z, pos.z, newpos.z, MINDISTZ, LEASHZ);
+			SetMapPos(newpos);
+		}
+		else
+		{
+			int x, y;
+			WorldToScreen(pos, x, y);
+			x = ScreenGrid(x, MAPGRIDWIDTH);
+			y = ScreenGrid(y - CHARACTER_HEIGHT, MAPGRIDHEIGHT);
+
+			int sx, sy;
+			WorldToScreen(center, sx, sy);
+			sx = ScreenGrid(sx, MAPGRIDWIDTH);
+			sy = ScreenGrid(sy, MAPGRIDHEIGHT);
+
+			if (x != sx || y != sy)
+			{
+				x *= MAPGRIDWIDTH;
+				y *= MAPGRIDHEIGHT;
+				ScreenToWorld(x, y, newpos);
+				SetMapPos(newpos);
+				MapPane.RedrawAll();
+			}
+		}
+
+		// Draw dynamic light
+		static int brighttick;
+		brighttick++;
+		S3DPoint lpos = pos;
+		lpos.x += (int)(10.0 * sin((double)brighttick / 7.0));
+		lpos.y += (int)(10.0 * cos((double)brighttick / 7.0));
+		lpos.z += 100 + (int)(20.0 * sin((double)brighttick / 12.0));
+		MapPane.SetDLightPos(lpos);
+
+		if (draw)
+		{
+			SetClipRect();
+			DrawDLight();
+		}
+	}		
+
+
+  // Draw objects being dragged around
+	if (Editor && draw && !mx && !my)
+		AnimateSelectedObjects();
+
+  // Draw object animations
+	AnimateObjects(draw);
+
+	// Draw 3D scene stuff	
+	SetClipRect();
+    if (draw)
+		Scene3D.DrawScene();
+
+  // Pulse objects
+	PulseObjects();
+}
+
+// ***********************
+// * Object Manipulation *
+// ***********************
+
+void TMapPane::AddToInventory(PTObjectInstance oi, int item, int slot)
+{
+	if (oi == NULL || item < 0 || slot < 0)
+		return;
+
+	PTObjectInstance inst = GetInstance(item);
+	if (inst == NULL || !inst->IsInventoryItem())
+		return;
+
+	S3DPoint pos;
+	oi->GetPos(pos);
+	inst->SetPos(pos);
+	item = inst->GetMapIndex();
+
+	inst->SendToInventory(GETITEM(oi->PlaceInInventory(GETITEM(item))), slot);
+
+	// error checking on the linked list
+	if (inst->NextObj() == GETITEM(item))
+		inst->SetNextObj(-1);
+
+	inst->AddToInventory(oi);
+
+	if (oi == Locke)
+	{
+		Inventory.Update();
+		if (inst->ObjClass() == OBJCLASS_TALISMAN)
+			SpellPane.Update();
+	}
+
+	AddObjectUpdateRect(item);
+}
+
+int TMapPane::FindFreeInvSlot(PTObjectInstance oi)
+{
+	if (oi == NULL)
+		return -1;
+
+	PTObjectInstance inst;
+	short lowest = 0;
+	int item;
+	BOOL done = FALSE;
+
+	while (!done)
+	{
+		done = TRUE;
+
+		// keep looping until we've located an unused inventory slot
+		for (item = oi->FirstInvent(), inst = GetInstance(MakeIndex(oi, item)); inst;
+								 item = inst->NextObj(), inst = GetInstance(MakeIndex(oi, item)))
+			if (inst->InventNum() == lowest)
+			{
+				lowest++;
+				done = FALSE;
+				break;
+			}
+	}
+
+	return lowest;
+}
+
+PTObjectInstance TMapPane::FindObjInventory(PTObjectInstance oi, char *name)
+{
+	if (oi == NULL)
+		return NULL;
+
+	PTObjectInstance inst;
+	int item;
+
+	for (item = oi->FirstInvent(), inst = GetInstance(MakeIndex(oi, item)); inst;
+						 item = inst->NextObj(), inst = GetInstance(MakeIndex(oi, item)))
+		if (strcmp(name, inst->GetTypeName()) == 0)
+			return inst;
+
+	return NULL;
+}
+
+PTObjectInstance TMapPane::InventoryItem(PTObjectInstance oi, int slot)
+{
+	if (slot < 0)
+		return NULL;
+
+	PTObjectInstance inst;
+
+	for (int item = oi->FirstInvent(); item >= 0; item = inst->NextObj())
+	{
+		inst = GetInstance(MakeIndex(oi, item));
+		if (!inst)
+			break;
+
+		if (inst->InventNum() == slot)
+			return inst;
+	}
+
+	return NULL;
+}
+
+PTObjectInstance TMapPane::RemoveFromInventory(PTObjectInstance oi, int slot)
+{
+	if (oi == NULL || slot < 0)
+		return NULL;
+
+	PTObjectInstance inst, prev = NULL;
+	int item;
+
+	for (item = oi->FirstInvent(), inst = GetInstance(MakeIndex(oi, item)); inst;
+		 item = inst->NextObj(), prev = inst, inst = GetInstance(MakeIndex(oi, item)))
+	{
+		if (inst->InventNum() == slot)
+		{
+			// yank the item from the linked list
+			if (prev)
+				prev->SetNextObj(inst->NextObj());
+			else
+				oi->SetFirstInvent(inst->NextObj());
+
+			inst->RemoveFromInventory(oi);
+
+			if (oi == Locke)
+			{
+				Inventory.Update();
+				if (inst->ObjClass() == OBJCLASS_TALISMAN)
+					SpellPane.Update();
+			}
+
+			AddObjectUpdateRect(item);
+			
+			return inst;
+		}
+	}
+
+	return NULL;
+}
+
+// This 'figures out' what the owner of a given object is, but normally
+// you can just check GetOwner() on the object instance itself.
+PTObjectInstance TMapPane::GetOwner(PTObjectInstance oi)
+{
+	if (oi->InventNum() < 0)
+		return NULL;
+
+	S3DPoint pos;
+	oi->GetPos(pos);
+
+	int sx = (pos.x >> SECTORWSHIFT) - sectorx;
+	int sy = (pos.y >> SECTORHSHIFT) - sectory;
+
+	if (sx < 0 || (DWORD)sx >= SECTORWINDOWX ||
+		sy < 0 || (DWORD)sy >= SECTORWINDOWY) 
+		return NULL;
+
+	for (TObjectIterator i(sectors[sx][sy]->ObjectArray()); i; i++)
+	{
+		PTObjectInstance cont = i.Item();
+		if (!cont)
+			continue;
+
+		int item;
+		PTObjectInstance inst;
+
+		// check container's inventory for the specified object
+		for (item = cont->FirstInvent(), inst = GetInstance(MakeIndex(cont, item)); inst;
+			 item = inst->NextObj(), inst = GetInstance(MakeIndex(cont, item)))
+			if (oi == inst)
+				return cont;
+	}
+
+	return NULL;
+}
+
+int TMapPane::CheckPos(PTObjectInstance inst, RS3DPoint newpos)
+{
+	// basic bounds checking
+	if (newpos.x < 0)
+		newpos.x = 0;
+	else if (newpos.x >= MAXMAPWIDTH)
+		newpos.x = MAXMAPWIDTH;
+
+	if (newpos.y < 0)
+		newpos.y = 0;
+	else if (newpos.y >= MAXMAPHEIGHT)
+		newpos.y = MAXMAPHEIGHT;
+
+	int newsx = (newpos.x >> SECTORWSHIFT) - sectorx;
+	int newsy = (newpos.y >> SECTORHSHIFT) - sectory;
+
+	// make sure new sector is within loaded sectors - if not leave it bumping up against
+	// the sector boundry
+	if (newsx < 0)
+	{
+		newsx = 0;
+		newpos.x = max(sectorx, 0) << SECTORWSHIFT;
+	}
+	else if (newsx >= SECTORWINDOWX)
+	{
+		newsx = SECTORWINDOWX - 1;
+		newpos.x = ((sectorx + newsx) << SECTORWSHIFT) + SECTORWIDTH - 1;
+	}
+
+	if (newsy < 0)
+	{
+		newsy = 0;
+		newpos.y = max(sectory, 0) << SECTORHSHIFT;
+	}
+	else if (newsy >= SECTORWINDOWY)
+	{
+		newsy = SECTORWINDOWY - 1;
+		newpos.y = ((sectory + newsy) << SECTORHSHIFT) + SECTORHEIGHT - 1;
+	}
+
+	// check to see if it changed sectors while moving
+	S3DPoint pos;
+	inst->GetPos(pos);
+	int sx = (pos.x >> SECTORWSHIFT) - sectorx;
+	int sy = (pos.y >> SECTORHSHIFT) - sectory;
+
+	int item;
+	PTObjectInstance oi, prev = NULL;
+	for (item = inst->FirstInvent(), oi = GetInstance(MakeIndex(inst, item)); oi;
+		 prev = oi, item = oi->NextObj(), oi = GetInstance(MakeIndex(inst, item)))
+	{
+		int index = oi->SetPos(newpos);
+		if (prev)
+			prev->SetNextObj(index);
+		else
+			inst->SetFirstInvent(index);
+	}
+
+	if (newsx != sx || newsy != sy)
+		return TransferObject(GETITEM(inst->GetMapIndex()), sx, sy, newsx, newsy);
+
+	return GETITEM(inst->GetMapIndex());
+}
+
+int TMapPane::TransferObject(int itemnum, int sx, int sy, int newsx, int newsy)
+{
+	PTObjectInstance inst, prev = NULL;
+//	int item;
+
+	inst = sectors[sx][sy]->GetInstance(itemnum);
+	if (!inst)
+		return -1;
+/*
+	// move the object's inventory first
+	for (item = inst->FirstInvent(); item >= 0; item = prev->NextObj())
+	{
+		int index = TransferObject(item, sx, sy, newsx, newsy);
+
+		// update the linked list (itemnums change based on the sector)
+		if (prev)
+			prev->SetNextObj(index);
+		else
+			inst->SetFirstInvent(index);
+
+		prev = sectors[newsx][newsy]->GetInstance(index);
+		if (!prev)
+			break;
+	}
+*/
+	// then the object itself
+	sectors[sx][sy]->RemoveObject(itemnum);
+	int sectorindex = sectors[newsx][newsy]->AddObject(inst);
+	int newindex = MAKEINDEX(level, newsx + sectorx, newsy + sectory, sectorindex);
+	inst->SetMapIndex(newindex);
+
+	if (Editor)
+		StatusBar.Reselect(MakeIndex(inst, itemnum), newindex);
+
+	return GETITEM(newindex);
+}
+
+// Walkmap auto-generator for current sector
+void TMapPane::CalculateWalkmap()
+{
+	PTSector sector = sectors[1][1];
+	if (!sector)
+		return;
+
+	for (int y = 0; y < (SECTORWIDTH >> WALKMAPSHIFT); y++)
+		for (int x = 0; x < (SECTORHEIGHT >> WALKMAPSHIFT); x++)
+		{
+			S3DPoint pos, screenpos;
+
+			pos.x = ((sectorx+1) << SECTORWSHIFT) + (x << WALKMAPSHIFT);
+			pos.y = ((sectory+1) << SECTORHSHIFT) + (y << WALKMAPSHIFT);
+			pos.z = 0;
+			WorldToScreen(pos, screenpos);
+
+			if (screenpos.x < posx || screenpos.x >= (posx+GetWidth()) ||
+				screenpos.y < posy || screenpos.y >= (posy+GetHeight()))
+				continue;
+
+			for (pos.z = 255; pos.z > 1; pos.z--)
+			{
+				pos.x = ((sectorx+1) << SECTORWSHIFT) + (x << WALKMAPSHIFT);
+				pos.y = ((sectory+1) << SECTORHSHIFT) + (y << WALKMAPSHIFT);
+				WorldToScreen(pos, screenpos);
+
+				if (screenpos.x < posx || screenpos.x >= (posx+GetWidth()) ||
+					screenpos.y < posy || screenpos.y >= (posy+GetHeight()))
+					continue;
+
+				unlitmulti->SetClipRect(screenpos.x, screenpos.y, 1, 1);
+				screenpos.y += 8;
+				screenpos.z -= GRIDZOFF;
+
+				if (!unlitmulti->ZFind(screenpos.x, screenpos.y, screenpos.z, EditorData->Bitmap("grid"), DM_WRAPCLIP | DM_USEREG | DM_ZBUFFER))
+				{
+					pos.x = x;
+					pos.y = y;
+					sector->SetWalkmap(pos);
+					break;
+				}
+			}
+		}
+
+	MapPane.RedrawAll();
+}
+
+void TMapPane::AdjustWalkmap(int deltaz, BOOL absolute, BOOL nonzero)
+{
+	PTSector sect = sectors[1][1];
+	if (!sect || !deltaz)
+		return;
+
+	S3DPoint pos;
+	for (pos.y = min(wmrevealsizey, (SECTORHEIGHT >> WALKMAPSHIFT)) - 1; pos.y >= wmrevealy; pos.y--)
+		for (pos.x = min(wmrevealsizex, (SECTORWIDTH >> WALKMAPSHIFT)) - 1; pos.x >= wmrevealx; pos.x--)
+		{
+			pos.z = sect->ReturnWalkmap(pos);
+			if (nonzero && pos.z == 0)
+				continue;
+
+			if (absolute)
+				pos.z = 0;
+
+			pos.z = min(255, max(0, pos.z + deltaz));
+			sect->SetWalkmap(pos);
+		}
+
+	RedrawAll();
+}
+
+
+char *ModeCursorName[NUMMODES] = { "crosshar", "stamp", "marrow" };
+
+// Handler for special editor modes
+void TMapPane::SetMode(void (*tfunc)(S3DPoint), void (*afunc)(), int newmode)
+{
+	if (newmode >= NUMMODES || newmode < 0)
+		return;
+
+	targetcallback = tfunc;
+	abortcallback = afunc;
+	mode = newmode;
+
+	if (mode == MODE_CLONE || mode == MODE_MOVE)
+	{
+		dragmode = TRUE;
+		PTObjectInstance inst = GetInstance(StatusBar.GetSelectedObj());
+		if (inst)
+		{
+			SRect r;
+			inst->GetScreenRect(r);
+			objx = 0;
+			objy = -((r.bottom - r.top + 1) / 2);
+		}
+	}
+
+	SetMouseBitmap(EditorData->Bitmap(ModeCursorName[mode]));
+
+	//PlayScreen.SetExclusivePane(&MapPane);
+}
+
