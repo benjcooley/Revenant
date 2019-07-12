@@ -62,7 +62,7 @@ struct SAutoMapData
   public:
 
   char MapName[80];                    // Name of the map (same name as the
-	                                   // corresponding Inventory map object)
+                                       // corresponding Inventory map object)
 
   int ResID;                           // Resource ID for the AUTOMAP.xxx
                                        // specifying which graphics to use

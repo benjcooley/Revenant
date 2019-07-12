@@ -17,16 +17,16 @@ class TMainWindow
 {
   public:
   // Main Window hwnd handle
-	HWND		  hwnd;
+    HWND          hwnd;
 
-	TMainWindow() { hwnd = NULL; }
-	virtual ~TMainWindow();
+    TMainWindow() { hwnd = NULL; }
+    virtual ~TMainWindow();
 
-	BOOL Initialize(HANDLE hInstance, HANDLE hPrevInstance, LPSTR lpCmdLine, int nCmdShow);
-	  // Create window
-	void Close();
-	  // Destroy window
-	HWND Hwnd() {return hwnd;}
+    BOOL Initialize(HANDLE hInstance, HANDLE hPrevInstance, LPSTR lpCmdLine, int nCmdShow);
+      // Create window
+    void Close();
+      // Destroy window
+    HWND Hwnd() {return hwnd;}
 };
 
 static LRESULT CALLBACK MainWndProc(HWND hWnd, UINT wMessage, WPARAM wParam, LPARAM lParam);

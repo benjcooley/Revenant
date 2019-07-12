@@ -14,55 +14,55 @@
 
 BOOL TStatusBar::Initialize()
 {
-	tubedata = NULL;
-	level = targetlevel = 1000;
-	animating = FALSE;
-	SetDirty(TRUE);
-	return TRUE;
+    tubedata = NULL;
+    level = targetlevel = 1000;
+    animating = FALSE;
+    SetDirty(TRUE);
+    return TRUE;
 }
 
 void TStatusBar::Close()
 {
-	if (tubedata)
-		delete tubedata;
+    if (tubedata)
+        delete tubedata;
 }
 
-#define HEALTH_INCREMENT	4
+#define HEALTH_INCREMENT    4
 
 void TStatusBar::DrawBackground()
 {
-	if (animating || level != targetlevel || IsDirty())
-	{
-		if (absval(level - targetlevel) <= HEALTH_INCREMENT)
-			level = targetlevel;
-		else if (level < targetlevel)
-			level += HEALTH_INCREMENT;
-		else if (level > targetlevel)
-			level -= HEALTH_INCREMENT;
+    if (animating || level != targetlevel || IsDirty())
+    {
+        if (absval(level - targetlevel) <= HEALTH_INCREMENT)
+            level = targetlevel;
+        else if (level < targetlevel)
+            level += HEALTH_INCREMENT;
+        else if (level > targetlevel)
+            level -= HEALTH_INCREMENT;
 
-		BOOL drawmode = 0;
+        BOOL drawmode = 0;
 
-		if (level != targetlevel)
-		{
-			animating = TRUE;
-			drawmode |= DM_NORESTORE;
-		}
-		else
-		{
-			animating = FALSE;
-			drawmode |= DM_BACKGROUND;
-		}
+        if (level != targetlevel)
+        {
+            animating = TRUE;
+            drawmode |= DM_NORESTORE;
+        }
+        else
+        {
+            animating = FALSE;
+            drawmode |= DM_BACKGROUND;
+        }
 
-		Display->PutHue(0, -(176 * level / 1000), tubedata->Bitmap("tube"), drawmode, GetHue());
+        Display->PutHue(0, -(176 * level / 1000), tubedata->Bitmap("tube"), drawmode, GetHue());
 
-		drawmode |= DM_TRANSPARENT;
+        drawmode |= DM_TRANSPARENT;
 
-		Display->Put(0, 0, tubedata->Bitmap("topoverlay"), drawmode);
-		Display->Put(0, 59, tubedata->Bitmap("middleoverlay"), drawmode);
-		Display->Put(0, 161, tubedata->Bitmap("bottomoverlay"), drawmode);
+        Display->Put(0, 0, tubedata->Bitmap("topoverlay"), drawmode);
+        Display->Put(0, 59, tubedata->Bitmap("middleoverlay"), drawmode);
+        Display->Put(0, 161, tubedata->Bitmap("bottomoverlay"), drawmode);
 
-		SetDirty(FALSE);
-	}
+        SetDirty(FALSE);
+    }
 }
 
 // **************
@@ -71,22 +71,22 @@ void TStatusBar::DrawBackground()
 
 BOOL THealthBar::Initialize()
 {
-	TStatusBar::Initialize();
+    TStatusBar::Initialize();
 
-	tubedata = TMulti::LoadMulti("health.dat");
+    tubedata = TMulti::LoadMulti("health.dat");
 
-	return tubedata != NULL;
+    return tubedata != NULL;
 }
 
 int THealthBar::GetHue()
 {
-	int hue = level * 155 / 1000;
-	if (hue > 16)
-		hue -= 16;
-	else
-		hue = 0;
+    int hue = level * 155 / 1000;
+    if (hue > 16)
+        hue -= 16;
+    else
+        hue = 0;
 
-	return hue;
+    return hue;
 }
 
 // ***************
@@ -95,15 +95,15 @@ int THealthBar::GetHue()
 
 BOOL TStaminaBar::Initialize()
 {
-	TStatusBar::Initialize();
+    TStatusBar::Initialize();
 
-	tubedata = TMulti::LoadMulti("stamina.dat");
+    tubedata = TMulti::LoadMulti("stamina.dat");
 
-	return tubedata != NULL;
+    return tubedata != NULL;
 }
 
 int TStaminaBar::GetHue()
 {
-	return ((1000 - level) * 65 / 1000) + 240;
+    return ((1000 - level) * 65 / 1000) + 240;
 }
 

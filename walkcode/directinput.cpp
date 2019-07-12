@@ -23,8 +23,8 @@ LPDIRECTINPUT DirectInput = NULL;
 
 struct DIERRORSTRING
 {
-	HRESULT Error;
-	char *lpszErrorStr;
+    HRESULT Error;
+    char *lpszErrorStr;
 };
 
 static DIERRORSTRING dierrors[] =
@@ -77,16 +77,16 @@ void TraceErrorDI(HRESULT Err, char *file, int line)
     char *dierr;
     char err[1024];
 
-	for (int c = 0; c < NUMDIERRORS; c++)
-	{
-		if (Err == dierrors[c].Error)
-		{
-			dierr = dierrors[c].lpszErrorStr; 
-			break;
-		}
-	}
-	if (c >= NUMDIERRORS)
-		sprintf(dierr, "Unknown Error"); 
+    for (int c = 0; c < NUMDIERRORS; c++)
+    {
+        if (Err == dierrors[c].Error)
+        {
+            dierr = dierrors[c].lpszErrorStr; 
+            break;
+        }
+    }
+    if (c >= NUMDIERRORS)
+        sprintf(dierr, "Unknown Error"); 
 
     sprintf(err, "DirectX Error %s\nin file %s at line %d", dierr, file, line);
     FatalError(err);
@@ -98,30 +98,30 @@ void TraceErrorDI(HRESULT Err, char *file, int line)
 
 BOOL InitializeDirectInput()
 {
-	if (DirectInput != NULL)
-		return TRUE;
+    if (DirectInput != NULL)
+        return TRUE;
 
    // create the DirectInput 5.0 interface object
-	DWORD err = DirectInputCreate(hInstance, DIRECTINPUT_VERSION, &DirectInput, NULL);
-	if (err != DI_OK)
-	{
-		_RPT0(_CRT_WARN, "DIRECTINPUT: Unable to initialize DirectInput");
-		DirectInput = NULL;
-		return FALSE;
-	}
+    DWORD err = DirectInputCreate(hInstance, DIRECTINPUT_VERSION, &DirectInput, NULL);
+    if (err != DI_OK)
+    {
+        _RPT0(_CRT_WARN, "DIRECTINPUT: Unable to initialize DirectInput");
+        DirectInput = NULL;
+        return FALSE;
+    }
 
    return TRUE;
 }
 
 void CloseDirectInput()
 {
-	if (!DirectInput)
-		return;
+    if (!DirectInput)
+        return;
 
-	CloseJoysticks();
-	DirectInput->Release();
+    CloseJoysticks();
+    DirectInput->Release();
 
-	DirectInput = NULL;
+    DirectInput = NULL;
 }
 
 // **********************
@@ -131,8 +131,8 @@ void CloseDirectInput()
 _STRUCTDEF(SJoystick)
 struct SJoystick
 {
-	LPDIRECTINPUTDEVICE2 joydev;
-	DWORD laststate;
+    LPDIRECTINPUTDEVICE2 joydev;
+    DWORD laststate;
 };
 
 static int numjoysticks = 0;
@@ -158,18 +158,18 @@ HRESULT SetWordProperty(LPDIRECTINPUTDEVICE2 pdev, REFGUID guidProperty,
 BOOL FAR PASCAL EnumJoystickFunc(LPCDIDEVICEINSTANCE pdinst, LPVOID)
 {
    // create the DirectInput joystick device
-	LPDIRECTINPUTDEVICE joydev;
-	LPDIRECTINPUTDEVICE2 joydev2;
-	TRY_DI(DirectInput->CreateDevice(pdinst->guidInstance, &joydev, NULL));
+    LPDIRECTINPUTDEVICE joydev;
+    LPDIRECTINPUTDEVICE2 joydev2;
+    TRY_DI(DirectInput->CreateDevice(pdinst->guidInstance, &joydev, NULL));
     TRY_DI(joydev->QueryInterface(IID_IDirectInputDevice2, (LPVOID *)&joydev2));
-	TRY_DI(joydev2->SetDataFormat(&c_dfDIJoystick));
+    TRY_DI(joydev2->SetDataFormat(&c_dfDIJoystick));
     TRY_DI(joydev2->SetCooperativeLevel(MainWindow.Hwnd(), 
-		DISCL_BACKGROUND | DISCL_NONEXCLUSIVE));
+        DISCL_BACKGROUND | DISCL_NONEXCLUSIVE));
 
-	// set X-axis range to (-1000 ... +1000)
-	// This lets us test against 0 to see which way the stick is pointed.
+    // set X-axis range to (-1000 ... +1000)
+    // This lets us test against 0 to see which way the stick is pointed.
 
-	DIPROPRANGE diprg;
+    DIPROPRANGE diprg;
     diprg.diph.dwSize       = sizeof(diprg);
     diprg.diph.dwHeaderSize = sizeof(diprg.diph);
     diprg.diph.dwObj        = DIJOFS_X;
@@ -177,68 +177,68 @@ BOOL FAR PASCAL EnumJoystickFunc(LPCDIDEVICEINSTANCE pdinst, LPVOID)
     diprg.lMin              = -1000;
     diprg.lMax              = +1000;
 
-	TRY_DI(joydev2->SetProperty(DIPROP_RANGE, &diprg.diph));
+    TRY_DI(joydev2->SetProperty(DIPROP_RANGE, &diprg.diph));
 
-	//
-	// And again for Y-axis range
-	//
-	diprg.diph.dwObj        = DIJOFS_Y;
+    //
+    // And again for Y-axis range
+    //
+    diprg.diph.dwObj        = DIJOFS_Y;
 
-	TRY_DI(joydev2->SetProperty(DIPROP_RANGE, &diprg.diph));
+    TRY_DI(joydev2->SetProperty(DIPROP_RANGE, &diprg.diph));
 
-	// set X axis dead zone to 50% (to avoid accidental turning)
-	// Units are ten thousandths, so 50% = 5000/10000.
+    // set X axis dead zone to 50% (to avoid accidental turning)
+    // Units are ten thousandths, so 50% = 5000/10000.
 
-	TRY_DI(SetWordProperty(joydev2, DIPROP_DEADZONE, DIJOFS_X, DIPH_BYOFFSET, 5000));
+    TRY_DI(SetWordProperty(joydev2, DIPROP_DEADZONE, DIJOFS_X, DIPH_BYOFFSET, 5000));
 
-	// set Y axis dead zone to 50% (to avoid accidental thrust)
-	// Units are ten thousandths, so 50% = 5000/10000.
-	TRY_DI(SetWordProperty(joydev2, DIPROP_DEADZONE, DIJOFS_Y, DIPH_BYOFFSET, 5000));
+    // set Y axis dead zone to 50% (to avoid accidental thrust)
+    // Units are ten thousandths, so 50% = 5000/10000.
+    TRY_DI(SetWordProperty(joydev2, DIPROP_DEADZONE, DIJOFS_Y, DIPH_BYOFFSET, 5000));
 
-	// Start getting input!
-	TRY_DI(joydev2->Acquire());
+    // Start getting input!
+    TRY_DI(joydev2->Acquire());
 
-	joysticks[numjoysticks].joydev = joydev2;
-	joysticks[numjoysticks].laststate = 0;
-	numjoysticks++;
+    joysticks[numjoysticks].joydev = joydev2;
+    joysticks[numjoysticks].laststate = 0;
+    numjoysticks++;
  
-	if (numjoysticks < MAXJOYSTICKS)
-		return DIENUM_CONTINUE;
-	else
-		return FALSE;
+    if (numjoysticks < MAXJOYSTICKS)
+        return DIENUM_CONTINUE;
+    else
+        return FALSE;
 }
 
 // Initializes joystick devices
 BOOL InitializeJoysticks()
 {
-	if (!DirectInput)
-		return FALSE;
+    if (!DirectInput)
+        return FALSE;
 
-	TRY_DI(DirectInput->EnumDevices(DIDEVTYPE_JOYSTICK,
-		EnumJoystickFunc, NULL, DIEDFL_ATTACHEDONLY));
+    TRY_DI(DirectInput->EnumDevices(DIDEVTYPE_JOYSTICK,
+        EnumJoystickFunc, NULL, DIEDFL_ATTACHEDONLY));
 
-	return numjoysticks > 0;
+    return numjoysticks > 0;
 }
 
 void CloseJoysticks()
 {
-	if (numjoysticks <= 0)
-		return;
+    if (numjoysticks <= 0)
+        return;
 
-	for (int c = 0; c < numjoysticks; c++)
-	{
-		joysticks[c].joydev->Unacquire();
-		joysticks[c].joydev->Release();
-		joysticks[c].joydev = NULL;
-		joysticks[c].laststate = 0;
-	}
+    for (int c = 0; c < numjoysticks; c++)
+    {
+        joysticks[c].joydev->Unacquire();
+        joysticks[c].joydev->Release();
+        joysticks[c].joydev = NULL;
+        joysticks[c].laststate = 0;
+    }
 
-	numjoysticks = 0;
+    numjoysticks = 0;
 }
 
 int NumJoysticks()
 {
-	return numjoysticks;
+    return numjoysticks;
 }
 
 void GetJoystickState(int joynum, DWORD *state, DWORD *changed)
@@ -246,11 +246,11 @@ void GetJoystickState(int joynum, DWORD *state, DWORD *changed)
    HRESULT hRes;
    DIJOYSTATE js;
 
- 	if (numjoysticks <= 0)
-	{
-		*state = *changed = 0;
-		return;
-	}
+    if (numjoysticks <= 0)
+    {
+        *state = *changed = 0;
+        return;
+    }
 
   // poll the joystick to read the current state
    hRes = joysticks[joynum].joydev->Poll();
@@ -267,39 +267,39 @@ void GetJoystickState(int joynum, DWORD *state, DWORD *changed)
       if(hRes == DIERR_INPUTLOST)
          joysticks[joynum].joydev->Acquire();
 
-	  // get data from the joystick
-	  hRes = joysticks[joynum].joydev->GetDeviceState(sizeof(DIJOYSTATE), &js);
-	  if (hRes != DI_OK)
-	  {
-		*state = joysticks[joynum].laststate;
-		*changed = 0;
-		return;
-	  }
+      // get data from the joystick
+      hRes = joysticks[joynum].joydev->GetDeviceState(sizeof(DIJOYSTATE), &js);
+      if (hRes != DI_OK)
+      {
+        *state = joysticks[joynum].laststate;
+        *changed = 0;
+        return;
+      }
    }
 
    DWORD buttons = 0;
 
    if (js.lX < 0 && js.lY < 0)
-	  buttons |= JOYSTICK_UPLEFT;
+      buttons |= JOYSTICK_UPLEFT;
    else if (js.lX == 0 && js.lY < 0)
-	  buttons |= JOYSTICK_UP;
+      buttons |= JOYSTICK_UP;
    else if (js.lX > 0 && js.lY < 0)
-	  buttons |= JOYSTICK_UPRIGHT;
+      buttons |= JOYSTICK_UPRIGHT;
    else if (js.lX < 0 && js.lY == 0)
-	  buttons |= JOYSTICK_LEFT;
+      buttons |= JOYSTICK_LEFT;
    else if (js.lX > 0 && js.lY == 0)
-	  buttons |= JOYSTICK_RIGHT;
+      buttons |= JOYSTICK_RIGHT;
    else if (js.lX < 0 && js.lY > 0)
-	  buttons |= JOYSTICK_DOWNLEFT;
+      buttons |= JOYSTICK_DOWNLEFT;
    else if (js.lX == 0 && js.lY > 0)
-	  buttons |= JOYSTICK_DOWN;
+      buttons |= JOYSTICK_DOWN;
    else if (js.lX > 0 && js.lY > 0)
       buttons |= JOYSTICK_DOWNRIGHT;
 
    for (int c = 0; c < 24; c++)
    {
-		if (js.rgbButtons[c] & 0x80)
-			buttons |= (JOYSTICK_BUTTON1 << c);
+        if (js.rgbButtons[c] & 0x80)
+            buttons |= (JOYSTICK_BUTTON1 << c);
    }
 
    *state = buttons;
@@ -313,24 +313,24 @@ void GetJoystickState(int joynum, DWORD *state, DWORD *changed)
 // are no more codes.
 BOOL GetJoystickKeyCode(DWORD state, DWORD changed, int &code, BOOL &down)
 {
-	if (code < VK_JOYFIRST || code > VK_JOYLAST)
-		code = VK_JOYFIRST - 1;
+    if (code < VK_JOYFIRST || code > VK_JOYLAST)
+        code = VK_JOYFIRST - 1;
 
-	code++;
+    code++;
 
-	while (code <= VK_JOYLAST)
-	{
-		if (changed & (1 << (code - VK_JOYFIRST)))
-		{
-			down = (state & (1 << (code - VK_JOYFIRST))) != 0;
-			return TRUE;
-		}
+    while (code <= VK_JOYLAST)
+    {
+        if (changed & (1 << (code - VK_JOYFIRST)))
+        {
+            down = (state & (1 << (code - VK_JOYFIRST))) != 0;
+            return TRUE;
+        }
 
-		code++;
-	}
+        code++;
+    }
 
-	code = -1;
-	down = FALSE;
+    code = -1;
+    down = FALSE;
 
-	return FALSE;
+    return FALSE;
 }

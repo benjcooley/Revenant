@@ -104,10 +104,10 @@ void *LoadFile(const char *filepath, void *filebuf, long *filesize)
 
 BOOL FileExists(const char *filepath)
 {
-	if (!access(filepath, 0))
-		return TRUE;
-	else
-		return FALSE;
+    if (!access(filepath, 0))
+        return TRUE;
+    else
+        return FALSE;
 }
 
 
@@ -156,26 +156,26 @@ long FileSize(const char *filepath)
 
 FILE *TryOpen(const char *name, const char *mode)
 {
-	FILE *fp;
-	int n;
+    FILE *fp;
+    int n;
 
-	// Try to open the file, it may already be open by someone else so we need to
-	// try more than once before we exit out
-	for (n = 0; n < 300; n++)
-	{
-		if ((fp = popen((char *)name, (char *)mode)) != NULL)
-			break;
+    // Try to open the file, it may already be open by someone else so we need to
+    // try more than once before we exit out
+    for (n = 0; n < 300; n++)
+    {
+        if ((fp = popen((char *)name, (char *)mode)) != NULL)
+            break;
 
-		// check error - if we're out of disk space or trying to access
-		// a non-existant file, just jump out right away
-		if (errno == ENOENT || errno == ENOSPC)
-			break;
+        // check error - if we're out of disk space or trying to access
+        // a non-existant file, just jump out right away
+        if (errno == ENOENT || errno == ENOSPC)
+            break;
 
-		// Wait 100 milliseconds inbetween trys
-		while (GetTickCount() % 100);
-	}
+        // Wait 100 milliseconds inbetween trys
+        while (GetTickCount() % 100);
+    }
 
-	return fp;
+    return fp;
 }
 
 
@@ -193,24 +193,24 @@ FILE *TryOpen(const char *name, const char *mode)
 
 BOOL TryDelete(const char *name)
 {
-	int n;
-	BOOL success = TRUE;
+    int n;
+    BOOL success = TRUE;
 
-	// Remove the file (if it exists)
-	if (FileExists(name))
-	{
-		for (n = 0; n < 1000; n++)
-		{
-			if (remove(name) == 0)
-				break;
-			// Wait 100 milliseconds inbetween trys
-			while (GetTickCount() % 100);
-		}
-		if (n == 1000)
-			success = FALSE;
-	}
+    // Remove the file (if it exists)
+    if (FileExists(name))
+    {
+        for (n = 0; n < 1000; n++)
+        {
+            if (remove(name) == 0)
+                break;
+            // Wait 100 milliseconds inbetween trys
+            while (GetTickCount() % 100);
+        }
+        if (n == 1000)
+            success = FALSE;
+    }
 
-	return success;
+    return success;
 }
 
 
@@ -230,18 +230,18 @@ BOOL TryDelete(const char *name)
 
 BOOL TryRename(const char *oldname, const char *newname)
 {
-	int n;
-	BOOL success = TRUE;
+    int n;
+    BOOL success = TRUE;
 
-	for (n = 0; n < 1000; n++)
-	{
-		if (rename(oldname, newname) == 0)
-			break;
-		// Wait 100 milliseconds inbetween trys
-		while (GetTickCount() % 100);
-	}
-	if (n == 1000)
-		success = FALSE;
+    for (n = 0; n < 1000; n++)
+    {
+        if (rename(oldname, newname) == 0)
+            break;
+        // Wait 100 milliseconds inbetween trys
+        while (GetTickCount() % 100);
+    }
+    if (n == 1000)
+        success = FALSE;
 
-	return success;
+    return success;
 }

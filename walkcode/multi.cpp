@@ -12,16 +12,16 @@
 
 void *TMulti::Object(char *name)
 {
-	for (int c = 0; c < numoffsets; c++)
-	{
-		char *p = (char *)((void *)names[c]);
-		if (p && !stricmp(p, name))
-			return (void *)offsets[c]; 
-	}
+    for (int c = 0; c < numoffsets; c++)
+    {
+        char *p = (char *)((void *)names[c]);
+        if (p && !stricmp(p, name))
+            return (void *)offsets[c]; 
+    }
 
-	char buf[80];
-	sprintf(buf, "Unable to find '%s' in multiresource", name);
-	FatalError(buf);
+    char buf[80];
+    sprintf(buf, "Unable to find '%s' in multiresource", name);
+    FatalError(buf);
 
-	return NULL;
+    return NULL;
 }

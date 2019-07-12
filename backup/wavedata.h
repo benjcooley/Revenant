@@ -42,12 +42,12 @@ _CLASSDEF(TWaveData)
 class TWaveData
 {
   public:
-    WAVEFORMATEX format;			// Format of wave; sent directly to DirectSound
-	DWORD size;						// Number of bytes of data
-	int volume;						// Volume adjustment
-	long loopstart;					// Begin loop location
-	long loopend;					// End loop location
-	BYTE data[1];					// Actual sound data
+    WAVEFORMATEX format;            // Format of wave; sent directly to DirectSound
+    DWORD size;                     // Number of bytes of data
+    int volume;                     // Volume adjustment
+    long loopstart;                 // Begin loop location
+    long loopend;                   // End loop location
+    BYTE data[1];                   // Actual sound data
 };
 
 #endif

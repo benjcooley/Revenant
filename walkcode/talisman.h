@@ -19,22 +19,22 @@ _CLASSDEF(TTalisman)
 class TTalisman : public TObjectInstance
 {
   public:
-	TTalisman(PTObjectImagery newim) : TObjectInstance(newim) {}
-	TTalisman(PSObjectDef def, PTObjectImagery newim) : TObjectInstance(def, newim) {}
+    TTalisman(PTObjectImagery newim) : TObjectInstance(newim) {}
+    TTalisman(PSObjectDef def, PTObjectImagery newim) : TObjectInstance(def, newim) {}
 
-	virtual void AddToInventory(PTObjectInstance oi);
-		// Add this object to oi's inventory
+    virtual void AddToInventory(PTObjectInstance oi);
+        // Add this object to oi's inventory
 
-	// Talisman statistics
-	STATFUNC(Value)
-	STATFUNC(Order)
-	STATFUNC(Power)
-	STATFUNC(Earth)
-	STATFUNC(Fire)
-	STATFUNC(Lightning)
-	STATFUNC(Ice)
-	STATFUNC(Destruction)
-	STATFUNC(Healing)
+    // Talisman statistics
+    STATFUNC(Value)
+    STATFUNC(Order)
+    STATFUNC(Power)
+    STATFUNC(Earth)
+    STATFUNC(Fire)
+    STATFUNC(Lightning)
+    STATFUNC(Ice)
+    STATFUNC(Destruction)
+    STATFUNC(Healing)
 
 };
 

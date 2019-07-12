@@ -24,28 +24,28 @@ _CLASSDEF(TStatPane)
 class TStatPane : public TButtonPane
 {
   public:
-	TStatPane() : TButtonPane(MULTIPANEX, MULTIPANEY, MULTIPANEWIDTH, MULTIPANEHEIGHT) {}
-	~TStatPane() {}
+    TStatPane() : TButtonPane(MULTIPANEX, MULTIPANEY, MULTIPANEWIDTH, MULTIPANEHEIGHT) {}
+    ~TStatPane() {}
 
-	virtual BOOL Initialize();
-	virtual void Close();
-	virtual void DrawBackground();
-	virtual void MouseClick(int button, int x, int y);
-	virtual void MouseMove(int button, int x, int y);
+    virtual BOOL Initialize();
+    virtual void Close();
+    virtual void DrawBackground();
+    virtual void MouseClick(int button, int x, int y);
+    virtual void MouseMove(int button, int x, int y);
 
-	void Scroll(int numlines);
-	void ExpandAll() { SetAllExpanded(TRUE); }
-	void ContractAll() { SetAllExpanded(FALSE); }
+    void Scroll(int numlines);
+    void ExpandAll() { SetAllExpanded(TRUE); }
+    void ContractAll() { SetAllExpanded(FALSE); }
 
-	PTButton ScrollUpButton() { return Button(2); }
-	PTButton ScrollDownButton() { return Button(3); }
+    PTButton ScrollUpButton() { return Button(2); }
+    PTButton ScrollDownButton() { return Button(3); }
 
   protected:
-	void SetAllExpanded(BOOL value);
-	int OnSlot(int x, int y);
+    void SetAllExpanded(BOOL value);
+    int OnSlot(int x, int y);
 
-	int startline;						// for scrolling
-	BOOL expanded[NUM_SKILLS];			// whether each level is expanded
+    int startline;                      // for scrolling
+    BOOL expanded[NUM_SKILLS];          // whether each level is expanded
 };
 
 #endif

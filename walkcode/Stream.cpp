@@ -19,25 +19,25 @@
 
 TOutputStream::TOutputStream(int startsize, int grwsize)
 {
-	buf = (BYTE *)malloc(startsize);
-	bufsize = startsize;
-	growsize = grwsize;
-	Reset();
+    buf = (BYTE *)malloc(startsize);
+    bufsize = startsize;
+    growsize = grwsize;
+    Reset();
 }
 
 TOutputStream::~TOutputStream()
 {
-	delete buf;
+    delete buf;
 }
 
 void TOutputStream::MakeFreeSpace(int freespace)
 {
-	int datasize = DataSize();
-	if (bufsize - datasize < freespace)
-	{
-		buf = (BYTE *)realloc(buf, bufsize + growsize);
-		ptr = buf + datasize;
-		bufsize = bufsize + growsize;
-	}
+    int datasize = DataSize();
+    if (bufsize - datasize < freespace)
+    {
+        buf = (BYTE *)realloc(buf, bufsize + growsize);
+        ptr = buf + datasize;
+        bufsize = bufsize + growsize;
+    }
 }
 

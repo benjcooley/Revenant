@@ -35,11 +35,11 @@
 // Imagery id's (index numbers into the imagery builder array)
 enum
 {
-	OBJIMAGE_ANIMATION,
-	OBJIMAGE_MESH3D,
-	OBJIMAGE_MESH3DHELPER,
-	OBJIMAGE_MULTI,
-	OBJIMAGE_MULTIANIMATION
+    OBJIMAGE_ANIMATION,
+    OBJIMAGE_MESH3D,
+    OBJIMAGE_MESH3DHELPER,
+    OBJIMAGE_MULTI,
+    OBJIMAGE_MULTIANIMATION
 };
 
 _STRUCTDEF(SImageryStateHeader)
@@ -48,35 +48,35 @@ _STRUCTDEF(SImageryStateHeader)
 
 struct SImageryStateHeader
 {
-	char		animname[MAXANIMNAME];	// Array of Ascii Names
-	OFFSET		walkmap;	// Walkmap
-	DWORD		flags;		// Imagery state flags
-	short		aniflags;	// Animation state flags
-	short		frames;		// Number of frames
-	short		width;		// Graphics maximum width/height (for IsOnScreen and refresh rects) 
-	short		height;		
-	short		regx;		// Registration point x,y,z for graphics
-	short		regy;		
-	short		regz;
-	short		animregx;	// Registration point of animation
-	short		animregy;
-	short		animregz;
-	short		wregx;		// World registration x and y of walk and bounding box info
-	short		wregy;
-	short		wregz;
-	short		wwidth;		// Object's world width, length, and height for walk map and bound box
-	short		wlength;
-	short		wheight;
-	short		invaniflags;// Animation flags for inventory animation
-	short		invframes;	// Number of frames of inventory animation
+    char        animname[MAXANIMNAME];  // Array of Ascii Names
+    OFFSET      walkmap;    // Walkmap
+    DWORD       flags;      // Imagery state flags
+    short       aniflags;   // Animation state flags
+    short       frames;     // Number of frames
+    short       width;      // Graphics maximum width/height (for IsOnScreen and refresh rects) 
+    short       height;     
+    short       regx;       // Registration point x,y,z for graphics
+    short       regy;       
+    short       regz;
+    short       animregx;   // Registration point of animation
+    short       animregy;
+    short       animregz;
+    short       wregx;      // World registration x and y of walk and bounding box info
+    short       wregy;
+    short       wregz;
+    short       wwidth;     // Object's world width, length, and height for walk map and bound box
+    short       wlength;
+    short       wheight;
+    short       invaniflags;// Animation flags for inventory animation
+    short       invframes;  // Number of frames of inventory animation
 };
 
 _STRUCTDEF(SImageryHeader)
 struct SImageryHeader
 {
-	int					imageryid;	 			// Id number for imagery handler (index to builder array)
-	int					numstates;				// Number of states
-	SImageryStateHeader	states[1];				// Imagery for state
+    int                 imageryid;              // Id number for imagery handler (index to builder array)
+    int                 numstates;              // Number of states
+    SImageryStateHeader states[1];              // Imagery for state
 };
 
 // ****************
@@ -86,7 +86,7 @@ struct SImageryHeader
 _STRUCTDEF(SImageryBody)
 struct SImageryBody
 {
-	// [insert tumbleweeds here]
+    // [insert tumbleweeds here]
 };
 
 #endif

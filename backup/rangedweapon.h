@@ -19,12 +19,12 @@ _CLASSDEF(TRangedWeapon)
 class TRangedWeapon : public TObjectInstance
 {
   public:
-	TRangedWeapon(PTObjectImagery newim) : TObjectInstance(newim) {}
-	TRangedWeapon(PSObjectDef def, PTObjectImagery newim) : TObjectInstance(def, newim) {}
+    TRangedWeapon(PTObjectImagery newim) : TObjectInstance(newim) {}
+    TRangedWeapon(PSObjectDef def, PTObjectImagery newim) : TObjectInstance(def, newim) {}
 
-	// Ranged weapon stats
-	STATFUNC(EqSlot)
-	STATFUNC(Value)
+    // Ranged weapon stats
+    STATFUNC(EqSlot)
+    STATFUNC(Value)
 
 };
 

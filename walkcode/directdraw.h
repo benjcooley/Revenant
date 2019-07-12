@@ -33,35 +33,35 @@ typedef struct _D3DDeviceInfo
 #define DRIVERDESCLEN 80
 
 // Direct Draw Global variables
-extern LPDIRECTDRAW	     DirectDraw;		// DirectDraw pointer
-extern LPDIRECTDRAW2     DirectDraw2;		// DirectDraw 2 pointer
-extern char				 DirectDrawDesc[DRIVERNAMELEN];	// DirectDraw device desc
-extern char				 DirectDrawName[DRIVERNAMELEN];	// DirectDraw device name
-extern char				 DriversAvailable[DRIVERNAMELEN]; // Lists names of available drivers
+extern LPDIRECTDRAW      DirectDraw;        // DirectDraw pointer
+extern LPDIRECTDRAW2     DirectDraw2;       // DirectDraw 2 pointer
+extern char              DirectDrawDesc[DRIVERNAMELEN]; // DirectDraw device desc
+extern char              DirectDrawName[DRIVERNAMELEN]; // DirectDraw device name
+extern char              DriversAvailable[DRIVERNAMELEN]; // Lists names of available drivers
 
-extern DDCAPS				 DDHWCaps;			// Direct Draw Hardware Caps
-extern DDCAPS				 DDHELCaps;			// Direct Draw Hel Caps
+extern DDCAPS                DDHWCaps;          // Direct Draw Hardware Caps
+extern DDCAPS                DDHELCaps;         // Direct Draw Hel Caps
 
 // external 3d interfaces
 extern LPDIRECT3D            Direct3D;         // Direct3D object
 extern LPDIRECT3D2           Direct3D2;        // Direct3D object 2
 extern LPDIRECT3DDEVICE      Device;           // Direct3D device
 extern LPDIRECT3DDEVICE2     Device2;          // Direct3D device 2
-extern LPDIRECT3DVIEWPORT	 Viewport;         // Direct3D RM Viewport
+extern LPDIRECT3DVIEWPORT    Viewport;         // Direct3D RM Viewport
 extern LPDIRECT3DVIEWPORT2   Viewport2;        // Direct3D RM Viewport 2
 
-extern D3DDEVICEDESC		 D3DHWCaps;		   // Direct3D Hardware Caps
-extern D3DDEVICEDESC		 D3DHELCaps;	   // Direct3D Hardware Emulation Layer Caps
+extern D3DDEVICEDESC         D3DHWCaps;        // Direct3D Hardware Caps
+extern D3DDEVICEDESC         D3DHELCaps;       // Direct3D Hardware Emulation Layer Caps
 
 // external surfaces
-extern LPDIRECTDRAWSURFACE  front;		// Pointer to DirectDraw Surfaces for the 
-extern LPDIRECTDRAWSURFACE  back;		// display.
+extern LPDIRECTDRAWSURFACE  front;      // Pointer to DirectDraw Surfaces for the 
+extern LPDIRECTDRAWSURFACE  back;       // display.
 extern LPDIRECTDRAWSURFACE  zbuffer;
 
-extern D3DDeviceInfo		DeviceInfo; // 3D device info
+extern D3DDeviceInfo        DeviceInfo; // 3D device info
 
-extern D3DMATRIX			identity;
-extern D3DMATRIXHANDLE		hProj, hView, hWorld, hPos;
+extern D3DMATRIX            identity;
+extern D3DMATRIXHANDLE      hProj, hView, hWorld, hPos;
 
 BOOL InitDirectDraw();
   // Sets up Direct X

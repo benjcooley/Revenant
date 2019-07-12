@@ -12,10 +12,10 @@
 typedef D3DVALUE MATRIX[4][4];
 
 static D3DMATRIX IDENTITY = {
-	D3DVAL(1.0), D3DVAL(0.0), D3DVAL(0.0), D3DVAL(0.0),
-	D3DVAL(0.0), D3DVAL(1.0), D3DVAL(0.0), D3DVAL(0.0),
-	D3DVAL(0.0), D3DVAL(0.0), D3DVAL(1.0), D3DVAL(0.0),
-	D3DVAL(0.0), D3DVAL(0.0), D3DVAL(0.0), D3DVAL(1.0)
+    D3DVAL(1.0), D3DVAL(0.0), D3DVAL(0.0), D3DVAL(0.0),
+    D3DVAL(0.0), D3DVAL(1.0), D3DVAL(0.0), D3DVAL(0.0),
+    D3DVAL(0.0), D3DVAL(0.0), D3DVAL(1.0), D3DVAL(0.0),
+    D3DVAL(0.0), D3DVAL(0.0), D3DVAL(0.0), D3DVAL(1.0)
 };
 
 /*
@@ -56,8 +56,8 @@ D3DVECTORCrossProduct(LPD3DVECTOR lpd, LPD3DVECTOR lpa, LPD3DVECTOR lpb)
  */
 LPD3DMATRIX D3DMATRIXClear(LPD3DMATRIX lpMat)
 {
-	memcpy(lpMat, &IDENTITY, sizeof(D3DMATRIX));
-	return lpMat;
+    memcpy(lpMat, &IDENTITY, sizeof(D3DMATRIX));
+    return lpMat;
 }
 
 /*
@@ -68,8 +68,8 @@ LPD3DMATRIX MultiplyD3DMATRIX(LPD3DMATRIX lpDst, LPD3DMATRIX lpSrc1,
                               LPD3DMATRIX lpSrc2)
 {
     MATRIX &M1 = *(MATRIX *)lpSrc1;
-	MATRIX &M2 = *(MATRIX *)lpSrc2;
-	MATRIX D;
+    MATRIX &M2 = *(MATRIX *)lpSrc2;
+    MATRIX D;
     int i, r, c;
 
     for (r = 0; r < 4; r++) {
@@ -80,21 +80,21 @@ LPD3DMATRIX MultiplyD3DMATRIX(LPD3DMATRIX lpDst, LPD3DMATRIX lpSrc1,
         }
     }
 
-	memcpy(lpDst, D, sizeof(D3DMATRIX));
+    memcpy(lpDst, D, sizeof(D3DMATRIX));
 
     return lpDst;
 }
 
 void D3DMATRIXTransform(LPD3DMATRIX lpm, LPD3DVECTOR lpV, LPD3DVECTOR lpD)
 {
-	D3DVECTOR v;
-	v.x = lpV->x;
-	v.y = lpV->y;
-	v.z = lpV->z;
+    D3DVECTOR v;
+    v.x = lpV->x;
+    v.y = lpV->y;
+    v.z = lpV->z;
 
-	lpD->x = lpm->_11 * v.x  + lpm->_21 * v.y + lpm->_31 * v.z + lpm->_41;
-	lpD->y = lpm->_12 * v.x  + lpm->_22 * v.y + lpm->_32 * v.z + lpm->_42;
-	lpD->z = lpm->_13 * v.x  + lpm->_23 * v.y + lpm->_33 * v.z + lpm->_43;
+    lpD->x = lpm->_11 * v.x  + lpm->_21 * v.y + lpm->_31 * v.z + lpm->_41;
+    lpD->y = lpm->_12 * v.x  + lpm->_22 * v.y + lpm->_32 * v.z + lpm->_42;
+    lpD->z = lpm->_13 * v.x  + lpm->_23 * v.y + lpm->_33 * v.z + lpm->_43;
 }
 
 /*
@@ -178,13 +178,13 @@ LPD3DMATRIX D3DMATRIXSetRotation(LPD3DMATRIX lpM, LPD3DVECTOR lpD, LPD3DVECTOR l
  */
 LPD3DMATRIX D3DMATRIXTranslate(LPD3DMATRIX lpDst, LPD3DVECTOR lpV)
 {
-	MATRIX m;
-	memcpy(&m, &IDENTITY, sizeof(D3DMATRIX));
-	m[3][0] = lpV->x;
-	m[3][1] = lpV->y;
-	m[3][2] = lpV->z;
-	MultiplyD3DMATRIX(lpDst, lpDst, (LPD3DMATRIX)&m);
-	return lpDst;
+    MATRIX m;
+    memcpy(&m, &IDENTITY, sizeof(D3DMATRIX));
+    m[3][0] = lpV->x;
+    m[3][1] = lpV->y;
+    m[3][2] = lpV->z;
+    MultiplyD3DMATRIX(lpDst, lpDst, (LPD3DMATRIX)&m);
+    return lpDst;
 }
 
 /*
@@ -193,13 +193,13 @@ LPD3DMATRIX D3DMATRIXTranslate(LPD3DMATRIX lpDst, LPD3DVECTOR lpV)
  */
 LPD3DMATRIX D3DMATRIXMove(LPD3DMATRIX lpDst, LPD3DVECTOR lpV)
 {
-	MATRIX m;
-	memcpy(&m, &IDENTITY, sizeof(D3DMATRIX));
-	m[3][0] = -lpV->x;
-	m[3][1] = -lpV->y;
-	m[3][2] = -lpV->z;
-	MultiplyD3DMATRIX(lpDst, lpDst, (LPD3DMATRIX)&m);
-	return lpDst;
+    MATRIX m;
+    memcpy(&m, &IDENTITY, sizeof(D3DMATRIX));
+    m[3][0] = -lpV->x;
+    m[3][1] = -lpV->y;
+    m[3][2] = -lpV->z;
+    MultiplyD3DMATRIX(lpDst, lpDst, (LPD3DMATRIX)&m);
+    return lpDst;
 }
 
 /*
@@ -208,13 +208,13 @@ LPD3DMATRIX D3DMATRIXMove(LPD3DMATRIX lpDst, LPD3DVECTOR lpV)
  */
 LPD3DMATRIX D3DMATRIXScale(LPD3DMATRIX lpDst, LPD3DVECTOR lpV)
 {
-	MATRIX m;
-	memcpy(&m, &IDENTITY, sizeof(D3DMATRIX));
-	m[0][0] = lpV->x;
-	m[1][1] = lpV->y;
-	m[2][2] = lpV->z;
-	MultiplyD3DMATRIX(lpDst, lpDst, (LPD3DMATRIX)&m);
-	return lpDst;
+    MATRIX m;
+    memcpy(&m, &IDENTITY, sizeof(D3DMATRIX));
+    m[0][0] = lpV->x;
+    m[1][1] = lpV->y;
+    m[2][2] = lpV->z;
+    MultiplyD3DMATRIX(lpDst, lpDst, (LPD3DMATRIX)&m);
+    return lpDst;
 }
 
 /*
@@ -222,16 +222,16 @@ LPD3DMATRIX D3DMATRIXScale(LPD3DMATRIX lpDst, LPD3DVECTOR lpV)
  */
 LPD3DMATRIX D3DMATRIXRotateX(LPD3DMATRIX lpDst, D3DVALUE a)
 {
-	float c = (float)cos((double)a);
-	float s = (float)sin((double)a);
-	MATRIX m;
-	memcpy(&m, &IDENTITY, sizeof(D3DMATRIX));
-	m[1][1] = c;
-	m[1][2] = s;
-	m[2][1] = -s;
-	m[2][2] = c;
-	MultiplyD3DMATRIX(lpDst, lpDst, (LPD3DMATRIX)&m);
-	return lpDst;
+    float c = (float)cos((double)a);
+    float s = (float)sin((double)a);
+    MATRIX m;
+    memcpy(&m, &IDENTITY, sizeof(D3DMATRIX));
+    m[1][1] = c;
+    m[1][2] = s;
+    m[2][1] = -s;
+    m[2][2] = c;
+    MultiplyD3DMATRIX(lpDst, lpDst, (LPD3DMATRIX)&m);
+    return lpDst;
 }
 
 /*
@@ -239,16 +239,16 @@ LPD3DMATRIX D3DMATRIXRotateX(LPD3DMATRIX lpDst, D3DVALUE a)
  */
 LPD3DMATRIX D3DMATRIXRotateY(LPD3DMATRIX lpDst, D3DVALUE a)
 {
-	float c = (float)cos((double)a);
-	float s = (float)sin((double)a);
-	MATRIX m;
-	memcpy(&m, &IDENTITY, sizeof(D3DMATRIX));
-	m[0][0] = c;
-	m[0][2] = -s;
-	m[2][0] = s;
-	m[2][2] = c;
-	MultiplyD3DMATRIX(lpDst, lpDst, (LPD3DMATRIX)&m);
-	return lpDst;
+    float c = (float)cos((double)a);
+    float s = (float)sin((double)a);
+    MATRIX m;
+    memcpy(&m, &IDENTITY, sizeof(D3DMATRIX));
+    m[0][0] = c;
+    m[0][2] = -s;
+    m[2][0] = s;
+    m[2][2] = c;
+    MultiplyD3DMATRIX(lpDst, lpDst, (LPD3DMATRIX)&m);
+    return lpDst;
 }
 
 /*
@@ -256,16 +256,16 @@ LPD3DMATRIX D3DMATRIXRotateY(LPD3DMATRIX lpDst, D3DVALUE a)
  */
 LPD3DMATRIX D3DMATRIXRotateZ(LPD3DMATRIX lpDst, D3DVALUE a)
 {
-	float c = (float)cos((double)a);
-	float s = (float)sin((double)a);
-	MATRIX m;
-	memcpy(&m, &IDENTITY, sizeof(D3DMATRIX));
-	m[0][0] = c;
-	m[0][1] = s;
-	m[1][0] = -s;
-	m[1][1] = c;
-	MultiplyD3DMATRIX(lpDst, lpDst, (LPD3DMATRIX)&m);
-	return lpDst;
+    float c = (float)cos((double)a);
+    float s = (float)sin((double)a);
+    MATRIX m;
+    memcpy(&m, &IDENTITY, sizeof(D3DMATRIX));
+    m[0][0] = c;
+    m[0][1] = s;
+    m[1][0] = -s;
+    m[1][1] = c;
+    MultiplyD3DMATRIX(lpDst, lpDst, (LPD3DMATRIX)&m);
+    return lpDst;
 }
 
 /*

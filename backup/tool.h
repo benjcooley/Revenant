@@ -19,15 +19,15 @@ _CLASSDEF(TTool)
 class TTool : public TObjectInstance
 {
   public:
-	TTool(PTObjectImagery newim) : TObjectInstance(newim) {}
-	TTool(PSObjectDef def, PTObjectImagery newim) : TObjectInstance(def, newim) {}
+    TTool(PTObjectImagery newim) : TObjectInstance(newim) {}
+    TTool(PSObjectDef def, PTObjectImagery newim) : TObjectInstance(def, newim) {}
 
-	virtual BOOL Use(PTObjectInstance user, int with = -1);
-	virtual int CursorType(PTObjectInstance with = NULL);
+    virtual BOOL Use(PTObjectInstance user, int with = -1);
+    virtual int CursorType(PTObjectInstance with = NULL);
 
-	// Tool stats
-	STATFUNC(Value)
-	STATFUNC(Pick)
+    // Tool stats
+    STATFUNC(Value)
+    STATFUNC(Pick)
 };
 
 DEFINE_BUILDER("TOOL", TTool)

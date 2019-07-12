@@ -17,16 +17,16 @@ _CLASSDEF(TArmor)
 class TArmor : public TObjectInstance
 {
   public:
-	TArmor(PTObjectImagery newim) : TObjectInstance(newim) {}
-	TArmor(PSObjectDef def, PTObjectImagery newim) : TObjectInstance(def, newim) {}
+    TArmor(PTObjectImagery newim) : TObjectInstance(newim) {}
+    TArmor(PSObjectDef def, PTObjectImagery newim) : TObjectInstance(def, newim) {}
 
-	// Armor stats
-	STATFUNC(EqSlot)
-	STATFUNC(Value)
-	STATFUNC(Protection)
-	STATFUNC(Combining)
-	STATFUNC(ResistPoison)
-	STATFUNC(Stealth)
+    // Armor stats
+    STATFUNC(EqSlot)
+    STATFUNC(Value)
+    STATFUNC(Protection)
+    STATFUNC(Combining)
+    STATFUNC(ResistPoison)
+    STATFUNC(Stealth)
 };
 
 DEFINE_BUILDER("ARMOR", TArmor)

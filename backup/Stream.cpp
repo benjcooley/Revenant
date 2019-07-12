@@ -19,26 +19,26 @@
 
 TOutputStream::TOutputStream(int startsize, int grwsize)
 {
-	buf = (BYTE *)malloc(startsize);
-	bufsize = startsize;
-	growsize = grwsize;
-	Reset();
+    buf = (BYTE *)malloc(startsize);
+    bufsize = startsize;
+    growsize = grwsize;
+    Reset();
 }
 
 TOutputStream::~TOutputStream()
 {
-	delete buf;
+    delete buf;
 }
 
 void TOutputStream::MakeFreeSpace(int freespace)
 {
-	int datasize = DataSize();
-	if (bufsize - datasize < freespace)
-	{
-		buf = (BYTE *)realloc(buf, bufsize + growsize);
-		ptr = buf + datasize;
-		bufsize = bufsize + growsize;
-	}
+    int datasize = DataSize();
+    if (bufsize - datasize < freespace)
+    {
+        buf = (BYTE *)realloc(buf, bufsize + growsize);
+        ptr = buf + datasize;
+        bufsize = bufsize + growsize;
+    }
 }
 
 // ****************
@@ -47,16 +47,16 @@ void TOutputStream::MakeFreeSpace(int freespace)
 
 RTInputStream TInputStream::operator >> (char *d)
 {
-	strncpy(d, (char *)(ptr + 1), *ptr);
-	d[*ptr] = NULL;
-	ptr += *ptr + 1;
-	return *this;
+    strncpy(d, (char *)(ptr + 1), *ptr);
+    d[*ptr] = NULL;
+    ptr += *ptr + 1;
+    return *this;
 }
 
 RTOutputStream TOutputStream::operator << (char *d)
 {
-	*ptr = strlen(d);
-	strncpy((char *)(ptr + 1), d, *ptr);
-	ptr += *ptr + 1;
-	return *this;
+    *ptr = strlen(d);
+    strncpy((char *)(ptr + 1), d, *ptr);
+    ptr += *ptr + 1;
+    return *this;
 }

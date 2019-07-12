@@ -17,8 +17,8 @@ _STRUCTDEF(SPalette);
 
 struct SPalette
 {
-	WORD colors[256];
-	DWORD rgbcolors[256];
+    WORD colors[256];
+    DWORD rgbcolors[256];
 };
 
 #ifndef _WINGDI_
@@ -40,14 +40,14 @@ class TBitmapData
   public:
 
     int    width;     // Bitmap Width
-    int    height;	  // Bitmap Height
-	int	   regx;	  // Registration point x
-	int	   regy;	  // Registration point y
-	DWORD  flags;     // Bitmap Flags. See exiledef.h for Bitmap flags.
+    int    height;    // Bitmap Height
+    int    regx;      // Registration point x
+    int    regy;      // Registration point y
+    DWORD  flags;     // Bitmap Flags. See exiledef.h for Bitmap flags.
     DWORD  drawmode;  // Default drawing mode of bitmap. See exiledef.h
                       // for drawing mode flags.
     DWORD  keycolor;  // Color to use as Transparent color.
-	DWORD  aliassize; // Size of Alias Buffer
+    DWORD  aliassize; // Size of Alias Buffer
     OFFSET alias;     // Relative Offset to alias data.
     DWORD  alphasize;
     OFFSET alpha;   

@@ -11,8 +11,8 @@
 _STRUCTDEF(SKeyName)
 struct SKeyName
 {
-	int key;
-	char *name;
+    int key;
+    char *name;
 };
 
 static SKeyName keynames[] =
@@ -136,418 +136,418 @@ static SKeyName keynames[] =
 // Initialize the control mapper from a static list of controls
 BOOL TControlMap::Initialize(int numcontrols, PSControlEntry controlarray)
 {
-	if (initialized)
-		return TRUE;
+    if (initialized)
+        return TRUE;
 
-	controls.Clear();
-	for (int c = 0; c < numcontrols; c++)
-	{
-		controls.Add(controlarray[c]); // Note virtual array stores copy of structure only
-	}
+    controls.Clear();
+    for (int c = 0; c < numcontrols; c++)
+    {
+        controls.Add(controlarray[c]); // Note virtual array stores copy of structure only
+    }
 
-	cmdflagstate = cmdflagchanged = 0;
+    cmdflagstate = cmdflagchanged = 0;
 
-	initialized = TRUE;
+    initialized = TRUE;
 
-	return TRUE;
+    return TRUE;
 }
 
 // closes the control mapper
 void TControlMap::Close()
 {
-	if (!initialized)
-		return;
+    if (!initialized)
+        return;
 
-	controls.Clear();
+    controls.Clear();
 
-	initialized = FALSE;
+    initialized = FALSE;
 }
 
 // Returns the control entry for the given index
 void TControlMap::GetControlEntry(int index, PSControlEntry ce)
 {
-	if (!initialized)
-		return;
+    if (!initialized)
+        return;
 
-	if ((DWORD)index >= (DWORD)controls.NumItems())
-		return;
+    if ((DWORD)index >= (DWORD)controls.NumItems())
+        return;
 
-	memcpy(ce, &(controls[index]), sizeof(SControlEntry));
+    memcpy(ce, &(controls[index]), sizeof(SControlEntry));
 }
 
 // Returns the control entry for the given index
 void TControlMap::SetControlEntry(int index, PSControlEntry ce)
 {
-	if (!initialized)
-		return;
+    if (!initialized)
+        return;
 
-	if ((DWORD)index >= (DWORD)controls.NumItems())
-		return;
+    if ((DWORD)index >= (DWORD)controls.NumItems())
+        return;
 
-	memcpy(&(controls[index]), ce, sizeof(SControlEntry));
+    memcpy(&(controls[index]), ce, sizeof(SControlEntry));
 }
 
 // Returns the game command given the 'keycode'
 int TControlMap::GetCommand(int keycode, BOOL down, DWORD modeflags)
 {
-	int c;
+    int c;
 
-	if (!initialized)
-		return 0;
+    if (!initialized)
+        return 0;
 
   // Clear command flags set by modes that are no longer active
-	for (c = 0; c < controls.NumItems(); c++)
-	{
-		if (!controls.Used(c))
-			continue;
+    for (c = 0; c < controls.NumItems(); c++)
+    {
+        if (!controls.Used(c))
+            continue;
 
-		PSControlEntry ce = &(controls[c]);
+        PSControlEntry ce = &(controls[c]);
 
-	  // Has a flag, but mode no longer active?
-		if (!(ce->mode & modeflags) && ce->cmdflag)
-		{
-			cmdflagchanged |= ce->cmdflag;
-			cmdflagstate &= ~(ce->cmdflag);
-		}
-	}
+      // Has a flag, but mode no longer active?
+        if (!(ce->mode & modeflags) && ce->cmdflag)
+        {
+            cmdflagchanged |= ce->cmdflag;
+            cmdflagstate &= ~(ce->cmdflag);
+        }
+    }
 
   // Get new commands
-	for (c = 0; c < controls.NumItems(); c++)
-	{
-		if (!controls.Used(c))
-			continue;
+    for (c = 0; c < controls.NumItems(); c++)
+    {
+        if (!controls.Used(c))
+            continue;
 
-		PSControlEntry ce = &(controls[c]);
+        PSControlEntry ce = &(controls[c]);
 
-	  // Do key codes one by one
-		for (int code = 0; code < CODESPERCOMMAND; code++)
-		{
-			PSControlKey ck = &ce->codes[code];
+      // Do key codes one by one
+        for (int code = 0; code < CODESPERCOMMAND; code++)
+        {
+            PSControlKey ck = &ce->codes[code];
 
-			if (ck->keys[0] <= 0) // This code not used
-				continue;
+            if (ck->keys[0] <= 0) // This code not used
+                continue;
 
           // Start at last key, and go backwards
-			int key = KEYSPERCODE - 1;
-			int kdown = 1 << (KEYSPERCODE - 1);
-			int kmask = 0xFFFFFFFF >> (32 - (KEYSPERCODE - 1));
+            int key = KEYSPERCODE - 1;
+            int kdown = 1 << (KEYSPERCODE - 1);
+            int kmask = 0xFFFFFFFF >> (32 - (KEYSPERCODE - 1));
 
-		  // Find last key
-			while (key > 0 && ck->keys[key] <= 0)
-			{
-				key--;
-				kdown = kdown >> 1;
-				kmask = kmask >> 1;
-			}
-				
-		  // If we are last key, and other keys are down, return a command
-			if ((ck->keys[key] == keycode) &&		// Key matches last key of command
-				((ce->down && !down) |				// Currently down and key is up OR...
-				((ck->flags & kmask) == kmask)))	// Prefix keys for command (if any) are down
-			{
-				if (down)
-					ck->flags |= kdown;
-				else
-					ck->flags &= ~kdown;
+          // Find last key
+            while (key > 0 && ck->keys[key] <= 0)
+            {
+                key--;
+                kdown = kdown >> 1;
+                kmask = kmask >> 1;
+            }
+                
+          // If we are last key, and other keys are down, return a command
+            if ((ck->keys[key] == keycode) &&       // Key matches last key of command
+                ((ce->down && !down) |              // Currently down and key is up OR...
+                ((ck->flags & kmask) == kmask)))    // Prefix keys for command (if any) are down
+            {
+                if (down)
+                    ck->flags |= kdown;
+                else
+                    ck->flags &= ~kdown;
 
-				if (ce->mode & modeflags &&			// Command is part of this mode	
-					ce->down != down)				// Not a key repeat (already down)
-				{
-					cmdflagchanged |= ce->cmdflag;
+                if (ce->mode & modeflags &&         // Command is part of this mode 
+                    ce->down != down)               // Not a key repeat (already down)
+                {
+                    cmdflagchanged |= ce->cmdflag;
 
-					ce->down = down;				// Indicate that command is down or not
-					if (down)
-					{
-						cmdflagstate |= ce->cmdflag;
-						return ce->downcmd;
-					}
-					else
-					{
-						cmdflagstate &= ~(ce->cmdflag);
-						return ce->upcmd;
-					}
-				}
-			}
-					
-		  // Set or clear down flags for prefix keys
-			key--;
-			kdown = kdown >> 1;
-			while (key >= 0)
-			{
-				if (ck->keys[key] == keycode)
-				{
-					if (down)
-						ck->flags |= kdown;
-					else
-						ck->flags &= ~kdown;
-				}
-				key--;
-				kdown = kdown >> 1;
-			}
+                    ce->down = down;                // Indicate that command is down or not
+                    if (down)
+                    {
+                        cmdflagstate |= ce->cmdflag;
+                        return ce->downcmd;
+                    }
+                    else
+                    {
+                        cmdflagstate &= ~(ce->cmdflag);
+                        return ce->upcmd;
+                    }
+                }
+            }
+                    
+          // Set or clear down flags for prefix keys
+            key--;
+            kdown = kdown >> 1;
+            while (key >= 0)
+            {
+                if (ck->keys[key] == keycode)
+                {
+                    if (down)
+                        ck->flags |= kdown;
+                    else
+                        ck->flags &= ~kdown;
+                }
+                key--;
+                kdown = kdown >> 1;
+            }
 
-		} // End of code loop
-	
-	} // End of command entry loop
+        } // End of code loop
+    
+    } // End of command entry loop
 
-	return 0;
+    return 0;
 }
 
 BOOL TControlMap::CommandOn(int command, DWORD modeflags)
 {
-	if (!initialized)
-		return FALSE;
+    if (!initialized)
+        return FALSE;
 
-	for (int c = 0; c < controls.NumItems(); c++)
-	{
-		if (!controls.Used(c))
-			continue;
+    for (int c = 0; c < controls.NumItems(); c++)
+    {
+        if (!controls.Used(c))
+            continue;
 
-		PSControlEntry ce = &(controls[c]);
+        PSControlEntry ce = &(controls[c]);
 
-		if ((ce->downcmd == command) &&			// Command matches
-		     ce->down &&						// Key or keys are currently down
-			(ce->mode & modeflags))				// We're in this mode
-				return TRUE;
-		else if (ce->upcmd == command)			// Matches up command and we weren't down
-			return TRUE;
-	}
+        if ((ce->downcmd == command) &&         // Command matches
+             ce->down &&                        // Key or keys are currently down
+            (ce->mode & modeflags))             // We're in this mode
+                return TRUE;
+        else if (ce->upcmd == command)          // Matches up command and we weren't down
+            return TRUE;
+    }
 
-	return FALSE;
+    return FALSE;
 }
 
 // Clears command settings
 void TControlMap::Clear()
 {
-	if (!initialized)
-		return;
+    if (!initialized)
+        return;
 
-	for (int c = 0; c < controls.NumItems(); c++)
-	{
-		if (!controls.Used(c))
-			continue;
+    for (int c = 0; c < controls.NumItems(); c++)
+    {
+        if (!controls.Used(c))
+            continue;
 
-		PSControlEntry ce = &(controls[c]);
+        PSControlEntry ce = &(controls[c]);
 
-		ce->down = FALSE;
+        ce->down = FALSE;
 
-	  // Do key codes one by one
-		for (int code = 0; code < CODESPERCOMMAND; code++)
-		{
-			PSControlKey ck = &ce->codes[code];
+      // Do key codes one by one
+        for (int code = 0; code < CODESPERCOMMAND; code++)
+        {
+            PSControlKey ck = &ce->codes[code];
 
-			for (int key = 0;  key < KEYSPERCODE; key++)
-				ck->keys[key] = 0;
+            for (int key = 0;  key < KEYSPERCODE; key++)
+                ck->keys[key] = 0;
 
-			ck->flags = 0;
-		}
-	}
+            ck->flags = 0;
+        }
+    }
 }
 
 // Gets a keycode id given the ascii string name
 int TControlMap::GetKeyCode(char *name)
 {
-	if (name[1] == NULL && (name[0] >= 'A' && name[0] <= 'Z'))
-		return name[0];
-	if (name[1] == NULL && (name[0] >= 'a' && name[0] <= 'z'))
-		return name[0] - 'a' + 'A';
-	for (int c = 0; c < NUMKEYNAMES; c++)
-	{
-		if (!stricmp(name, keynames[c].name))
-			return keynames[c].key;
-	}
+    if (name[1] == NULL && (name[0] >= 'A' && name[0] <= 'Z'))
+        return name[0];
+    if (name[1] == NULL && (name[0] >= 'a' && name[0] <= 'z'))
+        return name[0] - 'a' + 'A';
+    for (int c = 0; c < NUMKEYNAMES; c++)
+    {
+        if (!stricmp(name, keynames[c].name))
+            return keynames[c].key;
+    }
 
-	return 0;
+    return 0;
 }
 
 // Gets a string name given the keycode id
 char *TControlMap::GetKeyName(int keycode)
 {
-	static char buf[2];
-	if (keycode >= 'A' && keycode <= 'Z')
-	{
-		buf[0] = (char)keycode;
-		buf[1] = NULL;
-		return buf;
-	}
+    static char buf[2];
+    if (keycode >= 'A' && keycode <= 'Z')
+    {
+        buf[0] = (char)keycode;
+        buf[1] = NULL;
+        return buf;
+    }
 
-	for (int c = 0; c < NUMKEYNAMES; c++)
-	{
-		if (keynames[c].key == keycode)
-			return keynames[c].name;
-	}
+    for (int c = 0; c < NUMKEYNAMES; c++)
+    {
+        if (keynames[c].key == keycode)
+            return keynames[c].name;
+    }
 
-	return NULL;
+    return NULL;
 }
 
 // Takes an array of keycodes and returns a keystring with the format "CTRL-SHIFT-A"
 char *TControlMap::MakeKeyString(int numkeys, int *keys, char *buf, int buflen)
 {
-	buf[0] = NULL;
+    buf[0] = NULL;
 
-	if (numkeys < 1 || keys[0] <= 0)
-		return buf;
+    if (numkeys < 1 || keys[0] <= 0)
+        return buf;
 
-	for (int c = 0; c < numkeys; c++)
-	{
-		if (keys[c] <= 0)
-			break;
+    for (int c = 0; c < numkeys; c++)
+    {
+        if (keys[c] <= 0)
+            break;
 
-		char *keyname = GetKeyName(keys[c]);
-		if (!keyname)
-			break;
+        char *keyname = GetKeyName(keys[c]);
+        if (!keyname)
+            break;
 
-		if (c > 0)
-			strncatz(buf, "-", buflen);
+        if (c > 0)
+            strncatz(buf, "-", buflen);
 
-		strncatz(buf, keyname, buflen);
-	}
+        strncatz(buf, keyname, buflen);
+    }
 
-	return buf;
+    return buf;
 }
 
 // Takes a string of the format "CTRL-A"
 int TControlMap::ParseKeyString(char *str, int numkeys, int *keys)
 {
-	char buf[64];
-	strncpyz(buf, str, 64);
+    char buf[64];
+    strncpyz(buf, str, 64);
 
-	char *t = buf;
-	char *p = strchr(buf, '-');
-	if (p)
-		*p = NULL;
+    char *t = buf;
+    char *p = strchr(buf, '-');
+    if (p)
+        *p = NULL;
 
-	int key = 0;
-	int num = 0;
-	while (t && *t && key < numkeys)
-	{
-		keys[key] = GetKeyCode(t);
+    int key = 0;
+    int num = 0;
+    while (t && *t && key < numkeys)
+    {
+        keys[key] = GetKeyCode(t);
 
-		if (p)
-		{
-			t = p + 1;
-			p = strchr(t, '-');
-			if (p)
-				*p = NULL;
-		}
-		else
-			t = NULL;
+        if (p)
+        {
+            t = p + 1;
+            p = strchr(t, '-');
+            if (p)
+                *p = NULL;
+        }
+        else
+            t = NULL;
 
-		key++;
-		num++;
-	}
+        key++;
+        num++;
+    }
 
-	while (key < numkeys)
-	{
-		keys[key] = 0;
-		key++;
-	}
+    while (key < numkeys)
+    {
+        keys[key] = 0;
+        key++;
+    }
 
-	return num;
+    return num;
 }
 
 // Takes a command entry structure, and creates a string of the format "CTRL-A,SHIFT-F1"
 char *TControlMap::MakeCommandString(PSControlEntry ce, char *buf, int buflen)
 {
-	buf[0] = NULL;
+    buf[0] = NULL;
 
-	for (int code = 0; code < CODESPERCOMMAND; code++)
-	{
-		PSControlKey ck = &ce->codes[code];
-		if (ck->keys[0] > 0)
-		{
-			if (code > 0)
-				strncatz(buf, ",", buflen);
-			char keybuf[64];
-			MakeKeyString(KEYSPERCODE, ck->keys, keybuf, 64);
-			strncatz(buf, keybuf, buflen);
-		}
-	}
+    for (int code = 0; code < CODESPERCOMMAND; code++)
+    {
+        PSControlKey ck = &ce->codes[code];
+        if (ck->keys[0] > 0)
+        {
+            if (code > 0)
+                strncatz(buf, ",", buflen);
+            char keybuf[64];
+            MakeKeyString(KEYSPERCODE, ck->keys, keybuf, 64);
+            strncatz(buf, keybuf, buflen);
+        }
+    }
 
-	return buf;
+    return buf;
 }
 
 // Takes a command string and parses it into keys for command structure
 int TControlMap::ParseCommandString(char *str, PSControlEntry ce)
 {
-	char buf[80];
-	strncpyz(buf, str, 80);
+    char buf[80];
+    strncpyz(buf, str, 80);
 
-	char *t = buf;
-	char *p = strchr(buf, ',');
-	if (p)
-		*p = NULL;
+    char *t = buf;
+    char *p = strchr(buf, ',');
+    if (p)
+        *p = NULL;
 
-	int code = 0;
-	int num = 0;
-	while (t && *t && code < CODESPERCOMMAND)
-	{
-		ParseKeyString(t, KEYSPERCODE, ce->codes[code].keys);
-		ce->codes[code].flags = 0;
+    int code = 0;
+    int num = 0;
+    while (t && *t && code < CODESPERCOMMAND)
+    {
+        ParseKeyString(t, KEYSPERCODE, ce->codes[code].keys);
+        ce->codes[code].flags = 0;
 
-		if (p)
-		{
-			t = p + 1;
-			p = strchr(t, ',');
-			if (p)
-				*p = NULL;
-		}
-		else
-			t = NULL;
+        if (p)
+        {
+            t = p + 1;
+            p = strchr(t, ',');
+            if (p)
+                *p = NULL;
+        }
+        else
+            t = NULL;
 
-		code++;
-		num++;
-	}
+        code++;
+        num++;
+    }
 
-	while (code < CODESPERCOMMAND)
-	{
-		for (int key = 0; key < KEYSPERCODE; key++)
-			ce->codes[code].keys[key] = 0;
-		ce->codes[code].flags = 0;
-		code++;
-	}
+    while (code < CODESPERCOMMAND)
+    {
+        for (int key = 0; key < KEYSPERCODE; key++)
+            ce->codes[code].keys[key] = 0;
+        ce->codes[code].flags = 0;
+        code++;
+    }
 
-	ce->down = FALSE;
+    ce->down = FALSE;
 
-	return num;
+    return num;
 }
 
 // Loads settings from the INI file
 void TControlMap::Load(char *section)
 {
-	INISetSection("Controls");
+    INISetSection("Controls");
 
-	for (int c = 0; c < controls.NumItems(); c++)
-	{
-		if (!controls.Used(c))
-			continue;
-		
-		PSControlEntry ce = &(controls[c]);
+    for (int c = 0; c < controls.NumItems(); c++)
+    {
+        if (!controls.Used(c))
+            continue;
+        
+        PSControlEntry ce = &(controls[c]);
 
-		char defbuf[64];
-		MakeCommandString(ce, defbuf, 64);
+        char defbuf[64];
+        MakeCommandString(ce, defbuf, 64);
 
-		char buf[64];
-		INIGetStr(ce->id, defbuf, buf, 64);
+        char buf[64];
+        INIGetStr(ce->id, defbuf, buf, 64);
 
-		ParseCommandString(buf, ce);
-	}
+        ParseCommandString(buf, ce);
+    }
 }
 
 // Saves settings to the INI file
 void TControlMap::Save(char *section)
 {
-	INISetSection("Controls");
+    INISetSection("Controls");
 
-	for (int c = 0; c < controls.NumItems(); c++)
-	{
-		if (!controls.Used(c))
-			continue;
-		
-		PSControlEntry ce = &(controls[c]);
+    for (int c = 0; c < controls.NumItems(); c++)
+    {
+        if (!controls.Used(c))
+            continue;
+        
+        PSControlEntry ce = &(controls[c]);
 
-		char buf[64];
-		MakeCommandString(ce, buf, 64);
+        char buf[64];
+        MakeCommandString(ce, buf, 64);
 
-		INISetStr(ce->id, buf);
-	}
+        INISetStr(ce->id, buf);
+    }
 }

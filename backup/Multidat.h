@@ -11,9 +11,9 @@ _CLASSDEF(TMultiData)
 class TMultiData
 {
   public:
-	int numoffsets;						// Number of resource offsets
-	OFFSET names[MAXMULTIOFFSETS];		// Array of offsets to resource names
-	OFFSET offsets[MAXMULTIOFFSETS];	// Array of offsets to resources
+    int numoffsets;                     // Number of resource offsets
+    OFFSET names[MAXMULTIOFFSETS];      // Array of offsets to resource names
+    OFFSET offsets[MAXMULTIOFFSETS];    // Array of offsets to resources
 };
 
 #endif

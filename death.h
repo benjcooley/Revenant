@@ -19,14 +19,14 @@ _CLASSDEF(TDeathPane)
 class TDeathPane : public TButtonPane
 {
   public:
-	TDeathPane() : TButtonPane(FRAMEMAPPANEX, FRAMEMAPPANEY, FRAMEMAPPANEWIDTH, FRAMEMAPPANEHEIGHT) { }
-	
-	virtual BOOL Initialize();
-	virtual void Close();
-	virtual void DrawBackground();
+    TDeathPane() : TButtonPane(FRAMEMAPPANEX, FRAMEMAPPANEY, FRAMEMAPPANEWIDTH, FRAMEMAPPANEHEIGHT) { }
+    
+    virtual BOOL Initialize();
+    virtual void Close();
+    virtual void DrawBackground();
 
   private:
-	PTMulti deathdata;				// Background and buttons
+    PTMulti deathdata;              // Background and buttons
 };
 
 #endif

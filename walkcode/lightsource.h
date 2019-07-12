@@ -17,12 +17,12 @@ _CLASSDEF(TLightSource)
 class TLightSource : public TObjectInstance
 {
   public:
-	TLightSource(PTObjectImagery newim) : TObjectInstance(newim) {}
-	TLightSource(PSObjectDef def, PTObjectImagery newim) : TObjectInstance(def, newim) {}
+    TLightSource(PTObjectImagery newim) : TObjectInstance(newim) {}
+    TLightSource(PSObjectDef def, PTObjectImagery newim) : TObjectInstance(def, newim) {}
 
-	// Lightsource stats
-	STATFUNC(EqSlot)
-	STATFUNC(Value)
+    // Lightsource stats
+    STATFUNC(EqSlot)
+    STATFUNC(Value)
 };
 
 DEFINE_BUILDER("LIGHTSOURCE", TLightSource)

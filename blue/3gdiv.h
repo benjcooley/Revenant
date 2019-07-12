@@ -4,11 +4,11 @@
 class C3GDivTable
 {
 public :
-	C3GDivTable();
-	void MakeTable(int colorcount);
-	~C3GDivTable();
+    C3GDivTable();
+    void MakeTable(int colorcount);
+    ~C3GDivTable();
 
-	int* pm_divtable;
+    int* pm_divtable;
 
 };
 

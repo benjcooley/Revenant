@@ -4,13 +4,13 @@
 class C3GARGB4444Table 
 {
 public :
-	C3GARGB4444Table();
-	void MakeTable(int colorcount);
-	~C3GARGB4444Table();
+    C3GARGB4444Table();
+    void MakeTable(int colorcount);
+    ~C3GARGB4444Table();
 
-	unsigned short* pm_table;
-	int m_colorcount;
-	int m_colorshift;
+    unsigned short* pm_table;
+    int m_colorcount;
+    int m_colorshift;
 
 };
 

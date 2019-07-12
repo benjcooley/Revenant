@@ -17,69 +17,69 @@ HANDLE tickevent;
 
 void WINAPI TTimer::TimerCallback(UINT wTimerID, UINT msg, DWORD dwUser, DWORD dw1, DWORD dw2)
 {
-	clockticks++;
-	TickOccured = TRUE;
-	PulseEvent(tickevent);
+    clockticks++;
+    TickOccured = TRUE;
+    PulseEvent(tickevent);
 }
 
 TTimer::TTimer()
 {
-	clockticks = 0;
-	timerID = NULL;
+    clockticks = 0;
+    timerID = NULL;
 }
 
 TTimer::~TTimer()
 {
-	if (timerID) 
-	{
-		timeEndPeriod(period);
-		DWORD Result = timeKillEvent(timerID);
-	}
+    if (timerID) 
+    {
+        timeEndPeriod(period);
+        DWORD Result = timeKillEvent(timerID);
+    }
 }
 
 BOOL TTimer::Initialize()
 {
-	TIMECAPS tc;
-	DWORD period = 1000 / FRAMERATE;
+    TIMECAPS tc;
+    DWORD period = 1000 / FRAMERATE;
 
-	tickevent = CreateEvent(NULL, FALSE, FALSE, NULL);
+    tickevent = CreateEvent(NULL, FALSE, FALSE, NULL);
 
-	if (timerID) return TRUE;
+    if (timerID) return TRUE;
 
-	if (timeGetDevCaps(&tc, sizeof(TIMECAPS)) != TIMERR_NOERROR)
-		return FALSE;
+    if (timeGetDevCaps(&tc, sizeof(TIMECAPS)) != TIMERR_NOERROR)
+        return FALSE;
 
-	period = min(max(tc.wPeriodMin, period), tc.wPeriodMax);
+    period = min(max(tc.wPeriodMin, period), tc.wPeriodMax);
 
-	timeBeginPeriod(period);
+    timeBeginPeriod(period);
 
-	timerID = timeSetEvent(period, RESOLUTION, TimerCallback, NULL, TIME_PERIODIC);
+    timerID = timeSetEvent(period, RESOLUTION, TimerCallback, NULL, TIME_PERIODIC);
 
-	if (!timerID) return FALSE;
+    if (!timerID) return FALSE;
 
-	return TRUE;
+    return TRUE;
 }
 
 void TTimer::Close()
 {
-	if (timerID == NULL) 
-		return;
-	
-	timeEndPeriod(period);
-	timeKillEvent(timerID);
-	timerID = NULL;
-	CloseHandle(tickevent);
+    if (timerID == NULL) 
+        return;
+    
+    timeEndPeriod(period);
+    timeKillEvent(timerID);
+    timerID = NULL;
+    CloseHandle(tickevent);
 }
   
 void TTimer::WaitForTick()
 {
-	if (TickOccured)
-		return;
+    if (TickOccured)
+        return;
 
-	WaitForSingleObject(tickevent, INFINITE);
+    WaitForSingleObject(tickevent, INFINITE);
 }
 
 void TTimer::ResetTick()
 {
-	TickOccured = FALSE;
+    TickOccured = FALSE;
 }

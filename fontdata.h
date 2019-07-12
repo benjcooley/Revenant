@@ -11,19 +11,19 @@
 #include "revenant.h"
 #endif
 
-#define CURSOR		('z' + 1)
+#define CURSOR      ('z' + 1)
 
 _CLASSDEF(TFontData)
 class TFontData
 {
   public:
-	short firstchar;
-	short numchars;
-	short height;
-	short startheight[MAXFONTCHARS];
-	BYTE drawleft[MAXFONTCHARS];
-	BYTE drawright[MAXFONTCHARS];
-	OTBitmapData chars[MAXFONTCHARS];
+    short firstchar;
+    short numchars;
+    short height;
+    short startheight[MAXFONTCHARS];
+    BYTE drawleft[MAXFONTCHARS];
+    BYTE drawright[MAXFONTCHARS];
+    OTBitmapData chars[MAXFONTCHARS];
 };
 
 #endif

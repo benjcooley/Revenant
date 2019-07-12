@@ -16,7 +16,7 @@
 
 #define max(a,b)    (((a) > (b)) ? (a) : (b))
 #define min(a,b)    (((a) < (b)) ? (a) : (b))
-#define abs(a)    	(((a) < 0) ? -(a) : (a))
+#define abs(a)      (((a) < 0) ? -(a) : (a))
 
 #ifndef _SIZE_T
 #define _SIZE_T
@@ -177,10 +177,10 @@ typedef LONG LRESULT;
 /****** Handles and Such ****************************************************/
 
 typedef UINT                    HANDLE;
-typedef HANDLE					HINSTANCE;
-typedef HANDLE					HWND;
-typedef	HANDLE					HDC;
-typedef HANDLE			   		HBITMAP;
+typedef HANDLE                  HINSTANCE;
+typedef HANDLE                  HWND;
+typedef HANDLE                  HDC;
+typedef HANDLE                  HBITMAP;
 
 #endif
 
@@ -190,34 +190,34 @@ typedef HANDLE			   		HBITMAP;
 class OFFSET
 {
   public:
-	OFFSET() {}
+    OFFSET() {}
     void set(void *p)
-	  { if (p) offset = ((DWORD)p - (DWORD)this); else offset = 0; }
-	void *ptr()
-	  { return offset ? (void *)((long)this + offset) : NULL; }
-	OFFSET &operator = (unsigned long l)
-	  { offset = l; return *this; }
-	OFFSET &operator = (OFFSET &o)
-	  { offset = o.offset; return *this; }
-	operator void *()
-	  { return offset ? (void *)((long)this + offset) : NULL; }
-	operator unsigned long()
-	  { return offset; }
-	unsigned long offset;
+      { if (p) offset = ((DWORD)p - (DWORD)this); else offset = 0; }
+    void *ptr()
+      { return offset ? (void *)((long)this + offset) : NULL; }
+    OFFSET &operator = (unsigned long l)
+      { offset = l; return *this; }
+    OFFSET &operator = (OFFSET &o)
+      { offset = o.offset; return *this; }
+    operator void *()
+      { return offset ? (void *)((long)this + offset) : NULL; }
+    operator unsigned long()
+      { return offset; }
+    unsigned long offset;
 };
 
 template<class T>
 class TOffset : public OFFSET
 {
   public:
-	operator T *()
-	  { return offset ? (T *)((long)this + offset) : NULL; }
-	T *operator -> ()
-	  { return offset ? (T *)((long)this + offset) : NULL; }
-	T &operator [] (int i) { return ((T *)((long)this + offset))[i]; }
-	T *alloc(void* &p, int n = 1) { p = (void *)((unsigned long)p + 3 & 0xFFFFFFFC); set(p); p = (char *)p + sizeof(T) * n; return (T *)ptr(); }
-	T *alloc(unsigned char* &p, int n = 1) { return alloc((void* &)p, n); }
-	T *alloc(char* &p, int n = 1) { return alloc((void* &)p, n); }
+    operator T *()
+      { return offset ? (T *)((long)this + offset) : NULL; }
+    T *operator -> ()
+      { return offset ? (T *)((long)this + offset) : NULL; }
+    T &operator [] (int i) { return ((T *)((long)this + offset))[i]; }
+    T *alloc(void* &p, int n = 1) { p = (void *)((unsigned long)p + 3 & 0xFFFFFFFC); set(p); p = (char *)p + sizeof(T) * n; return (T *)ptr(); }
+    T *alloc(unsigned char* &p, int n = 1) { return alloc((void* &)p, n); }
+    T *alloc(char* &p, int n = 1) { return alloc((void* &)p, n); }
 };
 
 template <class T>
@@ -239,102 +239,102 @@ class TVirtualIterator;
 template <class T, int size = 64>
 class TArray
 {
-	friend class TIterator<T>;
+    friend class TIterator<T>;
 
-	int numitems;		// Number of items in array
-	T   items[size];    // Array
+    int numitems;       // Number of items in array
+    T   items[size];    // Array
 
   public:
 
-	TArray() { numitems = 0; }
+    TArray() { numitems = 0; }
 
-	int Add(T &newitem)
-	{
-		int i = min(numitems, size - 1);
-		T *item = &items[i];
-		for (; i >= 0; i--, item--)
-		{
-			if (i >= numitems || !item->used)
-			{
-				memcpy(item, &newitem, sizeof(T));
-				item->used = TRUE;
-				if (i >= numitems)
-					numitems = i + 1;
-				return i;
-			}
-		}
+    int Add(T &newitem)
+    {
+        int i = min(numitems, size - 1);
+        T *item = &items[i];
+        for (; i >= 0; i--, item--)
+        {
+            if (i >= numitems || !item->used)
+            {
+                memcpy(item, &newitem, sizeof(T));
+                item->used = TRUE;
+                if (i >= numitems)
+                    numitems = i + 1;
+                return i;
+            }
+        }
 
-		return -1;
-	}
-	  // Adds items
-	int Set(T &item, int index)
-	{
-		if (index >= size)
-			return -1;
+        return -1;
+    }
+      // Adds items
+    int Set(T &item, int index)
+    {
+        if (index >= size)
+            return -1;
 
-		memcpy(&items[index], &item, sizeof(T));
+        memcpy(&items[index], &item, sizeof(T));
 
-		if (index >= numitems)
-			numitems = index + 1;
+        if (index >= numitems)
+            numitems = index + 1;
 
-		return index;
-	}
-	  // Sets item
-	int Set(T &item, TPointerIterator<T> i)
-	{
-		return Set(item, i.ItemNum());
-	}
-	  // Sets item
-	void Remove(int itemnum)
-	{
-		items[itemnum].used = FALSE;
-		while (numitems > 0 && !items[numitems - 1].used)
-			numitems--;
-	}
-	  // Removes items
-	void Remove(TIterator<T> i)
-	{
-		Remove(i.ItemNum());
-	}
-	  // Removes items
-	int NumItems() { return numitems; }
-	  // Returns current itemnum.
-	int MaxItems() { return size; }
-	  // Returns size of array.
-	void Clear() { numitems = 0; }
-	  // Clears all elements in array
-	BOOL Used(int itemnum)
-		{ if ((DWORD)itemnum >= (DWORD)numitems) return FALSE; else return items[itemnum].used; }
-	  // Returns TRUE if array element used or FALSE if not
-	T   *Get(int itemnum) { return &items[itemnum]; }
-	  // Returns specific item
-	T   &operator [] (int itemnum) { return items[itemnum]; }
-	  // Returns address of specific item
+        return index;
+    }
+      // Sets item
+    int Set(T &item, TPointerIterator<T> i)
+    {
+        return Set(item, i.ItemNum());
+    }
+      // Sets item
+    void Remove(int itemnum)
+    {
+        items[itemnum].used = FALSE;
+        while (numitems > 0 && !items[numitems - 1].used)
+            numitems--;
+    }
+      // Removes items
+    void Remove(TIterator<T> i)
+    {
+        Remove(i.ItemNum());
+    }
+      // Removes items
+    int NumItems() { return numitems; }
+      // Returns current itemnum.
+    int MaxItems() { return size; }
+      // Returns size of array.
+    void Clear() { numitems = 0; }
+      // Clears all elements in array
+    BOOL Used(int itemnum)
+        { if ((DWORD)itemnum >= (DWORD)numitems) return FALSE; else return items[itemnum].used; }
+      // Returns TRUE if array element used or FALSE if not
+    T   *Get(int itemnum) { return &items[itemnum]; }
+      // Returns specific item
+    T   &operator [] (int itemnum) { return items[itemnum]; }
+      // Returns address of specific item
 };
 
 template <class T>
 class TIterator
 {
-	TArray<T> *array;
-	T   *item;
-	int itemnum;
+    TArray<T> *array;
+    T   *item;
+    int itemnum;
 
   public:
-	TIterator() { array = NULL; item = NULL; itemnum = 0; }
-	TIterator(void *a) { SetArray(a); }
-	void SetArray(void *a) { array = (TArray<T> *)a; item = &(array->items[0]); itemnum = 0; }
-	T    *Item() { return item; }
-	  // Returns current item.
-	int  ItemNum() { return itemnum; }
-	  // Returns current itemnum.
-	BOOL Used() { return item->used; }
-	  // Returns if item is used or not
-	BOOL operator ++ (int) { item++; itemnum++; return array && itemnum < array->numitems; }
-	  // Allows moving forwards through array in sequential order
-	BOOL operator -- (int) { item--; itemnum--; return itemnum >= 0; }
-	  // Allows moving backwards through array in sequential order
-	operator BOOL () { return array && (DWORD)itemnum < (DWORD)array->numitems; }
-	  // Returns FALSE if past end of array
+    TIterator() { array = NULL; item = NULL; itemnum = 0; }
+    TIterator(void *a) { SetArray(a); }
+    void SetArray(void *a) { array = (TArray<T> *)a; item = &(array->items[0]); itemnum = 0; }
+    T    *Item() { return item; }
+      // Returns current item.
+    int  ItemNum() { return itemnum; }
+      // Returns current itemnum.
+    BOOL Used() { return item->used; }
+      // Returns if item is used or not
+    BOOL operator ++ (int) { item++; itemnum++; return array && itemnum < array->numitems; }
+      // Allows moving forwards through array in sequential order
+    BOOL operator -- (int) { item--; itemnum--; return itemnum >= 0; }
+      // Allows moving backwards through array in sequential order
+    operator BOOL () { return array && (DWORD)itemnum < (DWORD)array->numitems; }
+      // Returns FALSE if past end of array
 };
 
 // ************************************************************************
@@ -350,164 +350,164 @@ class TIterator
 template <class T, int defsize = 64, int grow = 64>
 class TSizableArray
 {
-	friend class TSizableIterator<T>;
+    friend class TSizableIterator<T>;
 
-	short numitems;	// Number of items in array
-	short size;		// Size of the array
-	T   *items;		// Array elements
+    short numitems; // Number of items in array
+    short size;     // Size of the array
+    T   *items;     // Array elements
 
-	friend class T;
+    friend class T;
 
   public:
 
-	TSizableArray() {
-		numitems = 0;
-		size = defsize;
-		items = NULL;
-		if (size > 0)
-		{
-			items = new T[size];
-			memset(items, 0, sizeof(T) * size);
-		}
-	 }
-	TSizableArray(int arysize) {
-		numitems = 0;
-		size = arysize;
-		items = NULL;
-		if (size > 0)
-		{
-			items = new T[size];
-			memset(items, 0, sizeof(T) * size);
-		}
-	 }
-	~TSizableArray() { if (items) delete items; }
+    TSizableArray() {
+        numitems = 0;
+        size = defsize;
+        items = NULL;
+        if (size > 0)
+        {
+            items = new T[size];
+            memset(items, 0, sizeof(T) * size);
+        }
+     }
+    TSizableArray(int arysize) {
+        numitems = 0;
+        size = arysize;
+        items = NULL;
+        if (size > 0)
+        {
+            items = new T[size];
+            memset(items, 0, sizeof(T) * size);
+        }
+     }
+    ~TSizableArray() { if (items) delete items; }
 
-	void Grow(int newsize = -1)
-	{
-		if (newsize < 0)
-			newsize = size + grow;
-		else if (newsize < size)
-			return;
-		T *newitems = new T[newsize];
-		memset(newitems + size, 0, sizeof(T) * (newsize - size));
-		if (items)
-		{
-			memcpy(newitems, items, sizeof(T) * size);
-			delete items;
-		}
-		items = newitems;
-		size = newsize;
-	}
+    void Grow(int newsize = -1)
+    {
+        if (newsize < 0)
+            newsize = size + grow;
+        else if (newsize < size)
+            return;
+        T *newitems = new T[newsize];
+        memset(newitems + size, 0, sizeof(T) * (newsize - size));
+        if (items)
+        {
+            memcpy(newitems, items, sizeof(T) * size);
+            delete items;
+        }
+        items = newitems;
+        size = newsize;
+    }
 
-	void SetNumItems(int newnumitems)
-	{
-		Grow(newnumitems);
-		numitems = newnumitems;
-	}
+    void SetNumItems(int newnumitems)
+    {
+        Grow(newnumitems);
+        numitems = newnumitems;
+    }
 
-	int New()
-	{
-		if (numitems >= size)
-			Grow();
-		return numitems++;
-	}
+    int New()
+    {
+        if (numitems >= size)
+            Grow();
+        return numitems++;
+    }
 
-	int Add(T &newitem)
-	{
-		if (numitems >= size)
-			Grow();
-		items[numitems++] = newitem;
-		return numitems - 1;
-	}
+    int Add(T &newitem)
+    {
+        if (numitems >= size)
+            Grow();
+        items[numitems++] = newitem;
+        return numitems - 1;
+    }
 
-	int Set(T &item, int index)
-	{
-		while ((DWORD)index >= (DWORD)size)
-			Grow();
+    int Set(T &item, int index)
+    {
+        while ((DWORD)index >= (DWORD)size)
+            Grow();
 
-		items[index] = item;
+        items[index] = item;
 
-		if (index >= numitems)
-			numitems = index + 1;
+        if (index >= numitems)
+            numitems = index + 1;
 
-		return index;
-	}
-	  // Sets item
-	int Set(T *item, TSizableIterator<T> i)
-	{
-		return Set(item, i.ItemNum());
-	}
-	  // Remove item
-	void Remove(int itemnum)
-	{
-		if ((DWORD)itemnum >= (DWORD)numitems)
-			return;
-		if (itemnum == numitems - 1)
-			numitems--;
-		if (numitems <= 0)
-			Clear();
-	}
-	  // Removes items
-	void Remove(TSizableIterator<T> i)
-	{
-		Remove(i.ItemNum());
-	}
-	  // Removes item and collapses array
-	void Collapse(int itemnum)
-	{
-		if ((DWORD)itemnum >= (DWORD)numitems)
-			return;
-			
-		for (int c = itemnum; c < size - 1; c++)
-			items[c] = items[c + 1];
-		numitems--;
-		if (numitems <= 0)
-			Clear();
-	}
-	  // Removes item and collapses array
-	void Collapse(TVirtualIterator<T> i)
-	{
-		Collapse(i.ItemNum());
-	}
-	  // Number of items
-	int NumItems() { return numitems; }
-	  // Returns current itemnum.
-	int MaxItems() { return size; }
-	  // Returns size of array.
-	void Clear() { if (items) delete items; items = NULL; size = numitems = 0; }
-	  // Clears all pointers in array
-	BOOL Used(int itemnum) { return TRUE; }
-	  // Returns TRUE if array element used or FALSE if not
-	T   &Get(int itemnum) { return items[itemnum]; }
-	  // Returns specific item
-	T   &operator [] (int itemnum) { return items[itemnum]; }
-	  // Returns address of specific item
+        return index;
+    }
+      // Sets item
+    int Set(T *item, TSizableIterator<T> i)
+    {
+        return Set(item, i.ItemNum());
+    }
+      // Remove item
+    void Remove(int itemnum)
+    {
+        if ((DWORD)itemnum >= (DWORD)numitems)
+            return;
+        if (itemnum == numitems - 1)
+            numitems--;
+        if (numitems <= 0)
+            Clear();
+    }
+      // Removes items
+    void Remove(TSizableIterator<T> i)
+    {
+        Remove(i.ItemNum());
+    }
+      // Removes item and collapses array
+    void Collapse(int itemnum)
+    {
+        if ((DWORD)itemnum >= (DWORD)numitems)
+            return;
+            
+        for (int c = itemnum; c < size - 1; c++)
+            items[c] = items[c + 1];
+        numitems--;
+        if (numitems <= 0)
+            Clear();
+    }
+      // Removes item and collapses array
+    void Collapse(TVirtualIterator<T> i)
+    {
+        Collapse(i.ItemNum());
+    }
+      // Number of items
+    int NumItems() { return numitems; }
+      // Returns current itemnum.
+    int MaxItems() { return size; }
+      // Returns size of array.
+    void Clear() { if (items) delete items; items = NULL; size = numitems = 0; }
+      // Clears all pointers in array
+    BOOL Used(int itemnum) { return TRUE; }
+      // Returns TRUE if array element used or FALSE if not
+    T   &Get(int itemnum) { return items[itemnum]; }
+      // Returns specific item
+    T   &operator [] (int itemnum) { return items[itemnum]; }
+      // Returns address of specific item
 };
 
 template <class T>
 class TSizableIterator
 {
-	TSizableArray<T> *array;
-	T   *item;
-	int itemnum;
+    TSizableArray<T> *array;
+    T   *item;
+    int itemnum;
 
   public:
-	TSizableIterator() { array = NULL; item = NULL; itemnum = 0; }
-	TSizableIterator(void *a) { SetArray(a); }
-	void SetArray(void *a) { array = (TSizableArray<T> *)a;
-		item = &(array->items[0]); itemnum = 0; }
-	T    *Item() { return item; }
-	  // Returns current item.
-	BOOL Used() { return TRUE; }
-	  // Returns if item is used or not
-	int  ItemNum() { return itemnum; }
-	  // Returns current itemnum.
-	BOOL operator ++ (int) { item++; itemnum++; return array && itemnum < array->numitems; }
-	  // Allows moving forwards through array in sequential order
-	BOOL operator -- (int) { item--; itemnum--; return itemnum >= 0; }
-	  // Allows moving backwards through array in sequential order
-	operator BOOL () { return array && (DWORD)itemnum < (DWORD)array->numitems; }
-	  // Returns FALSE if past end of array
+    TSizableIterator() { array = NULL; item = NULL; itemnum = 0; }
+    TSizableIterator(void *a) { SetArray(a); }
+    void SetArray(void *a) { array = (TSizableArray<T> *)a;
+        item = &(array->items[0]); itemnum = 0; }
+    T    *Item() { return item; }
+      // Returns current item.
+    BOOL Used() { return TRUE; }
+      // Returns if item is used or not
+    int  ItemNum() { return itemnum; }
+      // Returns current itemnum.
+    BOOL operator ++ (int) { item++; itemnum++; return array && itemnum < array->numitems; }
+      // Allows moving forwards through array in sequential order
+    BOOL operator -- (int) { item--; itemnum--; return itemnum >= 0; }
+      // Allows moving backwards through array in sequential order
+    operator BOOL () { return array && (DWORD)itemnum < (DWORD)array->numitems; }
+      // Returns FALSE if past end of array
 };
 
 // *****************************************************
@@ -517,186 +517,186 @@ class TSizableIterator
 template <class T, int defsize = 64, int defgrow = 64>
 class TPointerArray
 {
-	friend class TPointerIterator<T>;
+    friend class TPointerIterator<T>;
 
-	int numitems;	// Number of items in array
-	int size;		// Size of the array
-	int grow;		// Size to grow array by when full
-	T   **items;    // Array elements
+    int numitems;   // Number of items in array
+    int size;       // Size of the array
+    int grow;       // Size to grow array by when full
+    T   **items;    // Array elements
 
-	friend class T;
+    friend class T;
 
   public:
 
-	TPointerArray() {
-		numitems = 0;
-		size = defsize;
-		grow = defgrow;
-		items = NULL;
-		items = new T* [size];
-		memset(items, 0, sizeof(T*) * size);
-	 }
-	TPointerArray(int arysize, int grwsize) {
-		numitems = 0;
-		size = arysize;
-		grow = grwsize;
-		items = NULL;
-		items = new T* [size];
-		memset(items, 0, sizeof(T*) * size);
-	 }
-	~TPointerArray() { delete items; }
+    TPointerArray() {
+        numitems = 0;
+        size = defsize;
+        grow = defgrow;
+        items = NULL;
+        items = new T* [size];
+        memset(items, 0, sizeof(T*) * size);
+     }
+    TPointerArray(int arysize, int grwsize) {
+        numitems = 0;
+        size = arysize;
+        grow = grwsize;
+        items = NULL;
+        items = new T* [size];
+        memset(items, 0, sizeof(T*) * size);
+     }
+    ~TPointerArray() { delete items; }
 
-	void Grow()
-	{
-		T **newitems = new T* [size + grow];
-		memcpy(newitems, items, sizeof(T*) * size);
-		memset(newitems + size, 0, sizeof(T*) * grow);
-		delete items;
-		items = newitems;
-		size += grow;
-	}
+    void Grow()
+    {
+        T **newitems = new T* [size + grow];
+        memcpy(newitems, items, sizeof(T*) * size);
+        memset(newitems + size, 0, sizeof(T*) * grow);
+        delete items;
+        items = newitems;
+        size += grow;
+    }
 
-	int Add(T *newitem)
-	{
-		if (numitems >= size)
-			Grow();
-		int i = min(numitems, size - 1);
-		T **item = &items[i];
-		for (; i >= 0; i--, item--)
-		{
-			if (i >= numitems || !*item)
-			{
-				*item = newitem;
-				if (i >= numitems)
-					numitems = i + 1;
-				return i;
-			}
-		}
+    int Add(T *newitem)
+    {
+        if (numitems >= size)
+            Grow();
+        int i = min(numitems, size - 1);
+        T **item = &items[i];
+        for (; i >= 0; i--, item--)
+        {
+            if (i >= numitems || !*item)
+            {
+                *item = newitem;
+                if (i >= numitems)
+                    numitems = i + 1;
+                return i;
+            }
+        }
 
-		return -1;
-	}
+        return -1;
+    }
 
-	int Set(T *item, int index)
-	{
-		while ((DWORD)index >= (DWORD)size)
-			Grow();
+    int Set(T *item, int index)
+    {
+        while ((DWORD)index >= (DWORD)size)
+            Grow();
 
-		items[index] = item;
+        items[index] = item;
 
-		if (index >= numitems)
-			numitems = index + 1;
+        if (index >= numitems)
+            numitems = index + 1;
 
-		return index;
-	}
-	  // Sets item
-	int Set(T *item, TPointerIterator<T> i)
-	{
-		return Set(item, i.ItemNum());
-	}
-	  // Remove item
-	void Remove(int itemnum)
-	{
-		if ((DWORD)itemnum >= (DWORD)numitems)
-			return;
-		items[itemnum] = NULL;
-		while (numitems > 0 && !items[numitems - 1])
-			numitems--;
-	}
-	  // Removes items
-	void Remove(TPointerIterator<T> i)
-	{
-		Remove(i.ItemNum());
-	}
-	  // Delete item
-	void Delete(int itemnum)
-	{
-		if ((DWORD)itemnum >= (DWORD)numitems)
-			return;
-		if (items[itemnum])
-			delete items[itemnum];
-		items[itemnum] = NULL;
-		while (numitems > 0 && !items[numitems - 1])
-			numitems--;
-	}
-	  // Deletes items
-	void Delete(TPointerIterator<T> i)
-	{
-		Delete(i.ItemNum());
-	}
-	  // Delete's all items
-	void DeleteAll()
-	{
-		T **item = items;
-		for (int i = 0; i < numitems; i++, item++)
-		{
-			if (*item)
-			{
-				delete *item;
-				*item = NULL;
-			}
-		}
-		numitems = 0;
-	}
-	  // Removes item and collapses array
-	void Collapse(int itemnum, BOOL del = TRUE)
-	{
-		if ((DWORD)itemnum >= (DWORD)numitems)
-			return;
-			
-		if (del && items[itemnum])
-			delete items[itemnum];
-		for (int c = itemnum; c < size - 1; c++)
-		{
-			items[c] = items[c + 1];
-		}
-		items[size - 1] = NULL;
-		numitems--;
-	}
-	  // Removes item and collapses array
-	void Collapse(TVirtualIterator<T> i, BOOL del = TRUE)
-	{
-		Collapse(i.ItemNum(), del);
-	}
-	  // Number of items
-	int NumItems() { return numitems; }
-	  // Returns current itemnum.
-	int MaxItems() { return size; }
-	  // Returns size of array.
-	void Clear() { numitems = 0; }
-	  // Clears all pointers in array
-	BOOL Used(int itemnum)
-		{ if ((DWORD)itemnum >= (DWORD)numitems) return FALSE; else return items[itemnum] != NULL; }
-	  // Returns TRUE if array element used or FALSE if not
-	T   *Get(int itemnum) { return items[itemnum]; }
-	  // Returns specific item
-	T   *operator [] (int itemnum) { return items[itemnum]; }
-	  // Returns address of specific item
+        return index;
+    }
+      // Sets item
+    int Set(T *item, TPointerIterator<T> i)
+    {
+        return Set(item, i.ItemNum());
+    }
+      // Remove item
+    void Remove(int itemnum)
+    {
+        if ((DWORD)itemnum >= (DWORD)numitems)
+            return;
+        items[itemnum] = NULL;
+        while (numitems > 0 && !items[numitems - 1])
+            numitems--;
+    }
+      // Removes items
+    void Remove(TPointerIterator<T> i)
+    {
+        Remove(i.ItemNum());
+    }
+      // Delete item
+    void Delete(int itemnum)
+    {
+        if ((DWORD)itemnum >= (DWORD)numitems)
+            return;
+        if (items[itemnum])
+            delete items[itemnum];
+        items[itemnum] = NULL;
+        while (numitems > 0 && !items[numitems - 1])
+            numitems--;
+    }
+      // Deletes items
+    void Delete(TPointerIterator<T> i)
+    {
+        Delete(i.ItemNum());
+    }
+      // Delete's all items
+    void DeleteAll()
+    {
+        T **item = items;
+        for (int i = 0; i < numitems; i++, item++)
+        {
+            if (*item)
+            {
+                delete *item;
+                *item = NULL;
+            }
+        }
+        numitems = 0;
+    }
+      // Removes item and collapses array
+    void Collapse(int itemnum, BOOL del = TRUE)
+    {
+        if ((DWORD)itemnum >= (DWORD)numitems)
+            return;
+            
+        if (del && items[itemnum])
+            delete items[itemnum];
+        for (int c = itemnum; c < size - 1; c++)
+        {
+            items[c] = items[c + 1];
+        }
+        items[size - 1] = NULL;
+        numitems--;
+    }
+      // Removes item and collapses array
+    void Collapse(TVirtualIterator<T> i, BOOL del = TRUE)
+    {
+        Collapse(i.ItemNum(), del);
+    }
+      // Number of items
+    int NumItems() { return numitems; }
+      // Returns current itemnum.
+    int MaxItems() { return size; }
+      // Returns size of array.
+    void Clear() { numitems = 0; }
+      // Clears all pointers in array
+    BOOL Used(int itemnum)
+        { if ((DWORD)itemnum >= (DWORD)numitems) return FALSE; else return items[itemnum] != NULL; }
+      // Returns TRUE if array element used or FALSE if not
+    T   *Get(int itemnum) { return items[itemnum]; }
+      // Returns specific item
+    T   *operator [] (int itemnum) { return items[itemnum]; }
+      // Returns address of specific item
 };
 
 template <class T>
 class TPointerIterator
 {
-	TPointerArray<T> *array;
-	T   **item;
-	int itemnum;
+    TPointerArray<T> *array;
+    T   **item;
+    int itemnum;
 
   public:
-	TPointerIterator() { array = NULL; item = NULL; itemnum = 0; }
-	TPointerIterator(void *a) { SetArray(a); }
-	void SetArray(void *a) { array = (TPointerArray<T> *)a;
-		item = &(array->items[0]); itemnum = 0; }
-	T    *Item() { return *item; }
-	  // Returns current item.
-	BOOL Used() { return *item != NULL; }
-	  // Returns if item is used or not
-	int  ItemNum() { return itemnum; }
-	  // Returns current itemnum.
-	BOOL operator ++ (int) { item++; itemnum++; return array && itemnum < array->numitems; }
-	  // Allows moving forwards through array in sequential order
-	BOOL operator -- (int) { item--; itemnum--; return itemnum >= 0; }
-	  // Allows moving backwards through array in sequential order
-	operator BOOL () { return array && (DWORD)itemnum < (DWORD)array->numitems; }
-	  // Returns FALSE if past end of array
+    TPointerIterator() { array = NULL; item = NULL; itemnum = 0; }
+    TPointerIterator(void *a) { SetArray(a); }
+    void SetArray(void *a) { array = (TPointerArray<T> *)a;
+        item = &(array->items[0]); itemnum = 0; }
+    T    *Item() { return *item; }
+      // Returns current item.
+    BOOL Used() { return *item != NULL; }
+      // Returns if item is used or not
+    int  ItemNum() { return itemnum; }
+      // Returns current itemnum.
+    BOOL operator ++ (int) { item++; itemnum++; return array && itemnum < array->numitems; }
+      // Allows moving forwards through array in sequential order
+    BOOL operator -- (int) { item--; itemnum--; return itemnum >= 0; }
+      // Allows moving backwards through array in sequential order
+    operator BOOL () { return array && (DWORD)itemnum < (DWORD)array->numitems; }
+      // Returns FALSE if past end of array
 };
 
 // ******************************************************************************
@@ -706,185 +706,185 @@ class TPointerIterator
 template <class T, int defsize = 64, int defgrow = 64>
 class TVirtualArray
 {
-	friend class TVirtualIterator<T>;
+    friend class TVirtualIterator<T>;
 
-	int numitems;	// Number of items in array
-	int size;		// Size of the array
-	int grow;		// Size to grow array by when full
-	T   **items;    // Array elements
-	T	*empty;		// An empty item we can return if there is no item in an array slot
+    int numitems;   // Number of items in array
+    int size;       // Size of the array
+    int grow;       // Size to grow array by when full
+    T   **items;    // Array elements
+    T   *empty;     // An empty item we can return if there is no item in an array slot
 
-	friend class T;
+    friend class T;
 
   public:
 
-	TVirtualArray() { 
-		numitems = 0;
-		size = defsize; 
-		grow = defgrow;
-		items = NULL;
-		items = new T* [size]; 
-		memset(items, 0, sizeof(T*) * size);
-		empty = new T; 
-		memset(empty, 0, sizeof(T));
-		}
-	TVirtualArray(int arysize, int grwsize) { 
-		numitems = 0;
-		size = arysize;
-		grow = grwsize; 
-		items = NULL;
-		items = new T* [size]; 
-		memset(items, 0, sizeof(T*) * size);
-		empty = new T; 
-		memset(empty, 0, sizeof(T));
-		}
-	~TVirtualArray() { delete items; delete empty; }
+    TVirtualArray() { 
+        numitems = 0;
+        size = defsize; 
+        grow = defgrow;
+        items = NULL;
+        items = new T* [size]; 
+        memset(items, 0, sizeof(T*) * size);
+        empty = new T; 
+        memset(empty, 0, sizeof(T));
+        }
+    TVirtualArray(int arysize, int grwsize) { 
+        numitems = 0;
+        size = arysize;
+        grow = grwsize; 
+        items = NULL;
+        items = new T* [size]; 
+        memset(items, 0, sizeof(T*) * size);
+        empty = new T; 
+        memset(empty, 0, sizeof(T));
+        }
+    ~TVirtualArray() { delete items; delete empty; }
 
-	void Grow()
-	{
-		T **newitems = new T* [size + grow];
-		memcpy(newitems, items, sizeof(T*) * size);
-		memset(newitems + size, 0, sizeof(T*) * grow);
-		delete items;
-		items = newitems;
-		size += grow;
-	}
-	  // Adds an item to array by using pointer instead of copying data
-	  // (NOTE: object is deleted by array)
-	int AddPtr(T *newitem)
-	{
-		if (numitems >= size)
-			Grow();
-		int i = min(numitems, size - 1);
-		T **item = &items[i];
-		for (; i >= 0; i--, item--)
-		{
-			if (i >= numitems || !*item)
-			{
-				*item = newitem;
-				if (i >= numitems)
-					numitems = i + 1;
-				return i;
-			}
-		}
+    void Grow()
+    {
+        T **newitems = new T* [size + grow];
+        memcpy(newitems, items, sizeof(T*) * size);
+        memset(newitems + size, 0, sizeof(T*) * grow);
+        delete items;
+        items = newitems;
+        size += grow;
+    }
+      // Adds an item to array by using pointer instead of copying data
+      // (NOTE: object is deleted by array)
+    int AddPtr(T *newitem)
+    {
+        if (numitems >= size)
+            Grow();
+        int i = min(numitems, size - 1);
+        T **item = &items[i];
+        for (; i >= 0; i--, item--)
+        {
+            if (i >= numitems || !*item)
+            {
+                *item = newitem;
+                if (i >= numitems)
+                    numitems = i + 1;
+                return i;
+            }
+        }
 
-		return -1;
-	}
-	  // Creates a new entry in the array at end, or in middle if there are empty spaces
-	int New() { return AddPtr(new T); }
-	  // Adds item to array (copies data)
-	int Add(T &newitem) { return AddPtr((T*)memcpy(new T, &newitem, sizeof(T))); }
-	  // Sets item
-	int Set(T &item, int index)
-	{
-		while ((DWORD)index >= (DWORD)size)
-			Grow();
+        return -1;
+    }
+      // Creates a new entry in the array at end, or in middle if there are empty spaces
+    int New() { return AddPtr(new T); }
+      // Adds item to array (copies data)
+    int Add(T &newitem) { return AddPtr((T*)memcpy(new T, &newitem, sizeof(T))); }
+      // Sets item
+    int Set(T &item, int index)
+    {
+        while ((DWORD)index >= (DWORD)size)
+            Grow();
 
-		if (!items[index])
-			items[index] = new T;
+        if (!items[index])
+            items[index] = new T;
 
-		memcpy(items[index], &item, sizeof(T));
+        memcpy(items[index], &item, sizeof(T));
 
-		if (index >= numitems)
-			numitems = index + 1;
+        if (index >= numitems)
+            numitems = index + 1;
 
-		return index;
-	}
-	  // Sets item
-	int Set(T &item, TVirtualIterator<T> i)
-	{
-		return Set(item, i.ItemNum());
-	}
-	  // Remove item
-	void Remove(int itemnum)
-	{
-		if ((DWORD)itemnum >= (DWORD)numitems)
-			return;
-			
-		if (items[itemnum])
-			delete items[itemnum];
-		items[itemnum] = NULL;
+        return index;
+    }
+      // Sets item
+    int Set(T &item, TVirtualIterator<T> i)
+    {
+        return Set(item, i.ItemNum());
+    }
+      // Remove item
+    void Remove(int itemnum)
+    {
+        if ((DWORD)itemnum >= (DWORD)numitems)
+            return;
+            
+        if (items[itemnum])
+            delete items[itemnum];
+        items[itemnum] = NULL;
 
-		while (numitems > 0 && !items[numitems - 1])
-			numitems--;
-	}
-	  // Removes items
-	void Remove(TVirtualIterator<T> i)
-	{
-		Remove(i.ItemNum());
-	}
-	  // Removes item and collapses array
-	void Collapse(int itemnum)
-	{
-		if ((DWORD)itemnum >= (DWORD)numitems)
-			return;
-			
-		if (items[itemnum])
-			delete items[itemnum];
-		for (int c = itemnum; c < size - 1; c++)
-		{
-			items[c] = items[c + 1];
-		}
-		items[size - 1] = NULL;
-		numitems--;
-	}
-	  // Removes item and collapses array
-	void Collapse(TVirtualIterator<T> i)
-	{
-		Collapse(i.ItemNum());
-	}
-	  // Number of items
-	int NumItems() { return numitems; }
-	  // Returns current itemnum.
-	int MaxItems() { return size; }
-	  // Returns size of array.
-	void Clear()
-	{
-		T **item = items;
-		for (int i = 0; i < numitems; i++, item++)
-		{
-			if (*item)
-			{
-				delete *item;
-				*item = NULL;
-			}
-		}
-		numitems = 0;
-	}
-	  // Clear array
-	BOOL Used(int itemnum)
-		{ if ((DWORD)itemnum >= (DWORD)numitems) return FALSE; else return items[itemnum] != NULL; }
-	  // Returns TRUE if array element used or FALSE if not
-	T   &Get(int itemnum) { if (items[itemnum]) return *(items[itemnum]); else return *empty; }
-	  // Returns specific item
-	T   &operator [] (int itemnum) { if (items[itemnum]) return *(items[itemnum]); else return *empty; }
-	  // Returns address of specific item
+        while (numitems > 0 && !items[numitems - 1])
+            numitems--;
+    }
+      // Removes items
+    void Remove(TVirtualIterator<T> i)
+    {
+        Remove(i.ItemNum());
+    }
+      // Removes item and collapses array
+    void Collapse(int itemnum)
+    {
+        if ((DWORD)itemnum >= (DWORD)numitems)
+            return;
+            
+        if (items[itemnum])
+            delete items[itemnum];
+        for (int c = itemnum; c < size - 1; c++)
+        {
+            items[c] = items[c + 1];
+        }
+        items[size - 1] = NULL;
+        numitems--;
+    }
+      // Removes item and collapses array
+    void Collapse(TVirtualIterator<T> i)
+    {
+        Collapse(i.ItemNum());
+    }
+      // Number of items
+    int NumItems() { return numitems; }
+      // Returns current itemnum.
+    int MaxItems() { return size; }
+      // Returns size of array.
+    void Clear()
+    {
+        T **item = items;
+        for (int i = 0; i < numitems; i++, item++)
+        {
+            if (*item)
+            {
+                delete *item;
+                *item = NULL;
+            }
+        }
+        numitems = 0;
+    }
+      // Clear array
+    BOOL Used(int itemnum)
+        { if ((DWORD)itemnum >= (DWORD)numitems) return FALSE; else return items[itemnum] != NULL; }
+      // Returns TRUE if array element used or FALSE if not
+    T   &Get(int itemnum) { if (items[itemnum]) return *(items[itemnum]); else return *empty; }
+      // Returns specific item
+    T   &operator [] (int itemnum) { if (items[itemnum]) return *(items[itemnum]); else return *empty; }
+      // Returns address of specific item
 };
 
 template <class T>
 class TVirtualIterator
 {
-	TVirtualArray<T> *array;
-	T   **item;
-	int itemnum;
+    TVirtualArray<T> *array;
+    T   **item;
+    int itemnum;
 
   public:
-	TVirtualIterator() { array = NULL; item = NULL; itemnum = 0; }
-	TVirtualIterator(void *a) { SetArray(a); }
-	void SetArray(void *a) { array = (TVirtualArray<T> *)a;
-		item = &(array->items[0]); itemnum = 0; }
-	T    *Item() { return *item; }
-	  // Returns current item.
-	BOOL Used() { return *item != NULL; }
-	  // Returns if item is used or not
-	int  ItemNum() { return itemnum; }
-	  // Returns current itemnum.
-	BOOL operator ++ (int) { item++; itemnum++; return array && itemnum < array->numitems; }
-	  // Allows moving forwards through array in sequential order
-	BOOL operator -- (int) { item--; itemnum--; return itemnum >= 0; }
-	  // Allows moving backwards through array in sequential order
-	operator BOOL () { return array && (DWORD)itemnum < (DWORD)array->numitems; }
-	  // Returns FALSE if past end of array
+    TVirtualIterator() { array = NULL; item = NULL; itemnum = 0; }
+    TVirtualIterator(void *a) { SetArray(a); }
+    void SetArray(void *a) { array = (TVirtualArray<T> *)a;
+        item = &(array->items[0]); itemnum = 0; }
+    T    *Item() { return *item; }
+      // Returns current item.
+    BOOL Used() { return *item != NULL; }
+      // Returns if item is used or not
+    int  ItemNum() { return itemnum; }
+      // Returns current itemnum.
+    BOOL operator ++ (int) { item++; itemnum++; return array && itemnum < array->numitems; }
+      // Allows moving forwards through array in sequential order
+    BOOL operator -- (int) { item--; itemnum--; return itemnum >= 0; }
+      // Allows moving backwards through array in sequential order
+    operator BOOL () { return array && (DWORD)itemnum < (DWORD)array->numitems; }
+      // Returns FALSE if past end of array
 };
 
 template <class T, int size = 64>
@@ -896,77 +896,77 @@ class OTOffsetArray;
 template <class T>
 class TOffsetIterator
 {
-	TOffsetArray<T> *array;
-	T   *item;
-	int itemnum;
+    TOffsetArray<T> *array;
+    T   *item;
+    int itemnum;
 
   public:
-	TOffsetIterator(TOffsetArray<T> &array);
-	  // Initializer for regular offset array
-	TOffsetIterator(OTOffsetArray<T> &array);
-	  // Initializer for offset to an offset array
+    TOffsetIterator(TOffsetArray<T> &array);
+      // Initializer for regular offset array
+    TOffsetIterator(OTOffsetArray<T> &array);
+      // Initializer for offset to an offset array
   public:
-	T    *Item() { return item; }
-	  // Returns current item.
-	int  ItemNum() { return itemnum; }
-	  // Returns current itemnum.
-	BOOL operator ++ (int) { if (array && itemnum < array->numitems - 1)
-		{ item++; itemnum++; return TRUE; } else 
-		{ item = NULL; itemnum = array->numitems; return FALSE; } }
-	  // Allows moving forwards through array in sequential order
-	BOOL operator -- (int) { if (array && itemnum > 0) 
-	     { item--; itemnum--; return TRUE; } else
-		 { item = NULL; itemnum = -1; return FALSE; } }
-	  // Allows moving backwards through array in sequential order
-	operator T* () { return item; }
-	  // Returns current item
-	T *operator -> () { return item; }
-	  // Returns member access 
-	T &operator * () { return *item; }
-	  // Returns dereferenced item
+    T    *Item() { return item; }
+      // Returns current item.
+    int  ItemNum() { return itemnum; }
+      // Returns current itemnum.
+    BOOL operator ++ (int) { if (array && itemnum < array->numitems - 1)
+        { item++; itemnum++; return TRUE; } else 
+        { item = NULL; itemnum = array->numitems; return FALSE; } }
+      // Allows moving forwards through array in sequential order
+    BOOL operator -- (int) { if (array && itemnum > 0) 
+         { item--; itemnum--; return TRUE; } else
+         { item = NULL; itemnum = -1; return FALSE; } }
+      // Allows moving backwards through array in sequential order
+    operator T* () { return item; }
+      // Returns current item
+    T *operator -> () { return item; }
+      // Returns member access 
+    T &operator * () { return *item; }
+      // Returns dereferenced item
 };
 
 template <class T, int size = 64>
 class TOffsetArray
 {
-	int numitems;
-	TOffset<T> items[size];
+    int numitems;
+    TOffset<T> items[size];
 
     TOffsetArray() { numitems = 0; }
 
-	void Add(int)
-	{
-		if (numitems == size) return -1;
-		TOffset<T> *item = items;
-		for (int i = 0; i < size; i++, item++)
-		{
-			if (!(*item))
-			{
-				items->set(newitem);
-				numitems++;
-				return i;
-			}
-		}
-		return -1;
-	}
-	  // Adds items
-	void Remove(int itemnum)
-	{
-		items[itemnum] = NULL;
-		numitems--;
-	}
-	  // Removes items
-	void Remove(TOffsetIterator<T> *i)
-	{
-		Remove(i->ItemNum());
-	}
-	  // Removes items
-	int NumItems() { return numitems; }
-	  // Returns number of items
-	T   *Get(int itemnum) { return items[itemnum]; }
-	  // Returns specific item
-	T   &operator [] (int itemnum) { return items[itemnum]; }
-	  // Returns address of specific item
+    void Add(int)
+    {
+        if (numitems == size) return -1;
+        TOffset<T> *item = items;
+        for (int i = 0; i < size; i++, item++)
+        {
+            if (!(*item))
+            {
+                items->set(newitem);
+                numitems++;
+                return i;
+            }
+        }
+        return -1;
+    }
+      // Adds items
+    void Remove(int itemnum)
+    {
+        items[itemnum] = NULL;
+        numitems--;
+    }
+      // Removes items
+    void Remove(TOffsetIterator<T> *i)
+    {
+        Remove(i->ItemNum());
+    }
+      // Removes items
+    int NumItems() { return numitems; }
+      // Returns number of items
+    T   *Get(int itemnum) { return items[itemnum]; }
+      // Returns specific item
+    T   &operator [] (int itemnum) { return items[itemnum]; }
+      // Returns address of specific item
 };
 
 // Class type pointer and reference definition macro
@@ -988,26 +988,26 @@ class TOffsetArray
 #define _OFFDEF(name) typedef TOffset<name> O##name;
 
 #define _CLASSDEF(name) class name; \
-	_PTRDEF(name) \
-	_REFDEF(name) \
-	_REFPTRDEF(name) \
-	_PTRCONSTDEF(name) \
-	_REFCONSTDEF(name) \
-	_OFFDEF(name)
+    _PTRDEF(name) \
+    _REFDEF(name) \
+    _REFPTRDEF(name) \
+    _PTRCONSTDEF(name) \
+    _REFCONSTDEF(name) \
+    _OFFDEF(name)
 
 #define _STRUCTDEF(name) struct name; \
-	_PTRDEF(name) \
-	_REFDEF(name) \
-	_OFFDEF(name)
+    _PTRDEF(name) \
+    _REFDEF(name) \
+    _OFFDEF(name)
 
 // Name typedefs
 typedef char FileName[13];
 typedef char FNAMESTRING[81];
 
 // Scalar type pointer & reference definitions
-typedef int &			Rint;
-typedef int	*			Pint;
-typedef void * &		RPvoid;
+typedef int &           Rint;
+typedef int *           Pint;
+typedef void * &        RPvoid;
 
 // Global Structure and class definitions.
 
@@ -1095,126 +1095,126 @@ _CLASSDEF(TTimer)
 _CLASSDEF(TToken)
 _CLASSDEF(TWaveData)
 
-#define absval(i)		((i) > 0 ? (i) : -(i))
-#define sqr(i)			((i) * (i))
-#define SQRDIST(i, j)	(sqr(absval((i).x - (j).x)) + sqr(absval((i).y - (j).y)) + \
-						 sqr(absval((i).z - (j).z)))
+#define absval(i)       ((i) > 0 ? (i) : -(i))
+#define sqr(i)          ((i) * (i))
+#define SQRDIST(i, j)   (sqr(absval((i).x - (j).x)) + sqr(absval((i).y - (j).y)) + \
+                         sqr(absval((i).z - (j).z)))
 
 _STRUCTDEF(SPoint)
 struct SPoint
 {
-	int x, y;
+    int x, y;
 
-	SPoint() {}
-	SPoint(int newx, int newy)
-		{ x = newx; y = newy; }
-	SPoint(RSPoint p)
-		{ x = p.x; y = p.y; }
-	int operator==(RSPoint p)
-		{ return ((x == p.x) && (y == p.y));}
-	SPoint &operator=(RSPoint p)
-		{ x = p.x; y = p.y; return *this; }
+    SPoint() {}
+    SPoint(int newx, int newy)
+        { x = newx; y = newy; }
+    SPoint(RSPoint p)
+        { x = p.x; y = p.y; }
+    int operator==(RSPoint p)
+        { return ((x == p.x) && (y == p.y));}
+    SPoint &operator=(RSPoint p)
+        { x = p.x; y = p.y; return *this; }
 };
 
 _STRUCTDEF(SRect)
 struct SRect
 {
-	int left, top, right, bottom;
+    int left, top, right, bottom;
 
-	SRect() {}
-	SRect(int x1, int y1, int x2, int y2)
-		{ left = x1; top = y1; right = x2; bottom = y2; }
-	SRect(SPoint p1, SPoint p2)
-		{ left = p1.x; top = p1.y; right = p2.x; bottom = p2.y; }
-	SRect &operator=(RSRect r1)
-		{ left = r1.left; top = r1.top; right = r1.right; bottom = r1.bottom; return *this; }
-	int In(SPoint p)
-		{ return p.x >= left && p.y >= top && p.x <= right && p.y <= bottom; }
-	int In(int x, int y)
-		{ return x >= left && y >= top && x <= right && y <= bottom; }
-	int In(RSRect r)
-	    { return left >= r.left && top >= r.top && right <= r.right && bottom <= r.bottom; }
-	int Intersects(RSRect r)
-		{ return !(r.right < left || r.left > right || r.bottom < top || r.top > bottom); }
+    SRect() {}
+    SRect(int x1, int y1, int x2, int y2)
+        { left = x1; top = y1; right = x2; bottom = y2; }
+    SRect(SPoint p1, SPoint p2)
+        { left = p1.x; top = p1.y; right = p2.x; bottom = p2.y; }
+    SRect &operator=(RSRect r1)
+        { left = r1.left; top = r1.top; right = r1.right; bottom = r1.bottom; return *this; }
+    int In(SPoint p)
+        { return p.x >= left && p.y >= top && p.x <= right && p.y <= bottom; }
+    int In(int x, int y)
+        { return x >= left && y >= top && x <= right && y <= bottom; }
+    int In(RSRect r)
+        { return left >= r.left && top >= r.top && right <= r.right && bottom <= r.bottom; }
+    int Intersects(RSRect r)
+        { return !(r.right < left || r.left > right || r.bottom < top || r.top > bottom); }
 
-	int x() { return left; }
-	int y() { return top; } 
-	int w() { return right - left + 1; }
-	int h() { return bottom - top + 1; }
+    int x() { return left; }
+    int y() { return top; } 
+    int w() { return right - left + 1; }
+    int h() { return bottom - top + 1; }
 };
 
 _STRUCTDEF(S3DPoint)
 struct S3DPoint
 {
-	int x, y, z;
+    int x, y, z;
 
-	S3DPoint() {}
-	S3DPoint(int newx, int newy, int newz)
-		{ x = newx; y = newy; z = newz;}
-	S3DPoint(RS3DPoint p)
-		{ x = p.x; y = p.y; z = p.z; }
+    S3DPoint() {}
+    S3DPoint(int newx, int newy, int newz)
+        { x = newx; y = newy; z = newz;}
+    S3DPoint(RS3DPoint p)
+        { x = p.x; y = p.y; z = p.z; }
 
-	// assignment and arithmatic operators
-	RS3DPoint operator=(RS3DPoint p)
-		{ x = p.x; y = p.y; z = p.z; return *this; }
-	RS3DPoint operator+(RS3DPoint p)
-		{ return S3DPoint(x + p.x, y + p.y, z + p.z); }
-	RS3DPoint operator+=(RS3DPoint p)
-		{ return S3DPoint(x += p.x, y += p.y, z += p.z); }
-	RS3DPoint operator-(RS3DPoint p)
-		{ return S3DPoint(x - p.x, y - p.y, z - p.z); }
-	RS3DPoint operator-=(RS3DPoint p)
-		{ return S3DPoint(x -= p.x, y -= p.y, z -= p.z); }
-	RS3DPoint operator*(int m)
-		{ return S3DPoint(x * m, y * m, z * m); }
-	RS3DPoint operator*=(int m)
-		{ return S3DPoint(x *= m, y *= m, z *= m); }
-	RS3DPoint operator/(int m)
-		{ return S3DPoint(x / m, y / m, z / m); }
-	RS3DPoint operator/=(int m)
-		{ return S3DPoint(x /= m, y /= m, z /= m); }
-	RS3DPoint operator&=(DWORD m)
-		{ return S3DPoint(x &= m, y &= m, z &= m); }
-	BOOL InRange(S3DPoint &pos, int dist)  // In range of other point 2D (x,y)
-	    { return absval(y - pos.y) <= dist && absval(x - pos.x) <= dist &&
-		  sqr(y - pos.y) + sqr(x - pos.x) <= sqr(dist) + sqr(dist); } 
-	BOOL InRange3D(S3DPoint &pos, int dist) // In range of other point 3D
-	    { return absval(y - pos.y) <= dist && absval(x - pos.x) <= dist && absval(z - pos.z) <= dist &&
-		  sqr(y - pos.y) + sqr(x - pos.x) + sqr(z - pos.z) <= sqr(dist) + sqr(dist) + sqr(dist); } 
+    // assignment and arithmatic operators
+    RS3DPoint operator=(RS3DPoint p)
+        { x = p.x; y = p.y; z = p.z; return *this; }
+    RS3DPoint operator+(RS3DPoint p)
+        { return S3DPoint(x + p.x, y + p.y, z + p.z); }
+    RS3DPoint operator+=(RS3DPoint p)
+        { return S3DPoint(x += p.x, y += p.y, z += p.z); }
+    RS3DPoint operator-(RS3DPoint p)
+        { return S3DPoint(x - p.x, y - p.y, z - p.z); }
+    RS3DPoint operator-=(RS3DPoint p)
+        { return S3DPoint(x -= p.x, y -= p.y, z -= p.z); }
+    RS3DPoint operator*(int m)
+        { return S3DPoint(x * m, y * m, z * m); }
+    RS3DPoint operator*=(int m)
+        { return S3DPoint(x *= m, y *= m, z *= m); }
+    RS3DPoint operator/(int m)
+        { return S3DPoint(x / m, y / m, z / m); }
+    RS3DPoint operator/=(int m)
+        { return S3DPoint(x /= m, y /= m, z /= m); }
+    RS3DPoint operator&=(DWORD m)
+        { return S3DPoint(x &= m, y &= m, z &= m); }
+    BOOL InRange(S3DPoint &pos, int dist)  // In range of other point 2D (x,y)
+        { return absval(y - pos.y) <= dist && absval(x - pos.x) <= dist &&
+          sqr(y - pos.y) + sqr(x - pos.x) <= sqr(dist) + sqr(dist); } 
+    BOOL InRange3D(S3DPoint &pos, int dist) // In range of other point 3D
+        { return absval(y - pos.y) <= dist && absval(x - pos.x) <= dist && absval(z - pos.z) <= dist &&
+          sqr(y - pos.y) + sqr(x - pos.x) + sqr(z - pos.z) <= sqr(dist) + sqr(dist) + sqr(dist); } 
 
-	// comparison operators
-	int operator==(RS3DPoint p)
-		{ return ((x == p.x) && (y == p.y) && (z == p.z)); }
-	int operator!=(RS3DPoint p)
-		{ return ((x != p.x) || (y != p.y) || (z != p.z)); }
-	int operator>=(RS3DPoint p)
-		{ return x >= p.x && y >= p.y && z >= p.z; }
-	int operator<=(RS3DPoint p)
-		{ return x <= p.x && y <= p.y && z <= p.z; }
+    // comparison operators
+    int operator==(RS3DPoint p)
+        { return ((x == p.x) && (y == p.y) && (z == p.z)); }
+    int operator!=(RS3DPoint p)
+        { return ((x != p.x) || (y != p.y) || (z != p.z)); }
+    int operator>=(RS3DPoint p)
+        { return x >= p.x && y >= p.y && z >= p.z; }
+    int operator<=(RS3DPoint p)
+        { return x <= p.x && y <= p.y && z <= p.z; }
 
 };
 
 _STRUCTDEF(S3DRect)
 struct S3DRect
 {
-	S3DPoint beg, end;
+    S3DPoint beg, end;
 
-	S3DRect() {}
-	S3DRect(int x1, int y1, int z1, int x2, int y2, int z2)
-		{ beg.x = x1; beg.y = y1; beg.z = z1; end.x = x2; end.y = y2; end.z = z2; }
-	S3DRect(S3DPoint p1, S3DPoint p2)
-		{ beg = p1; end = p2; }
-	S3DRect &operator=(RS3DRect r1)
-		{ beg.x = r1.beg.x; beg.y = r1.beg.y; beg.z = r1.beg.z;
-		  end.x = r1.end.x; end.y = r1.end.y; end.z = r1.end.z; return *this; }
-	int In(S3DPoint p)
-		{ return (p >= beg) && (p <= end); }
-	int In(int x, int y, int z)
-		{ return x >= beg.x && y >= beg.y && z >= beg.z &&
-				 x <= end.x && y <= end.y && z <= end.z; }
-	int Intersects(RS3DRect r)
-		{ return !(end.x < r.beg.x || end.y < r.beg.y || end.z < r.beg.z ||
-				   beg.x > r.end.x || beg.y > r.end.y || beg.z > r.end.z); }
+    S3DRect() {}
+    S3DRect(int x1, int y1, int z1, int x2, int y2, int z2)
+        { beg.x = x1; beg.y = y1; beg.z = z1; end.x = x2; end.y = y2; end.z = z2; }
+    S3DRect(S3DPoint p1, S3DPoint p2)
+        { beg = p1; end = p2; }
+    S3DRect &operator=(RS3DRect r1)
+        { beg.x = r1.beg.x; beg.y = r1.beg.y; beg.z = r1.beg.z;
+          end.x = r1.end.x; end.y = r1.end.y; end.z = r1.end.z; return *this; }
+    int In(S3DPoint p)
+        { return (p >= beg) && (p <= end); }
+    int In(int x, int y, int z)
+        { return x >= beg.x && y >= beg.y && z >= beg.z &&
+                 x <= end.x && y <= end.y && z <= end.z; }
+    int Intersects(RS3DRect r)
+        { return !(end.x < r.beg.x || end.y < r.beg.y || end.z < r.beg.z ||
+                   beg.x > r.end.x || beg.y > r.end.y || beg.z > r.end.z); }
 };
 
 // Super deluxe size of static array macro

@@ -21,24 +21,24 @@ _CLASSDEF(TCharAnimator)
 class TCharAnimator : public T3DAnimator
 {
   public:
-	TCharAnimator(PTObjectInstance oi);
-	virtual ~TCharAnimator();
+    TCharAnimator(PTObjectInstance oi);
+    virtual ~TCharAnimator();
 
-	virtual void Animate(BOOL draw);
-	virtual BOOL Render();
+    virtual void Animate(BOOL draw);
+    virtual BOOL Render();
 
   protected:
-	float *origmatred, *origmatgreen;		// saved material values
+    float *origmatred, *origmatgreen;       // saved material values
 
-	int oldpoison;			// update only when needed
+    int oldpoison;          // update only when needed
 };
 
 _CLASSDEF(TPlayerAnimator)
 class TPlayerAnimator : public TCharAnimator
 {
   public:
-	TPlayerAnimator(PTObjectInstance oi) : TCharAnimator(oi) {}
-	virtual ~TPlayerAnimator()				{}
+    TPlayerAnimator(PTObjectInstance oi) : TCharAnimator(oi) {}
+    virtual ~TPlayerAnimator()              {}
 };
 
 #endif

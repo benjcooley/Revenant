@@ -19,10 +19,10 @@
 #include "multi.h"
 #endif
 
-#define SECT_TOP	0
-#define SECT_BOTTOM	1
+#define SECT_TOP    0
+#define SECT_BOTTOM 1
 
-#define NUM_SECTS	2
+#define NUM_SECTS   2
 
 #include "button.h"
 
@@ -42,38 +42,38 @@ class TEquipPane : public TButtonPane
   public:
 
   // Constructor & Destructor
-	TEquipPane() : TButtonPane(MULTIPANEX, MULTIPANEY, MULTIPANEWIDTH, MULTIPANEHEIGHT) { equipdata = NULL; }
-	~TEquipPane() { if (equipdata) delete equipdata; }
+    TEquipPane() : TButtonPane(MULTIPANEX, MULTIPANEY, MULTIPANEWIDTH, MULTIPANEHEIGHT) { equipdata = NULL; }
+    ~TEquipPane() { if (equipdata) delete equipdata; }
 
   // Init, close, input handling
-	virtual BOOL Initialize();
-		// Initializes pane and prepares to load map resources
-	virtual void MouseClick(int button, int x, int y);
+    virtual BOOL Initialize();
+        // Initializes pane and prepares to load map resources
+    virtual void MouseClick(int button, int x, int y);
 
   // Background drawing functions
-	virtual void DrawBackground();
-		// Draws the tile information to the background
-	virtual void Animate(BOOL draw);
-		// Animate the pane
-	void DrawAnim(PTObjectInstance inst, PTBitmap bm);
+    virtual void DrawBackground();
+        // Draws the tile information to the background
+    virtual void Animate(BOOL draw);
+        // Animate the pane
+    void DrawAnim(PTObjectInstance inst, PTBitmap bm);
 
-	int GetHeldSlot() { return heldslot; }
-		// For moving objects between panes
+    int GetHeldSlot() { return heldslot; }
+        // For moving objects between panes
 
-	void Scroll(int amount);
+    void Scroll(int amount);
 
   private:
-	int OnSlot(int x, int y);
-		// Returns the eq slot number that pixel position x, y is located in
+    int OnSlot(int x, int y);
+        // Returns the eq slot number that pixel position x, y is located in
 
-	PTMulti equipdata;
+    PTMulti equipdata;
 
-	PTBitmap top;							// background for pane
-	PTBitmap bottom;						// bottom section
-	int section;							// which section they are in
+    PTBitmap top;                           // background for pane
+    PTBitmap bottom;                        // bottom section
+    int section;                            // which section they are in
 
-	int grabslot;							// dragging items with the mouse
-	int heldslot;
+    int grabslot;                           // dragging items with the mouse
+    int heldslot;
 };
 
 #endif

@@ -19,11 +19,11 @@ _STRUCTDEF(SChunkHeader)
 
 struct SChunkHeader
 {
-	BOOL    type;		// Compressed Flag;
-	int		width;		// Width and height of chunked bitmap in blocks
-	int		height;
-	OFFSET	block[1];	// Pointer to start of offsets for each block. 
-						// An offset of 0 is a blank block.
+    BOOL    type;       // Compressed Flag;
+    int     width;      // Width and height of chunked bitmap in blocks
+    int     height;
+    OFFSET  block[1];   // Pointer to start of offsets for each block. 
+                        // An offset of 0 is a blank block.
 };
 
 #endif

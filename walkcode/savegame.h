@@ -23,18 +23,18 @@ _CLASSDEF(TSaveGame)
 class TSaveGame
 {
   public:
-	TSaveGame() { saved = NULL; }
+    TSaveGame() { saved = NULL; }
 
-	BOOL WriteGame(char *name = NULL);
-		// Write savegame to disk
-	BOOL ReadGame(char *name = NULL);
-		// Read savegame from disk
+    BOOL WriteGame(char *name = NULL);
+        // Write savegame to disk
+    BOOL ReadGame(char *name = NULL);
+        // Read savegame from disk
 
   protected:
-	PTObjectInstance saved;				// Saved object (Locke)
-	int gametime;						// Game time when saved
-	int version;						// Version of savegame
-	int pane;							// Which pane was up
+    PTObjectInstance saved;             // Saved object (Locke)
+    int gametime;                       // Game time when saved
+    int version;                        // Version of savegame
+    int pane;                           // Which pane was up
 };
 
 #endif

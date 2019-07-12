@@ -19,11 +19,11 @@ DEFSTAT(Tool, Pick, PICK, 1, 0, 0, 100)
 
 BOOL TTool::Use(PTObjectInstance user, int with)
 {
-	return FALSE;
+    return FALSE;
 }
 
 int TTool::CursorType(PTObjectInstance with)
 {
-	return CURSOR_NONE;
+    return CURSOR_NONE;
 }
 

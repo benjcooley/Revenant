@@ -11,28 +11,28 @@
 #include "revenant.h"
 #endif
 
-#define MAXTERRAINNAMES		32
-#define MAXOBJECTREFS		64
-#define MAXTEMPLATES		256
+#define MAXTERRAINNAMES     32
+#define MAXOBJECTREFS       64
+#define MAXTEMPLATES        256
 
-#define TEMPLATEFILENAME	"template"
+#define TEMPLATEFILENAME    "template"
 
-#define MAXDENSITY			16
+#define MAXDENSITY          16
 
 _STRUCTDEF(SObjectRef)
 struct SObjectRef
 {
-	char name[RESNAMELEN];
-	S3DPoint offset;
+    char name[RESNAMELEN];
+    S3DPoint offset;
 };
 
 _STRUCTDEF(STemplate)
 struct STemplate
 {
-	char names[MAXTERRAINNAMES][RESNAMELEN];
-	int numnames;
-	SObjectRef objects[MAXOBJECTREFS];
-	int numobjects;
+    char names[MAXTERRAINNAMES][RESNAMELEN];
+    int numnames;
+    SObjectRef objects[MAXOBJECTREFS];
+    int numobjects;
 };
 
 // Since the terrain template object uses lots of big arrays, it's best to
@@ -44,23 +44,23 @@ _CLASSDEF(TTerrainTemplate)
 class TTerrainTemplate
 {
   public:
-	TTerrainTemplate();
-	~TTerrainTemplate();
+    TTerrainTemplate();
+    ~TTerrainTemplate();
 
-	BOOL Load();
-	BOOL Save();
+    BOOL Load();
+    BOOL Save();
 
-	int NewTemplate(char *tilename);
-		// Returns the index of the template
-	int AddObject(int index, PTObjectInstance inst, S3DPoint offset);
-		// Add inst at offset to the indexed template
+    int NewTemplate(char *tilename);
+        // Returns the index of the template
+    int AddObject(int index, PTObjectInstance inst, S3DPoint offset);
+        // Add inst at offset to the indexed template
 
-	void ApplyTemplate(PTObjectInstance inst, PTSector sect, int density);
-		// Choose a template for the given object and add the template objects to the sector
+    void ApplyTemplate(PTObjectInstance inst, PTSector sect, int density);
+        // Choose a template for the given object and add the template objects to the sector
 
   private:
-	STemplate templates[MAXTEMPLATES];
-	int numtemplates;
+    STemplate templates[MAXTEMPLATES];
+    int numtemplates;
 };
 
 #endif

@@ -23,8 +23,8 @@ LPDIRECTINPUT DirectInput = NULL;
 
 struct DIERRORSTRING
 {
-	HRESULT Error;
-	char *lpszErrorStr;
+    HRESULT Error;
+    char *lpszErrorStr;
 };
 
 static DIERRORSTRING dierrors[] =
@@ -77,16 +77,16 @@ void TraceErrorDI(HRESULT Err, char *file, int line)
     char *dierr;
     char err[1024];
 
-	for (int c = 0; c < NUMDIERRORS; c++)
-	{
-		if (Err == dierrors[c].Error)
-		{
-			dierr = dierrors[c].lpszErrorStr; 
-			break;
-		}
-	}
-	if (c >= NUMDIERRORS)
-		sprintf(dierr, "Unknown Error"); 
+    for (int c = 0; c < NUMDIERRORS; c++)
+    {
+        if (Err == dierrors[c].Error)
+        {
+            dierr = dierrors[c].lpszErrorStr; 
+            break;
+        }
+    }
+    if (c >= NUMDIERRORS)
+        sprintf(dierr, "Unknown Error"); 
 
     sprintf(err, "DirectX Error %s\nin file %s at line %d", dierr, file, line);
     FatalError(err);
@@ -98,30 +98,30 @@ void TraceErrorDI(HRESULT Err, char *file, int line)
 
 BOOL InitializeDirectInput()
 {
-	if (DirectInput != NULL)
-		return TRUE;
+    if (DirectInput != NULL)
+        return TRUE;
 
    // create the DirectInput 5.0 interface object
-	DWORD err = DirectInputCreate(hInstance, DIRECTINPUT_VERSION, &DirectInput, NULL);
-	if (err != DI_OK)
-	{
-		_RPT0(_CRT_WARN, "DIRECTINPUT: Unable to initialize DirectInput");
-		DirectInput = NULL;
-		return FALSE;
-	}
+    DWORD err = DirectInputCreate(hInstance, DIRECTINPUT_VERSION, &DirectInput, NULL);
+    if (err != DI_OK)
+    {
+        _RPT0(_CRT_WARN, "DIRECTINPUT: Unable to initialize DirectInput");
+        DirectInput = NULL;
+        return FALSE;
+    }
 
    return TRUE;
 }
 
 void CloseDirectInput()
 {
-	if (!DirectInput)
-		return;
+    if (!DirectInput)
+        return;
 
-	CloseJoysticks();
-	DirectInput->Release();
+    CloseJoysticks();
+    DirectInput->Release();
 
-	DirectInput = NULL;
+    DirectInput = NULL;
 }
 
 // **********************
@@ -133,12 +133,12 @@ void CloseDirectInput()
 _STRUCTDEF(SJoystick)
 struct SJoystick
 {
-	LPDIRECTINPUTDEVICE2 joydev;
-	DWORD states[MAXDBLTAPTICKS];
-	DWORD changed[MAXDBLTAPTICKS];
-	int curstate;
-	DWORD laststate;
-	DWORD lastdblstate;
+    LPDIRECTINPUTDEVICE2 joydev;
+    DWORD states[MAXDBLTAPTICKS];
+    DWORD changed[MAXDBLTAPTICKS];
+    int curstate;
+    DWORD laststate;
+    DWORD lastdblstate;
 };
 
 static int numjoysticks = 0;
@@ -164,18 +164,18 @@ HRESULT SetWordProperty(LPDIRECTINPUTDEVICE2 pdev, REFGUID guidProperty,
 BOOL FAR PASCAL EnumJoystickFunc(LPCDIDEVICEINSTANCE pdinst, LPVOID)
 {
    // create the DirectInput joystick device
-	LPDIRECTINPUTDEVICE joydev;
-	LPDIRECTINPUTDEVICE2 joydev2;
-	TRY_DI(DirectInput->CreateDevice(pdinst->guidInstance, &joydev, NULL));
+    LPDIRECTINPUTDEVICE joydev;
+    LPDIRECTINPUTDEVICE2 joydev2;
+    TRY_DI(DirectInput->CreateDevice(pdinst->guidInstance, &joydev, NULL));
     TRY_DI(joydev->QueryInterface(IID_IDirectInputDevice2, (LPVOID *)&joydev2));
-	TRY_DI(joydev2->SetDataFormat(&c_dfDIJoystick));
+    TRY_DI(joydev2->SetDataFormat(&c_dfDIJoystick));
     TRY_DI(joydev2->SetCooperativeLevel(MainWindow.Hwnd(), 
-		DISCL_BACKGROUND | DISCL_NONEXCLUSIVE));
+        DISCL_BACKGROUND | DISCL_NONEXCLUSIVE));
 
-	// set X-axis range to (-1000 ... +1000)
-	// This lets us test against 0 to see which way the stick is pointed.
+    // set X-axis range to (-1000 ... +1000)
+    // This lets us test against 0 to see which way the stick is pointed.
 
-	DIPROPRANGE diprg;
+    DIPROPRANGE diprg;
     diprg.diph.dwSize       = sizeof(diprg);
     diprg.diph.dwHeaderSize = sizeof(diprg.diph);
     diprg.diph.dwObj        = DIJOFS_X;
@@ -183,75 +183,75 @@ BOOL FAR PASCAL EnumJoystickFunc(LPCDIDEVICEINSTANCE pdinst, LPVOID)
     diprg.lMin              = -1000;
     diprg.lMax              = +1000;
 
-	TRY_DI(joydev2->SetProperty(DIPROP_RANGE, &diprg.diph));
+    TRY_DI(joydev2->SetProperty(DIPROP_RANGE, &diprg.diph));
 
-	//
-	// And again for Y-axis range
-	//
-	diprg.diph.dwObj        = DIJOFS_Y;
+    //
+    // And again for Y-axis range
+    //
+    diprg.diph.dwObj        = DIJOFS_Y;
 
-	TRY_DI(joydev2->SetProperty(DIPROP_RANGE, &diprg.diph));
+    TRY_DI(joydev2->SetProperty(DIPROP_RANGE, &diprg.diph));
 
-	// set X axis dead zone to 50% (to avoid accidental turning)
-	// Units are ten thousandths, so 50% = 5000/10000.
+    // set X axis dead zone to 50% (to avoid accidental turning)
+    // Units are ten thousandths, so 50% = 5000/10000.
 
-	TRY_DI(SetWordProperty(joydev2, DIPROP_DEADZONE, DIJOFS_X, DIPH_BYOFFSET, 5000));
+    TRY_DI(SetWordProperty(joydev2, DIPROP_DEADZONE, DIJOFS_X, DIPH_BYOFFSET, 5000));
 
-	// set Y axis dead zone to 50% (to avoid accidental thrust)
-	// Units are ten thousandths, so 50% = 5000/10000.
-	TRY_DI(SetWordProperty(joydev2, DIPROP_DEADZONE, DIJOFS_Y, DIPH_BYOFFSET, 5000));
+    // set Y axis dead zone to 50% (to avoid accidental thrust)
+    // Units are ten thousandths, so 50% = 5000/10000.
+    TRY_DI(SetWordProperty(joydev2, DIPROP_DEADZONE, DIJOFS_Y, DIPH_BYOFFSET, 5000));
 
-	// Start getting input!
-	TRY_DI(joydev2->Acquire());
+    // Start getting input!
+    TRY_DI(joydev2->Acquire());
 
-	joysticks[numjoysticks].joydev = joydev2;
-	joysticks[numjoysticks].laststate = 0;
-	numjoysticks++;
+    joysticks[numjoysticks].joydev = joydev2;
+    joysticks[numjoysticks].laststate = 0;
+    numjoysticks++;
  
-	if (numjoysticks < MAXJOYSTICKS)
-		return DIENUM_CONTINUE;
-	else
-		return FALSE;
+    if (numjoysticks < MAXJOYSTICKS)
+        return DIENUM_CONTINUE;
+    else
+        return FALSE;
 }
 
 // Initializes joystick devices
 BOOL InitializeJoysticks()
 {
-	if (!DirectInput)
-		return FALSE;
+    if (!DirectInput)
+        return FALSE;
 
-	TRY_DI(DirectInput->EnumDevices(DIDEVTYPE_JOYSTICK,
-		EnumJoystickFunc, NULL, DIEDFL_ATTACHEDONLY));
+    TRY_DI(DirectInput->EnumDevices(DIDEVTYPE_JOYSTICK,
+        EnumJoystickFunc, NULL, DIEDFL_ATTACHEDONLY));
 
-	return numjoysticks > 0;
+    return numjoysticks > 0;
 }
 
 void CloseJoysticks()
 {
-	if (numjoysticks <= 0)
-		return;
+    if (numjoysticks <= 0)
+        return;
 
-	for (int c = 0; c < numjoysticks; c++)
-	{
-		joysticks[c].joydev->Unacquire();
-		joysticks[c].joydev->Release();
-		joysticks[c].joydev = NULL;
-		joysticks[c].curstate = 0;
-		for (int d = 0; d < DoubleTapTicks; d++)
-		{
-			joysticks[c].states[d] = 0;
-			joysticks[c].changed[d] = 0;
-		}
-		joysticks[c].laststate = 0;
-		joysticks[c].lastdblstate = 0;
-	}
+    for (int c = 0; c < numjoysticks; c++)
+    {
+        joysticks[c].joydev->Unacquire();
+        joysticks[c].joydev->Release();
+        joysticks[c].joydev = NULL;
+        joysticks[c].curstate = 0;
+        for (int d = 0; d < DoubleTapTicks; d++)
+        {
+            joysticks[c].states[d] = 0;
+            joysticks[c].changed[d] = 0;
+        }
+        joysticks[c].laststate = 0;
+        joysticks[c].lastdblstate = 0;
+    }
 
-	numjoysticks = 0;
+    numjoysticks = 0;
 }
 
 int NumJoysticks()
 {
-	return numjoysticks;
+    return numjoysticks;
 }
 
 void GetJoystickState(int joynum, DWORD *state, DWORD *changed, DWORD *dblstate, DWORD *dblchanged)
@@ -259,17 +259,17 @@ void GetJoystickState(int joynum, DWORD *state, DWORD *changed, DWORD *dblstate,
    HRESULT hRes;
    DIJOYSTATE js;
 
- 	if (numjoysticks <= 0)
-	{
-		*state = *changed = 0;
-		return;
-	}
+    if (numjoysticks <= 0)
+    {
+        *state = *changed = 0;
+        return;
+    }
 
   // Make sure DoubleTapTicks is a sane number
-	if (DoubleTapTicks < 0)
-		DoubleTapTicks = 0;
-	else if (DoubleTapTicks > MAXDBLTAPTICKS)
-		DoubleTapTicks = MAXDBLTAPTICKS;
+    if (DoubleTapTicks < 0)
+        DoubleTapTicks = 0;
+    else if (DoubleTapTicks > MAXDBLTAPTICKS)
+        DoubleTapTicks = MAXDBLTAPTICKS;
 
   // poll the joystick to read the current state
    hRes = joysticks[joynum].joydev->Poll();
@@ -286,14 +286,14 @@ void GetJoystickState(int joynum, DWORD *state, DWORD *changed, DWORD *dblstate,
       if(hRes == DIERR_INPUTLOST)
          joysticks[joynum].joydev->Acquire();
 
-	  // get data from the joystick
-	  hRes = joysticks[joynum].joydev->GetDeviceState(sizeof(DIJOYSTATE), &js);
-	  if (hRes != DI_OK)
-	  {
-		*state = joysticks[joynum].laststate;
-		*changed = 0;
-		return;
-	  }
+      // get data from the joystick
+      hRes = joysticks[joynum].joydev->GetDeviceState(sizeof(DIJOYSTATE), &js);
+      if (hRes != DI_OK)
+      {
+        *state = joysticks[joynum].laststate;
+        *changed = 0;
+        return;
+      }
    }
 
   // Ok, setup button stuff
@@ -302,30 +302,30 @@ void GetJoystickState(int joynum, DWORD *state, DWORD *changed, DWORD *dblstate,
 
   // Convert joystick state to button flags
    if (js.lX < 0 && js.lY < 0)
-	  buttons |= JOYSTICK_UPLEFT;
+      buttons |= JOYSTICK_UPLEFT;
    else if (js.lX == 0 && js.lY < 0)
-	  buttons |= JOYSTICK_UP;
+      buttons |= JOYSTICK_UP;
    else if (js.lX > 0 && js.lY < 0)
-	  buttons |= JOYSTICK_UPRIGHT;
+      buttons |= JOYSTICK_UPRIGHT;
    else if (js.lX < 0 && js.lY == 0)
-	  buttons |= JOYSTICK_LEFT;
+      buttons |= JOYSTICK_LEFT;
    else if (js.lX > 0 && js.lY == 0)
-	  buttons |= JOYSTICK_RIGHT;
+      buttons |= JOYSTICK_RIGHT;
    else if (js.lX < 0 && js.lY > 0)
-	  buttons |= JOYSTICK_DOWNLEFT;
+      buttons |= JOYSTICK_DOWNLEFT;
    else if (js.lX == 0 && js.lY > 0)
-	  buttons |= JOYSTICK_DOWN;
+      buttons |= JOYSTICK_DOWN;
    else if (js.lX > 0 && js.lY > 0)
       buttons |= JOYSTICK_DOWNRIGHT;
 
    for (int c = 0; c < 24; c++)
    {
-		if (js.rgbButtons[c] & 0x80)
-			buttons |= (JOYSTICK_BUTTON1 << c);
+        if (js.rgbButtons[c] & 0x80)
+            buttons |= (JOYSTICK_BUTTON1 << c);
    }
 
-	if (buttons != lastbuttons)
-		buttons = buttons * 1;
+    if (buttons != lastbuttons)
+        buttons = buttons * 1;
 
  // Figure out what's changed since last call
    DWORD changebuttons = lastbuttons ^ buttons;
@@ -338,56 +338,56 @@ void GetJoystickState(int joynum, DWORD *state, DWORD *changed, DWORD *dblstate,
    DWORD btn = 1;
    for (c = 0; c < 32; c++, btn <<= 1)
    {
-	  // Button is still down, is unchanged, and were doing a dblbutton for it...
-		if ((btn & buttons) && (btn && lastdblbuttons))
-		{  
-			dblbuttons |= btn;
-			buttons &= ~btn;
-		}
+      // Button is still down, is unchanged, and were doing a dblbutton for it...
+        if ((btn & buttons) && (btn && lastdblbuttons))
+        {  
+            dblbuttons |= btn;
+            buttons &= ~btn;
+        }
 
      // Button was just pressed down, check for a new double button press...
-		else if ((btn & changebuttons) && (btn & buttons) && !(btn & lastdblbuttons))
-		{
-			for (int d = 0; d < DoubleTapTicks; d++)
-			{
-			  // If same button was pressed down recently, this is a double tap...
-				if (btn & joysticks[joynum].states[d] & joysticks[joynum].changed[d])
-				{
-					dblbuttons |= btn;
-					buttons &= ~btn;
-					break;
-				}
-			}
-		}
-		
-	  // Button is no longer down, clear all double button press...
-	    else if (!(btn && buttons) && (btn & lastdblbuttons))
-		{
-			dblbuttons &= ~btn;
-		}
-	}
+        else if ((btn & changebuttons) && (btn & buttons) && !(btn & lastdblbuttons))
+        {
+            for (int d = 0; d < DoubleTapTicks; d++)
+            {
+              // If same button was pressed down recently, this is a double tap...
+                if (btn & joysticks[joynum].states[d] & joysticks[joynum].changed[d])
+                {
+                    dblbuttons |= btn;
+                    buttons &= ~btn;
+                    break;
+                }
+            }
+        }
+        
+      // Button is no longer down, clear all double button press...
+        else if (!(btn && buttons) && (btn & lastdblbuttons))
+        {
+            dblbuttons &= ~btn;
+        }
+    }
 
   // Get doubletap changed buttons
     DWORD dblchangebuttons = dblbuttons ^ lastdblbuttons;
 
   // Save current button state, so we can use it later...
-	joysticks[joynum].states[joysticks[joynum].curstate] = buttons;
-	joysticks[joynum].changed[joysticks[joynum].curstate] = changebuttons;
-	joysticks[joynum].curstate++;
-	if (joysticks[joynum].curstate >= DoubleTapTicks)
-		joysticks[joynum].curstate = 0;
+    joysticks[joynum].states[joysticks[joynum].curstate] = buttons;
+    joysticks[joynum].changed[joysticks[joynum].curstate] = changebuttons;
+    joysticks[joynum].curstate++;
+    if (joysticks[joynum].curstate >= DoubleTapTicks)
+        joysticks[joynum].curstate = 0;
 
   // Normal buttons
-	*state = buttons;
-	*changed = changebuttons;
+    *state = buttons;
+    *changed = changebuttons;
 
   // Now just set the dbltap buttons
-	*dblstate = dblbuttons;
-	*dblchanged = dblchangebuttons;
+    *dblstate = dblbuttons;
+    *dblchanged = dblchangebuttons;
   
   // Ok.. save the previous states of the buttons so we can detect when they change
-	joysticks[joynum].laststate = buttons;		 // Normal buttons
-	joysticks[joynum].lastdblstate = dblbuttons; // Double taps
+    joysticks[joynum].laststate = buttons;       // Normal buttons
+    joysticks[joynum].lastdblstate = dblbuttons; // Double taps
 }
 
 // Generates VK compatible codes given the values in state, and changed.  The code returned
@@ -396,40 +396,40 @@ void GetJoystickState(int joynum, DWORD *state, DWORD *changed, DWORD *dblstate,
 // are no more codes.
 BOOL GetJoystickKeyCode(DWORD state, DWORD changed, DWORD dblstate, DWORD dblchanged, int &code, BOOL &down)
 {
-	if (code < VK_JOYFIRST || code > VK_JOYLAST)
-		code = VK_JOYFIRST - 1;
+    if (code < VK_JOYFIRST || code > VK_JOYLAST)
+        code = VK_JOYFIRST - 1;
 
-	code++;
+    code++;
 
-	if (state)
-		state = state * 1;
-	
-	while (code <= VK_JOYLAST)
-	{
-		if (code < (VK_JOYFIRST | VK_DBLTAP))
-		{
-		  // Do normal codes
-			if (changed & (1 << (code - VK_JOYFIRST)))
-			{
-				down = (state & (1 << (code - VK_JOYFIRST))) != 0;
-				return TRUE;
-			}
-		}
-		else
-		{
-		  // Do doubletap codes
-			if (dblchanged & (1 << (code - (VK_JOYFIRST | VK_DBLTAP))))
-			{
-				down = (dblstate & (1 << (code - (VK_JOYFIRST | VK_DBLTAP)))) != 0;
-				return TRUE;
-			}
-		}
+    if (state)
+        state = state * 1;
+    
+    while (code <= VK_JOYLAST)
+    {
+        if (code < (VK_JOYFIRST | VK_DBLTAP))
+        {
+          // Do normal codes
+            if (changed & (1 << (code - VK_JOYFIRST)))
+            {
+                down = (state & (1 << (code - VK_JOYFIRST))) != 0;
+                return TRUE;
+            }
+        }
+        else
+        {
+          // Do doubletap codes
+            if (dblchanged & (1 << (code - (VK_JOYFIRST | VK_DBLTAP))))
+            {
+                down = (dblstate & (1 << (code - (VK_JOYFIRST | VK_DBLTAP)))) != 0;
+                return TRUE;
+            }
+        }
 
-		code++;
-	}
+        code++;
+    }
 
-	code = -1;
-	down = FALSE;
+    code = -1;
+    down = FALSE;
 
-	return FALSE;
+    return FALSE;
 }

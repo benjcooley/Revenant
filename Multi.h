@@ -32,32 +32,32 @@ class TMulti : public TMultiData
   public:
 
   // Functions
-	static PTMulti LoadMulti(char *name)
-	  { return (PTMulti)LoadResource(name); }
-	static PTMulti LoadMulti(char *name, int id)
-	  { return (PTMulti)LoadResource(name, id); }
-	void operator delete(void *p)
-	  { free(p); }
+    static PTMulti LoadMulti(char *name)
+      { return (PTMulti)LoadResource(name); }
+    static PTMulti LoadMulti(char *name, int id)
+      { return (PTMulti)LoadResource(name, id); }
+    void operator delete(void *p)
+      { free(p); }
 
-	void *Object(int i)
-	  { return offsets[i]; }
-	void *Object(char *name);
+    void *Object(int i)
+      { return offsets[i]; }
+    void *Object(char *name);
 
-	PTAnimation Animation(int i)
-	  { return (PTAnimation)(void *)offsets[i]; }
-	PTBitmap Bitmap(int i)
-	  { return (PTBitmap)(void *)offsets[i]; }
-	PTFont Font(int i)
-	  { return (PTFont)(void *)offsets[i]; }
+    PTAnimation Animation(int i)
+      { return (PTAnimation)(void *)offsets[i]; }
+    PTBitmap Bitmap(int i)
+      { return (PTBitmap)(void *)offsets[i]; }
+    PTFont Font(int i)
+      { return (PTFont)(void *)offsets[i]; }
 
-	PTAnimation Animation(char *name)
-	  { return (PTAnimation)Object(name); }
-	PTBitmap Bitmap(char *name)
-	  { return (PTBitmap)Object(name); }
-	PTFont Font(char *name)
-	  { return (PTFont)Object(name); }
-	PTWaveData Wave(char *name)
-	  { return (PTWaveData)Object(name); }
+    PTAnimation Animation(char *name)
+      { return (PTAnimation)Object(name); }
+    PTBitmap Bitmap(char *name)
+      { return (PTBitmap)Object(name); }
+    PTFont Font(char *name)
+      { return (PTFont)Object(name); }
+    PTWaveData Wave(char *name)
+      { return (PTWaveData)Object(name); }
 };
 
 #endif

@@ -19,8 +19,8 @@ _CLASSDEF(TShadow)
 class TShadow : public TObjectInstance
 {
   public:
-	TShadow(PTObjectImagery newim) : TObjectInstance(newim) {}
-	TShadow(PSObjectDef def, PTObjectImagery newim) : TObjectInstance(def, newim) {}
+    TShadow(PTObjectImagery newim) : TObjectInstance(newim) {}
+    TShadow(PSObjectDef def, PTObjectImagery newim) : TObjectInstance(def, newim) {}
 };
 
 DEFINE_BUILDER("SHADOW", TShadow)

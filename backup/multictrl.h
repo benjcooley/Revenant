@@ -20,8 +20,8 @@
 #endif
 
 // Defines for multi control panel
-#define NUMMCBUTTONS	4
-#define BUTTONRADIUS	16
+#define NUMMCBUTTONS    4
+#define BUTTONRADIUS    16
 
 // **************
 // * TMultiCtrl *
@@ -38,28 +38,28 @@ class TMultiCtrlPane : public TButtonPane
   public:
 
   // Constructor & Destructor
-	TMultiCtrlPane() : TButtonPane(MULTICTRLPANEX, MULTICTRLPANEY, MULTICTRLPANEWIDTH, MULTICTRLPANEHEIGHT) {}
-	~TMultiCtrlPane() {}
+    TMultiCtrlPane() : TButtonPane(MULTICTRLPANEX, MULTICTRLPANEY, MULTICTRLPANEWIDTH, MULTICTRLPANEHEIGHT) {}
+    ~TMultiCtrlPane() {}
 
-	virtual BOOL Initialize();
-	virtual void Close();
+    virtual BOOL Initialize();
+    virtual void Close();
 
-	// These hide and show all the multifunction panes
-	virtual void Hide();
-	virtual void Show();
+    // These hide and show all the multifunction panes
+    virtual void Hide();
+    virtual void Show();
 
-	int GetActivePane() { return curpane; }
-		// Return the currently active pane
-	void ActivatePane(int pane);
-		// Activate one of the multipanes and hide the others
-	void RedrawCurPane();
-		// Redraw current pane
-	void RedrawOverhangButtons() { Button(0)->SetDirty(); Button(3)->SetDirty(); }
+    int GetActivePane() { return curpane; }
+        // Return the currently active pane
+    void ActivatePane(int pane);
+        // Activate one of the multipanes and hide the others
+    void RedrawCurPane();
+        // Redraw current pane
+    void RedrawOverhangButtons() { Button(0)->SetDirty(); Button(3)->SetDirty(); }
 
 // Data Members
   private:
-	int curpane;				// pane currently showing
-	PTMulti buttondata;			// bitmaps for buttons
+    int curpane;                // pane currently showing
+    PTMulti buttondata;         // bitmaps for buttons
 };
 
 #endif

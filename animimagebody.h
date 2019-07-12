@@ -15,10 +15,10 @@
 #include "imageres.h"
 #endif
 
-#define ANIIM_LIT		0x1			// draw anim imagery lit
-#define ANIIM_UNLIT		0x2			// draw anim imagery unlit
-#define ANIIM_SELECTED	0x4			// draw imagery when selected
-#define ANIIM_CUTOFF	0x8			// don't draw imagery unless top is cut off
+#define ANIIM_LIT       0x1         // draw anim imagery lit
+#define ANIIM_UNLIT     0x2         // draw anim imagery unlit
+#define ANIIM_SELECTED  0x4         // draw imagery when selected
+#define ANIIM_CUTOFF    0x8         // don't draw imagery unless top is cut off
 
 // *********************
 // * SAnimImageryState *
@@ -32,11 +32,11 @@ _STRUCTDEF(SAnimImageryState)
 
 struct SAnimImageryState
 {
-	OTBitmap	still;					// Still image
-	OTAnimation anim;					// Animation associated with state
-	OTBitmap    invitem;				// Inventory image
-	OTAnimation invanim;				// Inventory image animation
-	DWORD		flags;					// Imagery state flags
+    OTBitmap    still;                  // Still image
+    OTAnimation anim;                   // Animation associated with state
+    OTBitmap    invitem;                // Inventory image
+    OTAnimation invanim;                // Inventory image animation
+    DWORD       flags;                  // Imagery state flags
 };
 
 // ********************
@@ -53,7 +53,7 @@ _CLASSDEF(SAnimImageryBody)
 class SAnimImageryBody : public SImageryBody
 {
   public:
-	SAnimImageryState states[1];		// Imagery for state
+    SAnimImageryState states[1];        // Imagery for state
 };
 
 #endif

@@ -16,11 +16,11 @@ DEFSTAT(Food, Value, VAL, 0, 0, 0, 1000000)
 
 BOOL TFood::Use(PTObjectInstance user, int with)
 {
-	if (GetState() == 0)
-	{
-		SetState(1);
-		return TRUE;
-	}
+    if (GetState() == 0)
+    {
+        SetState(1);
+        return TRUE;
+    }
 
-	return FALSE;
+    return FALSE;
 }

@@ -29,43 +29,43 @@ _CLASSDEF(TInventory)
 class TInventory : public TPane
 {
   public:
-	TInventory() : TPane(INVENTORYPANEX, INVENTORYPANEY, INVENTORYPANEWIDTH, INVENTORYPANEHEIGHT) { container = NULL; }
-	~TInventory() {}
+    TInventory() : TPane(INVENTORYPANEX, INVENTORYPANEY, INVENTORYPANEWIDTH, INVENTORYPANEHEIGHT) { container = NULL; }
+    ~TInventory() {}
 
-	virtual BOOL Initialize();
-	virtual void Close();
-	virtual void DrawBackground();
-	virtual void Animate(BOOL draw);
-	virtual void Show() { TPane::Show(); Update(); }
-	virtual void MouseClick(int button, int x, int y);
-	virtual void MouseMove(int button, int x, int y);
+    virtual BOOL Initialize();
+    virtual void Close();
+    virtual void DrawBackground();
+    virtual void Animate(BOOL draw);
+    virtual void Show() { TPane::Show(); Update(); }
+    virtual void MouseClick(int button, int x, int y);
+    virtual void MouseMove(int button, int x, int y);
 
-	PTObjectInstance GetContainer() { return container; }
-		// Container whose inventory contents are currently displayed
-	PTObjectInstance GetTopContainer()
-		{ PTObjectInstance inst = container; while (inst->GetOwner()) inst = inst->GetOwner(); return inst; }
-		// Master of inventory (usually Player)
-	void SetContainer(PTObjectInstance cont)
-		{ if (container != cont) { container = cont; Update(); } }
-		// Sets the object whose inventory the pane displays
-	int GetHeldSlot() { return heldslot; }
-		// Function for transfering objects to other panes (namely, the equipment pane)
+    PTObjectInstance GetContainer() { return container; }
+        // Container whose inventory contents are currently displayed
+    PTObjectInstance GetTopContainer()
+        { PTObjectInstance inst = container; while (inst->GetOwner()) inst = inst->GetOwner(); return inst; }
+        // Master of inventory (usually Player)
+    void SetContainer(PTObjectInstance cont)
+        { if (container != cont) { container = cont; Update(); } }
+        // Sets the object whose inventory the pane displays
+    int GetHeldSlot() { return heldslot; }
+        // Function for transfering objects to other panes (namely, the equipment pane)
 
-	void DrawAnim(PTObjectInstance inst, PTBitmap bm);
-		// Draw an animation for an inventory object
+    void DrawAnim(PTObjectInstance inst, PTBitmap bm);
+        // Draw an animation for an inventory object
 
   private:
-	int OnSlot(int x, int y);
-		// Return slotnumber that pixel position x, y is on
-	void SwapSlots(int oldslot, int newslot);
-		// Swap the inventory objects in the slots specified
+    int OnSlot(int x, int y);
+        // Return slotnumber that pixel position x, y is on
+    void SwapSlots(int oldslot, int newslot);
+        // Swap the inventory objects in the slots specified
 
-	PTObjectInstance container;			// Object inventory is shown for
+    PTObjectInstance container;         // Object inventory is shown for
 
-	int grabslot;						// slot number currently dragging with mouse
-	int heldslot;						// for passing objects to other panes
-	BOOL isdragging;					// whether object is in motion
-	int startposx, startposy;			// dragging
+    int grabslot;                       // slot number currently dragging with mouse
+    int heldslot;                       // for passing objects to other panes
+    BOOL isdragging;                    // whether object is in motion
+    int startposx, startposy;           // dragging
 };
 
 #endif

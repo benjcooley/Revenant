@@ -19,12 +19,12 @@ _CLASSDEF(TKey)
 class TKey : public TObjectInstance
 {
   public:
-	TKey(PTObjectImagery newim) : TObjectInstance(newim) {}
-	TKey(PSObjectDef def, PTObjectImagery newim) : TObjectInstance(def, newim) {}
+    TKey(PTObjectImagery newim) : TObjectInstance(newim) {}
+    TKey(PSObjectDef def, PTObjectImagery newim) : TObjectInstance(def, newim) {}
 
-	// Key stats
-	STATFUNC(Value)
-	OBJSTATFUNC(KeyId)
+    // Key stats
+    STATFUNC(Value)
+    OBJSTATFUNC(KeyId)
 };
 
 DEFINE_BUILDER("KEY", TKey)

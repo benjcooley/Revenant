@@ -19,22 +19,22 @@ _CLASSDEF(TFood)
 class TFood : public TObjectInstance
 {
   public:
-	TFood(PTObjectImagery newim) : TObjectInstance(newim) {}
-	TFood(PSObjectDef def, PTObjectImagery newim) : TObjectInstance(def, newim) {}
+    TFood(PTObjectImagery newim) : TObjectInstance(newim) {}
+    TFood(PSObjectDef def, PTObjectImagery newim) : TObjectInstance(def, newim) {}
 
-	virtual BOOL Use(PTObjectInstance user, int with = -1);
-		// Munch munch munch
-	virtual int CursorType(PTObjectInstance inst = NULL) { if (inst) return CURSOR_NONE; return CURSOR_MOUTH; }
-		// Yummy
+    virtual BOOL Use(PTObjectInstance user, int with = -1);
+        // Munch munch munch
+    virtual int CursorType(PTObjectInstance inst = NULL) { if (inst) return CURSOR_NONE; return CURSOR_MOUTH; }
+        // Yummy
 
-	// Food statistics
-	STATFUNC(Value)
-	STATFUNC(Health)
-	STATFUNC(Mana)
-	STATFUNC(Fatigue)
-	STATFUNC(Poison)
-	STATFUNC(Cure)
-	STATFUNC(Fill)
+    // Food statistics
+    STATFUNC(Value)
+    STATFUNC(Health)
+    STATFUNC(Mana)
+    STATFUNC(Fatigue)
+    STATFUNC(Poison)
+    STATFUNC(Cure)
+    STATFUNC(Fill)
 };
 
 DEFINE_BUILDER("FOOD", TFood)

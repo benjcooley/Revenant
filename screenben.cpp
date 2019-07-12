@@ -18,9 +18,9 @@
 #include "sound.h"
 #include "videocap.h"
 
-int cursorx = 0;		// Mouse cursor positions
+int cursorx = 0;        // Mouse cursor positions
 int cursory = 0;
-int mousebutton = 0;	// Mouse button
+int mousebutton = 0;    // Mouse button
 
 extern BOOL LoaderWait;
 
@@ -28,7 +28,7 @@ extern BOOL LoaderWait;
 
 TScreen::TScreen()
 {
-	nextscreen = NULL;
+    nextscreen = NULL;
 }
 
 TScreen::~TScreen()
@@ -37,42 +37,42 @@ TScreen::~TScreen()
 
 BOOL TScreen::BeginScreen()
 {
-	int loop;
+    int loop;
 
-	Display->InitBackgroundSystem();
-	firstframe = TRUE;  // Tell timer tick function not to flip a page the first time
+    Display->InitBackgroundSystem();
+    firstframe = TRUE;  // Tell timer tick function not to flip a page the first time
 
-	panes.Clear();
-	screenframes = 0;
-	for (loop = 0; loop < NUMEXCLUSIVEPANES; loop++)
-		exclusive[loop] = 0;
-	numexclusive = 0;
+    panes.Clear();
+    screenframes = 0;
+    for (loop = 0; loop < NUMEXCLUSIVEPANES; loop++)
+        exclusive[loop] = 0;
+    numexclusive = 0;
 
-	BOOL ok = Initialize();
-	if (!ok)
-		return FALSE;
+    BOOL ok = Initialize();
+    if (!ok)
+        return FALSE;
 
-	return TRUE;
+    return TRUE;
 }
 
 void TScreen::EndScreen()
 {
-	int loop;
+    int loop;
 
-	Close();
+    Close();
 
-	panes.Clear();
-	screenframes = 0;
-	for (loop = 0; loop < NUMEXCLUSIVEPANES; loop++)
-		exclusive[loop] = 0;
-	numexclusive = 0;
+    panes.Clear();
+    screenframes = 0;
+    for (loop = 0; loop < NUMEXCLUSIVEPANES; loop++)
+        exclusive[loop] = 0;
+    numexclusive = 0;
 }
 
 // Copies contents of display's back buffer to the user's display immediately. (For
 // 'loading' screens which have to update from within a single timer tick).
 void TScreen::PutToScreen()
 {
-	Display->PutToScreen(0, 0, Display->Width(), Display->Height());
+    Display->PutToScreen(0, 0, Display->Width(), Display->Height());
 }
 
 // *************************
@@ -81,341 +81,341 @@ void TScreen::PutToScreen()
 
 PTPane TPane::FindPane(char *name)
 {
-	for (int loop = 0; loop < panes.NumItems(); loop++)
-	{
-		if (!stricmp(panes[loop].Name(), name))
-			return panes[loop];
-	}
+    for (int loop = 0; loop < panes.NumItems(); loop++)
+    {
+        if (!stricmp(panes[loop].Name(), name))
+            return panes[loop];
+    }
 }
 
 int TPane::FindPane(PTPane pane)
 {
-	for (int loop = 0; loop < panes.NumItems(); loop++)
-	{
-		if (panes[loop] == pane)
-			return loop;
-	}
+    for (int loop = 0; loop < panes.NumItems(); loop++)
+    {
+        if (panes[loop] == pane)
+            return loop;
+    }
 }
 
 int TPane::AddPane(PTPane pane, int panenum)
 {
-	int panenum = FindPane(pane);
-	if (panenum >= 0)
-		return panenum;
+    int panenum = FindPane(pane);
+    if (panenum >= 0)
+        return panenum;
 
-	for (int loop = 0; loop < panes.NumItems(); loop++)
-	{
-		if (panes[loop] == pane)
-			return loop;
-	}
+    for (int loop = 0; loop < panes.NumItems(); loop++)
+    {
+        if (panes[loop] == pane)
+            return loop;
+    }
 
-	if (panenum < 0)
-		panenum = panes.Add(pane);
-	else
-		panenum = panes.Insert(pane, panenum);
+    if (panenum < 0)
+        panenum = panes.Add(pane);
+    else
+        panenum = panes.Insert(pane, panenum);
 
-	pane->SetParent(this);
-	pane->SetScreen(GetScreen());
+    pane->SetParent(this);
+    pane->SetScreen(GetScreen());
 
-	return newnum;
+    return newnum;
 }
 
 BOOL TPane::RemovePane(PTPane pane)
 {
-	for (int loop = 0; loop < panes.NumItems(); loop++)
-	{
-		if (panes[loop] == pane)
-		{
-			panes.Remove(loop);
-			pane->SetScreen(NULL);
-			return TRUE;
-		}
-	}
+    for (int loop = 0; loop < panes.NumItems(); loop++)
+    {
+        if (panes[loop] == pane)
+        {
+            panes.Remove(loop);
+            pane->SetScreen(NULL);
+            return TRUE;
+        }
+    }
 
-	return FALSE;
+    return FALSE;
 }
 
 BOOL TPane::ToFront(PTPane pane)
 {
-	int panenum = FindPane(pane);
-	if (panenum < 0)
-		return FALSE;
+    int panenum = FindPane(pane);
+    if (panenum < 0)
+        return FALSE;
 
-	panes.Collapse(panenum, FALSE);
-	panes.Insert(pane, 0);
+    panes.Collapse(panenum, FALSE);
+    panes.Insert(pane, 0);
 
-	return TRUE;
+    return TRUE;
 }
 
 BOOL TPane::ToBack(PTPane pane)
 {
-	int panenum = FindPane(pane);
-	if (panenum < 0)
-		return FALSE;
+    int panenum = FindPane(pane);
+    if (panenum < 0)
+        return FALSE;
 
-	panes.Collapse(panenum, FALSE);
-	panes.Insert(pane, panes.NumItems());
+    panes.Collapse(panenum, FALSE);
+    panes.Insert(pane, panes.NumItems());
 
-	return TRUE;
+    return TRUE;
 }
 
 BOOL TPane::SetActivePane(PTPane pane)
 {
-	for (int loop = 0; loop < panes.NumItems(); loop++)
-	{
-		if (panes[loop] == pane)
-		{
-			activepane->SendMessage(SPaneMsg(PM_DEACTIVATE, PMF_PANE, activepane));
-			activepane->ClearFlags(PM_ACTIVE, FALSE);
-			activepane = pane;
-			activepane->SetFlags(PM_ACTIVE, TRUE);
-			pane->SendMessage(SPaneMsg(PM_ACTIVATE, PMF_PANE, activepane));
-		}
-	}
+    for (int loop = 0; loop < panes.NumItems(); loop++)
+    {
+        if (panes[loop] == pane)
+        {
+            activepane->SendMessage(SPaneMsg(PM_DEACTIVATE, PMF_PANE, activepane));
+            activepane->ClearFlags(PM_ACTIVE, FALSE);
+            activepane = pane;
+            activepane->SetFlags(PM_ACTIVE, TRUE);
+            pane->SendMessage(SPaneMsg(PM_ACTIVATE, PMF_PANE, activepane));
+        }
+    }
 
-	return FALSE;
+    return FALSE;
 }
 
 BOOL TPane::Message(SPaneMsg &msg)
 {
-	switch (msg.msg)
-	{
-	  case PM_MOVE:
-	  {
-	    PSPaneMsgMove m = (PSPaneMsgMove)&msg;
-		x = m->newx;
-		y = m->newy;
-		return TRUE;
-	  }
-	  case PM_RESIZE:
-	  {
-	    PSPaneMsgResize m = (PSPaneMsgResize)&msg;
-		FreeBackgroundBuffers(); 
-		x = m->newx; y = m->newy; width = m->newwidth; height = m->newheight;
-		CreateBackgroundBuffers();
-		return TRUE;
-	  }
-	  case PM_PULSE:
-	  {
-		if (!IsHidden() && !IsDisabled() && (flags & PF_PULSE))
-		{
-			SetClipRect();
-			Pulse();
-		}
-		return TRUE;
-	  }
-	  case PM_DRAWBG:
-	  {
-		if (!IsHidden() && !IsDisabled() && (flags & PF_DRAWBG))
-		{
-			SetClipRect();
-		    DrawBackground();
-		}
-		return TRUE;
-	  }
-	  case PM_ANIMATE:
-	  {
-	    PSPaneMsgPulse m = (PSPaneMsgPulse)&msg;
-		if (!IsHidden() && !IsDisabled() && (flags & PF_ANIMATE))
-		{
-			SetClipRect();
-		    Animate(m->draw);
-		}
-		return TRUE;
-	  }
-	  case PM_RENDER:
-	  {
-		if (!IsHidden() && !IsDisabled() && (flags & PF_RENDER))
-		{
-			SetClipRect();
-		    Render();
-		}
-		return TRUE;
-	  }
-	  case PM_OVERLAY:
-	  {
-	    PSPaneMsgPulse m = (PSPaneMsgPulse)&msg;
-		if (!IsHidden() && !IsDisabled() && (flags & PF_OVERLAY))
-		{
-			SetClipRect();
-		    Overlay(m->draw);
-		}
-		return TRUE;
-	  }
-	  case PM_MOUSECLICK:
-	  {
-	    PSPaneMsgMouse m = (PSPaneMsgMouse)&msg;
-		if (!IsHidden() && !IsDisabled() && (flags & PF_ACTIVE))
-		{
-			SetClipRect();
-		    MouseClick(m->button, m->x, m->y);
-		}
-		return TRUE;
-	  }
-	  case PM_MOUSEMOVE:
-	  {
-	    PSPaneMsgMouse m = (PSPaneMsgMouse)&msg;
-		if (!IsHidden() && !IsDisabled() && (flags & PF_ACTIVE))
-		{
-			SetClipRect();
-		    MouseMove(m->button, m->x, m->y);
-		}
-		return TRUE;
-	  }
-	  case PM_KEYPRESS:
-	  {
-	    PSPaneMsgKeyPress m = (PSPaneMsgKeyPress)&msg;
-		if (!IsHidden() && !IsDisabled() && (flags & PF_ACTIVE))
-		{
-			SetClipRect();
-		    KeyPress(m->key, m->down);
-		}
-		return TRUE;
-	  }
-	  case PM_CHARPRESS:
-	  {
-	    PSPaneMsgKeyPress m = (PSPaneMsgKeyPress)&msg;
-		if (!IsHidden() && !IsDisabled() && (flags & PF_ACTIVE))
-		{
-			SetClipRect();
-		    CharPress(m->key, m->down);
-		}
-		return TRUE;
-	  }
-	  case PM_JOYSTICK:
-	  {
-	    PSPaneMsgKeyPress m = (PSPaneMsgKeyPress)&msg;
-		if (!IsHidden() && !IsDisabled() && (flags & PF_ACTIVE))
-		{
-			SetClipRect();
-		    JoyStick(m->key, m->down);
-		}
-		return TRUE;
-	  }
-	}
+    switch (msg.msg)
+    {
+      case PM_MOVE:
+      {
+        PSPaneMsgMove m = (PSPaneMsgMove)&msg;
+        x = m->newx;
+        y = m->newy;
+        return TRUE;
+      }
+      case PM_RESIZE:
+      {
+        PSPaneMsgResize m = (PSPaneMsgResize)&msg;
+        FreeBackgroundBuffers(); 
+        x = m->newx; y = m->newy; width = m->newwidth; height = m->newheight;
+        CreateBackgroundBuffers();
+        return TRUE;
+      }
+      case PM_PULSE:
+      {
+        if (!IsHidden() && !IsDisabled() && (flags & PF_PULSE))
+        {
+            SetClipRect();
+            Pulse();
+        }
+        return TRUE;
+      }
+      case PM_DRAWBG:
+      {
+        if (!IsHidden() && !IsDisabled() && (flags & PF_DRAWBG))
+        {
+            SetClipRect();
+            DrawBackground();
+        }
+        return TRUE;
+      }
+      case PM_ANIMATE:
+      {
+        PSPaneMsgPulse m = (PSPaneMsgPulse)&msg;
+        if (!IsHidden() && !IsDisabled() && (flags & PF_ANIMATE))
+        {
+            SetClipRect();
+            Animate(m->draw);
+        }
+        return TRUE;
+      }
+      case PM_RENDER:
+      {
+        if (!IsHidden() && !IsDisabled() && (flags & PF_RENDER))
+        {
+            SetClipRect();
+            Render();
+        }
+        return TRUE;
+      }
+      case PM_OVERLAY:
+      {
+        PSPaneMsgPulse m = (PSPaneMsgPulse)&msg;
+        if (!IsHidden() && !IsDisabled() && (flags & PF_OVERLAY))
+        {
+            SetClipRect();
+            Overlay(m->draw);
+        }
+        return TRUE;
+      }
+      case PM_MOUSECLICK:
+      {
+        PSPaneMsgMouse m = (PSPaneMsgMouse)&msg;
+        if (!IsHidden() && !IsDisabled() && (flags & PF_ACTIVE))
+        {
+            SetClipRect();
+            MouseClick(m->button, m->x, m->y);
+        }
+        return TRUE;
+      }
+      case PM_MOUSEMOVE:
+      {
+        PSPaneMsgMouse m = (PSPaneMsgMouse)&msg;
+        if (!IsHidden() && !IsDisabled() && (flags & PF_ACTIVE))
+        {
+            SetClipRect();
+            MouseMove(m->button, m->x, m->y);
+        }
+        return TRUE;
+      }
+      case PM_KEYPRESS:
+      {
+        PSPaneMsgKeyPress m = (PSPaneMsgKeyPress)&msg;
+        if (!IsHidden() && !IsDisabled() && (flags & PF_ACTIVE))
+        {
+            SetClipRect();
+            KeyPress(m->key, m->down);
+        }
+        return TRUE;
+      }
+      case PM_CHARPRESS:
+      {
+        PSPaneMsgKeyPress m = (PSPaneMsgKeyPress)&msg;
+        if (!IsHidden() && !IsDisabled() && (flags & PF_ACTIVE))
+        {
+            SetClipRect();
+            CharPress(m->key, m->down);
+        }
+        return TRUE;
+      }
+      case PM_JOYSTICK:
+      {
+        PSPaneMsgKeyPress m = (PSPaneMsgKeyPress)&msg;
+        if (!IsHidden() && !IsDisabled() && (flags & PF_ACTIVE))
+        {
+            SetClipRect();
+            JoyStick(m->key, m->down);
+        }
+        return TRUE;
+      }
+    }
 
-	return FALSE;
+    return FALSE;
 }
 
 BOOL TScreen::Message(SPaneMsg &msg)
 {
-	BOOL handled = FALSE;
+    BOOL handled = FALSE;
 
-	switch (msg.msg)
-	{
-	  case PM_MOVE:
-	  {
-	    PSPaneMsgMove m = (PSPaneMsgMove)&msg;
-		x = m->newx;
-		y = m->newy;
-		return TRUE;
-	  }
-	  case PM_RESIZE:
-	  {
-	    PSPaneMsgResize m = (PSPaneMsgResize)&msg;
-		FreeBackgroundBuffers(); 
-		x = m->newx; y = m->newy; width = m->newwidth; height = m->newheight;
-		CreateBackgroundBuffers();
-		return TRUE;
-	  }
-	  case PM_PULSE:
-	  {
-		if (!IsHidden() && !IsDisabled() && (flags & PF_PULSE))
-		{
-			SetClipRect();
-			Pulse();
-		}
-		return TRUE;
-	  }
-	  case PM_DRAWBG:
-	  {
-		if (!IsHidden() && !IsDisabled() && (flags & PF_DRAWBG))
-		{
-			SetClipRect();
-		    DrawBackground();
-		}
-		return TRUE;
-	  }
-	  case PM_ANIMATE:
-	  {
-	    PSPaneMsgPulse m = (PSPaneMsgPulse)&msg;
-		if (!IsHidden() && !IsDisabled() && (flags & PF_ANIMATE))
-		{
-			SetClipRect();
-		    Animate(m->draw);
-		}
-		return TRUE;
-	  }
-	  case PM_RENDER:
-	  {
-		if (!IsHidden() && !IsDisabled() && (flags & PF_RENDER))
-		{
-			SetClipRect();
-		    Render();
-		}
-		return TRUE;
-	  }
-	  case PM_OVERLAY:
-	  {
-	    PSPaneMsgPulse m = (PSPaneMsgPulse)&msg;
-		if (!IsHidden() && !IsDisabled() && (flags & PF_OVERLAY))
-		{
-			SetClipRect();
-		    Overlay(m->draw);
-		}
-		return TRUE;
-	  }
-	  case PM_MOUSECLICK:
-	  {
-	    PSPaneMsgMouse m = (PSPaneMsgMouse)&msg;
-		if (!IsHidden() && !IsDisabled() && (flags & PF_ACTIVE))
-		{
-			SetClipRect();
-		    MouseClick(m->button, m->x, m->y);
-		}
-		return TRUE;
-	  }
-	  case PM_MOUSEMOVE:
-	  {
-	    PSPaneMsgMouse m = (PSPaneMsgMouse)&msg;
-		if (!IsHidden() && !IsDisabled() && (flags & PF_ACTIVE))
-		{
-			SetClipRect();
-		    MouseMove(m->button, m->x, m->y);
-		}
-		return TRUE;
-	  }
-	  case PM_KEYPRESS:
-	  {
-	    PSPaneMsgKeyPress m = (PSPaneMsgKeyPress)&msg;
-		if (!IsHidden() && !IsDisabled() && (flags & PF_ACTIVE))
-		{
-			SetClipRect();
-		    KeyPress(m->key, m->down);
-		}
-		return TRUE;
-	  }
-	  case PM_CHARPRESS:
-	  {
-	    PSPaneMsgKeyPress m = (PSPaneMsgKeyPress)&msg;
-		if (!IsHidden() && !IsDisabled() && (flags & PF_ACTIVE))
-		{
-			SetClipRect();
-		    CharPress(m->key, m->down);
-		}
-		return TRUE;
-	  }
-	  case PM_JOYSTICK:
-	  {
-	    PSPaneMsgKeyPress m = (PSPaneMsgKeyPress)&msg;
-		if (!IsHidden() && !IsDisabled() && (flags & PF_ACTIVE))
-		{
-			SetClipRect();
-		    JoyStick(m->key, m->down);
-		}
-		return TRUE;
-	  }
-	}
+    switch (msg.msg)
+    {
+      case PM_MOVE:
+      {
+        PSPaneMsgMove m = (PSPaneMsgMove)&msg;
+        x = m->newx;
+        y = m->newy;
+        return TRUE;
+      }
+      case PM_RESIZE:
+      {
+        PSPaneMsgResize m = (PSPaneMsgResize)&msg;
+        FreeBackgroundBuffers(); 
+        x = m->newx; y = m->newy; width = m->newwidth; height = m->newheight;
+        CreateBackgroundBuffers();
+        return TRUE;
+      }
+      case PM_PULSE:
+      {
+        if (!IsHidden() && !IsDisabled() && (flags & PF_PULSE))
+        {
+            SetClipRect();
+            Pulse();
+        }
+        return TRUE;
+      }
+      case PM_DRAWBG:
+      {
+        if (!IsHidden() && !IsDisabled() && (flags & PF_DRAWBG))
+        {
+            SetClipRect();
+            DrawBackground();
+        }
+        return TRUE;
+      }
+      case PM_ANIMATE:
+      {
+        PSPaneMsgPulse m = (PSPaneMsgPulse)&msg;
+        if (!IsHidden() && !IsDisabled() && (flags & PF_ANIMATE))
+        {
+            SetClipRect();
+            Animate(m->draw);
+        }
+        return TRUE;
+      }
+      case PM_RENDER:
+      {
+        if (!IsHidden() && !IsDisabled() && (flags & PF_RENDER))
+        {
+            SetClipRect();
+            Render();
+        }
+        return TRUE;
+      }
+      case PM_OVERLAY:
+      {
+        PSPaneMsgPulse m = (PSPaneMsgPulse)&msg;
+        if (!IsHidden() && !IsDisabled() && (flags & PF_OVERLAY))
+        {
+            SetClipRect();
+            Overlay(m->draw);
+        }
+        return TRUE;
+      }
+      case PM_MOUSECLICK:
+      {
+        PSPaneMsgMouse m = (PSPaneMsgMouse)&msg;
+        if (!IsHidden() && !IsDisabled() && (flags & PF_ACTIVE))
+        {
+            SetClipRect();
+            MouseClick(m->button, m->x, m->y);
+        }
+        return TRUE;
+      }
+      case PM_MOUSEMOVE:
+      {
+        PSPaneMsgMouse m = (PSPaneMsgMouse)&msg;
+        if (!IsHidden() && !IsDisabled() && (flags & PF_ACTIVE))
+        {
+            SetClipRect();
+            MouseMove(m->button, m->x, m->y);
+        }
+        return TRUE;
+      }
+      case PM_KEYPRESS:
+      {
+        PSPaneMsgKeyPress m = (PSPaneMsgKeyPress)&msg;
+        if (!IsHidden() && !IsDisabled() && (flags & PF_ACTIVE))
+        {
+            SetClipRect();
+            KeyPress(m->key, m->down);
+        }
+        return TRUE;
+      }
+      case PM_CHARPRESS:
+      {
+        PSPaneMsgKeyPress m = (PSPaneMsgKeyPress)&msg;
+        if (!IsHidden() && !IsDisabled() && (flags & PF_ACTIVE))
+        {
+            SetClipRect();
+            CharPress(m->key, m->down);
+        }
+        return TRUE;
+      }
+      case PM_JOYSTICK:
+      {
+        PSPaneMsgKeyPress m = (PSPaneMsgKeyPress)&msg;
+        if (!IsHidden() && !IsDisabled() && (flags & PF_ACTIVE))
+        {
+            SetClipRect();
+            JoyStick(m->key, m->down);
+        }
+        return TRUE;
+      }
+    }
 }
 
 // *****************************
@@ -424,233 +424,233 @@ BOOL TScreen::Message(SPaneMsg &msg)
 
 void TScreen::DrawBackground()
 {
-	Display->Reset();
+    Display->Reset();
 
   // Do pane list
-	for (int loop = 0; loop < panes.NumItems(); loop++)
-	{
-		if (!panes.Used(loop) || panes[loop]->IsHidden())
-			continue;
+    for (int loop = 0; loop < panes.NumItems(); loop++)
+    {
+        if (!panes.Used(loop) || panes[loop]->IsHidden())
+            continue;
 
-		if (dirty)
-			panes[loop]->Update();
+        if (dirty)
+            panes[loop]->Update();
 
-		panes[loop]->SetClipRect();
-		panes[loop]->DrawBackground();
-	}
+        panes[loop]->SetClipRect();
+        panes[loop]->DrawBackground();
+    }
 
-	dirty = FALSE;
-	Display->Reset();
+    dirty = FALSE;
+    Display->Reset();
 }
 
 void TScreen::Pulse()
 {
-	Display->Reset();
+    Display->Reset();
 
   // Do exclusive
-	if (numexclusive > 0)
-	{
-		PTPane pane = panes[exclusive[numexclusive - 1]];
-		if (pane && !pane->IsHidden())
-		{
-			pane->SetClipRect();
-			pane->Pulse();
-		}
+    if (numexclusive > 0)
+    {
+        PTPane pane = panes[exclusive[numexclusive - 1]];
+        if (pane && !pane->IsHidden())
+        {
+            pane->SetClipRect();
+            pane->Pulse();
+        }
 
-		if (complete[numexclusive - 1])
-		{
-			Display->Reset();
-			return;
-		}
-	}
+        if (complete[numexclusive - 1])
+        {
+            Display->Reset();
+            return;
+        }
+    }
 
   // Do pane list
-	for (int loop = 0; loop < panes.NumItems(); loop++)
-	{
-		if (!panes.Used(loop) || panes[loop]->IsHidden())
-			continue;
-		panes[loop]->SetClipRect();
-		panes[loop]->Pulse();
-	}
+    for (int loop = 0; loop < panes.NumItems(); loop++)
+    {
+        if (!panes.Used(loop) || panes[loop]->IsHidden())
+            continue;
+        panes[loop]->SetClipRect();
+        panes[loop]->Pulse();
+    }
 
-	Display->Reset();
+    Display->Reset();
 }
 
 void TScreen::Animate(BOOL draw)
 {
-	Display->Reset();
+    Display->Reset();
 
   // Do exclusive
-	if (numexclusive > 0)
-	{
-		PTPane pane = panes[exclusive[numexclusive - 1]];
-		if (pane && !pane->IsHidden())
-		{
-			pane->SetClipRect();
-			pane->Animate(draw);
-		}
+    if (numexclusive > 0)
+    {
+        PTPane pane = panes[exclusive[numexclusive - 1]];
+        if (pane && !pane->IsHidden())
+        {
+            pane->SetClipRect();
+            pane->Animate(draw);
+        }
 
-		if (complete[numexclusive - 1])
-		{
-			Display->Reset();
-			return;
-		}
-	}
+        if (complete[numexclusive - 1])
+        {
+            Display->Reset();
+            return;
+        }
+    }
 
   // Do pane list
-	for (int loop = 0; loop < panes.NumItems(); loop++)
-	{
-		if (!panes.Used(loop) || panes[loop]->IsHidden())
-			continue;
-		panes[loop]->SetClipRect();
-		panes[loop]->Animate(draw);
-	}
+    for (int loop = 0; loop < panes.NumItems(); loop++)
+    {
+        if (!panes.Used(loop) || panes[loop]->IsHidden())
+            continue;
+        panes[loop]->SetClipRect();
+        panes[loop]->Animate(draw);
+    }
 
-	Display->Reset();
+    Display->Reset();
 }
 
 void TScreen::MouseClick(int button, int x, int y)
 {
-	Display->Reset();
+    Display->Reset();
 
   // Do exclusive
-	if (numexclusive > 0)
-	{
-		PTPane pane = panes[exclusive[numexclusive - 1]];
-		if (pane && !pane->IsHidden())
-		{
-			pane->SetClipRect();
-			pane->MouseClick(button, x - pane->GetPosX(), y - pane->GetPosY());
-		}
-		Display->Reset();
-		return;
-	}
+    if (numexclusive > 0)
+    {
+        PTPane pane = panes[exclusive[numexclusive - 1]];
+        if (pane && !pane->IsHidden())
+        {
+            pane->SetClipRect();
+            pane->MouseClick(button, x - pane->GetPosX(), y - pane->GetPosY());
+        }
+        Display->Reset();
+        return;
+    }
 
   // Do pane list
-	for (int loop = 0; loop < panes.NumItems(); loop++)
-	{
-		if (!panes.Used(loop) || panes[loop]->IsHidden() || panes[loop]->IsIgnoringInput())
-			continue;
+    for (int loop = 0; loop < panes.NumItems(); loop++)
+    {
+        if (!panes.Used(loop) || panes[loop]->IsHidden() || panes[loop]->IsIgnoringInput())
+            continue;
 
-		panes[loop]->SetClipRect();
-		int nx = x - panes[loop]->GetPosX();
-		int ny = y - panes[loop]->GetPosY();
+        panes[loop]->SetClipRect();
+        int nx = x - panes[loop]->GetPosX();
+        int ny = y - panes[loop]->GetPosY();
 
-	  // send mouseup buttons to all panes, not just the owner of that screen space
-		if (panes[loop]->InPane(nx, ny) ||
-			(button == MB_LEFTUP || button == MB_RIGHTUP || button == MB_MIDDLEUP))
-			panes[loop]->MouseClick(button, nx, ny);
-	}
+      // send mouseup buttons to all panes, not just the owner of that screen space
+        if (panes[loop]->InPane(nx, ny) ||
+            (button == MB_LEFTUP || button == MB_RIGHTUP || button == MB_MIDDLEUP))
+            panes[loop]->MouseClick(button, nx, ny);
+    }
 
-	Display->Reset();
+    Display->Reset();
 }
 
 void TScreen::MouseMove(int button, int x, int y)
 {
-	Display->Reset();
+    Display->Reset();
 
   // Do exclusive
-	if (numexclusive > 0)
-	{
-		PTPane pane = panes[exclusive[numexclusive - 1]];
-		if (pane && !pane->IsHidden())
-		{
-			pane->SetClipRect();
-			pane->MouseMove(button, x - pane->GetPosX(), y - pane->GetPosY());
-		}
-		Display->Reset();
-		return;
-	}
+    if (numexclusive > 0)
+    {
+        PTPane pane = panes[exclusive[numexclusive - 1]];
+        if (pane && !pane->IsHidden())
+        {
+            pane->SetClipRect();
+            pane->MouseMove(button, x - pane->GetPosX(), y - pane->GetPosY());
+        }
+        Display->Reset();
+        return;
+    }
 
   // Do pane list
-	for (int loop = 0; loop < panes.NumItems(); loop++)
-	{
-		if (!panes.Used(loop) || panes[loop]->IsHidden() || panes[loop]->IsIgnoringInput())
-			continue;
+    for (int loop = 0; loop < panes.NumItems(); loop++)
+    {
+        if (!panes.Used(loop) || panes[loop]->IsHidden() || panes[loop]->IsIgnoringInput())
+            continue;
 
-		panes[loop]->SetClipRect();
-		int nx = x - panes[loop]->GetPosX();
-		int ny = y - panes[loop]->GetPosY();
-		panes[loop]->MouseMove(button, nx, ny);
-	}
+        panes[loop]->SetClipRect();
+        int nx = x - panes[loop]->GetPosX();
+        int ny = y - panes[loop]->GetPosY();
+        panes[loop]->MouseMove(button, nx, ny);
+    }
 
-	Display->Reset();
+    Display->Reset();
 }
 
 void TScreen::KeyPress(int key, BOOL down)
 {
-	Display->Reset();
+    Display->Reset();
 
   // Do exclusive
-	if (numexclusive > 0)
-	{
-		PTPane pane = panes[exclusive[numexclusive - 1]];
-		if (pane && !pane->IsHidden())
-			pane->KeyPress(key, down);
-		Display->Reset();
-		return;
-	}
+    if (numexclusive > 0)
+    {
+        PTPane pane = panes[exclusive[numexclusive - 1]];
+        if (pane && !pane->IsHidden())
+            pane->KeyPress(key, down);
+        Display->Reset();
+        return;
+    }
 
-	for (int loop = 0; loop < panes.NumItems(); loop++)
-	{
-		if (!panes.Used(loop) || panes[loop]->IsHidden() || panes[loop]->IsIgnoringInput())
-			continue;
-		panes[loop]->SetClipRect();
-		panes[loop]->KeyPress(key, down);
-	}
+    for (int loop = 0; loop < panes.NumItems(); loop++)
+    {
+        if (!panes.Used(loop) || panes[loop]->IsHidden() || panes[loop]->IsIgnoringInput())
+            continue;
+        panes[loop]->SetClipRect();
+        panes[loop]->KeyPress(key, down);
+    }
 
-	Display->Reset();
+    Display->Reset();
 }
 
 void TScreen::CharPress(int key, BOOL down)
 {
-	Display->Reset();
+    Display->Reset();
 
   // Do exclusive
-	if (numexclusive > 0)
-	{
-		PTPane pane = panes[exclusive[numexclusive - 1]];
-		if (pane && !pane->IsHidden())
-			pane->CharPress(key, down);
-		Display->Reset();
-		return;
-	}
+    if (numexclusive > 0)
+    {
+        PTPane pane = panes[exclusive[numexclusive - 1]];
+        if (pane && !pane->IsHidden())
+            pane->CharPress(key, down);
+        Display->Reset();
+        return;
+    }
 
-	for (int loop = 0; loop < panes.NumItems(); loop++)
-	{
-		if (!panes.Used(loop) || panes[loop]->IsHidden() || panes[loop]->IsIgnoringInput())
-			continue;
-		panes[loop]->SetClipRect();
-		panes[loop]->CharPress(key, down);
-	}
+    for (int loop = 0; loop < panes.NumItems(); loop++)
+    {
+        if (!panes.Used(loop) || panes[loop]->IsHidden() || panes[loop]->IsIgnoringInput())
+            continue;
+        panes[loop]->SetClipRect();
+        panes[loop]->CharPress(key, down);
+    }
 
-	Display->Reset();
+    Display->Reset();
 }
 
 void TScreen::Joystick(int key, BOOL down)
 {
-	Display->Reset();
+    Display->Reset();
 
   // Do exclusive
-	if (numexclusive > 0)
-	{
-		PTPane pane = panes[exclusive[numexclusive - 1]];
-		if (pane && !pane->IsHidden())
-			pane->Joystick(key, down);
-		Display->Reset();
-		return;
-	}
+    if (numexclusive > 0)
+    {
+        PTPane pane = panes[exclusive[numexclusive - 1]];
+        if (pane && !pane->IsHidden())
+            pane->Joystick(key, down);
+        Display->Reset();
+        return;
+    }
 
-	for (int loop = 0; loop < panes.NumItems(); loop++)
-	{
-		if (!panes.Used(loop) || panes[loop]->IsHidden() || panes[loop]->IsIgnoringInput())
-			continue;
+    for (int loop = 0; loop < panes.NumItems(); loop++)
+    {
+        if (!panes.Used(loop) || panes[loop]->IsHidden() || panes[loop]->IsIgnoringInput())
+            continue;
 
-		panes[loop]->SetClipRect();
-		panes[loop]->Joystick(key, down);
-	}
+        panes[loop]->SetClipRect();
+        panes[loop]->Joystick(key, down);
+    }
 
-	Display->Reset();
+    Display->Reset();
 }
 
 // ***************************
@@ -659,332 +659,332 @@ void TScreen::Joystick(int key, BOOL down)
 
 PTScreen TScreen::ShowScreen(PTScreen screen, int ticks)
 {
-	if (!screen)
-		return NULL;
+    if (!screen)
+        return NULL;
 
-	CurrentScreen = screen;
+    CurrentScreen = screen;
 
-	CurrentScreen->screenframes = 0;
+    CurrentScreen->screenframes = 0;
 
-	// clear the screen
-//	Display->Clear(0, 0xffff, 0, DM_NOCLIP | DM_NORESTORE);
-//	Display->FlipPage();
-//	Display->Clear(0, 0xffff, 0, DM_NOCLIP | DM_NORESTORE);
+    // clear the screen
+//  Display->Clear(0, 0xffff, 0, DM_NOCLIP | DM_NORESTORE);
+//  Display->FlipPage();
+//  Display->Clear(0, 0xffff, 0, DM_NOCLIP | DM_NORESTORE);
 
-	BOOL init = CurrentScreen->BeginScreen();
+    BOOL init = CurrentScreen->BeginScreen();
 
-	if (init)
-	{
-		CurrentScreen->TimerLoop(ticks);
-		CurrentScreen->EndScreen();
-	}
+    if (init)
+    {
+        CurrentScreen->TimerLoop(ticks);
+        CurrentScreen->EndScreen();
+    }
 
-	CurrentScreen = NULL;
+    CurrentScreen = NULL;
 
-	if (init && !Closing)
-		return screen->GetNextScreen();
-	else
-		return NULL;
+    if (init && !Closing)
+        return screen->GetNextScreen();
+    else
+        return NULL;
 }
 
 BOOL TScreen::TimerTick(BOOL draw)
 {
-	// Make sure we pick up where we left off if TimerTick() is called recursively
-	// from the message handling functions!
-	static BOOL washandlingmessage = FALSE;
-	MSG  Message;
+    // Make sure we pick up where we left off if TimerTick() is called recursively
+    // from the message handling functions!
+    static BOOL washandlingmessage = FALSE;
+    MSG  Message;
 
-	HWND hwnd = MainWindow.Hwnd();
+    HWND hwnd = MainWindow.Hwnd();
 
-	if (hwnd == NULL || Closing || !Display->Width())
-		return FALSE;
+    if (hwnd == NULL || Closing || !Display->Width())
+        return FALSE;
 
   // Update game toggles here...
   // ***************************
 
   // Allow scrolling of ZBuffer if game speed is high enough
-	if (GameSpeed >= 4)
-		NoScrollZBuffer = FALSE;
+    if (GameSpeed >= 4)
+        NoScrollZBuffer = FALSE;
 
   // ***************************
   // End update game toggles
 
-	if (!washandlingmessage)
-	{
-	  // Process windows messages
-		washandlingmessage = TRUE;
-		while (PeekMessage(&Message, hwnd, 0, 0, PM_REMOVE))
-		{
-			if (Message.message == WM_QUIT)
-			{	
-				Closing = TRUE;
-				return FALSE;
-			}
-			if (Message.message == WM_PAINT)
-				ValidateRect(hwnd, NULL);
-			else
-			{
-				TranslateMessage(&Message);
-				DispatchMessage(&Message);
-			}
-		}
+    if (!washandlingmessage)
+    {
+      // Process windows messages
+        washandlingmessage = TRUE;
+        while (PeekMessage(&Message, hwnd, 0, 0, PM_REMOVE))
+        {
+            if (Message.message == WM_QUIT)
+            {   
+                Closing = TRUE;
+                return FALSE;
+            }
+            if (Message.message == WM_PAINT)
+                ValidateRect(hwnd, NULL);
+            else
+            {
+                TranslateMessage(&Message);
+                DispatchMessage(&Message);
+            }
+        }
 
-	  // If no current screen, forget it!
-		if (CurrentScreen != this || Closing)
-			return FALSE;
+      // If no current screen, forget it!
+        if (CurrentScreen != this || Closing)
+            return FALSE;
 
-	  // Simulate mouse messages by polling the mouse
-		POINT cursorpos;
-		GetCursorPos(&cursorpos);
-		RECT r;
-		GetClientRect(MainWindow.Hwnd(), &r);
-		ClientToScreen(MainWindow.Hwnd(), (LPPOINT)&r);
-		cursorpos.x -= r.left;
-		cursorpos.y -= r.top;
+      // Simulate mouse messages by polling the mouse
+        POINT cursorpos;
+        GetCursorPos(&cursorpos);
+        RECT r;
+        GetClientRect(MainWindow.Hwnd(), &r);
+        ClientToScreen(MainWindow.Hwnd(), (LPPOINT)&r);
+        cursorpos.x -= r.left;
+        cursorpos.y -= r.top;
 
-		// only bother if it's changed
-		if (cursorx != cursorpos.x || cursory != cursorpos.y)
-		{
-			cursorx = cursorpos.x;
-			cursory = cursorpos.y;
+        // only bother if it's changed
+        if (cursorx != cursorpos.x || cursory != cursorpos.y)
+        {
+            cursorx = cursorpos.x;
+            cursory = cursorpos.y;
 
-			CurrentScreen->MouseMove(mousebutton, cursorx, cursory);
-		}
+            CurrentScreen->MouseMove(mousebutton, cursorx, cursory);
+        }
 
-	  // Get joystick state and send down to screen
-		DWORD joystate, joychanged;
-		GetJoystickState(0, &joystate, &joychanged);
-		if (joychanged)
-		{
-			int joykey = -1;
-			BOOL joydown = FALSE;
+      // Get joystick state and send down to screen
+        DWORD joystate, joychanged;
+        GetJoystickState(0, &joystate, &joychanged);
+        if (joychanged)
+        {
+            int joykey = -1;
+            BOOL joydown = FALSE;
 
-			while (GetJoystickKeyCode(joystate, joychanged, joykey, joydown))
-				Joystick(joykey, joydown);
-		}
+            while (GetJoystickKeyCode(joystate, joychanged, joykey, joydown))
+                Joystick(joykey, joydown);
+        }
 
-	  // Reset clipping stuff
-		Display->Reset();
+      // Reset clipping stuff
+        Display->Reset();
 
-	  // Resize pane before pulsing (and possibly setting new map position)
-		for (loop = 0; loop < messages.NumItems(); loop++)
-		{
-			if (messages[loop].pane)
-				PaneMessage(message[loop]);
-			else
-				activepane
-				for (loop2 = 0; loop2 < 
+      // Resize pane before pulsing (and possibly setting new map position)
+        for (loop = 0; loop < messages.NumItems(); loop++)
+        {
+            if (messages[loop].pane)
+                PaneMessage(message[loop]);
+            else
+                activepane
+                for (loop2 = 0; loop2 < 
 
-		for (int loop = 0; loop < panes.NumItems(); loop++)
-		{
-			if (!panes.Used(loop))
-				continue;
+        for (int loop = 0; loop < panes.NumItems(); loop++)
+        {
+            if (!panes.Used(loop))
+                continue;
 
-		  // Update pane sizes
-			if (panes[loop]->WasResized())
-				panes[loop]->PaneResized();
-		}
+          // Update pane sizes
+            if (panes[loop]->WasResized())
+                panes[loop]->PaneResized();
+        }
 
-	  // Pulse the screen (and it's panes) before we do any drawring....
-		Pulse();	
+      // Pulse the screen (and it's panes) before we do any drawring....
+        Pulse();    
 
-	  // Now update pane scroll position (after pulsing and possibly setting new map pos)
-		for (loop = 0; loop < panes.NumItems(); loop++)
-		{
-			if (!panes.Used(loop))
-				continue;
+      // Now update pane scroll position (after pulsing and possibly setting new map pos)
+        for (loop = 0; loop < panes.NumItems(); loop++)
+        {
+            if (!panes.Used(loop))
+                continue;
 
-		  // Set panes do dirty if screen is dirty
-			if (dirty)
-				panes[loop]->SetDirty(TRUE);	
+          // Set panes do dirty if screen is dirty
+            if (dirty)
+                panes[loop]->SetDirty(TRUE);    
 
-		  // Update the scrollpos for panes	
-			panes[loop]->UpdateBackgroundScrollPos();
-		}
+          // Update the scrollpos for panes 
+            panes[loop]->UpdateBackgroundScrollPos();
+        }
 
-	  // Calls the DrawBackground() function
-	  // Note: All drawing is done BEFORE the dirty rectangle restore functions are called.
-	  // This means that you can actually override what the restore system would do before
-	  // it has a chance to do it.  Any background draws will merge their update rectangles
-	  // with the restore rects in the restore system, thus reducing the total amount of the
-	  // display to restore.  If you update the entire background, all restore rects are
-	  // deleted (this actually happens during screen scrolling).
+      // Calls the DrawBackground() function
+      // Note: All drawing is done BEFORE the dirty rectangle restore functions are called.
+      // This means that you can actually override what the restore system would do before
+      // it has a chance to do it.  Any background draws will merge their update rectangles
+      // with the restore rects in the restore system, thus reducing the total amount of the
+      // display to restore.  If you update the entire background, all restore rects are
+      // deleted (this actually happens during screen scrolling).
 
-		if (draw)
-			DrawBackground();
+        if (draw)
+            DrawBackground();
 
-	  // Restores the video buffer
-		if (draw)
-			Display->RestoreBackgroundAreas();
+      // Restores the video buffer
+        if (draw)
+            Display->RestoreBackgroundAreas();
 
-	}
+    }
 
-	washandlingmessage = FALSE;
+    washandlingmessage = FALSE;
 
  // Call screen's Animate() virtual function
-	Display->Reset();
-	Animate(draw);
+    Display->Reset();
+    Animate(draw);
 
  // Draw new mouse cursor
-	Display->Reset();
-	if (draw)
-		DrawMouseCursor();	
+    Display->Reset();
+    if (draw)
+        DrawMouseCursor();  
 
-	return TRUE;
+    return TRUE;
 }
 
 BOOL TScreen::TimerLoop(long ticks)
 {
-	DWORD totalticks, totalframes, skipframes;
-	float showrate, framerate, frameaccum;
-	BOOL lastskipped;
+    DWORD totalticks, totalframes, skipframes;
+    float showrate, framerate, frameaccum;
+    BOOL lastskipped;
 
-	showrate = framerate = (float)FRAMERATE;
-	frameaccum = (float)0.0;
-	totalticks = totalframes = skipframes = 0;
-	lastskipped = FALSE;
+    showrate = framerate = (float)FRAMERATE;
+    frameaccum = (float)0.0;
+    totalticks = totalframes = skipframes = 0;
+    lastskipped = FALSE;
 
-	while (TRUE)
-	{
-	  // If clock has ticked, call timertick
-		if (!DisableTimer)
-			Timer.WaitForTick();
+    while (TRUE)
+    {
+      // If clock has ticked, call timertick
+        if (!DisableTimer)
+            Timer.WaitForTick();
 
-		while (PauseWhenNotActive && !AppActive)
-		{
-		  // Process windows messages
-			MSG  Message;
-			HWND hwnd = MainWindow.Hwnd();
+        while (PauseWhenNotActive && !AppActive)
+        {
+          // Process windows messages
+            MSG  Message;
+            HWND hwnd = MainWindow.Hwnd();
 
-			GetMessage(&Message, hwnd, 0, 0);		// use getmessage instead of peekmessage for pause
+            GetMessage(&Message, hwnd, 0, 0);       // use getmessage instead of peekmessage for pause
 
-			if (Message.message == WM_QUIT)
-			{
-				Closing = TRUE;
-				return FALSE;
-			}
-			if (Message.message == WM_PAINT)
-				ValidateRect(hwnd, NULL);
-			else
-			{
-				TranslateMessage(&Message);
-				DispatchMessage(&Message);
-			}
-		}
-		
-		if (CurrentScreen)
-		{
-			static DWORD lastcount;
+            if (Message.message == WM_QUIT)
+            {
+                Closing = TRUE;
+                return FALSE;
+            }
+            if (Message.message == WM_PAINT)
+                ValidateRect(hwnd, NULL);
+            else
+            {
+                TranslateMessage(&Message);
+                DispatchMessage(&Message);
+            }
+        }
+        
+        if (CurrentScreen)
+        {
+            static DWORD lastcount;
 
-			LastFrameTicks = GetTickCount() - lastcount;
-			lastcount = GetTickCount();
+            LastFrameTicks = GetTickCount() - lastcount;
+            lastcount = GetTickCount();
 
-			totalticks += LastFrameTicks;
-			totalframes++;
-			if (lastskipped)
-				skipframes++;
+            totalticks += LastFrameTicks;
+            totalframes++;
+            if (lastskipped)
+                skipframes++;
 
-			if (PauseFrameSkip)
-				totalframes = totalticks = skipframes = 0;
+            if (PauseFrameSkip)
+                totalframes = totalticks = skipframes = 0;
 
-			if (totalframes >= 5)
-			{
-				showrate = (float)1000.0 / (float)(totalticks / totalframes);
-				int realframes = totalframes - skipframes;
-				if (realframes <= 0)
-					realframes = 1; 
-				framerate = (float)1000.0 / (float)(totalticks / realframes);
+            if (totalframes >= 5)
+            {
+                showrate = (float)1000.0 / (float)(totalticks / totalframes);
+                int realframes = totalframes - skipframes;
+                if (realframes <= 0)
+                    realframes = 1; 
+                framerate = (float)1000.0 / (float)(totalticks / realframes);
 
-				if (skipframes >= totalframes)
-					PauseFrameSkip = TRUE;
+                if (skipframes >= totalframes)
+                    PauseFrameSkip = TRUE;
 
-				totalticks = 0;
-				totalframes = 0;
-				skipframes = 0;
-			}
+                totalticks = 0;
+                totalframes = 0;
+                skipframes = 0;
+            }
 
-			if (ShowFramesPerSecond)
-			{
-				char buf[80];
-				int usleep = MapPane.GetUpdateSleep();
-				sprintf(buf, "Frame rate: %4.1f %4.1f %d - %s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s", showrate, framerate, usleep,
-					(SmoothScroll)?"Scr ":"",
-					(NoFrameSkip)?"NSkp ":"",
-					(NoScrollZBuffer)?"NSZb ":"",
-					(ShowDrawing)?"Shw ":"",
-					(NoNormals)?"NNrm ":"",
-					(ClearBeforeDraw)?"Clr ":"",
-					(FlatShade)?"FSh ":"",
-					(DitherEnable)?"Dth ":"",
-					(BlendEnable)?"Bln ":"",
-					(ZEnable)?"Zbf ":"",
-					(SpecularEnable)?"Spc ":"",
-					(UseTextures)?"Tex ":"",
-					(BilinearFilter)?"Flt ":"",
-					(NoUpdateRects)?"NUp ":"",
-					(Show3D)?"3D ":"",
-					(GridSnap)?"Grd ":"",
-					(UseDrawPrimitive)?"Dpr ":"",
-					(NoPulseObjs)?"NPls ":"",
-					(NoAnimateObjs)?"NAni ":"",
-					(Interpolate)?"":"NInt ",
-					(NoAI)?"NAI ":"");
-				Display->Reset(); // Reset display clipping rect
-				Display->WriteText(buf, 
-					MapPane.GetPosX() + 10,
-					MapPane.GetPosY() + 10,
-					1, SystemFont, NULL, DM_TRANSPARENT | DM_ALIAS);
-			}
-			
-			frameaccum += framerate; // Accumulator is greater than framerate to draw a frame
+            if (ShowFramesPerSecond)
+            {
+                char buf[80];
+                int usleep = MapPane.GetUpdateSleep();
+                sprintf(buf, "Frame rate: %4.1f %4.1f %d - %s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s", showrate, framerate, usleep,
+                    (SmoothScroll)?"Scr ":"",
+                    (NoFrameSkip)?"NSkp ":"",
+                    (NoScrollZBuffer)?"NSZb ":"",
+                    (ShowDrawing)?"Shw ":"",
+                    (NoNormals)?"NNrm ":"",
+                    (ClearBeforeDraw)?"Clr ":"",
+                    (FlatShade)?"FSh ":"",
+                    (DitherEnable)?"Dth ":"",
+                    (BlendEnable)?"Bln ":"",
+                    (ZEnable)?"Zbf ":"",
+                    (SpecularEnable)?"Spc ":"",
+                    (UseTextures)?"Tex ":"",
+                    (BilinearFilter)?"Flt ":"",
+                    (NoUpdateRects)?"NUp ":"",
+                    (Show3D)?"3D ":"",
+                    (GridSnap)?"Grd ":"",
+                    (UseDrawPrimitive)?"Dpr ":"",
+                    (NoPulseObjs)?"NPls ":"",
+                    (NoAnimateObjs)?"NAni ":"",
+                    (Interpolate)?"":"NInt ",
+                    (NoAI)?"NAI ":"");
+                Display->Reset(); // Reset display clipping rect
+                Display->WriteText(buf, 
+                    MapPane.GetPosX() + 10,
+                    MapPane.GetPosY() + 10,
+                    1, SystemFont, NULL, DM_TRANSPARENT | DM_ALIAS);
+            }
+            
+            frameaccum += framerate; // Accumulator is greater than framerate to draw a frame
 
-		  // Do we draw this frame?
-			if (frameaccum > (FRAMERATE - 0.5) ||				// Frame rate caught up or..
-				firstframe || PauseFrameSkip || NoFrameSkip ||  // game flags say draw every frame or..
-				VideoCapture.IsCapturing())						// if capturing video frames
-			{
-				PauseFrameSkip = FALSE;			// resume normal frame skipping
+          // Do we draw this frame?
+            if (frameaccum > (FRAMERATE - 0.5) ||               // Frame rate caught up or..
+                firstframe || PauseFrameSkip || NoFrameSkip ||  // game flags say draw every frame or..
+                VideoCapture.IsCapturing())                     // if capturing video frames
+            {
+                PauseFrameSkip = FALSE;         // resume normal frame skipping
 
-				Timer.ResetTick();
-				if (frameaccum > (float)100.0)
-					frameaccum = (float)0.0;
-				else
-					frameaccum -= FRAMERATE;
+                Timer.ResetTick();
+                if (frameaccum > (float)100.0)
+                    frameaccum = (float)0.0;
+                else
+                    frameaccum -= FRAMERATE;
 
-				if (!firstframe)
-					Display->FlipPage(TRUE);  // Don't flip page the first time
-				firstframe = FALSE;
+                if (!firstframe)
+                    Display->FlipPage(TRUE);  // Don't flip page the first time
+                firstframe = FALSE;
 
-				if (!CurrentScreen->TimerTick(TRUE))
-					return FALSE;
+                if (!CurrentScreen->TimerTick(TRUE))
+                    return FALSE;
 
-				if (VideoCapture.IsCapturing())
-					VideoCapture.SaveFrame();  
+                if (VideoCapture.IsCapturing())
+                    VideoCapture.SaveFrame();  
 
-				screenframes++;
+                screenframes++;
 
-				lastskipped = FALSE;
-			}
-			else
-			{
-				if (!CurrentScreen->TimerTick(FALSE))
-					return FALSE;
+                lastskipped = FALSE;
+            }
+            else
+            {
+                if (!CurrentScreen->TimerTick(FALSE))
+                    return FALSE;
 
-				screenframes++;
+                screenframes++;
 
-				lastskipped = TRUE;
-			}
-		}
+                lastskipped = TRUE;
+            }
+        }
 
-		if (ticks)
-		{
-			ticks--;
-			if (!ticks)
-				return TRUE;
-		}
-	}
+        if (ticks)
+        {
+            ticks--;
+            if (!ticks)
+                return TRUE;
+        }
+    }
 
-	return FALSE;
+    return FALSE;
 }
 
 // *******************
@@ -993,30 +993,30 @@ BOOL TScreen::TimerLoop(long ticks)
 
 BOOL TPane::Initialize() 
 { 
-	if (isopen)
-		return TRUE;
-	
-	x = newx; y = newy; width = newwidth; height = newheight;
+    if (isopen)
+        return TRUE;
+    
+    x = newx; y = newy; width = newwidth; height = newheight;
 
-	backgroundbuffer = -1; 
-	oldscrollx = scrollx = newscrollx = oldscrolly = scrolly = newscrolly = 0;
-	dirty = TRUE;
-	ignoreinput = FALSE;
+    backgroundbuffer = -1; 
+    oldscrollx = scrollx = newscrollx = oldscrolly = scrolly = newscrolly = 0;
+    dirty = TRUE;
+    ignoreinput = FALSE;
 
   // Create any background buffers for this pane
-	CreateBackgroundBuffers();
+    CreateBackgroundBuffers();
 
-	isopen = TRUE;
+    isopen = TRUE;
 
-	return TRUE; 
+    return TRUE; 
 }
 
 void TPane::Close()
 {
-  // Free all background buffers for this pane	
-	FreeBackgroundBuffers();
+  // Free all background buffers for this pane  
+    FreeBackgroundBuffers();
 
-	isopen = FALSE;
+    isopen = FALSE;
 }
 
 // Causes the pane to be immediately shown on the screen.  Useful for when
@@ -1024,7 +1024,7 @@ void TPane::Close()
 // timer tick.
 void TPane::PutToScreen()
 {
-	Display->PutToScreen(x, y, width, height);
+    Display->PutToScreen(x, y, width, height);
 }
 
 // This function can be called to draw a pane immediately (instead of waiting for the
@@ -1034,38 +1034,38 @@ void TPane::PutToScreen()
 // to render the results to the display.
 void TPane::Draw()
 {
-	if (!IsOpen() || IsHidden())
-		return;
+    if (!IsOpen() || IsHidden())
+        return;
 
-	SClipState cs;
-	Display->SaveClipState(cs);
+    SClipState cs;
+    Display->SaveClipState(cs);
 
-	SetClipRect();
+    SetClipRect();
 
-	Pulse();
-	DrawBackground();
-	Animate(TRUE);
+    Pulse();
+    DrawBackground();
+    Animate(TRUE);
 
-	Display->RestoreClipState(cs);
+    Display->RestoreClipState(cs);
 }
 
 
 void TPane::SetClipRect()
 {
-	Display->SetOrigin(x - scrollx, y - scrolly);
-	Display->SetClipRect(x, y, width, height);
-	Display->SetClipMode(CLIP_EDGES);
+    Display->SetOrigin(x - scrollx, y - scrolly);
+    Display->SetClipRect(x, y, width, height);
+    Display->SetClipMode(CLIP_EDGES);
 }
 
 void TPane::UpdateBackgroundScrollPos()
 {
-	oldscrollx = scrollx; oldscrolly = scrolly;
-	scrollx = newscrollx; scrolly = newscrolly;
-	if (backgroundbuffer >= 0)
-		Display->ScrollBackground(backgroundbuffer, scrollx, scrolly);
-}	
+    oldscrollx = scrollx; oldscrolly = scrolly;
+    scrollx = newscrollx; scrolly = newscrolly;
+    if (backgroundbuffer >= 0)
+        Display->ScrollBackground(backgroundbuffer, scrollx, scrolly);
+}   
 
 void TPane::DrawRestoreRect(int x, int y, int width, int height, DWORD drawmode)
 {
-	Display->DrawRestoreRect(backgroundbuffer, x, y, width, height, drawmode);
+    Display->DrawRestoreRect(backgroundbuffer, x, y, width, height, drawmode);
 }

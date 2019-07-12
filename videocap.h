@@ -27,34 +27,34 @@ _CLASSDEF(TVideoCapture)
 class TVideoCapture
 {
   public:
-	BOOL Initialize(int bufmegs = 64, int fps = FRAMERATE);
-	  // Initializes the capture system (allocates buffer of frame * framerate * secs.. 
-	  // this buffer can be HUGE, so make sure 'secs' value is reasonable)
-	void Close();
-	  // Closes the capture object and deletes all buffers
-	void Start();
-	  // Start a capture session
-	void Stop();
-	  // Stop capturing video
-	void SaveFrame();
-	  // Called by system to save the current video frame
-	void Flush();
-	  // Flushes the current video buffers
-	BOOL IsCapturing() { return saving; }
-	  // Returns TRUE if the capture system is setup to capture
-	  
+    BOOL Initialize(int bufmegs = 64, int fps = FRAMERATE);
+      // Initializes the capture system (allocates buffer of frame * framerate * secs.. 
+      // this buffer can be HUGE, so make sure 'secs' value is reasonable)
+    void Close();
+      // Closes the capture object and deletes all buffers
+    void Start();
+      // Start a capture session
+    void Stop();
+      // Stop capturing video
+    void SaveFrame();
+      // Called by system to save the current video frame
+    void Flush();
+      // Flushes the current video buffers
+    BOOL IsCapturing() { return saving; }
+      // Returns TRUE if the capture system is setup to capture
+      
   private:
-	int framespersecond, seconds;
-	BOOL saving;
-	BYTE *buffer;
-	TBitmapSurface **bmsurface;
-	int totframes;
-	int frame;
-	int bufframe;
-	int bufsize;
-	int framesize;
-	int frameaccum;
-	int frameadd;
+    int framespersecond, seconds;
+    BOOL saving;
+    BYTE *buffer;
+    TBitmapSurface **bmsurface;
+    int totframes;
+    int frame;
+    int bufframe;
+    int bufsize;
+    int framesize;
+    int frameaccum;
+    int frameadd;
 };
 
 #endif

@@ -28,68 +28,68 @@ typedef void (*DRAWCALLBACK)(PSDrawBlock db, PSDrawParam dp);
 
 struct SDrawBlock
 {
-    DWORD srcbitmapflags;			// Bitmap Flags
-    DWORD dstbitmapflags;			// Bitmap Flags
-	void  *dest;					// Pointer to Dest, Dest Z, and Dest Normal buffers
+    DWORD srcbitmapflags;           // Bitmap Flags
+    DWORD dstbitmapflags;           // Bitmap Flags
+    void  *dest;                    // Pointer to Dest, Dest Z, and Dest Normal buffers
     WORD  *dzbuffer;
     WORD  *dnormals;
-    int   dbufwidth;   				// Dest buffer width
-    int   dbufheight;   			// Dest buffer height
-	int   dstride;					// Dest stride
-	int   dzstride;					// Dest zbuffer stride
-//	int	  dnstride;					// Dest normal stride
-    void  *source;					// Pointer to Src, Src Z, and Src Normal buffers
+    int   dbufwidth;                // Dest buffer width
+    int   dbufheight;               // Dest buffer height
+    int   dstride;                  // Dest stride
+    int   dzstride;                 // Dest zbuffer stride
+//  int   dnstride;                 // Dest normal stride
+    void  *source;                  // Pointer to Src, Src Z, and Src Normal buffers
     WORD  *szbuffer;
     WORD  *snormals;
-    int   sbufwidth;   				// Src buffer width
-    int   sbufheight;   			// Src buffer height
-	int   sstride;					// Src stride
-	int   szstride;					// Src zbuffer stride
-//	int	  snstride;					// Src normal stride
+    int   sbufwidth;                // Src buffer width
+    int   sbufheight;               // Src buffer height
+    int   sstride;                  // Src stride
+    int   szstride;                 // Src zbuffer stride
+//  int   snstride;                 // Src normal stride
 
-    WORD  *palette;					// Palette
-	BYTE  *alpha;	   				// Alpha buffer pointer
-    BYTE  *alias;	   				// Alpha buffer pointer
+    WORD  *palette;                 // Palette
+    BYTE  *alpha;                   // Alpha buffer pointer
+    BYTE  *alias;                   // Alpha buffer pointer
 
-    DWORD keycolor;					// Color to use as transparent
+    DWORD keycolor;                 // Color to use as transparent
     
-	BOOL operator= (PSDrawBlock drawblock)
+    BOOL operator= (PSDrawBlock drawblock)
         { memcpy(drawblock, this, sizeof(this)); return TRUE; };
       // Redefines '=' to allow assigning strings.
 };
 
 struct SDrawParam
 {
-    DWORD drawmode;				    // Drawing mode. See Exiledef.h for description
-	DRAWFUNCTION func;				// Drawing function
+    DWORD drawmode;                 // Drawing mode. See Exiledef.h for description
+    DRAWFUNCTION func;              // Drawing function
 
-	DRAWCALLBACK callback;			// Drawing callback function (for adding dirty rectangles, etc.)	
+    DRAWCALLBACK callback;          // Drawing callback function (for adding dirty rectangles, etc.)    
 
-	void *data;						// Other data (such as text for draw tex function)
+    void *data;                     // Other data (such as text for draw tex function)
 
-    int   originx;					// Upper left of drawing region
+    int   originx;                  // Upper left of drawing region
     int   originy;
 
-    int   clipx;  					// Clipping rectangle 
+    int   clipx;                    // Clipping rectangle 
     int   clipy;
     int   clipwidth;
     int   clipheight;
-									
-    int   dx;   					// Rectangle inside dest buffer to use
-    int   dy;   					
+                                    
+    int   dx;                       // Rectangle inside dest buffer to use
+    int   dy;                       
     int   dwidth;   
     int   dheight;  
 
-    int   sx;   					// Rectangle inside src buffer to use
+    int   sx;                       // Rectangle inside src buffer to use
     int   sy;   
     int   swidth;   
     int   sheight;  
-	
-	DWORD color;					// color used to draw image
-	DWORD intensity;				// intensity of translucent/alpha draw
+    
+    DWORD color;                    // color used to draw image
+    DWORD intensity;                // intensity of translucent/alpha draw
 
-    WORD  zpos;						// Z position of image
-	WORD  normal;					// Normal position for image
+    WORD  zpos;                     // Z position of image
+    WORD  normal;                   // Normal position for image
 
     BOOL operator= (PSDrawParam drawparam)
         { memcpy(drawparam, this, sizeof(this)); return TRUE; };
@@ -109,25 +109,25 @@ struct SColor
 _STRUCTDEF(SLineParam)
 struct SLineParam
 {
-	int x1, y1, x2, y2;
+    int x1, y1, x2, y2;
 };
 
 // Data pointer points to this when drawing text
 _STRUCTDEF(STextParam)
 struct STextParam
 {
-	int startline;
-	int numlines;
-	char *text;
-	TFont *font;
-	int wrapwidth;
-	int justify;
-	BOOL draw;
-	int length;
-	BOOL noclip;
-	int linespace;
+    int startline;
+    int numlines;
+    char *text;
+    TFont *font;
+    int wrapwidth;
+    int justify;
+    BOOL draw;
+    int length;
+    BOOL noclip;
+    int linespace;
 };
-	
+    
 // ******************************
 // * Low Level Graphic Routines *
 // ******************************
@@ -163,11 +163,11 @@ inline BOOL SubtractRect(int x, int y, int w, int h, RSRect src, PSRect rects, i
   // The Subtract rect function basically calculates an inverse of the rect intersection
 
 BOOL Clip(PSDrawBlock db, PSDrawParam dp, PSDrawParam dparray, 
-	int &numrects);
+    int &numrects);
   // Clipping Routine..  Takes one draw rectangle, clips it, and optionally wraps clips it to 4 other rects.
 
 BOOL StretchClip(PSDrawBlock db, PSDrawParam dp, PSDrawParam dparray, 
-	int &numrects);
+    int &numrects);
   // Stretch Clipping Routine.
 
 // Put Routines
@@ -175,7 +175,7 @@ BOOL Put(PSDrawBlock db, PSDrawParam dp);
   // Normal Draw Routine.
 BOOL Put8(PSDrawBlock db, PSDrawParam dp);
   // Normal Draw Routine for 8 bit bitmaps. Draws to 32 bit surface
-BOOL Put88(PSDrawBlock db, PSDrawParam dp);	
+BOOL Put88(PSDrawBlock db, PSDrawParam dp); 
   // Draws 8 bit bitmap to 8 bit surface.
 BOOL Put816(PSDrawBlock db, PSDrawParam dp);
   // Normal Draw Routine for 8 bit bitmaps. Draws to 16 bit surface.
@@ -198,9 +198,9 @@ BOOL TransPut(PSDrawBlock db, PSDrawParam dp);
   // Normal Transparent Draw Routine.
 BOOL TransPut8(PSDrawBlock db, PSDrawParam dp);
   // Normal Transparent Draw Routine for 8 bit bitmap. Draws to 32 bit surface
-BOOL TransPut816(PSDrawBlock db, PSDrawParam dp);	
+BOOL TransPut816(PSDrawBlock db, PSDrawParam dp);   
   // Normal Transparent Draw Routine for 8 bit bitmap. Draws to 16 bit surface
-BOOL TransPut88(PSDrawBlock db, PSDrawParam dp);	
+BOOL TransPut88(PSDrawBlock db, PSDrawParam dp);    
   // Normal Transparent Draw Routine for 8 bit bitmap. Draws to 8 bit surface
 BOOL TransPutKey(PSDrawBlock db, PSDrawParam dp);
   // Normal Transparent Draw Routine with nonzero keycolor.
@@ -345,94 +345,94 @@ WORD ZFindChunk(PSDrawBlock db, PSDrawParam dp);
   // Return the first uncliped zbuffer point in a chunked bitmap
 
 inline void SetupZDraw(int *bmwidth, int *bmheight, int *srcoff, int *srcadd, int *srczoff, int *srczadd,
-	int *dstoff, int *dstadd, int *dstzoff, int *dstzadd, PSDrawBlock db, PSDrawParam dp)
+    int *dstoff, int *dstadd, int *dstzoff, int *dstzadd, PSDrawBlock db, PSDrawParam dp)
 {
-	int srcbytes = 2;
-	if (db->srcbitmapflags & BM_8BIT) srcbytes = 1;
-	else if (db->srcbitmapflags & (BM_15BIT | BM_16BIT)) srcbytes = 2;
-	else if (db->srcbitmapflags & BM_24BIT) srcbytes = 3;
-	else if (db->srcbitmapflags & BM_32BIT) srcbytes = 4;
+    int srcbytes = 2;
+    if (db->srcbitmapflags & BM_8BIT) srcbytes = 1;
+    else if (db->srcbitmapflags & (BM_15BIT | BM_16BIT)) srcbytes = 2;
+    else if (db->srcbitmapflags & BM_24BIT) srcbytes = 3;
+    else if (db->srcbitmapflags & BM_32BIT) srcbytes = 4;
 
-	int dstbytes = 2;
-	if (db->dstbitmapflags & BM_8BIT) dstbytes = 1;
-	else if (db->dstbitmapflags & (BM_15BIT | BM_16BIT)) dstbytes = 2;
-	else if (db->dstbitmapflags & BM_24BIT) dstbytes = 3;
-	else if (db->dstbitmapflags & BM_32BIT) dstbytes = 4;
+    int dstbytes = 2;
+    if (db->dstbitmapflags & BM_8BIT) dstbytes = 1;
+    else if (db->dstbitmapflags & (BM_15BIT | BM_16BIT)) dstbytes = 2;
+    else if (db->dstbitmapflags & BM_24BIT) dstbytes = 3;
+    else if (db->dstbitmapflags & BM_32BIT) dstbytes = 4;
 
-	// Get offsets/add stuff
-	*dstoff  = (dp->dy + dp->originy) * db->dstride + dp->dx + dp->originx;
-	*dstadd  = db->dstride - dp->dwidth;
-		
-	*dstzoff  = (dp->dy + dp->originy) * db->dzstride + dp->dx + dp->originx;
-	*dstzadd  = db->dzstride - dp->dwidth;
+    // Get offsets/add stuff
+    *dstoff  = (dp->dy + dp->originy) * db->dstride + dp->dx + dp->originx;
+    *dstadd  = db->dstride - dp->dwidth;
+        
+    *dstzoff  = (dp->dy + dp->originy) * db->dzstride + dp->dx + dp->originx;
+    *dstzadd  = db->dzstride - dp->dwidth;
 
-	if (dp->drawmode & DM_REVERSEVERT)
-	{
-		*srcoff = (dp->sy + dp->sheight - 1) * db->sstride + dp->sx;
-		*srcadd = -db->sstride + dp->swidth;
-		*srczoff = (dp->sy + dp->sheight - 1) * db->szstride + dp->sx;
-		*srczadd = -db->szstride + dp->swidth;
-	}
-	else
-	{
-		*srcoff = dp->sy * db->sstride + dp->sx;
-		*srcadd = db->sstride - dp->swidth;
-		*srczoff = dp->sy * db->szstride + dp->sx;
-		*srczadd = db->szstride - dp->swidth;
-	}
-	
-	*bmwidth  = dp->swidth * srcbytes;
-	*bmheight = dp->sheight;
+    if (dp->drawmode & DM_REVERSEVERT)
+    {
+        *srcoff = (dp->sy + dp->sheight - 1) * db->sstride + dp->sx;
+        *srcadd = -db->sstride + dp->swidth;
+        *srczoff = (dp->sy + dp->sheight - 1) * db->szstride + dp->sx;
+        *srczadd = -db->szstride + dp->swidth;
+    }
+    else
+    {
+        *srcoff = dp->sy * db->sstride + dp->sx;
+        *srcadd = db->sstride - dp->swidth;
+        *srczoff = dp->sy * db->szstride + dp->sx;
+        *srczadd = db->szstride - dp->swidth;
+    }
+    
+    *bmwidth  = dp->swidth * srcbytes;
+    *bmheight = dp->sheight;
 
-	*dstoff = *dstoff * dstbytes;
-	*dstadd = *dstadd * dstbytes;
-	*dstzoff = *dstzoff * 2;
-	*dstzadd = *dstzadd * 2;
+    *dstoff = *dstoff * dstbytes;
+    *dstadd = *dstadd * dstbytes;
+    *dstzoff = *dstzoff * 2;
+    *dstzadd = *dstzadd * 2;
 
-	*srcoff = *srcoff * srcbytes;
-	*srcadd = *srcadd * srcbytes;
-	*srczoff = *srczoff * 2;
-	*srczadd = *srczadd * 2;
+    *srcoff = *srcoff * srcbytes;
+    *srcadd = *srcadd * srcbytes;
+    *srczoff = *srczoff * 2;
+    *srczadd = *srczadd * 2;
 }
 
 inline void SetupDraw(int *bmwidth, int *bmheight, int *srcoff, int *srcadd,
-	int *dstoff, int *dstadd, PSDrawBlock db, PSDrawParam dp)
+    int *dstoff, int *dstadd, PSDrawBlock db, PSDrawParam dp)
 {
-	int srcbytes = 2;
-	if (db->srcbitmapflags & BM_8BIT) srcbytes = 1;
-	else if (db->srcbitmapflags & (BM_15BIT | BM_16BIT)) srcbytes = 2;
-	else if (db->srcbitmapflags & BM_24BIT) srcbytes = 3;
-	else if (db->srcbitmapflags & BM_32BIT) srcbytes = 4;
+    int srcbytes = 2;
+    if (db->srcbitmapflags & BM_8BIT) srcbytes = 1;
+    else if (db->srcbitmapflags & (BM_15BIT | BM_16BIT)) srcbytes = 2;
+    else if (db->srcbitmapflags & BM_24BIT) srcbytes = 3;
+    else if (db->srcbitmapflags & BM_32BIT) srcbytes = 4;
 
-	int dstbytes = 2;
-	if (db->dstbitmapflags & BM_8BIT) dstbytes = 1;
-	else if (db->dstbitmapflags & (BM_15BIT | BM_16BIT)) dstbytes = 2;
-	else if (db->dstbitmapflags & BM_24BIT) dstbytes = 3;
-	else if (db->dstbitmapflags & BM_32BIT) dstbytes = 4;
+    int dstbytes = 2;
+    if (db->dstbitmapflags & BM_8BIT) dstbytes = 1;
+    else if (db->dstbitmapflags & (BM_15BIT | BM_16BIT)) dstbytes = 2;
+    else if (db->dstbitmapflags & BM_24BIT) dstbytes = 3;
+    else if (db->dstbitmapflags & BM_32BIT) dstbytes = 4;
 
-	// Get offsets/add stuff
-	*dstoff  = (dp->dy + dp->originy) * db->dstride + dp->dx + dp->originx;
-	*dstadd  = db->dstride - dp->dwidth;
-		
-	if (dp->drawmode & DM_REVERSEVERT)
-	{
-		*srcoff = (dp->sy + dp->sheight - 1) * db->sstride + dp->sx;
-		*srcadd = -db->sstride + dp->swidth;
-	}
-	else
-	{
-		*srcoff = dp->sy * db->sstride + dp->sx;
-		*srcadd = db->sstride - dp->swidth;
-	}
-	
-	*bmwidth  = dp->swidth * srcbytes;
-	*bmheight = dp->sheight;
+    // Get offsets/add stuff
+    *dstoff  = (dp->dy + dp->originy) * db->dstride + dp->dx + dp->originx;
+    *dstadd  = db->dstride - dp->dwidth;
+        
+    if (dp->drawmode & DM_REVERSEVERT)
+    {
+        *srcoff = (dp->sy + dp->sheight - 1) * db->sstride + dp->sx;
+        *srcadd = -db->sstride + dp->swidth;
+    }
+    else
+    {
+        *srcoff = dp->sy * db->sstride + dp->sx;
+        *srcadd = db->sstride - dp->swidth;
+    }
+    
+    *bmwidth  = dp->swidth * srcbytes;
+    *bmheight = dp->sheight;
 
-	*dstoff = *dstoff * dstbytes;
-	*dstadd = *dstadd * dstbytes;
+    *dstoff = *dstoff * dstbytes;
+    *dstadd = *dstadd * dstbytes;
 
-	*srcoff = *srcoff * srcbytes;
-	*srcadd = *srcadd * srcbytes;
+    *srcoff = *srcoff * srcbytes;
+    *srcadd = *srcadd * srcbytes;
 }
 
 #define SETUP_DRAW\
@@ -443,32 +443,32 @@ inline void SetupDraw(int *bmwidth, int *bmheight, int *srcoff, int *srcadd,
     int bmheight, bmwidth, srcoff, srcadd, srczoff, srczadd, dstoff, dstadd, dstzoff, dstzadd;\
     SetupZDraw(&bmwidth, &bmheight, &srcoff, &srcadd, &srczoff, &srczadd, &dstoff, &dstadd, &dstzoff, &dstzadd, db, dp);
 
-// Fills out default draw param struct	
+// Fills out default draw param struct  
 inline void MakeDP(SDrawParam &dp, 
-	int x, int y, int sx, int sy, int swidth, int sheight, DWORD drawmode)
+    int x, int y, int sx, int sy, int swidth, int sheight, DWORD drawmode)
 {
-	dp.drawmode  = drawmode;
-	dp.func		 = NULL;
-	dp.callback	 = NULL;
-	dp.data		 = NULL;
-	dp.dx        = x;
-	dp.dy        = y;
-	dp.dwidth    = swidth;
-	dp.dheight   = sheight;
-	dp.sx        = sx;
-	dp.sy        = sy;
-	dp.swidth    = swidth;
-	dp.sheight   = sheight;
-	dp.zpos      = dp.normal = 0;
-	dp.clipx     = dp.clipy = dp.clipwidth = dp.clipheight = dp.originx = dp.originy = 0;
-	dp.intensity = 31; dp.color = 0;
+    dp.drawmode  = drawmode;
+    dp.func      = NULL;
+    dp.callback  = NULL;
+    dp.data      = NULL;
+    dp.dx        = x;
+    dp.dy        = y;
+    dp.dwidth    = swidth;
+    dp.dheight   = sheight;
+    dp.sx        = sx;
+    dp.sy        = sy;
+    dp.swidth    = swidth;
+    dp.sheight   = sheight;
+    dp.zpos      = dp.normal = 0;
+    dp.clipx     = dp.clipy = dp.clipwidth = dp.clipheight = dp.originx = dp.originy = 0;
+    dp.intensity = 31; dp.color = 0;
 }
 
 inline void MakeDPNoSrc(SDrawParam &dp, int x, int y, int width, int height, DWORD drawmode)
 {
-	MakeDP(dp, x, y, 0, 0, 0, 0, drawmode);
-	dp.dwidth = width;
-	dp.dheight = height;
+    MakeDP(dp, x, y, 0, 0, 0, 0, drawmode);
+    dp.dwidth = width;
+    dp.dheight = height;
 }
 
 #endif

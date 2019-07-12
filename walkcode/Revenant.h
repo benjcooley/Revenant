@@ -95,68 +95,68 @@ extern HANDLE PauseMutex;
 extern char RunPath[MAX_PATH];
 extern char SavePath[MAX_PATH];
 
-extern char ClassDefPath[MAX_PATH];	// Where to load / save Class.Def
+extern char ClassDefPath[MAX_PATH]; // Where to load / save Class.Def
 extern char ExileRCPath[MAX_PATH];  // Where to run ExileRC from & where
-	 								// the graphics for the resources are
-extern char ResourcePath[MAX_PATH];	// Where to read / write the resources
-extern char BaseMapPath[MAX_PATH];	// Where the untouched version of the game map is stored
-extern char CurMapPath[MAX_PATH];	// Where the current map is stored
+                                    // the graphics for the resources are
+extern char ResourcePath[MAX_PATH]; // Where to read / write the resources
+extern char BaseMapPath[MAX_PATH];  // Where the untouched version of the game map is stored
+extern char CurMapPath[MAX_PATH];   // Where the current map is stored
 
 // Multi-Monitor Variables (Note: Additional Monitor globals are defined in MONITOR.H)
-extern int MonitorNum;			// Monitor game will run on (default is 1, primary)
-extern int MonitorX, MonitorY;	// Relative position of monitor in desktop coordinates
-extern int MonitorW, MonitorH;	// Width and height of monitor (before changing video modes)
+extern int MonitorNum;          // Monitor game will run on (default is 1, primary)
+extern int MonitorX, MonitorY;  // Relative position of monitor in desktop coordinates
+extern int MonitorW, MonitorH;  // Width and height of monitor (before changing video modes)
 extern char DXDriverMatchStr[FILENAMELEN]; // Will use first DX driver who's description contains the given string (not case sensitive)
-								           // i.e. use if string is "permidia" and driver desc is "Glint Permidia 2 3D"
+                                           // i.e. use if string is "permidia" and driver desc is "Glint Permidia 2 3D"
 
 // Game speed variable
-extern int GameSpeed;			// Value 1-5 which determines how fast the game is running
-								// Used to switch on/off processor intensive effects
+extern int GameSpeed;           // Value 1-5 which determines how fast the game is running
+                                // Used to switch on/off processor intensive effects
 
 // Animation toggles..
-extern BOOL WaitVertRetrace;	// Does vertical retrace checking (not used now)
-extern BOOL ShowDrawing;		// Swaps the back for the front buffer so we can wach redraw
-extern BOOL ShowBufNames;		// Shows labels for back/front buffer (not used now)
-extern BOOL NoNormals;			// Turns normal lights on/off
-extern BOOL NoFrameSkip;		// Turns frame skipping on/off
-extern BOOL PauseFrameSkip;		// Set during disk loading to avoid skipping afterwards
-extern BOOL ClearBeforeDraw;	// Clear before drawing update buffers?
-extern BOOL NoScrollZBuffer;	// Causes the system to not scroll the display z buffer
-extern BOOL SmoothScroll;		// Do smooth scrolling
-extern BOOL ScrollLock;			// Lock scrolling to the character
-extern BOOL DrawRealtimeShadows;	// Draw alpha shadows for 3D characters
-extern BOOL Show3D;				// Shows 3D objects and chars
-extern BOOL Interpolate;		// Causes 3D animations to interpolate when state changes
-extern BOOL DoPageFlip;			// Causes pages to flip (if off, screen will stop updating)
-extern BOOL PauseWhenNotActive;	// Causes program and threads to pause when not active
-extern BOOL Windowed;			// True if game is to be run in a window
-extern BOOL Borderless;			// When windowed, cut out the border (menu, other windows garabage)?
-extern BOOL NoWideBuffers;		// Doesn't allow video buffers with stides wider than their widths
-extern BOOL UseDirect3D2;		// True if want to be able to use drawprimive stuff
-extern BOOL UseSoftware3D;		// Use software 3D (False assumes we want hardware if available)
-extern BOOL SoftRampMode;		// Use RAMP mode for software 3D (hardware defaults to what's available)
-extern BOOL SoftRGBMode;		// Use RGB mode	for software 3D (hardware defaults to what's available)
-extern BOOL UseDrawPrimitive;	// If FALSE, 3D system does everything with Execute Buffers (always FALSE if UseDirect3D2 is FALSE)
-extern BOOL CacheExBufs;		// Attempt to cache execute buffers for chars and other animation
-extern BOOL PreloadSectors;		// If true, will load a large sector cache for faster scrolling
-extern BOOL NoPulseObjs;		// Prevents the game objects from being pulsed
-extern BOOL NoAnimateObjs;		// Prevents the game objects from being animated
-extern BOOL NoVidZBufLock;		// Prevents simultaneous locking of video and zbuffer (for voodoo)
-extern BOOL NoBlitZBuffer;		// Card is incapable of blitting to the display ZBuffer (voodoo)
-extern BOOL UseClearZBuffer;	// Use a clear z buffer for z restores (i.e. Viewport->Clear())
-extern BOOL UnlockImmediately;	// Causes video buffers to be unlocked immediately after they're locked (faster)
-extern BOOL IsVooDoo;			// True if using a voodoo card
-extern BOOL	IsMMX;				// Has MMX extensions
+extern BOOL WaitVertRetrace;    // Does vertical retrace checking (not used now)
+extern BOOL ShowDrawing;        // Swaps the back for the front buffer so we can wach redraw
+extern BOOL ShowBufNames;       // Shows labels for back/front buffer (not used now)
+extern BOOL NoNormals;          // Turns normal lights on/off
+extern BOOL NoFrameSkip;        // Turns frame skipping on/off
+extern BOOL PauseFrameSkip;     // Set during disk loading to avoid skipping afterwards
+extern BOOL ClearBeforeDraw;    // Clear before drawing update buffers?
+extern BOOL NoScrollZBuffer;    // Causes the system to not scroll the display z buffer
+extern BOOL SmoothScroll;       // Do smooth scrolling
+extern BOOL ScrollLock;         // Lock scrolling to the character
+extern BOOL DrawRealtimeShadows;    // Draw alpha shadows for 3D characters
+extern BOOL Show3D;             // Shows 3D objects and chars
+extern BOOL Interpolate;        // Causes 3D animations to interpolate when state changes
+extern BOOL DoPageFlip;         // Causes pages to flip (if off, screen will stop updating)
+extern BOOL PauseWhenNotActive; // Causes program and threads to pause when not active
+extern BOOL Windowed;           // True if game is to be run in a window
+extern BOOL Borderless;         // When windowed, cut out the border (menu, other windows garabage)?
+extern BOOL NoWideBuffers;      // Doesn't allow video buffers with stides wider than their widths
+extern BOOL UseDirect3D2;       // True if want to be able to use drawprimive stuff
+extern BOOL UseSoftware3D;      // Use software 3D (False assumes we want hardware if available)
+extern BOOL SoftRampMode;       // Use RAMP mode for software 3D (hardware defaults to what's available)
+extern BOOL SoftRGBMode;        // Use RGB mode for software 3D (hardware defaults to what's available)
+extern BOOL UseDrawPrimitive;   // If FALSE, 3D system does everything with Execute Buffers (always FALSE if UseDirect3D2 is FALSE)
+extern BOOL CacheExBufs;        // Attempt to cache execute buffers for chars and other animation
+extern BOOL PreloadSectors;     // If true, will load a large sector cache for faster scrolling
+extern BOOL NoPulseObjs;        // Prevents the game objects from being pulsed
+extern BOOL NoAnimateObjs;      // Prevents the game objects from being animated
+extern BOOL NoVidZBufLock;      // Prevents simultaneous locking of video and zbuffer (for voodoo)
+extern BOOL NoBlitZBuffer;      // Card is incapable of blitting to the display ZBuffer (voodoo)
+extern BOOL UseClearZBuffer;    // Use a clear z buffer for z restores (i.e. Viewport->Clear())
+extern BOOL UnlockImmediately;  // Causes video buffers to be unlocked immediately after they're locked (faster)
+extern BOOL IsVooDoo;           // True if using a voodoo card
+extern BOOL IsMMX;              // Has MMX extensions
 
 // Watch zbuffer and normal draws
 extern BOOL ShowZBuffer;
 extern BOOL ShowNormalBuffer;
 
 // Program run states
-extern BOOL AppActive;			// Flag for if the game is the active application
-extern BOOL Editor;				// This is true if we are in edit mode
-extern BOOL StartInEditor;		// Whether to start the program in editor mode
-extern BOOL NoQuickLoad;		// Prevent the program from attempting to load the IMAGERY.DAT file
+extern BOOL AppActive;          // Flag for if the game is the active application
+extern BOOL Editor;             // This is true if we are in edit mode
+extern BOOL StartInEditor;      // Whether to start the program in editor mode
+extern BOOL NoQuickLoad;        // Prevent the program from attempting to load the IMAGERY.DAT file
 
 // Render state controls
 extern BOOL FlatShade;
@@ -209,7 +209,7 @@ inline char *strncpyz(char *dst, char *src, int n)
   { strncpy(dst, src, n-1); dst[n-1] = NULL; return dst; }
   // Does a strncpy and insures that last character is always null
 inline char *strncatz(char *dst, char *src, int n)
-  {	int l = strlen(dst); return strncpyz(dst + l, src, n - l); }
+  { int l = strlen(dst); return strncpyz(dst + l, src, n - l); }
   // Concatenates a src with dst, but does not go beyound n-1 chars for dest, and insures
   // a null is appended at end of dst
 char *itos(int val, char *buf, int buflen);
@@ -236,7 +236,7 @@ void END_CRITICAL();
 
 // Load a resource functions
 void *LoadRCResource(char *name, int id); // Shouldn't be used anymore
-void FreeRC(void *p);					  // Same here
+void FreeRC(void *p);                     // Same here
 
 // Makes a file path given the current settings of RunPath and SavePath
 char *makepath(char *name, char *buf, int buflen);
@@ -249,13 +249,13 @@ int random(int min, int max);
 // Comma delimited list functions (useful for strings in "abcd,defg,hijk" format)
 // If dst is NULL, retuns result pointer from static internal buffer
 char *listrnd(char *src, char *dst = NULL, int len = 0);
-	// Get random string from comma list
+    // Get random string from comma list
 char *listget(char *src, int num, char *dst = NULL, int len = 0);
-	// Get num string from comma list
+    // Get num string from comma list
 int listnum(char *src);
-	// Get total number of strings in comma list
+    // Get total number of strings in comma list
 BOOL listin(char *src, char *in);
-	// Returns TRUE if string is in comma list (case insensitive)
+    // Returns TRUE if string is in comma list (case insensitive)
 
 // Causes all game threads to pause
 void PauseThreads();
@@ -268,13 +268,13 @@ void ExitGame();
 void Status(char *fmt, ...);
 
 // Memory free functions
-DWORD MemUsed();	// Percentage of memory used
-DWORD FreeMem();	// Free system memory (virtual)
-DWORD TotalMem();	// Total system memory (virtual)
-DWORD FreePhys();	// Free physical memory
-DWORD TotalPhys();	// Total physical memory
-DWORD FreePage();	// Free paging file memory
-DWORD TotalPage();	// Total paging file memory
+DWORD MemUsed();    // Percentage of memory used
+DWORD FreeMem();    // Free system memory (virtual)
+DWORD TotalMem();   // Total system memory (virtual)
+DWORD FreePhys();   // Free physical memory
+DWORD TotalPhys();  // Total physical memory
+DWORD FreePage();   // Free paging file memory
+DWORD TotalPage();  // Total paging file memory
 
 // INI File Functions
 void INISetSection(char *newsection);
@@ -299,7 +299,7 @@ void INIPrint(char *key, char *format, ...);
 
 // Debug BOOL variable
 extern BOOL Debug;
-extern BOOL Ignore3D;	// Whether to disallow 3D imagery (to make it run on systmes without Direct3D)
+extern BOOL Ignore3D;   // Whether to disallow 3D imagery (to make it run on systmes without Direct3D)
 
 // Forces video mode to assume 15 or 16 bit
 extern BOOL Force15Bit;
@@ -322,45 +322,45 @@ extern int LastFrameTicks;
 extern BOOL ShowFramesPerSecond;
 
 // Global Objects
-extern PTScreen		CurrentScreen;		// Currently displayed screen object 
-extern PTScreen		NextScreen;			// Next Screen to be display object
-extern TDisplay		display;			// Display object
-extern T3DScene		Scene3D;			// 3d Object
-extern PTDisplay	Display;			// Display object
-extern TPlayScreen	PlayScreen;			// PlayScreen Object
-extern TLogoScreen	LogoScreen;			// LogoScreen Object
-extern TMapPane		MapPane;			// Main map pane for PlayScreen
-extern THealthBar	HealthBar;			// Character's health
-extern TStaminaBar	StaminaBar;			// Character's fatigue
-extern TInventory	Inventory;			// Inventory of objects
-extern TTextBar		TextBar;			// Info line for player
-extern TMultiCtrlPane	MultiCtrl;		// Multipane control panel (buttons)
-extern TEquipPane	EquipPane;			// Equipment pane
-extern TAutoMap		AutoMap;			// Automapper
-extern TSpellPane	SpellPane;			// Talisman stuff
-extern TQuickSpellPane	QuickSpells;	// Quick spell buttons
-extern TStatPane	StatPane;			// Display of char's abilities
-extern TDialogPane	DialogPane;			// Dialog panel
-extern TMainWindow	MainWindow;			// Windows Object
-extern TScriptManager	ScriptManager;	// Manages all scripts in the game
-extern TSaveGame	SaveGame;			// SaveGame Object
-extern TChunkCache	ChunkCache;			// Tile Cache
-extern TTimer		Timer;				// Timer Object
-extern PTFont		SystemFont;			// Basic utility font
-extern PTFont		DialogFont;			// Dialog font
-extern PTFont		DialogFontShadow;	// Dialog font shadow
-extern PTFont		SmallFont;			// Small game font
-extern PTFont		GameFont;			// Medium game font
-extern PTFont		GoldFont;			// Medium gold font
-extern PTFont		MetalFont;			// Small gold/metal font
-extern PTFont		MenuFont;			// Menu font
-extern PTPlayer		Player;				// The active player for current game
-extern PTMulti		GameData;			// Global game data pointer
-extern TSoundPlayer	SoundPlayer;		// Sound effects player
-extern TControlMap	ControlMap;			// Contains the key/joystick mappings for game control
-extern TAreaManager	AreaManager;		// Manages the game area system
-extern TPlayerManager PlayerManager;	// Stores the current player list for the game
-extern TRules		Rules;				// Stores rules, like classes, char types, attacks, tables, etc.
+extern PTScreen     CurrentScreen;      // Currently displayed screen object 
+extern PTScreen     NextScreen;         // Next Screen to be display object
+extern TDisplay     display;            // Display object
+extern T3DScene     Scene3D;            // 3d Object
+extern PTDisplay    Display;            // Display object
+extern TPlayScreen  PlayScreen;         // PlayScreen Object
+extern TLogoScreen  LogoScreen;         // LogoScreen Object
+extern TMapPane     MapPane;            // Main map pane for PlayScreen
+extern THealthBar   HealthBar;          // Character's health
+extern TStaminaBar  StaminaBar;         // Character's fatigue
+extern TInventory   Inventory;          // Inventory of objects
+extern TTextBar     TextBar;            // Info line for player
+extern TMultiCtrlPane   MultiCtrl;      // Multipane control panel (buttons)
+extern TEquipPane   EquipPane;          // Equipment pane
+extern TAutoMap     AutoMap;            // Automapper
+extern TSpellPane   SpellPane;          // Talisman stuff
+extern TQuickSpellPane  QuickSpells;    // Quick spell buttons
+extern TStatPane    StatPane;           // Display of char's abilities
+extern TDialogPane  DialogPane;         // Dialog panel
+extern TMainWindow  MainWindow;         // Windows Object
+extern TScriptManager   ScriptManager;  // Manages all scripts in the game
+extern TSaveGame    SaveGame;           // SaveGame Object
+extern TChunkCache  ChunkCache;         // Tile Cache
+extern TTimer       Timer;              // Timer Object
+extern PTFont       SystemFont;         // Basic utility font
+extern PTFont       DialogFont;         // Dialog font
+extern PTFont       DialogFontShadow;   // Dialog font shadow
+extern PTFont       SmallFont;          // Small game font
+extern PTFont       GameFont;           // Medium game font
+extern PTFont       GoldFont;           // Medium gold font
+extern PTFont       MetalFont;          // Small gold/metal font
+extern PTFont       MenuFont;           // Menu font
+extern PTPlayer     Player;             // The active player for current game
+extern PTMulti      GameData;           // Global game data pointer
+extern TSoundPlayer SoundPlayer;        // Sound effects player
+extern TControlMap  ControlMap;         // Contains the key/joystick mappings for game control
+extern TAreaManager AreaManager;        // Manages the game area system
+extern TPlayerManager PlayerManager;    // Stores the current player list for the game
+extern TRules       Rules;              // Stores rules, like classes, char types, attacks, tables, etc.
 
 #endif
 

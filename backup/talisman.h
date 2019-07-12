@@ -19,14 +19,14 @@ _CLASSDEF(TTalisman)
 class TTalisman : public TObjectInstance
 {
   public:
-	TTalisman(PTObjectImagery newim) : TObjectInstance(newim) {}
-	TTalisman(PSObjectDef def, PTObjectImagery newim) : TObjectInstance(def, newim) {}
+    TTalisman(PTObjectImagery newim) : TObjectInstance(newim) {}
+    TTalisman(PSObjectDef def, PTObjectImagery newim) : TObjectInstance(def, newim) {}
 
-	virtual void RemoveFromInventory();
-		// Remove this object from whatever inventory it is in
+    virtual void RemoveFromInventory();
+        // Remove this object from whatever inventory it is in
 
-	// Talisman stats
-	STATFUNC(Code)
+    // Talisman stats
+    STATFUNC(Code)
 };
 
 DEFINE_BUILDER("TALISMAN", TTalisman)
