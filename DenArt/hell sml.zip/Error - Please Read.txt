@@ -1,0 +1,5 @@
+This archive is either invalid or is part 
+of a multi-volume zip archive.  If it is 
+part of a multi-volume archive, you can extract
+the contents with the ZipMagic Archive Manager.
+.
