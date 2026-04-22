@@ -3,4 +3,6 @@ Revenant 1998 PC game source - (does not include international vo, or extra musi
 
 This is the contents of a game source backup and may not contain the entire final source of the game.
 
+For the modernized and complete buildable version of the sourcecode please check out http://www.github.com/benjcooley/RevenantRevisited.
+
 
